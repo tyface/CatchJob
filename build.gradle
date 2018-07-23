@@ -1,0 +1,313 @@
+/*******************************************************
+
+	gradle Spring Web-MVC Project Build Script
+
+	@gradle-version : 3.5
+	@author 		: J.K LEE
+	@script version : 0.2
+
+	@update history 0.2
+	viewPath 예시에 /WEB-INF/views 에서 /WEB-INF/views/ 로 변경
+	root,servlet application context에 component scan에 <context:include-filter> 설정 추가
+
+********************************************************/
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+
+
+
+ext {
+
+	basePackage = "com.CatchJob"
+	springVersion = "4.3.18.RELEASE"
+	javaVersion = "1.8"
+	encoding = "UTF-8"
+
+	springRootContextFilePath="/WEB-INF/spring/"
+	springRootContextFileName="root-context.xml"
+
+	springDispacherServletName="appServlet"
+	springDispacherServletContextFilePath="/WEB-INF/spring/appServlet/"
+	springDispacherServletContextFileName="servlet-context.xml"
+
+	viewPath="/WEB-INF/views/"
+}
+
+String lc = System.getProperty("line.separator")
+String t = "\t"
+
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+tasks.withType(JavaCompile) {
+    options.encoding = encoding
+}
+
+/************************************************************
+	make project source directory
+*************************************************************/
+task initDir {
+
+	String basePackageDir = "/"+basePackage.replace(".","/");
+
+   //프로젝트에 생성할 디렉토리 목록
+	String[] dirNames = ["src/main/java${basePackageDir}",
+   						"src/main/resources",
+   						"src/main/webapp/resources",
+						"src/test/java${basePackageDir}",
+						"src/test/resources",
+   						"${webAppDirName}/WEB-INF/classes",
+						"${webAppDirName}/WEB-INF/lib",
+						"${webAppDirName}${viewPath}"
+   						]
+	def dir
+
+   dirNames.each { name ->
+   		dir = new File(name);
+   		if(!dir.exists()){
+			dir.mkdirs();
+			println ":initDir > [created] ${dir}"
+		}else{
+			println ":initDir > [exists] ${dir}"
+		}
+   }
+} // initDir End
+
+/************************************************************
+	create web.xml
+*************************************************************/
+task makeWebXmlTemplate {
+
+	def webXml = new File("${webAppDirName}/WEB-INF/web.xml")
+
+	if( !webXml.exists() ) {
+
+		webXml.withWriterAppend { w ->
+  			w << '<?xml version="1.0" encoding="UTF-8"?>'
+  			w << lc << '<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" '
+  			w << lc << 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+  			w << lc << 'xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee '
+  			w << lc << 'http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">'
+  			w << lc
+  			w << lc << '<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->'
+  			w << lc << t << '<context-param>'
+  			w << lc << t << t << '<param-name>contextConfigLocation</param-name>'
+  			w << lc << t << t << '<param-value>'+springRootContextFilePath+springRootContextFileName+'</param-value>'
+  			w << lc << t << '</context-param>'
+  			w << lc
+  			w << lc << '<!-- Creates the Spring Container shared by all Servlets and Filters -->'
+  			w << lc << t << '<listener>'
+  			w << lc << t << t << '<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>'
+  			w << lc << t << '</listener>'
+  			w << lc
+  			w << lc << t << '<servlet>'
+  			w << lc << t << t << '<servlet-name>'+springDispacherServletName+'</servlet-name>'
+  			w << lc << t << t << '<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>'
+  			w << lc << t << t << '<init-param>'
+  			w << lc << t << t << t << '<param-name>contextConfigLocation</param-name>'
+  			w << lc << t << t << t << '<param-value>'+springDispacherServletContextFilePath+springDispacherServletContextFileName+'</param-value>'
+  			w << lc << t << t << '</init-param>'
+  			w << lc << t << t << '<load-on-startup>1</load-on-startup>'
+  			w << lc << t << '</servlet>'
+  			w << lc << t << '<servlet-mapping>'
+  			w << lc << t << t << '<servlet-name>appServlet</servlet-name>'
+  			w << lc << t << t << '<url-pattern>/</url-pattern>'
+  			w << lc << t << '</servlet-mapping>'
+  			w << lc << t <<	'<filter>'
+			w << lc << t << t << '<filter-name>setCharacterEncodingFilter</filter-name>'
+			w << lc << t << t << '<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>'
+			w << lc << t << t << '<init-param>'
+			w << lc << t << t << t << '<param-name>encoding</param-name>'
+			w << lc << t << t << t << '<param-value>utf-8</param-value>'
+			w << lc << t << t << '</init-param>'
+			w << lc << t <<	'</filter>'
+			w << lc << t <<	'<filter-mapping>'
+			w << lc << t << t << '<filter-name>setCharacterEncodingFilter</filter-name>'
+			w << lc << t << t << '<url-pattern>/*</url-pattern>'
+			w << lc << t <<	'</filter-mapping>'
+  			w << lc <<  '</web-app>'
+		}
+
+		webXml.createNewFile()
+	}else{
+		println ":makeWebXmlTemplate > web.xml exists in the folder. skip the processing part"
+	}
+
+} //init makeWebXmlTemplate End
+
+
+/************************************************************
+	create web.xml
+*************************************************************/
+task makeRootContextTemplate {
+
+	def dir = new File(webAppDirName+springRootContextFilePath);
+
+   	if(!dir.exists()){
+
+		dir.mkdirs()
+	}
+
+	def rct = new File(webAppDirName+springRootContextFilePath+springRootContextFileName)
+
+	if( !rct.exists() ) {
+
+		rct.withWriterAppend { w ->
+  			w << '<?xml version="1.0" encoding="UTF-8"?>'
+  			w << lc << '<beans xmlns="http://www.springframework.org/schema/beans" '
+  			w << lc << 'xmlns:context="http://www.springframework.org/schema/context" '
+  			w << lc << 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+  			w << lc << 'xsi:schemaLocation="http://www.springframework.org/schema/beans '
+  			w << lc << 'http://www.springframework.org/schema/beans/spring-beans.xsd '
+  			w << lc << 'http://www.springframework.org/schema/context '
+  			w << lc << 'http://www.springframework.org/schema/context/spring-context.xsd "> '
+  			w << lc
+  			w << lc << t << '<!-- Root Context: defines shared resources visible to all other web components -->'
+  			w << lc << t << '<context:component-scan base-package="service" />'
+  			w << lc
+  			w << lc << '</beans>'
+		}
+
+		rct.createNewFile()
+
+	}else{
+		println ":makeRootContextTemplate > ${springRootContextFileName} exists in the folder. skip the processing part"
+	}
+
+}
+
+
+
+/************************************************************
+	create servlet-context.xml
+*************************************************************/
+task makeServletContextTemplate {
+
+	//make target directory
+
+	def dir = new File(webAppDirName+springDispacherServletContextFilePath);
+
+   	if(!dir.exists()){
+
+		dir.mkdirs()
+	}
+
+	def sct = new File(webAppDirName+springDispacherServletContextFilePath+springDispacherServletContextFileName)
+
+	if( !sct.exists() ) {
+
+		sct.withWriterAppend { w ->
+  			w << '<?xml version="1.0" encoding="UTF-8"?>'
+  			w << lc << '<beans xmlns="http://www.springframework.org/schema/beans" '
+  			w << lc << 'xmlns:mvc="http://www.springframework.org/schema/mvc" '
+  			w << lc << 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+  			w << lc << 'xmlns:beans="http://www.springframework.org/schema/beans" '
+  			w << lc << 'xmlns:context="http://www.springframework.org/schema/context" '
+  			w << lc << 'xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd '
+  			w << lc << 'http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd '
+  			w << lc << 'http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> '
+  			w << lc
+  			w << lc << '<!-- DispatcherServlet Context: defines this servlet`s request-processing infrastructure -->'
+  			w << lc << t << '<context:component-scan	base-package="controller" />'
+  			w << lc << '<!-- Enables the Spring MVC @Controller programming model -->'
+  			w << lc << t << '<mvc:annotation-driven />'
+  			w << lc
+  			w << lc << '<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->'
+  			w << lc << t << '<mvc:resources mapping="/resources/**" location="/resources/" />'
+  			w << lc
+  			w << lc << t << '<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->'
+  			w << lc << t << '<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">'
+  			w << lc << t << t << '<beans:property name="prefix" value="'+viewPath+'" />'
+  			w << lc << t << t << '<beans:property name="suffix" value=".jsp" />'
+  			w << lc << t << '</bean>'
+  			w << lc
+
+
+  			w << lc
+  			w << lc
+  			w << lc <<  '</beans>'
+		}
+
+		sct.createNewFile()
+
+	}else{
+		println ":makeServletContextTemplate > ${springDispacherServletContextFileName} exists in the folder. skip the processing part"
+	}
+
+
+}
+
+
+repositories {
+	mavenCentral()
+	maven { url "http://repo.spring.io/libs-release" }
+
+
+}
+
+dependencies {
+/*****************************
+ spring-webmvc download list
+******************************
+commons-logging-1.2.jar
+spring-aop-4.3.8.RELEASE.jar
+spring-beans-4.3.8.RELEASE.jar
+spring-context-4.3.8.RELEASE.jar
+spring-core-4.3.8.RELEASE.jar
+spring-expression-4.3.8.RELEASE.jar
+spring-web-4.3.8.RELEASE.jar
+spring-webmvc-4.3.8.RELEASE.jar
+*/
+compile 		group: 'org.springframework', 	name: 'spring-webmvc', 		version: springVersion
+compile			group: 'org.springframework', 	name: 'spring-jdbc', 		version: springVersion
+compile 		group: 'org.springframework', 	name: 'spring-websocket', 	version: springVersion
+
+compile 		group: 'javax.servlet', 		name: 'jstl', 				version: '1.2'
+providedCompile group: 'javax.servlet', 		name: 'javax.servlet-api', 	version: '3.1.0'
+
+testCompile 	group: 'org.springframework', 	name: 'spring-test',		version: springVersion
+testCompile 	group: 'junit', 				name: 'junit', 				version: '4.12'
+
+compile 		group: 'org.aspectj', 			name: 'aspectjrt', 			version:'1.8.13'
+compile 		group: 'org.aspectj', 			name: 'aspectjweaver', 		version:'1.8.13'
+
+compile 		group: 'org.mybatis', 			name: 'mybatis', 			version:'3.4.5'
+compile 		group: 'org.mybatis', 			name: 'mybatis-spring', 	version:'1.3.1'
+
+compile 		group: 'ch.qos.logback', 		name: 'logback-classic', 	version:'1.1.3'
+
+compile 		group: 'log4j', 				name: 'log4j', 				version:'1.2.17'
+
+//compile 		group: 'com.oracle', 			name: 'ojdbc6', 			version:'12.1.0.1-atlassian-hosted' //오라클용 디펜던시
+compile 		group: 'org.mariadb.jdbc', 		name: 'mariadb-java-client', version: '2.0.0-RC'
+
+compile 		group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+compile 		group: 'com.googlecode.json-simple', name: 'json-simple', 	version: '1.1.1'
+
+compile 		group: 'commons-io', 			name: 'commons-io', 		version: '2.4'
+
+compile 		group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.3.RELEASE'
+compile 		group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.3.RELEASE'
+compile 		group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.3.RELEASE'
+compile 		group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.2.3.RELEASE'
+
+
+}
+
+war{}
+
+eclipse {
+  wtp {
+    component {
+    	contextPath = project.name
+    }
+    facet {
+    	facet name: 'jst.web', version: '3.1'
+    	facet name: 'jst.java', version: javaVersion
+    }
+  }
+}
