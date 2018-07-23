@@ -283,7 +283,8 @@ compile 		group: 'ch.qos.logback', 		name: 'logback-classic', 	version:'1.1.3'
 compile 		group: 'log4j', 				name: 'log4j', 				version:'1.2.17'
 
 //compile 		group: 'com.oracle', 			name: 'ojdbc6', 			version:'12.1.0.1-atlassian-hosted' //오라클용 디펜던시
-compile 		group: 'org.mariadb.jdbc', 		name: 'mariadb-java-client', version: '2.0.0-RC'
+compile 		group: 'org.mariadb.jdbc', 		name: 'mariadb-java-client', version: '2.2.5'
+
 
 compile 		group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
 compile 		group: 'com.googlecode.json-simple', name: 'json-simple', 	version: '1.1.1'
