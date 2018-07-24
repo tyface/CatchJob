@@ -12,8 +12,9 @@ public class Interview {
 	private String intrvwFlag;
 	private String intrvwResult;
 	private String intrvwExperience;
-	private String PresentationDate;
+	private String presentationDate;
 	private String regDate;
+	
 	public int getmIndex() {
 		return mIndex;
 	}
@@ -81,10 +82,10 @@ public class Interview {
 		this.intrvwExperience = intrvwExperience;
 	}
 	public String getPresentationDate() {
-		return PresentationDate;
+		return presentationDate;
 	}
 	public void setPresentationDate(String presentationDate) {
-		PresentationDate = presentationDate;
+		this.presentationDate = presentationDate;
 	}
 	public String getRegDate() {
 		return regDate;
@@ -98,7 +99,7 @@ public class Interview {
 				+ ", intrvwDate=" + intrvwDate + ", intrvwRoute=" + intrvwRoute + ", intrvwReview=" + intrvwReview
 				+ ", intrvwQuestion=" + intrvwQuestion + ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag
 				+ ", intrvwResult=" + intrvwResult + ", intrvwExperience=" + intrvwExperience + ", PresentationDate="
-				+ PresentationDate + ", regDate=" + regDate + "]";
+				+ presentationDate + ", regDate=" + regDate + "]";
 	}
 	
 	
