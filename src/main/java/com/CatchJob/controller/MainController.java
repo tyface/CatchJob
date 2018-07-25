@@ -17,7 +17,6 @@ public class MainController {
 	public String home() {
 		System.out.println("메인화면 접속");
 		
-		System.out.println(testDao.selectOne());
 		return "home";
 	}
 	
@@ -25,7 +24,6 @@ public class MainController {
 	public String home_() {
 		System.out.println("메인화면 접속");
 		
-		System.out.println(testDao.selectOne());
 		return "home_";
 	}
 	
@@ -33,14 +31,12 @@ public class MainController {
 	public String test() {
 		System.out.println("메인화면 접속");
 		
-		System.out.println(testDao.selectOne());
 		return "test";
 	}
 	@RequestMapping(value = "/test2", method = RequestMethod.GET)
 	public String test2() {
 		System.out.println("메인화면 접속");
 		
-		System.out.println(testDao.selectOne());
 		return "test2";
 	}
 }

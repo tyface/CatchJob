@@ -19,13 +19,18 @@ http://www.springframework.org/schema/context/spring-context.xsd ">
 	
 	<bean id ="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
-		<!-- 		<property name="typeAliasesPackage" value="com.model"/> -->
+		<property name="typeAliasesPackage" value="com.model"/>
 		<property name="mapperLocations" value = "classpath:mapper/**/*.xml"></property>
 	</bean>
 	
 	<bean id = "testDao" class= "org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 		<property name="mapperInterface" value="com.CatchJob.dao.TestDao"></property>
+	</bean>
+	
+	<bean id = "entDao" class= "org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<property name="mapperInterface" value="com.CatchJob.dao.EntDao"></property>
 	</bean>
 	
 <!-- 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->

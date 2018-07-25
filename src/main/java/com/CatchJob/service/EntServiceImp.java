@@ -12,8 +12,8 @@ import com.CatchJob.model.NationalPension;
 @Service
 public class EntServiceImp implements EntService {
 
-	@Autowired
-	private EntDao dao;
+//	@Autowired
+//	private EntDao dao;
 
 	@Override
 	public List<Enterprise> searchEntList(String entName) {

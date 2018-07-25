@@ -15,8 +15,5 @@ public class DaoTest {
 	
 	@Test
 	public void testDao() {
-		System.out.println("123123");
-		dao.selectOne();
-		System.out.println("345345");
 	}
 }
