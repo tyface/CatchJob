@@ -13,12 +13,34 @@ public class MainController {
 	@Autowired
 	TestDao testDao;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index() {
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home() {
 		System.out.println("메인화면 접속");
 		
 		System.out.println(testDao.selectOne());
-		return "index";
+		return "home";
 	}
-
+	
+	@RequestMapping(value = "/home_", method = RequestMethod.GET)
+	public String home_() {
+		System.out.println("메인화면 접속");
+		
+		System.out.println(testDao.selectOne());
+		return "home_";
+	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test() {
+		System.out.println("메인화면 접속");
+		
+		System.out.println(testDao.selectOne());
+		return "test";
+	}
+	@RequestMapping(value = "/test2", method = RequestMethod.GET)
+	public String test2() {
+		System.out.println("메인화면 접속");
+		
+		System.out.println(testDao.selectOne());
+		return "test2";
+	}
 }
