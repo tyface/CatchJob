@@ -1,17 +1,17 @@
 package com.CatchJob.model;
 
 public class IndustryCode {
-	private int IndustryCode;
+	private int industryCode;
 	private String largeCatagory;
 	private String mediumCatagory;
 	private String smallCatagory;
 	private String detailsCatagory;
 	
 	public int getIndustryCode() {
-		return IndustryCode;
+		return industryCode;
 	}
 	public void setIndustryCode(int industryCode) {
-		IndustryCode = industryCode;
+		industryCode = industryCode;
 	}
 	public String getLargeCatagory() {
 		return largeCatagory;
@@ -39,7 +39,7 @@ public class IndustryCode {
 	}
 	@Override
 	public String toString() {
-		return "IndustryCode [IndustryCode=" + IndustryCode + ", largeCatagory=" + largeCatagory + ", mediumCatagory="
+		return "IndustryCode [industryCode=" + industryCode + ", largeCatagory=" + largeCatagory + ", mediumCatagory="
 				+ mediumCatagory + ", smallCatagory=" + smallCatagory + ", detailsCatagory=" + detailsCatagory + "]";
 	}
 	
