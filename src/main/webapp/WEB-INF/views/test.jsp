@@ -260,14 +260,7 @@ $(document).ready(function(){
     
   </div>
 </nav>
-	
 
-	
-	
-	
-	
-	
-	
 	<div class="container jumbotron text-center">
 		<h1>Find The Job That Fits Your Life</h1>
 		<p>이력서 쓰기 전, 면접 보기 전</p>
