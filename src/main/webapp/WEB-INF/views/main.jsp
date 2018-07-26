@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="<%= request.getContextPath()%>"></c:set>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 
-<%--   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/test.css">
-  <script  href="<%=request.getContextPath()%>/resources/js/test.js"></script> --%>
+<%-- <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/test.css">
+<script href="${contextPath}/resources/js/test.js"></script>  --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bootstrap Theme Company Page</title>
@@ -109,21 +110,12 @@ footer {
 </head>
 <body>
 
-
-	
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">CATCH JOB</a>
-    </div>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      
-    </ul>
-  </div>
-</nav>
+<c:if test="${mberId == null}">
+    <%@include file="include/before_login_nav.jsp"%>
+</c:if>
+<c:if test="${mberId != null}">
+    <%@include file="include/after_login_nav.jsp"%>
+</c:if>
 
 <%-- 로 그 인  Login --%>
 <div class="container">
@@ -140,26 +132,24 @@ footer {
         <div class="modal-body" style="padding:40px 50px;">
           <form role="form">
             <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+              <label for="mberId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
+              <input type="email" class="form-control" id="mberId" placeholder="Enter email">
             </div>
             <div class="form-group">
-              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+              <label for="mberPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="mberPw" placeholder="Enter password">
             </div>
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+              <button type="submit" id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           <p>Not a member? <a href="#">Sign Up</a></p>
-          <p>Forgot <a href="#">Password?</a></p>
+          <p>Forgot <a href="#">Password</a></p>
         </div>
       </div>
-      
     </div>
   </div> 
 </div>
@@ -167,7 +157,30 @@ footer {
 <script>
 $(document).ready(function(){
     $("#myBtnLogin").click(function(){
-        $("#myModalLogin").modal();
+        $("#myModalLogin").modal("show");
+    });
+   
+    $("#btnLogin").on("submit",function() {
+    	var d = $(this).serialize();//이벤트가 발생한 요소 this
+		//윗줄 : member?memberForm&userid = "홍길동"&pw = "123"&email=email.gmail.com
+		alert("d : " + d);
+        $.ajax({
+            type:"POST",
+            url:"/catchjob/login",
+			dataType:"json",
+         /*    success:function(result){                    
+                if (result.result == '1') { // 로그인 성공시 
+                    $("#myModalLogin").modal("hide");
+                   // location.href = "${contextPath}/";
+                } else { //로그인 실패시 
+                    $(".warning").text(result.msg);
+                    //'아이디나 비번이 틀립니다' 문구 출력 후 바로 창이 닫힘
+                }
+            },
+            error:function(xhr, status, error) {
+                console.log(xhr.status + " : " + error + " : " + xhr.responseText);
+            } */
+        });
     });
 });
 </script>
@@ -187,12 +200,12 @@ $(document).ready(function(){
         <div class="modal-body" style="padding:40px 50px;">
           <form role="form">
             <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+              <label for="mberId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
+              <input type="email" class="form-control" id="mberId" placeholder="Enter email">
             </div>
             <div class="form-group">
-              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+              <label for="mberPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="mberPw" placeholder="Enter password">
             </div>
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
@@ -201,7 +214,6 @@ $(document).ready(function(){
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
           <p>Not a member? <a href="#">Sign Up</a></p>
           <p>Forgot <a href="#">Password?</a></p>
         </div>
@@ -218,48 +230,6 @@ $(document).ready(function(){
     });
 });
 </script>	
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">CATCH JOB</a>
-    </div>
- 
-    <form class="navbar-form navbar-left" action="/action_page.php">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" name="search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    
-    <ul class="nav navbar-nav navbar-right">
-<!-- 	    <li class="active"><a href="#">Home</a></li>
-	    <li><a href="#">Page 1</a></li>
-	    <li><a href="#">Page 2</a></li> -->
-	    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">기업리뷰 작성</a></li>
-          <li><a href="#">면접후기 작성</a></li>
-        </ul>
-      </li>
-	    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">계정</a></li>
-          <li><a href="#">활동내역</a></li>
-          <li><a href="#">관심정보</a></li>
-          <li><a href="#">로그아웃</a></li>
-        </ul>
-      </li>
-    </ul>
-    
-  </div>
-</nav>
 
 	<div class="container jumbotron text-center">
 		<h1>Find The Job That Fits Your Life</h1>
@@ -284,7 +254,7 @@ $(document).ready(function(){
 			<div class="col-sm-4">
 				<div class="thumbnail">
 				
-					<img src="<%=request.getContextPath()%>/resources/img/paris.jpg" alt="Paris" width="400" height="300">
+					<img src="${contextPath}/resources/img/paris.jpg" alt="Paris" width="400" height="300">
 					<p>
 						<strong>Paris</strong>
 					</p>
@@ -293,7 +263,7 @@ $(document).ready(function(){
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/newyork.jpg" alt="New York" width="400" height="300">
+					<img src="${contextPath}/resources/img/newyork.jpg" alt="New York" width="400" height="300">
 					<p>
 						<strong>New York</strong>
 					</p>
@@ -302,7 +272,7 @@ $(document).ready(function(){
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/sanfran.jpg" alt="San Francisco" width="400" height="300">
+					<img src="${contextPath}/resources/img/sanfran.jpg" alt="San Francisco" width="400" height="300">
 					<p>
 						<strong>San Francisco</strong>
 					</p>
