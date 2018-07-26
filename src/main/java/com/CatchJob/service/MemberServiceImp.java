@@ -10,6 +10,7 @@ import com.CatchJob.model.Member;
 
 @Service
 public class MemberServiceImp implements MemberService {
+	
 	@Autowired
 	private MemberDao memberDao;
 

@@ -29,7 +29,7 @@ public class ReviewController {
 	}
 
 	// 리뷰 수정
-	@RequestMapping(value = "/review", method = RequestMethod.POST)
+//	@RequestMapping(value = "/review", method = RequestMethod.POST)
 	public String updateReview(Review review) {
 
 		if (reviewService.updateReview(review)) {
@@ -41,7 +41,7 @@ public class ReviewController {
 	}
 
 	// 리뷰 삭제 - 리뷰 상태 (1:사용 -> 2:삭제) 수정
-	@RequestMapping(value = "/review", method = RequestMethod.POST)
+//	@RequestMapping(value = "/review", method = RequestMethod.POST)
 	public String deleteReview(int reviewIndex) {
 
 		if (reviewService.deleteReview(reviewIndex)) {
@@ -53,7 +53,7 @@ public class ReviewController {
 	}
 
 	// 리뷰 출력 - 질문 식별번호에 관련된 리뷰 출력
-	@RequestMapping(value = "/review", method = RequestMethod.POST)
+//	@RequestMapping(value = "/review", method = RequestMethod.POST)
 	public String selectReviewList(Model model) {
 		model.addAttribute("reviewList", reviewService.selectReviewList());
 		return null;
