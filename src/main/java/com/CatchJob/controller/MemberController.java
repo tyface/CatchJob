@@ -38,11 +38,11 @@ public class MemberController {
 	public String login(HttpSession session, Member member, RedirectAttributes ra) {
 		// login.jsp에서 넘겨주는 form 요소를 받아서
 		// 로그인 진행
-		boolean result = MemberService.login(member.getmId(), member.getmPw());
+		boolean result = MemberService.login(member.getMberId(), member.getMberPw());
 
 		if (result) {
 			// 세션에 아이디를 담고 메인으로 이동
-			session.setAttribute("userid", member.getmId());
+			session.setAttribute("userid", member.getMberId());
 			// return "redirect:/board/boardList";
 		} else {
 			// 로그인 실패니까.. 로그인 페이지로 이동

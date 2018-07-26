@@ -2,52 +2,52 @@ package com.CatchJob.model;
 
 public class Member {
 
-	private int mIndex;
-	private String mId;
-	private String mPw;
-	private String mType;
-	private String userFlag;
+	private int mberIndex;
+	private String mberId;
+	private String mberPw;
+	private String mberType;
+	private String mberFlag;
 	private String regDate;
 	private String lastDate;
 
-	public int getmIndex() {
-		return mIndex;
+	public int getMberIndex() {
+		return mberIndex;
 	}
 
-	public void setmIndex(int mIndex) {
-		this.mIndex = mIndex;
+	public void setMberIndex(int mberIndex) {
+		this.mberIndex = mberIndex;
 	}
 
-	public String getmId() {
-		return mId;
+	public String getMberId() {
+		return mberId;
 	}
 
-	public void setmId(String mId) {
-		this.mId = mId;
+	public void setMberId(String mberId) {
+		this.mberId = mberId;
 	}
 
-	public String getmPw() {
-		return mPw;
+	public String getMberPw() {
+		return mberPw;
 	}
 
-	public void setmPw(String mPw) {
-		this.mPw = mPw;
+	public void setMberPw(String mberPw) {
+		this.mberPw = mberPw;
 	}
 
-	public String getmType() {
-		return mType;
+	public String getMberType() {
+		return mberType;
 	}
 
-	public void setmType(String mType) {
-		this.mType = mType;
+	public void setMberType(String mberType) {
+		this.mberType = mberType;
 	}
 
-	public String getUserFlag() {
-		return userFlag;
+	public String getMberFlag() {
+		return mberFlag;
 	}
 
-	public void setUserFlag(String userFlag) {
-		this.userFlag = userFlag;
+	public void setMberFlag(String mberFlag) {
+		this.mberFlag = mberFlag;
 	}
 
 	public String getRegDate() {
@@ -68,8 +68,8 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [mIndex=" + mIndex + ", mId=" + mId + ", mPw=" + mPw + ", mType=" + mType + ", userFlag="
-				+ userFlag + ", regDate=" + regDate + ", lastDate=" + lastDate + "]";
+		return "Member [mberIndex=" + mberIndex + ", mberId=" + mberId + ", mberPw=" + mberPw + ", mberType=" + mberType
+				+ ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate=" + lastDate + "]";
 	}
 
 }

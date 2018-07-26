@@ -24,13 +24,13 @@ public class MemberServiceImp implements MemberService {
 	public boolean login(String mId, String mPw) {
 		Member member = memberDao.selectById(mId);
 		// 탈퇴회원 경우 로그인 금지
-		if (member.getUserFlag().equals("탈퇴")) {
+		if (member.getMberFlag().equals("탈퇴")) {
 			return false;
 		}
 
 		if (member != null) {
 			// 아이디 있음
-			if (member.getmPw().equals(mPw)) {
+			if (member.getMberPw().equals(mPw)) {
 				// 방문일 갱신
 				memberDao.updateLastDate();
 				return true;
@@ -63,7 +63,7 @@ public class MemberServiceImp implements MemberService {
 
 	public boolean deleteMember(Member member) {
 		// 회원탈퇴
-		member.setUserFlag("탈퇴");
+		member.setMberFlag("탈퇴");
 		int rowCount = memberDao.updateOne(member);
 		if (rowCount > 0) {
 			return true;
