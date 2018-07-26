@@ -13,11 +13,11 @@ public class MainController {
 	@Autowired
 	TestDao testDao;
 	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		System.out.println("메인화면 접속");
 		
-		return "home";
+		return "main";
 	}
 	
 	@RequestMapping(value = "/home_", method = RequestMethod.GET)
