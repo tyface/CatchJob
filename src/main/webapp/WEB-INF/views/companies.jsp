@@ -113,7 +113,7 @@
 									<div class="col-sm-5">
 
 										<p style="float: right">
-											<b>올해 입사자 평균연봉</b>
+											<b>평균연봉</b>
 										</p>
 										<p style="float: right">(국민연금)</p>
 									</div>
