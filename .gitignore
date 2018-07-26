@@ -92,8 +92,9 @@ local.properties
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-#Áö»ó Ãß°¡
+#ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 .gradle/
 *.MF
 
 # End of https://www.gitignore.io/api/java,eclipse
+src/main/resources/rebel.xml
