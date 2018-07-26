@@ -1,13 +1,14 @@
 package com.CatchJob.model;
 
+/* 국민연금 납입 내역 (월 기준)*/
 public class NationalPension {
-	private int npnIndex;
-	private int entIndex;
-	private int npnSubscriberCount;
-	private int npnNewSubscriberCount;
-	private int npnSubscriberTerminateCount;
-	private String payDate;
-	private String payAmount;
+	private int npnIndex; // 국민연금납입내역 식별번호
+	private int entIndex; // 사업장 식별번호
+	private int npnSubscriberCount; // 국민연금 총 가입자수
+	private int npnNewSubscriberCount; // 국민연금 신규가입자수
+	private int npnSubscriberTerminateCount; // 국민연금 가입해지자수
+	private String payDate; // 납입날짜
+	private String payAmount; // 납입금액
 
 	public int getNpnIndex() {
 		return npnIndex;

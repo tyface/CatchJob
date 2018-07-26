@@ -1,14 +1,14 @@
 package com.CatchJob.model;
 
+/* 회원 정보 */
 public class Member {
-
-	private int mberIndex;
-	private String mberId;
-	private String mberPw;
-	private String mberType;
-	private String mberFlag;
-	private String regDate;
-	private String lastDate;
+	private int mberIndex; // 회원 식별번호
+	private String mberId; // 아이디(email)
+	private String mberPw; // 비밀번호
+	private String mberType; // 회원구분(1:일반,2:기업인증)
+	private String mberFlag; // 계정상태(1:등록,2:탈퇴)
+	private String regDate; // 회원가입일
+	private String lastDate; // 마지막방문일
 
 	public int getMberIndex() {
 		return mberIndex;

@@ -1,5 +1,6 @@
 package com.CatchJob.model;
 
+/* 업종코드 TODO 아직 미사용*/
 public class IndustryCode {
 	private int industryCode;
 	private String largeCatagory;
