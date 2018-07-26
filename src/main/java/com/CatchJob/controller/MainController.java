@@ -20,29 +20,15 @@ public class MainController {
 		return "main";
 	}
 	
-	@RequestMapping(value = "/interview_chart", method = RequestMethod.GET)
-	public String interview_chart() {
-		System.out.println("메인화면 접속");
-		
-		return "interview_chart";
-	}
-	@RequestMapping(value = "/home_", method = RequestMethod.GET)
-	public String home_() {
-		System.out.println("메인화면 접속");
-		
-		return "home_";
-	}
+
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test() {
+	@RequestMapping(value = "/companies", method = RequestMethod.GET)
+	public String companies() {
 		System.out.println("메인화면 접속");
 		
-		return "test";
+		return "companies";
 	}
-	@RequestMapping(value = "/test2", method = RequestMethod.GET)
-	public String test2() {
-		System.out.println("메인화면 접속");
-		
-		return "test2";
-	}
+
+	
+	
 }

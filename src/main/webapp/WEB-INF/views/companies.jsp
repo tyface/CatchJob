@@ -1,137 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<title>Bootstrap Example</title>
-<meta charset="utf-8">
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-<meta
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-	name="viewport">
-<!-- Bootstrap 3.3.7 -->
-<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bower_components/bootstrap/dist/css/bootstrap.min.css"> --%>
-<!-- Font Awesome -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/bower_components/font-awesome/css/font-awesome.min.css">
-<!-- Ionicons -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/bower_components/Ionicons/css/ionicons.min.css">
-<!-- Theme style -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/dist/css/AdminLTE.min.css">
-<!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/dist/css/skins/_all-skins.min.css">
-
-<style>
-body {
-	position: relative;
-}
-
-.affix {
-	top: 20px;
-	z-index: 9999 !important;
-}
-
-div.col-sm-9 div {
-	/*  height: 250px;  */
-	font-size: 28px;
-}
-
-#section1 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #f4511e;
-}
-
-#section2 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ff9800;
-}
-
-#section3 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #00bcd4;
-}
-
-#section41 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #009688;
-}
-
-#section42 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #009688;
-}
-
-@media screen and (max-width: 810px) {
-	#section1, #section2, #section3, #section41, #section42 {
-		margin-left: 150px;
-	}
-}
-
-.logo-small {
-	color: #f4511e;
-	font-size: 50px;
-	width: 50px;
-}
-
-.logo {
-	color: #f4511e;
-	font-size: 200px;
-}
-
-.font-gray {
-	color: #5D5D5D;
-}
-</style>
-</head>
-
-<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
-
-	<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="#">CATCH JOB</a>
-		</div>
-
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#" id="myBtnSignUp"><span
-					class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			<li><a href="#" id="myBtnLogin"><span
-					class="glyphicon glyphicon-log-in"></span> Login</a></li>
-
-		</ul>
-	</div>
-	</nav>
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ 
+<%@include file="include/companies-header.jsp"%>
 
 	<div class="container"
 		style="background-color: #f4511e; color: #fff; height: 200px;">
 
-		<h1 style="padding-top: 50px">삼성전자</h1>
-
-
-
-
+		<h1 style="padding-top: 50px">삼성전자자</h1>
 		<button type="button" class="btn btn-default">
 			<span class="glyphicon glyphicon-heart"></span> 팔로우
 		</button>
@@ -146,32 +22,6 @@ div.col-sm-9 div {
 	</div>
 	<br>
 
-	<!-- <div class="container-fluid bg-grey">
-  <div class="row">
-    <div class="col-sm-4">
-      <span class="glyphicon glyphicon-globe logo" style="font-size:1000px"></span>
-    </div>
-    <div class="col-sm-8">
-      <h2>Our Values</h2>
-      <h4><strong>MISSION:</strong> Our mission lorem ipsum..</h4>      
-      <p><strong>VISION:</strong> Our vision Lorem ipsum..</p>
-    </div>
-  </div>
-</div> -->
-	<!-- <span class="glyphicon glyphicon-bookmark"></span> bookmark
-<span class="glyphicon glyphicon-heart"></span> Heart 
-<span class="glyphicon glyphicon-heart-empty"></span> Heart -empty
-<span class="glyphicon glyphicon-star"></span> star
-<span class="glyphicon glyphicon-star-empty"></span> -star-empty
-<span class="glyphicon glyphicon-thumbs-up"></span> -thumbs-up
-월별그래프
-<span class="glyphicon glyphicon-stats"></span>stats
-기업정보--빌딩
-<span class="glyphicon glyphicon-globe"></span> -globe
-<span class="glyphicon glyphicon-tasks"></span> -tasks
-기업리뷰...
-면접후기
-  -->
 
 	<div class="container">
 		<div class="row">
@@ -216,13 +66,13 @@ div.col-sm-9 div {
 							<br>
 							<div class="row">
 								<div class="col-sm-6">
-									<div class="well ">
+									<div class="well well-lg">
 										<span><b>인원</b></span> <span style="float: right"><b>98,141
 										</b>명</span>
 									</div>
 								</div>
 								<div class="col-sm-6">
-									<div class="well ">
+									<div class="well well-lg">
 										<span><b>업력</b></span> <span style="float: right"><b>29
 										</b>년</span>
 									</div>
@@ -230,46 +80,20 @@ div.col-sm-9 div {
 							</div>
 							<div class="row">
 								<div class="col-sm-6">
-									<div class="well ">
+									<div class="well  well-lg">
 										<span><b>입사</b></span> <span style="float: right"><b>5,486
 										</b>명 <b>6.0 </b>%</span>
 									</div>
 								</div>
 								<div class="col-sm-6">
-									<div class="well">
+									<div class="well well-lg">
 										<span><b>퇴사</b></span> <span style="float: right"><b>3,104
 										</b>명 <b>3.0 </b>%</span>
 									</div>
 								</div>
 							</div>
 							<br> <br> <br>
-							<div class="row" style="text-align: center">
-								<div class="col-sm-3">
-									<div class="row">
-										<h6>총 매출액</h6>
-										<h4>134조원</h4>
-									</div>
-								</div>
-								<div class="col-sm-1">
-									<div style="font-size: 50px">|</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<h5>1인당 매출액</h5>
-										<h4>138조원</h4>
-									</div>
-								</div>
-								<div class="col-sm-1">
-									<div style="font-size: 50px">|</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="row">
-										<h5>매출액 대비 임금금액</h5>
-										<h4>10%</h4>
-									</div>
-								</div>
-							</div>
-							<br> <br> <br>
+							
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="col-sm-5">
@@ -830,7 +654,7 @@ div.col-sm-9 div {
 									<div class="box-header with-border">
 										<h3 class="box-title">면접 난이도</h3>
 
-										<div class="box-tools pull-right">
+										<!-- <div class="box-tools pull-right">
 											<button type="button" class="btn btn-box-tool"
 												data-widget="collapse">
 												<i class="fa fa-minus"></i>
@@ -839,10 +663,16 @@ div.col-sm-9 div {
 												data-widget="remove">
 												<i class="fa fa-times"></i>
 											</button>
-										</div>
+										</div> -->
 									</div>
-									<div class="box-body">
-										<canvas id="pieChart" style="height:250px"></canvas>
+									<div class="row">
+										<div class="col-sm-4"></div>
+										<div class="col-sm-4">
+											<div class="box-body">
+												<canvas id="pieChart" style="height:100px"></canvas>
+											</div>										
+										</div>
+										<div class="col-sm-4"></div>										
 									</div>
 								</div>
 
@@ -1338,7 +1168,7 @@ div.col-sm-9 div {
 									<div class="box-header with-border">
 										<h3 class="box-title">Line Chart</h3>
 
-										<div class="box-tools pull-right">
+										<!-- <div class="box-tools pull-right">
 											<button type="button" class="btn btn-box-tool"
 												data-widget="collapse">
 												<i class="fa fa-minus"></i>
@@ -1347,7 +1177,7 @@ div.col-sm-9 div {
 												data-widget="remove">
 												<i class="fa fa-times"></i>
 											</button>
-										</div>
+										</div> -->
 									</div>
 									<div class="box-body">
 										<div class="chart">
@@ -1380,7 +1210,7 @@ div.col-sm-9 div {
 									<div class="box-header with-border">
 										<h3 class="box-title">Line Chart</h3>
 
-										<div class="box-tools pull-right">
+<!-- 										<div class="box-tools pull-right">
 											<button type="button" class="btn btn-box-tool"
 												data-widget="collapse">
 												<i class="fa fa-minus"></i>
@@ -1389,7 +1219,7 @@ div.col-sm-9 div {
 												data-widget="remove">
 												<i class="fa fa-times"></i>
 											</button>
-										</div>
+										</div> -->
 									</div>
 									<div class="box-body">
 										<div class="chart">
@@ -1404,7 +1234,7 @@ div.col-sm-9 div {
 								<div class="box-header with-border">
 									<h3 class="box-title">Bar Chart</h3>
 
-									<div class="box-tools pull-right">
+<!-- 									<div class="box-tools pull-right">
 										<button type="button" class="btn btn-box-tool"
 											data-widget="collapse">
 											<i class="fa fa-minus"></i>
@@ -1413,7 +1243,7 @@ div.col-sm-9 div {
 											data-widget="remove">
 											<i class="fa fa-times"></i>
 										</button>
-									</div>
+									</div> -->
 								</div>
 								<div class="box-body">
 									<div class="chart">
@@ -1435,250 +1265,7 @@ div.col-sm-9 div {
 	</div>
 
 
-	<script>
-		$(document).ready(function() {
-			// Add scrollspy to <body>
-			$('body').scrollspy({
-				target : ".navbar",
-				offset : 50
-			});
+<script src="<%=request.getContextPath()%>/resources/bower_components/chart.js/Chart.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/companies.js"></script>
 
-			// Add smooth scrolling on all links inside the navbar
-			$("#myScrollspy a").on('click', function(event) {
-				// Make sure this.hash has a value before overriding default behavior
-				if (this.hash !== "") {
-					// Prevent default anchor click behavior
-					event.preventDefault();
-
-					// Store hash
-					var hash = this.hash;
-
-					// Using jQuery's animate() method to add smooth page scroll
-					// The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-					$('html, body').animate({
-						scrollTop : $(hash).offset().top
-					}, 800, function() {
-
-						// Add hash (#) to URL when done scrolling (default click behavior)
-						window.location.hash = hash;
-					});
-				} // End if
-			});
-		});
-	</script>
-
-
-
-	<!-- ChartJS -->
-	<script
-		src="<%=request.getContextPath()%>/resources/bower_components/chart.js/Chart.js"></script>
-	<!-- FastClick -->
-
-	<script>
-		$(function() {
-			/* ChartJS
-			 * -------
-			 * Here we will create a few charts using ChartJS
-			 */
-
-			//--------------
-			//- AREA CHART -
-			//--------------
-			// Get context with jQuery - using jQuery's .get() method.
-			var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-			// This will get the first returned node in the jQuery collection.
-			var areaChart = new Chart(areaChartCanvas)
-			/*꼭 필요함*/
-			var areaChartData = {
-				labels : [ 'January', 'February', 'March', 'April', 'May',
-						'June', 'July', 'August', 'September', 'October',
-						'November', 'December' ],
-				datasets : [ {
-					label : 'Electronics',
-					fillColor : 'rgba(210, 214, 222, 1)',
-					strokeColor : 'rgba(210, 214, 222, 1)',
-					pointColor : 'rgba(210, 214, 222, 1)',
-					pointStrokeColor : '#c1c7d1',
-					pointHighlightFill : '#fff',
-					pointHighlightStroke : 'rgba(220,220,220,1)',
-					data : [ 65, 59, 80, 81, 56, 55, 40, 75, 60, 50, 40, 70 ]
-				}, {
-					label : 'Digital Goods',
-					fillColor : 'rgba(60,141,188,0.9)',
-					strokeColor : 'rgba(60,141,188,0.8)',
-					pointColor : '#3b8bba',
-					pointStrokeColor : 'rgba(60,141,188,1)',
-					pointHighlightFill : '#fff',
-					pointHighlightStroke : 'rgba(60,141,188,1)',
-					data : [ 28, 48, 40, 19, 86, 27, 90, 75, 30, 40, 50, 30 ]
-				} ]
-			}
-			/*꼭 필요함*/
-			var areaChartOptions = {
-				//Boolean - If we should show the scale at all
-				showScale : true,
-				//Boolean - Whether grid lines are shown across the chart
-				scaleShowGridLines : false,
-				//String - Colour of the grid lines
-				scaleGridLineColor : 'rgba(0,0,0,.05)',
-				//Number - Width of the grid lines
-				scaleGridLineWidth : 1,
-				//Boolean - Whether to show horizontal lines (except X axis)
-				scaleShowHorizontalLines : true,
-				//Boolean - Whether to show vertical lines (except Y axis)
-				scaleShowVerticalLines : true,
-				//Boolean - Whether the line is curved between points
-				bezierCurve : true,
-				//Number - Tension of the bezier curve between points
-				bezierCurveTension : 0.3,
-				//Boolean - Whether to show a dot for each point
-				pointDot : false,
-				//Number - Radius of each point dot in pixels
-				pointDotRadius : 4,
-				//Number - Pixel width of point dot stroke
-				pointDotStrokeWidth : 1,
-				//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-				pointHitDetectionRadius : 20,
-				//Boolean - Whether to show a stroke for datasets
-				datasetStroke : true,
-				//Number - Pixel width of dataset stroke
-				datasetStrokeWidth : 2,
-				//Boolean - Whether to fill the dataset with a color
-				datasetFill : true,
-				//String - A legend template
-				//Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-				maintainAspectRatio : true,
-				//Boolean - whether to make the chart responsive to window resizing
-				responsive : true
-			}
-
-			//Create the line chart
-			/*      areaChart.Line(areaChartData, areaChartOptions) */
-
-			//-------------
-			//- PIE CHART - 면접난이도
-			//-------------
-			// Get context with jQuery - using jQuery's .get() method.
-			var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-			var pieChart = new Chart(pieChartCanvas)
-			var PieData = [ {
-				value : 700,
-				color : '#FF0000',
-				highlight : '#FF0000',
-				label : '매우 어려움'
-			}, {
-				value : 600,
-				color : '#FF5E00',
-				highlight : '#FF5E00',
-				label : '어려움'
-			}, {
-				value : 400,
-				color : '#FFBB00',
-				highlight : '#FFBB00',
-				label : '보통'
-			}, {
-				value : 300,
-				color : '#ABF200',
-				highlight : '#ABF200',
-				label : '쉬움'
-			}, {
-				value : 500,
-				color : '#1DDB16',
-				highlight : '#1DDB16',
-				label : '매우 쉬움'
-			},
-			/*  {
-			   value    : 100,
-			   color    : '#d2d6de',
-			   highlight: '#d2d6de',
-			   label    : 'Navigator'
-			 } */
-			]
-			var pieOptions = {
-				//Boolean - Whether we should show a stroke on each segment
-				segmentShowStroke : true,
-				//String - The colour of each segment stroke`
-				segmentStrokeColor : '#fff',
-				//Number - The width of each segment stroke
-				segmentStrokeWidth : 2,
-				//Number - The percentage of the chart that we cut out of the middle
-				percentageInnerCutout : 50, // This is 0 for Pie charts
-				//Number - Amount of animation steps
-				animationSteps : 100,
-				//String - Animation easing effect
-				animationEasing : 'easeOutBounce',
-				//Boolean - Whether we animate the rotation of the Doughnut
-				animateRotate : true,
-				//Boolean - Whether we animate scaling the Doughnut from the centre
-				animateScale : false,
-				//Boolean - whether to make the chart responsive to window resizing
-				responsive : true,
-				// Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-				maintainAspectRatio : true
-			}
-			//Create pie or douhnut chart
-			// You can switch between pie and douhnut using the method below.
-			pieChart.Doughnut(PieData, pieOptions)
-
-			//-------------
-			//- LINE CHART - 
-			//--------------
-			var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-			var lineChart = new Chart(lineChartCanvas)
-			var lineChartOptions = areaChartOptions
-			lineChartOptions.datasetFill = false
-			lineChart.Line(areaChartData, lineChartOptions)
-
-			//-------------
-			//- LINE CHART - 
-			//--------------
-			var lineChartCanvas = $('#lineChart2').get(0).getContext('2d')
-			var lineChart = new Chart(lineChartCanvas)
-			var lineChartOptions = areaChartOptions
-			lineChartOptions.datasetFill = false
-			lineChart.Line(areaChartData, lineChartOptions)
-
-			//-------------
-			//- BAR CHART -
-			//-------------
-			var barChartCanvas = $('#barChart').get(0).getContext('2d')
-			var barChart = new Chart(barChartCanvas)
-			var barChartData = areaChartData
-			barChartData.datasets[1].fillColor = '#00a65a'
-			barChartData.datasets[1].strokeColor = '#00a65a'
-			barChartData.datasets[1].pointColor = '#00a65a'
-			var barChartOptions = {
-				//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-				scaleBeginAtZero : true,
-				//Boolean - Whether grid lines are shown across the chart
-				scaleShowGridLines : true,
-				//String - Colour of the grid lines
-				scaleGridLineColor : 'rgba(0,0,0,.05)',
-				//Number - Width of the grid lines
-				scaleGridLineWidth : 1,
-				//Boolean - Whether to show horizontal lines (except X axis)
-				scaleShowHorizontalLines : true,
-				//Boolean - Whether to show vertical lines (except Y axis)
-				scaleShowVerticalLines : true,
-				//Boolean - If there is a stroke on each bar
-				barShowStroke : true,
-				//Number - Pixel width of the bar stroke
-				barStrokeWidth : 2,
-				//Number - Spacing between each of the X value sets
-				barValueSpacing : 5,
-				//Number - Spacing between data sets within X values
-				barDatasetSpacing : 1,
-				//String - A legend template
-
-				responsive : true,
-				maintainAspectRatio : true
-			}
-
-			barChartOptions.datasetFill = false
-			barChart.Bar(barChartData, barChartOptions)
-		})
-	</script>
-
-
-</body>
-</html>
+<%@include file="include/companies-footer.jsp"%>
