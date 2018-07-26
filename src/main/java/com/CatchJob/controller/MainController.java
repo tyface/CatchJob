@@ -20,6 +20,12 @@ public class MainController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/interview_chart", method = RequestMethod.GET)
+	public String interview_chart() {
+		System.out.println("메인화면 접속");
+		
+		return "interview_chart";
+	}
 	@RequestMapping(value = "/home_", method = RequestMethod.GET)
 	public String home_() {
 		System.out.println("메인화면 접속");
