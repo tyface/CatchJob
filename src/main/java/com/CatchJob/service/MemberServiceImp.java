@@ -2,14 +2,10 @@ package com.CatchJob.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.MemberDao;
 import com.CatchJob.model.Member;
 
@@ -26,16 +22,20 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public boolean login(String mberId, String mberPw) {
-		Member member = memberDao.selectById(Constants.Member.MBERID);
+		
+		
 		/*// 탈퇴회원 경우 로그인 금지
 		if (member.getMberFlag().equals("2")) {
 			return false;
 		}*/
-		System.out.println("1");
+		System.out.println("13213123");
+	
+		Member member = memberDao.selectById(mberId);
+		System.out.println("member:"+member);
 		if (member != null) {
 			// 아이디 있음
 			System.out.println("2");
-			if (member.getMberPw().equals(Constants.Member.MBERPW)) {
+			if (member.getMberPw().equals(mberPw)) {
 				// 방문일 갱신
 				System.out.println("3");
 				Date date = new Date();
@@ -48,14 +48,15 @@ public class MemberServiceImp implements MemberService {
 			}
 		} else {
 			// 아이디 없음 : 로그인 실패
-			System.out.println("5");
+			System.out.println("531232131");
+			System.out.println("서비스 진입");
 			return false;
 		}
 	}
 
 	@Override
 	public Member getMemberById(String mberId) {
-		return memberDao.selectById(Constants.Member.MBERID);
+		return memberDao.selectById(mberId);
 	}
 
 	@Override
