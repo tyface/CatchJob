@@ -23,14 +23,9 @@ http://www.springframework.org/schema/context/spring-context.xsd ">
 		<property name="mapperLocations" value = "classpath:mapper/**/*.xml"></property>
 	</bean>
 	
-	<bean id = "testDao" class= "org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id = "enterpriseDao" class= "org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-		<property name="mapperInterface" value="com.CatchJob.dao.TestDao"></property>
-	</bean>
-	
-	<bean id = "entDao" class= "org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
-		<property name="mapperInterface" value="com.CatchJob.dao.EntDao"></property>
+		<property name="mapperInterface" value="com.CatchJob.dao.EnterpriseDao"></property>
 	</bean>
 	
 	<bean id = "memberDao" class= "org.mybatis.spring.mapper.MapperFactoryBean">

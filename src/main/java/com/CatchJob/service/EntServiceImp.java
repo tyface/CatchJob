@@ -2,10 +2,8 @@ package com.CatchJob.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.CatchJob.dao.EntDao;
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.NationalPension;
 
