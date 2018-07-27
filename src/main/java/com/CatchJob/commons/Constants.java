@@ -9,6 +9,5 @@ public class Constants {
 		public static final String MBERFLAG = "MBERFLAG";
 		public static final String REGDATE = "REGDATE";
 		public static final String LASTDATE = "LASTDATE";
-		
 	}
 }
