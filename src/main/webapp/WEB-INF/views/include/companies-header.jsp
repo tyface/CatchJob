@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="<%= request.getContextPath()%>"></c:set> 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -22,17 +24,17 @@
 	name="viewport">
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/bower_components/font-awesome/css/font-awesome.min.css">
+	href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/bower_components/Ionicons/css/ionicons.min.css">
+	href="${contextPath}/resources/bower_components/Ionicons/css/ionicons.min.css">
 <!-- Theme style -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/dist/css/AdminLTE.min.css">
+	href="${contextPath}/resources/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/dist/css/skins/_all-skins.min.css">
+	href="${contextPath}/resources/dist/css/skins/_all-skins.min.css">
 
 <style>
 body {
