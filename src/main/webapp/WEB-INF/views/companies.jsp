@@ -97,10 +97,10 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="col-sm-5">
-										<p style="float: right">
+										<p style="text-align: right;">
 											<b>올해 입사자 평균연봉</b>
 										</p>
-										<p style="float: right">(국민연금)</p>
+										<p style="text-align: right;">(국민연금)</p>
 
 									</div>
 									<div class="col-sm-7">
@@ -112,10 +112,10 @@
 								<div class="col-sm-6">
 									<div class="col-sm-5">
 
-										<p style="float: right">
-											<b>평균연봉</b>
+										<p style="text-align: right;">
+											<b> 평균연봉</b>
 										</p>
-										<p style="float: right">(국민연금)</p>
+										<p style="text-align: right;">(국민연금)</p>
 									</div>
 									<div class="col-sm-7">
 										<h1>

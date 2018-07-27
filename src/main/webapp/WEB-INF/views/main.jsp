@@ -1,13 +1,13 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="<%= request.getContextPath()%>"></c:set>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 
-
 <%-- <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/test.css">
-<script href="${contextPath}/resources/js/test.js"></script>  --%>
+<script href="${contextPath}/resources/js/test.js"></script>   --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bootstrap Theme Company Page</title>
@@ -110,64 +110,13 @@ footer {
 </head>
 <body>
 
+<c:if test="${mberId == null}">
+    <%@include file="include/before_login_nav.jsp"%>
+</c:if>
+<c:if test="${mberId != null}">
+    <%@include file="include/after_login_nav.jsp"%>
+</c:if>
 
-	
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">CATCH JOB</a>
-    </div>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      
-    </ul>
-  </div>
-</nav>
-
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">CATCH JOB</a>
-    </div>
- 
-    <form class="navbar-form navbar-left" action="/action_page.php">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" name="search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    
-    <ul class="nav navbar-nav navbar-right">
-<!-- 	    <li class="active"><a href="#">Home</a></li>
-	    <li><a href="#">Page 1</a></li>
-	    <li><a href="#">Page 2</a></li> -->
-	    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">기업리뷰 작성</a></li>
-          <li><a href="#">면접후기 작성</a></li>
-        </ul>
-      </li>
-	    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">계정</a></li>
-          <li><a href="#">활동내역</a></li>
-          <li><a href="#">관심정보</a></li>
-          <li><a href="#">로그아웃</a></li>
-        </ul>
-      </li>
-    </ul>
-    
-  </div>
-</nav>
 
 	<div class="container jumbotron text-center">
 		<h1>Find The Job That Fits Your Life</h1>
@@ -189,7 +138,7 @@ footer {
 			<div class="col-sm-4">
 				<div class="thumbnail">
 				
-					<img src="<%=request.getContextPath()%>/resources/img/paris.jpg" alt="Paris" width="400" height="300">
+					<img src="${contextPath}/resources/img/paris.jpg" alt="Paris" width="400" height="300">
 					<p>
 						<strong>Paris</strong>
 					</p>
@@ -198,7 +147,7 @@ footer {
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/newyork.jpg" alt="New York" width="400" height="300">
+					<img src="${contextPath}/resources/img/newyork.jpg" alt="New York" width="400" height="300">
 					<p>
 						<strong>New York</strong>
 					</p>
@@ -207,7 +156,7 @@ footer {
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/sanfran.jpg" alt="San Francisco" width="400" height="300">
+					<img src="${contextPath}/resources/img/sanfran.jpg" alt="San Francisco" width="400" height="300">
 					<p>
 						<strong>San Francisco</strong>
 					</p>
