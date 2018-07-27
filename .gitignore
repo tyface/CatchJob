@@ -1,4 +1,4 @@
-
+﻿
 # Created by https://www.gitignore.io/api/java,eclipse
 
 ### Eclipse ###
@@ -93,8 +93,7 @@ local.properties
 hs_err_pid*
 
 #���� �߰�
+*.classpath
 .gradle/
 *.MF
-
-# End of https://www.gitignore.io/api/java,eclipse
-src/main/resources/rebel.xml
+rebel.xml
