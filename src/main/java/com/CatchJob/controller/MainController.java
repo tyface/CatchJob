@@ -28,6 +28,15 @@ public class MainController {
 		
 		return "companies";
 	}
+	
+	
+	
+	@RequestMapping(value = "/nav", method = RequestMethod.GET)
+	public String nav() {
+		System.out.println("메인화면 접속");
+		
+		return "nav";
+	}
 
 	
 	
