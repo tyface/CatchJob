@@ -38,7 +38,7 @@
           <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-        	  <div class="form-group">
+        	 <div class="form-group">
         	 <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b></button>
         	  <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>
         	</div>
@@ -113,6 +113,11 @@ $(document).ready(function(){
         
         <div class="modal-body" style="padding:40px 50px;">
         	
+        	
+        	 <div class="form-group">
+	        	 <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Facebook</b></button>
+	        	  <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Google</b></button>
+        	</div>
         
           <form role="form">
             <div class="form-group">
@@ -121,7 +126,10 @@ $(document).ready(function(){
             </div>
             <div class="form-group">
               <label for="mberPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="mberPw" placeholder="Enter password">
+              <!-- 비밀번호 -->
+              <input type="password" class="form-control" id="mberPw" placeholder="Enter password"><br>
+              <!-- 비밀번호 확인  -->
+               <input type="password" class="form-control" id="mberPwCheck" placeholder="Enter password">
             </div>
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
@@ -130,8 +138,8 @@ $(document).ready(function(){
           </form>
         </div>
         <div class="modal-footer">
-          <p>Not a member? <a href="#">Sign Up</a></p>
-          <p>Forgot <a href="#">Password?</a></p>
+          <p>회원이십니까? <a href="#">Login</a></p>
+         
         </div>
       </div>
       
