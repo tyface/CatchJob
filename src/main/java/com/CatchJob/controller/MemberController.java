@@ -27,9 +27,6 @@ public class MemberController {
 	public void login(HttpSession session, HttpServletResponse resp, HttpServletRequest req) {
 		boolean result = MemberService.login(req.getParameter("mberId"), req.getParameter("mberPw"));
 		String data = "";
-		
-		System.out.println(req.getParameter("mberId") + req.getParameter("mberPw"));
-		
 		if (result) {
 			session.setAttribute("mberId", req.getParameter("mberId"));
 			data = "{\"result\" : true}";
