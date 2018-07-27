@@ -53,6 +53,8 @@
 				<div id="section1">
 					<h3>기업정보</h3>
 
+						
+
 					<br>
 
 					<div class="panel panel-default">
@@ -135,6 +137,7 @@
 				<!-- 기업리뷰//////////////////////////////////////////////////////////////////////////////// -->
 				<div id="section2">
 					<h3>기업리뷰</h3>
+					<button type="button" class="btn btn-default">기업리뷰 작성</button>
 					<p>Try to scroll this section and look at the navigation list
 						while scrolling!</p>
 					<div class="panel-group " id="accordion">
@@ -233,8 +236,18 @@
 											</tr>
 										</tbody>
 									</table>
-								</div>
+								
+			<p class="margin">Small <code>별점별점 별점 힘들면..</code></p>
 
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="기업리뷰를 추가로 입력해주세요">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-flat" style="background-color:#FF9900">제출</button>
+                      
+                    </span>
+              </div>
+
+								</div>
 							</div>
 						</div>
 						<div class="panel panel-default">
@@ -638,6 +651,14 @@
 				<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
 				<div id="section3">
 					<h3>면접후기</h3>
+					<button type="button" class="btn btn-default" id="myBtn">면접후기 작성</button>
+				 <!--  <button type="button" class="btn btn-info btn-lg" id="myBtn">면접후기 작성</button> -->
+
+
+
+
+
+
 					<p>Try to scroll this section and look at the navigation list
 						while scrolling!가나다라</p>
 
@@ -1264,7 +1285,36 @@
 		</div>
 	</div>
 
-
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">면접후기 작성</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  <script>
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+</script>
 <script src="<%=request.getContextPath()%>/resources/bower_components/chart.js/Chart.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/companies.js"></script>
 

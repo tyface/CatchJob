@@ -25,13 +25,29 @@ public class MainController {
 	
 	
 	
-	@RequestMapping(value = "/nav", method = RequestMethod.GET)
-	public String nav() {
-		System.out.println("메인화면 접속");
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String main2() {
 		
-		return "nav";
+		return "test2_original";
 	}
 
+	@RequestMapping(value = "/modals", method = RequestMethod.GET)
+	public String modals() {
+		
+		return "modals";
+	}
+
+	@RequestMapping(value = "/input", method = RequestMethod.GET)
+	public String reply() {
+		
+		return "source/input";
+	}
+	
+	@RequestMapping(value = "/interview", method = RequestMethod.GET)
+	public String interview() {
+		
+		return "interview";
+	}
 	
 	
 }

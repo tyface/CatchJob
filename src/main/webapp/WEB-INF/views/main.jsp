@@ -111,10 +111,10 @@ footer {
 <body>
 
 <c:if test="${mberId == null}">
-    <%@include file="include/before_login_nav.jsp"%>
+    <%@include file="include/before-login-nav.jsp"%>
 </c:if>
 <c:if test="${mberId != null}">
-    <%@include file="include/after_login_nav.jsp"%>
+    <%@include file="include/after-login-nav.jsp"%>
 </c:if>
 
 
