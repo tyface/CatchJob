@@ -3,14 +3,8 @@ package com.CatchJob.dao;
 //기업정보, 그래프 출력(ENTERPRISE_TB, NPN_DTLS_TB 이용)
 import java.util.List;
 
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.CatchJob.model.Review;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public interface ReviewDao {
 
 	// 리뷰 등록(기업 식별번호, 회원 식별번호, 질문 식별번호, 리뷰 내용, 기업 평가 점수, 리뷰 상태(1:사용), 작성일)
