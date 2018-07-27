@@ -16,13 +16,16 @@ public interface MemberDao {
 
 	public int updateOne(Member member);
 
+	public int deleteOne(int mIndex);
+
 	public Member selectOne(int mIndex);
 
 	public List<Member> selectAll();
 
-	public String selectLastDate(int mIndex);
-	
-	public void updateLastDate(Member member);
-	
+	public void updateLastDate();
+
 	public Member selectById(String mId);
+
+	public int updateUserFlag(Member member);
+
 }
