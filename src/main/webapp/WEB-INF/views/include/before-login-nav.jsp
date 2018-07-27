@@ -39,23 +39,23 @@
         </div>
         <div class="modal-body" style="padding:40px 50px;">
         	 <div class="form-group">
-        	 <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b></button>
-        	  <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>
+        	 <button  id="btnLoginFacebook" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b></button>
+        	  <button  id="btnLoginGoogle" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>
         	</div>
         
-          <form role="form">
+          <form role="form" method="post" id="loginForm">
             <div class="form-group">
-              <label for="mberId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
-              <input type="email" class="form-control" id="mberId" placeholder="Enter email">
+              <label for="loginId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
+              <input type="email" class="form-control" id="loginId" placeholder="Enter email">
             </div>
             <div class="form-group">
-              <label for="mberPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="mberPw" placeholder="Enter password">
+              <label for="loginPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="loginPw" placeholder="Enter password">
             </div>
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <button type="submit" id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -66,40 +66,36 @@
     </div>
   </div> 
 </div>
- 
-<script>
+
+	<script> 
 $(document).ready(function(){
     $("#myBtnLogin").click(function(){
-        $("#myModalLogin").modal("show");
+    	$("#myModalLogin").modal("show");
     });
-   
-    $("#btnLogin").on("submit",function() {
-    	var d = $(this).serialize();//이벤트가 발생한 요소 this
-		//윗줄 : member?memberForm&userid = "홍길동"&pw = "123"&email=email.gmail.com
-		alert("d : " + d);
-        $.ajax({
-            type:"POST",
-            url:"/catchjob/login",
+
+    
+    $("#loginForm").on("submit",function() {
+         $.ajax({
+            type:"post",
+            url:"${contextPath}/login",
+            data : {"mberId":$("#loginId").val(), "mberPw":$("#loginPw").val()},
 			dataType:"json",
-         /*    success:function(result){                    
-                if (result.result == '1') { // 로그인 성공시 
-                    $("#myModalLogin").modal("hide");
-                   // location.href = "${contextPath}/";
-                } else { //로그인 실패시 
-                    $(".warning").text(result.msg);
-                    //'아이디나 비번이 틀립니다' 문구 출력 후 바로 창이 닫힘
-                }
-            },
-            error:function(xhr, status, error) {
-                console.log(xhr.status + " : " + error + " : " + xhr.responseText);
-            } */
-        });
+         	success:function(data){ 
+         	   	if(data.result){
+    				alert("완료!");	
+    				$("#myModalLogin").modal("hide");
+    			} else {
+    				alert("실패!");	
+    			}
+         	}
+         });
+         return false;
     });
-});
+}); 
 </script>
 
-<%-- 회 원 가 입 Sign Up  --%>
-<div class="container">
+	<%-- 회 원 가 입 Sign Up  --%>
+	<div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalSignUp" role="dialog">
     <div class="modal-dialog">
@@ -113,28 +109,27 @@ $(document).ready(function(){
         
         <div class="modal-body" style="padding:40px 50px;">
         	
-        	
         	 <div class="form-group">
-	        	 <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Facebook</b></button>
-	        	  <button  id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Google</b></button>
+	        	 <button  id="btnSignUpFacebook" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Facebook</b></button>
+	        	  <button  id="btnSignUpGoogle" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Google</b></button>
         	</div>
         
-          <form role="form">
+          <form role="form" method="post">
             <div class="form-group">
-              <label for="mberId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
-              <input type="email" class="form-control" id="mberId" placeholder="Enter email">
+              <label for="signUpId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
+              <input type="email" class="form-control" id="signUpId" placeholder="Enter email">
             </div>
             <div class="form-group">
-              <label for="mberPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <label for="signUpPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
               <!-- 비밀번호 -->
-              <input type="password" class="form-control" id="mberPw" placeholder="Enter password"><br>
+              <input type="password" class="form-control" id="signUpPw" placeholder="Enter password"><br>
               <!-- 비밀번호 확인  -->
-               <input type="password" class="form-control" id="mberPwCheck" placeholder="Enter password">
+               <input type="password" class="form-control" id="signUpPwCheck" placeholder="Enter password">
             </div>
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign UP</button>
           </form>
         </div>
         <div class="modal-footer">

@@ -16,7 +16,13 @@ public interface ReviewDao {
 	// 리뷰 삭제 - 리뷰 상태 수정(1:사용 -> 2:삭제)
 	public int updateReviewStatus(Review review);
 
-	// 리뷰 출력 - 질문 식별번호에 관련된 리뷰 출력
-	public List<Review> selectReviewList();
+	// 기업 리뷰 출력 - 질문 식별번호에 관련된 리뷰 출력
+	public List<Review> selectListByEntIndex(int entIndex);
 
+	// 회원 리뷰 출력 - 질문 식별번호에 관련된 리뷰 출력
+	public List<Review> selectListByMberIndex(int mberIndex);
+	
+	// 리뷰 질문 출력
+	public List<String> selectAllQuestion();
+	
 }
