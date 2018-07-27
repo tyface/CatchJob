@@ -60,6 +60,8 @@ local.properties
 .worksheet
 
 ### Eclipse Patch ###
+.classpath
+
 # Eclipse Core
 .project
 
