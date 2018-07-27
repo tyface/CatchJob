@@ -7,9 +7,11 @@ import com.CatchJob.model.Member;
 public interface MemberService {
 	public List<Member> getAllMembers();
 
-	public boolean login(String mId, String mPw);
+	public Member selectMember(int mberIndex);
+	
+	public boolean login(String mberId, String mberPw);
 
-	public Member getMemberById(String mId);
+	public Member getMemberById(String mberId);
 
 	public boolean join(Member member);
 
