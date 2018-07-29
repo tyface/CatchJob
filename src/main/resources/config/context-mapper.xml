@@ -1,16 +1,28 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
-<!-- <beans xmlns="http://www.springframework.org/schema/beans" -->
-<!--     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
-<!--     xmlns:context="http://www.springframework.org/schema/context" -->
-<!--     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd -->
-<!--                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> -->
- 
-<!--     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
-<!--         <property name="dataSource" ref="dataSource" /> -->
-<!--         <property name="mapperLocations" value="classpath:/mapper/**/*mapper.xml" /> -->
-<!--     </bean> -->
-     
-<!--     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> -->
-<!--         <constructor-arg index="0" ref="sqlSession"/> -->
-<!--     </bean>  -->
-<!-- </beans> -->
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage"	value="com.CatchJob.model" />
+		<property name="mapperLocations" value="classpath:mapper/**/*.xml" />
+		<property name="configLocation" value="classpath:config/mybatis-config.xml"></property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.CatchJob.dao" />
+		<property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+	</bean>
+
+	<!-- 트랜잭션 매니저 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- Annotation 기반 트랜잭션 설정 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+</beans>

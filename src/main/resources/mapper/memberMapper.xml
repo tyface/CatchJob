@@ -3,35 +3,25 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.MemberDao">
-	<insert id="insertOne" parameterType="member">
+	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT)
 		VALUES
 		(#{mberId},#{mberPw},'1','1',#{regDate},#{lastDate})
 	</insert>
-	<update id="updateOne" parameterType="member">
+	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER_TB SET
 		MBER_ID=#{mberId},MBER_PW=#{mberPw},MBER_TYPE=#{mberType},USE_FL=#{mberFlag},REG_DT=#{regDate},LAST_DT=#{lastDate} 
 		WHERE MBER_IDX=#{mberIndex}
 	</update>
-	<delete id="deleteOne" parameterType="int">
-		DELETE * FROM MEMBER_TB
-	</delete>
+	
 	<select id="selectOne" parameterType="int" resultMap="memberMap">
 		SELECT *
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
-	<select id="selectAll" resultMap="memberMap">
+	<select id="selectListMember" parameterType="map" resultMap="memberMap">
 		SELECT *
-		FROM MEMBER_TB
-	</select>
-	<select id="selectLastDate" parameterType="int" resultType="String">
-		SELECT STR_TO_DATE(#{lastDate}, '%y,%m,%d')
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
-	<update id="updateLastDate" parameterType="member">
-		UPDATE MEMBER_TB SET LAST_DT=#{lastDate} 
-		WHERE MBER_ID=#{mberId}
-	</update>
 	<select id="selectById" parameterType="String" resultMap="memberMap">
 		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}
 	</select>
