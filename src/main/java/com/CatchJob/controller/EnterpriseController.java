@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.CatchJob.service.EntService;
 
 @Controller
-public class EntController {
+public class EnterpriseController {
 	
 	@Autowired
 	private EntService entService;

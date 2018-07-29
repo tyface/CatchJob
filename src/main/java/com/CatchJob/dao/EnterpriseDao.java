@@ -2,8 +2,11 @@ package com.CatchJob.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.CatchJob.model.Enterprise;
 
+@Repository
 public interface EnterpriseDao {
 
 	// 기업이름으로 찾기

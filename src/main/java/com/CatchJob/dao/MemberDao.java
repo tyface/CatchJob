@@ -3,8 +3,11 @@ package com.CatchJob.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
 import com.CatchJob.model.Member;
 
+@Repository
 public interface MemberDao {
 
 	// 회원 추가
