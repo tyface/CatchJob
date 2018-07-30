@@ -13,9 +13,6 @@ public interface MemberDao {
 	// 회원 수정
 	public int updateMember(Member member);
 
-	// 회원 삭제
-	//public int deleteMember(int mberIndex); 사용안함
-
 	// 회원 찾기
 	public Member selectOne(int mberIndex);
 

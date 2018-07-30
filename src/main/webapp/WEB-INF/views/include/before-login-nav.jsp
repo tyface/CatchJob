@@ -68,12 +68,15 @@
 </div>
 
 	<script> 
-$(document).ready(function(){
-    $("#myBtnLogin").click(function(){
-    	$("#myModalLogin").modal("show");
-    });
+function openModalLogin(){
+	 $("#myBtnLogin").click(function(){
+	    	$("#myModalLogin").modal("show");
+	    });
+}
 
-    
+$(document).ready(function(){
+	openModalLogin();
+
     $("#loginForm").on("submit",function() {
          $.ajax({
             type:"post",
@@ -81,13 +84,15 @@ $(document).ready(function(){
             data : {"mberId":$("#loginId").val(), "mberPw":$("#loginPw").val()},
 			dataType:"json",
          	success:function(data){ 
-         	   	if(data.result){
-    				alert("완료!");	
+         	   	if(data.result){	
     				$("#myModalLogin").modal("hide");
     			} else {
-    				alert("실패!");	
+    				alert("비밀번호를 다시 입력해 주세요");
     			}
-         	}
+         	},
+			error:function(request, status, error){
+				alert("아이디를 다시 입력해 주세요")
+			}
          });
          return false;
     });
