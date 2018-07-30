@@ -112,20 +112,6 @@ footer {
 <body>
 
 
-	
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">CATCH JOB</a>
-    </div>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      
-    </ul>
-  </div>
-</nav>
 
 
  <c:if test="${mberId == null}">
