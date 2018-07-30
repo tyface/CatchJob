@@ -6,9 +6,8 @@
 <html lang="en">
 <head>
 
-<%--   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/test.css">
-  <script  href="<%=request.getContextPath()%>/resources/js/test.js"></script> --%>
-
+<%--   <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/test.css">
+  <script  href="${contextPath}/resources/js/test.js"></script> --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bootstrap Theme Company Page</title>
@@ -110,18 +109,13 @@ footer {
 </style>
 </head>
 <body>
-
-
-
-
- <c:if test="${mberId == null}">
-    <%@include file="include/before-login-nav.jsp"%>
-</c:if> 
- <c:if test="${mberId != null}">
-    <%@include file="include/after-login-nav.jsp"%>
-</c:if> 
-
-
+<!-- <nav class="navbar navbar-inverse" id="navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">CATCH JOB</a>
+    </div>
+ -->
+ <%@include file="include/login-nav.jsp"%>
 
 <!-- CONTENTS -->
 	<div class="container jumbotron text-center">
@@ -144,7 +138,7 @@ footer {
 			<div class="col-sm-4">
 				<div class="thumbnail">
 				
-					<img src="<%=request.getContextPath()%>/resources/img/paris.jpg" alt="Paris" width="400" height="300">
+					<img src="${contextPath}/resources/img/paris.jpg" alt="Paris" width="400" height="300">
 					<p>
 						<strong>Paris</strong>
 					</p>
@@ -153,7 +147,7 @@ footer {
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/newyork.jpg" alt="New York" width="400" height="300">
+					<img src="${contextPath}/resources/img/newyork.jpg" alt="New York" width="400" height="300">
 					<p>
 						<strong>New York</strong>
 					</p>
@@ -162,7 +156,7 @@ footer {
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/sanfran.jpg" alt="San Francisco" width="400" height="300">
+					<img src="${contextPath}/resources/img/sanfran.jpg" alt="San Francisco" width="400" height="300">
 					<p>
 						<strong>San Francisco</strong>
 					</p>
