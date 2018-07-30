@@ -1,9 +1,11 @@
 package com.CatchJob.controller;
 
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,7 @@ public class MemberController {
 		return null;
 	}
 
-	 수정 
+	수정 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String updateForm(HttpSession session, Model model) {
 		String id = (String) session.getAttribute("userid");
