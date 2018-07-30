@@ -1,24 +1,25 @@
 package com.CatchJob.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.CatchJob.model.Member;
 
 public interface MemberDao {
 
-	public int insertOne(Member member);
+	// 회원 추가
+	public int insertMember(Member member);
 
-	public int updateOne(Member member);
+	// 회원 수정
+	public int updateMember(Member member);
 
-	public int deleteOne(int mIndex);
+	// 회원 찾기
+	public Member selectOne(int mberIndex);
 
-	public Member selectOne(int mIndex);
-
-	public List<Member> selectAll();
-	//마지막 방문일 
-	public String selectLastDate(int mIndex);
-	public void updateLastDate(Member member);
-
+	// 회원 리스트 출력
+	public List<Member> selectListMember(Map<String, String> map);
+	
+	// 회원 아이디 찾기
 	public Member selectById(String mberId);
 
 }
