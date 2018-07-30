@@ -110,11 +110,14 @@ footer {
 .modal-footer {
 	background-color: #f9f9f9;
 }
+
+#inputError{
+	color : DarkRed ;
+	font-weight: 400;
+}
 </style>
 </head>
 <body>
-
-
 
 <%-- 	<c:if test="${mberId == null}">
 		<%@include file="include/before-login-nav.jsp"%>

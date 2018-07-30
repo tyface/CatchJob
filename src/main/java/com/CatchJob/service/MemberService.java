@@ -16,5 +16,7 @@ public interface MemberService {
 	public boolean join(Member member);
 
 	public boolean updateMember(Member member);
+	
+	public Member getMemberById(String mberId);
 
 }

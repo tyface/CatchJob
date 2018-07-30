@@ -2,6 +2,8 @@ package com.CatchJob.controller;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,12 +27,11 @@ public class MemberController {
 
 	/* 로그인 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(HttpSession session, HttpServletResponse resp, HttpServletRequest req) {
-		boolean result = MemberService.login(req.getParameter("mberId"), req.getParameter("mberPw"));
-		System.out.println(req.getParameter("mberId") + req.getParameter("mberPw"));
+	public void login(HttpSession session, HttpServletResponse resp, String mberId, String mberPw) {
+		boolean result = MemberService.login(mberId, mberPw);
 		String data = "";
 		if (result) {
-			session.setAttribute("mberId", req.getParameter("mberId"));
+			session.setAttribute("mberId", mberId);
 			data = "{\"result\" : true}";
 		} else {
 			data = "{\"result\" : false}";
@@ -44,21 +45,58 @@ public class MemberController {
 
 	/* 회원가입  */
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(HttpServletRequest request, Member member) {
+	public void join(HttpServletRequest request, HttpServletResponse resp, String signUpId, String signUpPw, String signUpPwCheck) {
+		//"잘못된 형식의 이메일 주소입니다".					유효성 검사
+		//"비밀번호는 00자리 이상 입력해 주세요					유효성 검사2
+		String data = "";
+		
+		Date date = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		String to = transFormat.format(date);
+		System.out.println(to);
 
+		Member member = new Member();
+		member.setMberId(signUpId);
+		member.setMberPw(signUpPw);
+		member.setRegDate(to);
+		member.setLastDate(to);
+
+	
 		if (MemberService.join(member)) {
 			// 회원가입 성공
-			return null;
-		} else {
-			return null;
+			//"가입 시 사용한 이메일로 인증해 주세요"
+			data = "{\"result\" : true}";
+		} 
+		
+		if(!signUpPw.equals(signUpPwCheck)) {
+			data = "{\"result\" : false}";	
+		}
+			
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	/*  로그아웃  */
-	@RequestMapping(value ="/logout", method = RequestMethod.GET)
+	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("mberId");
 		return "redirect:/";
+	}
+	
+
+	/* 탈퇴  */
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(Member member) {
+		if (MemberService.updateMember(member)) {
+			// 회원탈퇴 성공
+			return null;
+		} else {
+			return null;
+		}
 	}
 
 	  /*수정 
@@ -79,23 +117,5 @@ public class MemberController {
 			return null;
 		}
 	}
-
-	 탈퇴 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteForm(HttpSession session, Model model) {
-		String id = (String) session.getAttribute("userid");
-		model.addAttribute("member", MemberService.getMemberById(id));
-
-		return null;
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(Member member) {
-		if (MemberService.updateMember(member)) {
-			// 회원탈퇴 성공
-			return null;
-		} else {
-			return null;
-		}
-	}*/
+*/
 }

@@ -19,7 +19,7 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public List<Member> getListMembers(Map<String, String> map) {
-		return memberDao.selectListMember( map);
+		return memberDao.selectListMember(map);
 	}
 
 	@Override
@@ -51,6 +51,7 @@ public class MemberServiceImp implements MemberService {
 		if (rowCount > 0) {
 			return true;
 		} else {
+			//"이미 가입된 이메일입니다"	
 			return false;
 		}
 	}
@@ -80,6 +81,11 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public Member getMember(int mberIndex) {
 		return memberDao.selectOne(mberIndex);
+	}
+
+	@Override
+	public Member getMemberById(String mberId) {
+		return memberDao.selectById(mberId);				
 	}
 
 }

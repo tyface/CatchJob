@@ -16,12 +16,9 @@
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <li><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      
     </ul>
   </div>
 </nav>
-
-
 
 <%-- 로 그 인  Login --%>
 <div class="container">
@@ -57,7 +54,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <p>Not a member? <a href="#">Sign Up</a></p>
+          <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
           <p>Forgot <a href="#">Password</a></p>
         </div>
       </div>
@@ -65,36 +62,47 @@
   </div> 
 </div>
 
-   <script> 
-$(document).ready(function(){
-	 $("#myBtnLogin").click(function(){
-         $("#myModalLogin").modal("show");
-      });
+<script>
+	$(document).ready(function() {
+		$("#myBtnLogin").click(function() {
+			$("#myModalLogin").modal("show");
+		});
+		
+		 $("#loginHide").click(function(){
+		        $("#myModalLogin").modal("hide");
+		    });
 
-    $("#loginForm").on("submit",function() {
-         $.ajax({
-            type:"post",
-            url:"${contextPath}/login",
-            data : {"mberId":$("#loginId").val(), "mberPw":$("#loginPw").val()},
-         dataType:"json",
-            success:function(data){ 
-                  if(data.result){   
-                $("#myModalLogin").modal("hide");
-                window.location.reload();
-             } else {
-                alert("비밀번호를 다시 입력해 주세요");
-             }
-            },
-         error:function(request, status, error){
-            alert("아이디를 다시 입력해 주세요")
-         }
-         });
-         return false;
-    });
-}); 
+		$("#loginForm").on("submit", function() {
+			$.ajax({
+				type : "post",
+				url : "${contextPath}/login",
+				data : {
+					"mberId" : $("#loginId").val(),
+					"mberPw" : $("#loginPw").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					if (data.result) {
+						$("#myModalLogin").modal("hide");
+						window.location.reload();
+					} else {
+						alert("비밀번호를 다시 입력해 주세요");
+					}
+				},
+				error : function() {
+					alert("아이디를 다시 입력해 주세요")
+				}
+			});
+			return false;
+		});
+		//모달 초기화
+		$('.modal').on('hidden.bs.modal', function (e) { 
+		    $(this).find('form')[0].reset() 
+		});
+	});
 </script>
 
-   <%-- 회 원 가 입 Sign Up  --%>
+	<%-- 회 원 가 입 Sign Up  --%>
    <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalSignUp" role="dialog">
@@ -107,14 +115,12 @@ $(document).ready(function(){
           <h4><span class="glyphicon glyphicon-lock"></span> Sign Up</h4>
         </div>
         
-        <div class="modal-body" style="padding:40px 50px;">
-           
+        <div class="modal-body" style="padding:40px 50px;">     
             <div class="form-group">
                <button  id="btnSignUpFacebook" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Facebook</b></button>
                 <button  id="btnSignUpGoogle" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Google</b></button>
            </div>
-        
-          <form role="form" method="post">
+          <form role="form" method="post" id="signUpForm">
             <div class="form-group">
               <label for="signUpId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
               <input type="email" class="form-control" id="signUpId" placeholder="Enter email">
@@ -122,19 +128,28 @@ $(document).ready(function(){
             <div class="form-group">
               <label for="signUpPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
               <!-- 비밀번호 -->
-              <input type="password" class="form-control" id="signUpPw" placeholder="Enter password"><br>
+              <input type="password" class="form-control" id="signUpPw" placeholder="Enter password">
+              <span style="line-height:50%"><br></span>
               <!-- 비밀번호 확인  -->
                <input type="password" class="form-control" id="signUpPwCheck" placeholder="Enter password">
             </div>
-            <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
-            </div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign UP</button>
-          </form>
+           <!-- 회원가입 실패 시 보이는 창 -->
+			<div class="form-group has-error has-feedback hidden" id="signUpFail">
+  				<div class="input-group">
+   				 <span class="input-group-addon"> 
+   			 		<span class = "glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+   			 		</span>
+  				  <input type="text" class="form-control" id="inputError" aria-describedby="inputGroupSuccess1Status"
+  			  	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
+ 				 </div>
+ 		 	</div>
+ 		 	  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
+          </form>      
         </div>
+        
         <div class="modal-footer">
-          <p>회원이십니까? <a href="#">Login</a></p>
-         
+          <p> Member? <a href="#myModalLogin" data-toggle="modal" id="signUpHide">Login</a></p>
+				
         </div>
       </div>
       
@@ -145,8 +160,42 @@ $(document).ready(function(){
 <script>
 $(document).ready(function(){
     $("#myBtnSignUp").click(function(){
-        $("#myModalSignUp").modal();
+        $("#myModalSignUp").modal("show");
     });
+    
+    $("#signUpHide").click(function(){
+        $("#myModalSignUp").modal("hide");
+    });
+    
+	$("#signUpForm").on("submit", function() {
+		$.ajax({
+			type : "post",
+			url : "${contextPath}/join",
+			data : {
+				"signUpId" : $("#signUpId").val(),
+				"signUpPw" : $("#signUpPw").val(),
+				"signUpPwCheck" : $("#signUpPwCheck").val()
+			}, 
+			dataType : "json",
+			success : function(data) {
+				if (data.result) {
+					// 회원가입 성공
+					alert("해당 이메일로 인증 메일이 발송되었습니다");
+					$("#myModalSignUp").modal("hide");
+					window.location.reload();
+				} else {
+					//비밀번호가 다릅니다.
+					$("#signUpFail").removeClass('hidden');
+				}
+			},
+			error : function() {
+				//이미 가입된 이메일입니다
+				$("#signUpFail").removeClass('hidden');
+			}
+		});
+		return false;
+	});
+	
 });
 </script>   
 </c:if>
@@ -154,7 +203,6 @@ $(document).ready(function(){
 <!-- 로그인 후! -->
 <c:if test="${mberId != null}">
    
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
