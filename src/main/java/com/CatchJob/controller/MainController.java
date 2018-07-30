@@ -34,13 +34,31 @@ public class MainController {
 	@RequestMapping(value = "/modals", method = RequestMethod.GET)
 	public String modals() {
 		
-		return "modals";
+		return "source/modals";
 	}
 
 	@RequestMapping(value = "/input", method = RequestMethod.GET)
-	public String reply() {
+	public String input() {
 		
 		return "source/input";
+	}
+	
+	@RequestMapping(value = "/button", method = RequestMethod.GET)
+	public String button() {
+		
+		return "source/button";
+	}
+	
+	@RequestMapping(value = "/star", method = RequestMethod.GET)
+	public String star() {
+		
+		return "source/star";
+	}
+	
+	@RequestMapping(value = "/table", method = RequestMethod.GET)
+	public String table() {
+		
+		return "source/table";
 	}
 	
 	@RequestMapping(value = "/interview", method = RequestMethod.GET)

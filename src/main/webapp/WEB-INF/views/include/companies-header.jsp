@@ -110,12 +110,18 @@ footer {
 	background-color: #f2f2f2;
 	padding: 25px;
 }
+
+.btn-lg{
+	height:70px;
+	padding-left: 50px;
+	padding-right: 50px; 
+}
 </style>
 </head>
 
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
 
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<!-- <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">CATCH JOB</a>
@@ -130,4 +136,6 @@ footer {
 		</ul>
 	</div>
 	</nav>
-    
+     -->
+     
+     <%@include file="login-nav.jsp"%>
