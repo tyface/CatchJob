@@ -1,17 +1,18 @@
 package com.CatchJob.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.NationalPension;
 
-public interface EntService {
+public interface EnterpriseService {
 	// 검색한 기업 리스트 출력
-	public List<Enterprise> searchEntList(String entName);
+	public List<Enterprise> searchEntList(Map<String, String> data);
 
 	// 기업정보 : 검색 후 기업 선택(출력 : 주소, 인원, 업력, 입사, 퇴사, 총매출액, 1인당 매출액, 매출액 대비 입금금액, 올해입사자
 	// 평균연봉, 평균연봉..)
-	public Enterprise selectEnt(int entIndex);
+	public Enterprise getEntInfo(int entIndex);
 
 	// 그래프 - 인원(국민연금 총 가입자수,국민연금 신규가입자수,국민연금 가입해지자수 반환)
 	public NationalPension empCountGraph(int entIndex);

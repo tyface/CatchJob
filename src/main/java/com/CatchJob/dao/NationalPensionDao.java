@@ -13,11 +13,11 @@ import com.CatchJob.model.Salary;
 public interface NationalPensionDao {
 	
 	// 특정기업 국민연금 납입내역 리스트 출력
-	public List<NationalPension> selectListNPN(Map<String, String> map);
+	public List<NationalPension> selectListNPN(Map<String, String> data);
 
 	// 특정기업 인사정보 리스트 출력
-	public List<HumanResource> selectListHR(Map<String, String> map);
+	public List<HumanResource> selectListHR(Map<String, String> data);
 	
 	// 특정기업 연봉정보 리스트 출력
-	public List<Salary> selectListSalary(Map<String, String> map);
+	public List<Salary> selectListSalary(Map<String, String> data);
 }

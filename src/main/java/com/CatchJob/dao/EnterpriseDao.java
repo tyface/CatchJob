@@ -1,6 +1,7 @@
 package com.CatchJob.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,7 @@ import com.CatchJob.model.Enterprise;
 public interface EnterpriseDao {
 
 	// 기업이름으로 찾기
-	public List<Enterprise> selectListEnt(String entName);
+	public List<Enterprise> selectListEnt(Map<String, String> data);
 
 	// 기업 찾기
 	public Enterprise selectEnt(int entIndex);

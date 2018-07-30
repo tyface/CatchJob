@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CatchJob.dao.EnterpriseDao">
+	
+	<select id="selectListEnt" resultMap="entMap">
+		SELECT    e.*, n.NPN_NW_SBSCRBER_CNT, n.NPN_SCBT_CNT
+		FROM 	  ENTERPRISE_TB e
+		LEFT JOIN NPN_DTLS_TB n
+		ON 		  e.ENT_IDX = n.ENT_IDX
+		WHERE     n.PAY_YM = (	SELECT 	  MAX(n2.PAY_YM)
+								FROM 	  ENTERPRISE_TB e2
+								LEFT JOIN NPN_DTLS_TB n2
+								ON 		  e2.ENT_IDX = n2.ENT_IDX
+								WHERE     e2.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
+								AND       e.ENT_IDX = e2.ENT_IDX
+								GROUP BY  e2.ent_idx )
+		ORDER BY  LENGTH(ENT_NM) ASC, ENT_NM ASC;
+	</select>
+
+
+	<resultMap type="enterprise" id="entMap">
+		<result property="entIndex" column="ENT_IDX" />
+		<result property="entName" column="ENT_NM" />
+		<result property="entBizRegNum" column="ENT_BIZR_NO" />
+		<result property="industryCode" column="ENT_INDUTY_CD" />
+		<result property="industryName" column="ENT_INDUTY_NM" />
+		<result property="entStyleType" column="ENT_STLE_TYPE" />
+		<result property="entSubscriberFlag" column="ENT_SBSCRB_ST" />
+		<result property="entFlag" column="ENT_FL" />
+		<result property="entFoundationDate" column="ENT_FOND_YMD" />
+		<result property="entRoadAddrName" column="ENT_ROADADDR_NM" />
+		<result property="employeeCount" column="ENT_EMPLOYEE_CNT" />
+		<result property="entranceCount" column="NPN_NW_SBSCRBER_CNT" />
+		<result property="retirementCount" column="NPN_SCBT_CNT" />
+		<result property="evaluationAvg" column="EVALUATION_AVG" />
+	</resultMap>
+</mapper>
+

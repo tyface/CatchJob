@@ -17,10 +17,10 @@ public interface InterviewDao {
 	public int updateInterview(Interview interview);
 
 	// 회원 면접후기 찾기
-	public List<Interview> selectListByMberIndex(Map<String, String> map);
+	public List<Interview> selectListByMberIndex(Map<String, String> data);
 
 	// 기업 면접후기 찾기
-	public List<Interview> selectListByEntIndex(Map<String, String> map);
+	public List<Interview> selectListByEntIndex(Map<String, String> data);
 
 	// 면접후기 삭제
 	// public int deleteInterview(int mberIndex, int EntIndex); TODO 사용안함

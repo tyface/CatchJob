@@ -18,10 +18,10 @@ public interface ReviewDao {
 	public int updateReview(Review review);
 
 	// 기업 리뷰 출력 - 질문 식별번호에 관련된 리뷰 출력
-	public List<Review> selectListByEntIndex(Map<String, String> map);
+	public List<Review> selectListByEntIndex(Map<String, String> data);
 
 	// 회원 리뷰 출력 - 질문 식별번호에 관련된 리뷰 출력
-	public List<Review> selectListByMberIndex(Map<String, String> map);
+	public List<Review> selectListByMberIndex(Map<String, String> data);
 	
 	// 리뷰 질문 출력
 	public List<String> selectAllQuestion();

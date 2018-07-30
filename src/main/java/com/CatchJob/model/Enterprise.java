@@ -14,7 +14,7 @@ public class Enterprise {
 	private String entFoundationDate; // 설립일
 	private String entRoadAddrName; // 사업장도로명주소 TODO 사업장 소재지로 변경(시군구 까지 표출)
 	private int employeeCount; // 사원수(월단위 갱신)
-	private int EntranceCount; // 입사자수(년간)
+	private int entranceCount; // 입사자수(년간)
 	private int retirementCount; // 퇴사자수(년간)
 	private float evaluationAvg; // 기업 평가점수(리뷰등록마다 갱신) TODO
 
@@ -107,11 +107,11 @@ public class Enterprise {
 	}
 
 	public int getEntranceCount() {
-		return EntranceCount;
+		return entranceCount;
 	}
 
 	public void setEntranceCount(int entranceCount) {
-		EntranceCount = entranceCount;
+		this.entranceCount = entranceCount;
 	}
 
 	public int getRetirementCount() {
@@ -136,7 +136,7 @@ public class Enterprise {
 				+ ", industryCode=" + industryCode + ", industryName=" + industryName + ", entStyleType=" + entStyleType
 				+ ", entSubscriberFlag=" + entSubscriberFlag + ", entFlag=" + entFlag + ", entFoundationDate="
 				+ entFoundationDate + ", entRoadAddrName=" + entRoadAddrName + ", employeeCount=" + employeeCount
-				+ ", EntranceCount=" + EntranceCount + ", retirementCount=" + retirementCount + ", evaluationAvg="
+				+ ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount + ", evaluationAvg="
 				+ evaluationAvg + "]";
 	}
 
