@@ -36,6 +36,10 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/dist/css/skins/_all-skins.min.css">
+	
+	<!-- bootstrap datepicker -->
+<link rel="stylesheet"	href="${contextPath}/resources/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+	
 
 <style>
 body {

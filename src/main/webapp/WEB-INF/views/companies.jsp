@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="contextPath" value="<%= request.getContextPath()%>"></c:set> 
  
 <%@include file="include/companies-header.jsp"%>
 
@@ -1285,37 +1287,431 @@
 		</div>
 	</div>
 
+
+  
+  
+
+<%-- 
+<script src="<%=request.getContextPath()%>/resources/bower_components/chart.js/Chart.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/companies.js"></script> --%>
+<!-- jQuery 3 -->
+<script src="${contextPath}/resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="${contextPath}/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- ChartJS -->
+<script src="${contextPath}/resources/bower_components/chart.js/Chart.js"></script>
+<!-- FastClick -->
+<script src="${contextPath}/resources/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${contextPath}/resources/dist/js/demo.js"></script>
+
+<script>
+  $(function () {
+    /* ChartJS
+     * -------
+     * Here we will create a few charts using ChartJS
+     */
+
+    //--------------
+    //- AREA CHART -
+    //--------------
+
+    // Get context with jQuery - using jQuery's .get() method.
+    var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+    // This will get the first returned node in the jQuery collection.
+    var areaChart       = new Chart(areaChartCanvas)
+
+    var areaChartData = {
+      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label               : 'Electronics',
+          fillColor           : 'rgba(210, 214, 222, 1)',
+          strokeColor         : 'rgba(210, 214, 222, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label               : 'Digital Goods',
+          fillColor           : 'rgba(60,141,188,0.9)',
+          strokeColor         : 'rgba(60,141,188,0.8)',
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : [28, 48, 40, 19, 86, 27, 90]
+        }
+      ]
+    }
+
+    var areaChartOptions = {
+      //Boolean - If we should show the scale at all
+      showScale               : true,
+      //Boolean - Whether grid lines are shown across the chart
+      scaleShowGridLines      : false,
+      //String - Colour of the grid lines
+      scaleGridLineColor      : 'rgba(0,0,0,.05)',
+      //Number - Width of the grid lines
+      scaleGridLineWidth      : 1,
+      //Boolean - Whether to show horizontal lines (except X axis)
+      scaleShowHorizontalLines: true,
+      //Boolean - Whether to show vertical lines (except Y axis)
+      scaleShowVerticalLines  : true,
+      //Boolean - Whether the line is curved between points
+      bezierCurve             : true,
+      //Number - Tension of the bezier curve between points
+      bezierCurveTension      : 0.3,
+      //Boolean - Whether to show a dot for each point
+      pointDot                : false,
+      //Number - Radius of each point dot in pixels
+      pointDotRadius          : 4,
+      //Number - Pixel width of point dot stroke
+      pointDotStrokeWidth     : 1,
+      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+      pointHitDetectionRadius : 20,
+      //Boolean - Whether to show a stroke for datasets
+      datasetStroke           : true,
+      //Number - Pixel width of dataset stroke
+      datasetStrokeWidth      : 2,
+      //Boolean - Whether to fill the dataset with a color
+      datasetFill             : true,
+      //String - A legend template
+   
+      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio     : true,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive              : true
+    }
+
+    //Create the line chart
+    areaChart.Line(areaChartData, areaChartOptions)
+
+    //-------------
+    //- LINE CHART -
+    //--------------
+    var lineChartCanvas          = $('#lineChart').get(0).getContext('2d')
+    var lineChart                = new Chart(lineChartCanvas)
+    var lineChartOptions         = areaChartOptions
+    lineChartOptions.datasetFill = false
+    lineChart.Line(areaChartData, lineChartOptions)
+
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieChart       = new Chart(pieChartCanvas)
+    var PieData        = [
+      {
+        value    : 700,
+        color    : '#f56954',
+        highlight: '#f56954',
+        label    : 'Chrome'
+      },
+      {
+        value    : 500,
+        color    : '#00a65a',
+        highlight: '#00a65a',
+        label    : 'IE'
+      },
+      {
+        value    : 400,
+        color    : '#f39c12',
+        highlight: '#f39c12',
+        label    : 'FireFox'
+      },
+      {
+        value    : 600,
+        color    : '#00c0ef',
+        highlight: '#00c0ef',
+        label    : 'Safari'
+      },
+      {
+        value    : 300,
+        color    : '#3c8dbc',
+        highlight: '#3c8dbc',
+        label    : 'Opera'
+      },
+      {
+        value    : 100,
+        color    : '#d2d6de',
+        highlight: '#d2d6de',
+        label    : 'Navigator'
+      }
+    ]
+    var pieOptions     = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke    : true,
+      //String - The colour of each segment stroke
+      segmentStrokeColor   : '#fff',
+      //Number - The width of each segment stroke
+      segmentStrokeWidth   : 2,
+      //Number - The percentage of the chart that we cut out of the middle
+      percentageInnerCutout: 50, // This is 0 for Pie charts
+      //Number - Amount of animation steps
+      animationSteps       : 100,
+      //String - Animation easing effect
+      animationEasing      : 'easeOutBounce',
+      //Boolean - Whether we animate the rotation of the Doughnut
+      animateRotate        : true,
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale         : false,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive           : true,
+      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio  : true,
+      //String - A legend template
+    
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    pieChart.Doughnut(PieData, pieOptions)
+
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas                   = $('#barChart').get(0).getContext('2d')
+    var barChart                         = new Chart(barChartCanvas)
+    var barChartData                     = areaChartData
+    barChartData.datasets[1].fillColor   = '#00a65a'
+    barChartData.datasets[1].strokeColor = '#00a65a'
+    barChartData.datasets[1].pointColor  = '#00a65a'
+    var barChartOptions                  = {
+      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+      scaleBeginAtZero        : true,
+      //Boolean - Whether grid lines are shown across the chart
+      scaleShowGridLines      : true,
+      //String - Colour of the grid lines
+      scaleGridLineColor      : 'rgba(0,0,0,.05)',
+      //Number - Width of the grid lines
+      scaleGridLineWidth      : 1,
+      //Boolean - Whether to show horizontal lines (except X axis)
+      scaleShowHorizontalLines: true,
+      //Boolean - Whether to show vertical lines (except Y axis)
+      scaleShowVerticalLines  : true,
+      //Boolean - If there is a stroke on each bar
+      barShowStroke           : true,
+      //Number - Pixel width of the bar stroke
+      barStrokeWidth          : 2,
+      //Number - Spacing between each of the X value sets
+      barValueSpacing         : 5,
+      //Number - Spacing between data sets within X values
+      barDatasetSpacing       : 1,
+      //String - A legend template
+   
+      //Boolean - whether to make the chart responsive
+      responsive              : true,
+      maintainAspectRatio     : true
+    }
+
+    barChartOptions.datasetFill = false
+    barChart.Bar(barChartData, barChartOptions)
+  })
+</script>
+
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">면접후기 작성</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
+ <div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">면접후기 작성</h4>
+					</div>
+					<div class="modal-body ">
+
+						<!-- 기업명  -->
+						<div class="form-group">
+							<label>기업명</label> <select class="form-control">
+								<option>삼성전자</option>
+								<option></option>
+								<option></option>
+								<option></option>
+							</select>
+						</div>
+
+
+						<!-- 면접경험 radio-->
+						<div class="form-group">
+							<label>면접 경험 </label>
+							<div class="radio">
+								<label> <input type="radio" name="optionsRadios"
+									id="optionsRadios1" value="option1" checked>부정적
+								</label>
+							</div>
+							<div class="radio">
+								<label> <input type="radio" name="optionsRadios"
+									id="optionsRadios2" value="option2">보통
+								</label>
+							</div>
+							<div class="radio">
+								<label> <input type="radio" name="optionsRadios"
+									id="optionsRadios3" value="option3">긍정적
+								</label>
+							</div>
+						</div>
+
+						<!-- 면접에서 채용까지의 과정 요약 -->
+						<div class="form-group">
+							<label>면접에서 채용까지의 과정 요약</label>
+							<textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+						</div>
+						<!-- 면접질문 입력하기 -->
+						<div class="form-group">
+							<label>면접질문 입력하기</label>
+							<textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+						</div>
+						<!-- 면접에 대한 답변 -->
+						<div class="form-group">
+							<label>작성한 면접질문에 대한 답변을 입력하세요.</label>
+							<textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+						</div>
+						
+						<!-- 면접난이도 -->
+						<div class="form-group">
+							<label>면접난이도</label> <select class="form-control">
+								<option>매우 쉬움</option>
+								<option>쉬움</option>
+								<option>보통</option>
+								<option>어려움</option>
+								<option>매우 어려움</option>
+							</select>
+						</div>
+						<!-- 면접결과 -->
+						<div class="form-group">
+							<label>이 기업에 합격하셨나요?</label> <select class="form-control">
+								<option>합격</option>
+								<option>불합격</option>
+								<option>대기중</option>
+								<option>합격했으나 취업하지 않음</option>
+
+							</select>
+						</div>
+						<!-- 면접경로 -->
+						<div class="form-group">
+							<label>면접경로</label> <select class="form-control">
+								<option>공채</option>
+								<option>온라인지원</option>
+								<option>직원추천</option>
+								<option>헤드헌터</option>
+								<option>학교 취업지원센터</option>
+								<option>기타</option>
+							</select>
+						</div>						
+						
+							<!--면접일자 -->
+						<div class="form-group">
+							<label>면접일자</label>
+
+							<div class="input-group date">
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</div>
+								<input type="text" class="form-control pull-right"
+									id="datepicker">
+							</div>
+						</div>
+					<!-- 면접일자/발표시기  -->
+						<div class="form-group">
+							<label>발표시기</label> 
+							<div class="row">
+							<div class="col-sm-11">
+								<input type="text" class="form-control"	placeholder="면접 결과 발표까지 걸린 시간 " >							
+							</div>
+							<div  class="col-sm-1">
+								<p>일</p>
+							</div>
+							</div>
+						</div>
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">제출</button>
         </div>
       </div>
       
     </div>
   </div>
-  
-  
-  <script>
+<script>
 $(document).ready(function(){
     $("#myBtn").click(function(){
         $("#myModal").modal();
     });
 });
 </script>
-<script src="<%=request.getContextPath()%>/resources/bower_components/chart.js/Chart.js"></script>
-<script src="<%=request.getContextPath()%>/resources/js/companies.js"></script>
+<script src="${contextPath}/resources/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="${contextPath}/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="${contextPath}/resources/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="${contextPath}/resources/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="${contextPath}/resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="${contextPath}/resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="${contextPath}/resources/bower_components/moment/min/moment.min.js"></script>
+<script src="${contextPath}/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="${contextPath}/resources/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="${contextPath}/resources/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="${contextPath}/resources/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll -->
+<script src="${contextPath}/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="${contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
+<!-- FastClick -->
+<script src="${contextPath}/resources/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="${contextPath}/resources/dist/js/demo.js"></script>
+<!-- Page script -->
+<script>
+  $(function () {
+
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+  })
+</script>
+
+
+
+
+
 
 <%@include file="include/companies-footer.jsp"%>

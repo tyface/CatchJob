@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,6 +27,7 @@ public class MemberController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpSession session, HttpServletResponse resp, HttpServletRequest req) {
 		boolean result = MemberService.login(req.getParameter("mberId"), req.getParameter("mberPw"));
+		System.out.println(req.getParameter("mberId") + req.getParameter("mberPw"));
 		String data = "";
 		if (result) {
 			session.setAttribute("mberId", req.getParameter("mberId"));
@@ -42,12 +42,7 @@ public class MemberController {
 		}
 	}
 
-	/* 회원가입 
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String joinForm() {
-		return null;
-	}
-
+	/* 회원가입  */
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(HttpServletRequest request, Member member) {
 
@@ -59,14 +54,14 @@ public class MemberController {
 		}
 	}
 
-	 로그아웃 
-	@RequestMapping("/logout")
+	/*  로그아웃  */
+	@RequestMapping(value ="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		session.removeAttribute("userid");
-		return null;
+		session.removeAttribute("mberId");
+		return "redirect:/";
 	}
 
-	수정 
+	  /*수정 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String updateForm(HttpSession session, Model model) {
 		String id = (String) session.getAttribute("userid");
