@@ -33,9 +33,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="regDate" column="REG_DT" />
 		<result property="lastDate" column="LAST_DT" />
 	</resultMap>
-<<<<<<< HEAD
-	
+
 </mapper>
-=======
-</mapper>
->>>>>>> 5be02a092fa4aa7d19b512d07f7ff783a74eaac1
+
