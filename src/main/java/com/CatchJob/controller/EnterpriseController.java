@@ -25,7 +25,7 @@ public class EnterpriseController {
 	}
 
 	@RequestMapping(value = "/search")
-	public String entList(String keyword, Model model) {
+	public String getEntList(String keyword, Model model) {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);
 		model.addAttribute("entList", entService.searchEntList(data));

@@ -14,7 +14,7 @@ import com.CatchJob.service.ReviewService;
 public class ReviewController {
 
 	@Autowired
-	ReviewService reviewService;
+	private ReviewService reviewService;
 
 	// 리뷰 등록
 	@RequestMapping(value = "/review", method = RequestMethod.POST)
