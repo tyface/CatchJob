@@ -24,7 +24,7 @@
 			<div class="col-sm-4">
 				<div class="thumbnail">
 
-					<img src="<%=request.getContextPath()%>/resources/img/paris.jpg"
+					<img src="${pageContext.request.contextPath}/resources/img/paris.jpg"
 						alt="Paris" width="400" height="300">
 					<p>
 						<strong>Paris</strong>
@@ -34,7 +34,7 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/newyork.jpg"
+					<img src="${pageContext.request.contextPath}/resources/img/newyork.jpg"
 						alt="New York" width="400" height="300">
 					<p>
 						<strong>New York</strong>
@@ -44,7 +44,7 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="thumbnail">
-					<img src="<%=request.getContextPath()%>/resources/img/sanfran.jpg"
+					<img src="${pageContext.request.contextPath}/resources/img/sanfran.jpg"
 						alt="San Francisco" width="400" height="300">
 					<p>
 						<strong>San Francisco</strong>
