@@ -25,10 +25,10 @@ public class MainController {
 	
 	
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String main2() {
+	@RequestMapping(value = "/nav", method = RequestMethod.GET)
+	public String nav() {
 		
-		return "test2_original";
+		return "nav";
 	}
 
 	@RequestMapping(value = "/modals", method = RequestMethod.GET)
