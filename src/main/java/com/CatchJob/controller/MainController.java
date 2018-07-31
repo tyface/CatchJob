@@ -49,6 +49,12 @@ public class MainController {
 		return "source/button";
 	}
 	
+	@RequestMapping(value = "/follow", method = RequestMethod.GET)
+	public String follow() {
+		
+		return "source/follow";
+	}
+	
 	@RequestMapping(value = "/star", method = RequestMethod.GET)
 	public String star() {
 		

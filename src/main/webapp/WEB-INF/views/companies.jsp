@@ -12,16 +12,22 @@
 
 	<h1 style="padding-top: 50px">삼성전자</h1>
 
-	 <!--  <a class="btn btn-app" id="btnFollow">
-                <i class="fa fa-heart-o"></i> 팔로우
-                <span class="glyphicon glyphicon-heart" style="color:red"></span>
-      </a> -->
+<!--       <div class="mailbox-star">
+      	<a href="#"><i class="fa fa-star text-yellow"></i></a>
+      </div>
+       -->
       
-      <a class="btn btn-app"  id="btnFollow">
-               <!--  <i class="fa fa-heart-o"></i> 팔로우 -->
+       <div class="btn btn-app mailbox-star"  id="btnFollow">
+         <a href="#" ><i class="fa fa-heart" style="color:red; font-size: 20px"></i></a>
+         <p>팔로우</p>
+      </div>
+      
+      
+<!--       <a class="btn btn-app"  id="btnFollow">
+                <i class="fa fa-heart-o"></i> 팔로우
                 <span class="glyphicon glyphicon-heart" style="color:gray"  id="follow" ></span>팔로우
       </a>
-
+ -->
 
 	<div style="float: right">
 		<button type="button" class="btn btn-default ">기업리뷰작성</button>
@@ -374,10 +380,20 @@
 									</tbody>
 								</table>
 
-								<p class="margin">
-									Small
-									<code>별점별점 별점 힘들면..</code>
-								</p>
+						
+								<div>
+								<span class="star-input">
+								  <span class="input" id="star">
+								    <input type="radio" name="star-input" id="p2" value="1"><label for="p2">1</label>
+								    <input type="radio" name="star-input" id="p4" value="2"><label for="p4">2</label>
+								    <input type="radio" name="star-input" id="p6" value="3"><label for="p6">3</label>
+								    <input type="radio" name="star-input" id="p8" value="4"><label for="p8">4</label>
+								    <input type="radio" name="star-input" id="p10" value="5"><label for="p10">5</label>
+
+								  </span>
+								  <output for="star-input"><b>0</b> 점</output>
+								</span>
+								</div>
 
 								<div class="input-group input-group-sm">
 									<input type="text" class="form-control"
@@ -1826,6 +1842,69 @@
 			$("#indPer").css('width', '60%');
 			$("#toEntPer").css('width', '30%');
 		});
+		
+		
+		
+	    $(".mailbox-star").click(function (e) {
+	        e.preventDefault();
+	        //detect type
+	        var $this = $(this).find("a > i");
+	        var glyph = $this.hasClass("glyphicon");
+	        var fa = $this.hasClass("fa");
+
+	        //Switch states
+	        if (glyph) {
+	          $this.toggleClass("glyphicon-heart");
+	          $this.toggleClass("glyphicon-heart-empty");
+	        }
+
+	        if (fa) {
+	          $this.toggleClass("fa-heart");
+	          $this.toggleClass("fa-heart-o");
+	        }
+	      });
+	    
+	    
+	    
+	    
+	    
+	    
+	    /* 별점 */
+	  //star rating
+	    var starRating = function(){
+	      var $star = $(".star-input"),
+	          $result = $star.find("output>b");
+	      $(document)
+	        .on("focusin", ".star-input>.input", function(){
+	        $(this).addClass("focus");
+	      })
+	        .on("focusout", ".star-input>.input", function(){
+	        var $this = $(this);
+	        setTimeout(function(){
+	          if($this.find(":focus").length === 0){
+	            $this.removeClass("focus");
+	          }
+	        }, 100);
+	      })
+	        .on("change", ".star-input :radio", function(){
+	        //여기여기서 값 넘겨주기 !!
+	        alert($(this).next().text())
+	        $result.text($(this).next().text());
+	      })
+	        .on("mouseover", ".star-input label", function(){
+	        $result.text($(this).text());
+	      })
+	        .on("mouseleave", ".star-input>.input", function(){
+	        var $checked = $star.find(":checked");
+	        if($checked.length === 0){
+	          $result.text("0");
+	        } else {
+	          $result.text($checked.next().text());
+	        }
+	      });
+	    };
+	    starRating();
+	    /* 별점END */
 	});
 </script>
 <script
