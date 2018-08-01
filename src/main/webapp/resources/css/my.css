@@ -1,58 +1,6 @@
-/*     layout    */
-* {
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-}
-
-html {
-	height: 100%;
-}
-
-body {
-	margin: 0;
-	height: 100%;
-}
-
-#wrap {
-	min-height: 100%;
-	position: relative;
-	padding-bottom: 19px; /* footer height */
-}
-
-header {
-/* 	background-color: #EFEFEF; */
-}
-
-section {
-/* 	background-color: #AFAFAF; */
-}
-
-ol {
-	margin: 0;
-}
-
-footer {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-/* 	color: white; */
-/* 	background-color: #333333; */
-}
-
-
-
-
-
-
-
-
-
-
-/*//////////////////////*/
 /* 사용용도 정의 안된 css */
-.jumbotron {
+/* .jumbotron {
+	background-color: #f4511e;
 	color: #fff;
 	padding: 100px 25px;
 }
@@ -66,12 +14,12 @@ footer {
 }
 
 .logo-small {
-	color: #dc1010cf;
+	color: #f4511e;
 	font-size: 50px;
 }
 
 .logo {
-	color: #dc1010cf;
+	color: #f4511e;
 	font-size: 200px;
 }
 
@@ -89,15 +37,15 @@ footer {
 
 .carousel-control.right, .carousel-control.left {
 	background-image: none;
-	color: #dc1010cf;
+	color: #f4511e;
 }
 
 .carousel-indicators li {
-	border-color: #dc1010cf;
+	border-color: #f4511e;
 }
 
 .carousel-indicators li.active {
-	background-color: #dc1010cf;
+	background-color: #f4511e;
 }
 
 .item p {
@@ -141,8 +89,38 @@ footer {
 	background-color: #f9f9f9;
 }
 
-#inputError {
-	color: DarkRed;
+#inputError{
+	color : DarkRed ;
 	font-weight: 400;
-}
+} */
 /* 사용용도 정의 안된 css */
+
+
+/* 제목부분 */
+ .jumbotron {
+      background-color: #f4511e;
+      color: #fff;
+      padding: 100px 25px;
+      font-family: Montserrat, sans-serif;
+  }
+
+/* 기업 순위 옆으로 움직이는거 */
+  .carousel-control.right, .carousel-control.left {
+      background-image: none;
+      color: #f4511e;
+  }
+  .carousel-indicators li {
+      border-color: #f4511e;
+  }
+  .carousel-indicators li.active {
+      background-color: #f4511e;
+  }
+/* 기업순위 옆으로 움직이는 거 중... 아래 공백을 위해 필요한 것. (margin 때문에 필요함 아니면 따로 값 줘도 됨) */
+  .item h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      font-weight: 400;
+      font-style: italic;
+      margin: 70px 0;
+  }
+

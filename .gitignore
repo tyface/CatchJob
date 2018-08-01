@@ -1,4 +1,4 @@
-
+﻿
 # Created by https://www.gitignore.io/api/java,eclipse
 
 ### Eclipse ###
@@ -99,4 +99,3 @@ hs_err_pid*
 .gradle/
 *.MF
 rebel.xml
-classdia.ucls

@@ -1,83 +1,38 @@
+ body {
+      position: relative;
+  }
+  .affix {
+      top: 20px;
+      z-index: 9999 !important;
+  }
+  div.col-sm-9 div {
+      height: 250px;
+      font-size: 28px;
+  }
+  #section1 {padding: 50px 20px 20px 20px;color: #fff; background-color: #1E88E5;}
+  #section2 {padding: 50px 20px 20px 20px;color: #fff; background-color: #673ab7;}
+  #section3 {padding: 50px 20px 20px 20px;color: #fff; background-color: #ff9800;}
+  #section41 {padding: 50px 20px 20px 20px;color: #fff; background-color: #00bcd4;}
+  #section42 {padding: 50px 20px 20px 20px;color: #fff; background-color: #009688;}
 
-body {
-	position: relative;
-}
-
-.affix {
-	top: 20px;
-	z-index: 9999 !important;
-}
-
-div.col-sm-9 div {
-	/*  height: 250px;  */
-	font-size: 28px;
-}
-
-#section1 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #f4511e;
-}
-
-#section2 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ff9800;
-}
-
-#section3 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #00bcd4;
-}
-
-#section41 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #009688;
-}
-
-#section42 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #009688;
-}
-
-@media screen and (max-width: 810px) {
-	#section1, #section2, #section3, #section41, #section42 {
-		margin-left: 150px;
+  
+/*    @media screen and (max-width: 810px) {
+  #section1, #section2, #section3, #section41, #section42  {
+      margin-left: 150px;
+  } 
+  } */
+  
+	/* 팔로우  */
+	.follow{
+		color: gray;
+		background-color: white;
 	}
-}
 
-.logo-small {
-	color: #f4511e;
-	font-size: 50px;
-	width: 50px;
-}
-
-.logo {
-	color: #f4511e;
-	font-size: 200px;
-}
-
-.font-gray {
-	color: #5D5D5D;
-}
-footer {
-	background-color: #f2f2f2;
-	padding: 25px;
-}
-
-.btn-lg{
-	height:70px;
-	padding-left: 50px;
-	padding-right: 50px; 
-}
-
-
-
-
-/* 별점 */
+	.following{
+	
+		color: red;
+	}
+	/* 별점 ----------------------------------- */
 .star-input>.input,
 .star-input>.input>label:hover,
 .star-input>.input>input:focus+label,
