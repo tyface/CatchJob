@@ -4,26 +4,27 @@
 <jsp:include page="include/header.jsp" flush="true"/> 
 
 <script src="${pageContext.request.contextPath}/resources/bower_components/chart.js/Chart.js"></script>
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
+
 <script	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/enterprise.css" rel="stylesheet" >
 
 
 
+<div class="container module-main"  style="background-color:white;color:#fff;height:220px;">
 
-<div class="container-fluid" style="background-color:#2196F3;color:#fff;height:220px;">
-
-	<h1 style="padding-top: 50px">삼성전자</h1>
+	<h1 style="padding-top: 50px; color : #2196F3; ">삼성전자</h1>
 
       
        <div class="btn btn-app follow"  id="btnFollow" onclick="classToggle()">
-         <span class="glyphicon glyphicon-heart"></span> <p>팔로우</p>
+         <span class="glyphicon glyphicon-heart" style="font-size: 25px"></span> <p>팔로우</p>
       </div>
       
       
 
 	<div style="float: right">
-		<button type="button" class="btn btn-default ">기업리뷰작성</button>
-		<button type="button" class="btn btn-default" id="myBtn2">면접후기
+		<button type="button" class="btn btn-info ">기업리뷰작성</button>
+		<button type="button" class="btn btn-info" id="myBtn2">면접후기
 	</div>
 
 
@@ -31,25 +32,34 @@
 <br>
 
 
-<div class="container" >
+<div class="container " >
 	<div class="row" >
-		<nav class="col-sm-2" id="myScrollspy" >
+		<nav class="col-sm-1" id="myScrollspy" >
 	
 			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">	
 				<li style="height: 30px"></li>
-				<li><a href="#section1"><span
-						class="glyphicon glyphicon-bookmark  logo-small"></span>
-						<p>기업정보</p></a></li>
-				<li><a href="#section2"><span
-						class="glyphicon glyphicon-file logo-small"></span>
+				<li><a href="#section1">
+					<!-- <span class="glyphicon glyphicon-bookmark  logo-small" style="font-size: 50px"></span> -->
+					<span class="fa fa-building logo-small" ></span>
+		<!-- 			<span class="fa fa-building-o logo-small" ></span>
+					<span class="fa  fa-paw logo-small" ></span>
+					<span class="fa  fa-paw-o logo-small" ></span> -->
+					
+					<p>기업정보</p></a></li>
+				<li><a href="#section2">
+					<!-- <span class="glyphicon glyphicon-file logo-small"></span> -->
+					<span class="fa fa-weixin logo-small"></span>
 						<p>기업리뷰</p></a></li>
-				<li><a href="#section3"><span
-						class="glyphicon glyphicon-pencil logo-small"></span>
-						<p>면접후기</p></a></li>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"><span
-						class="glyphicon glyphicon-stats logo-small"></span>
+				<li><a href="#section3">
+					<!-- <span class="glyphicon glyphicon-pencil logo-small"></span> -->
+					<span class="fa fa-file-text logo-small"></span>
+					
+					<p>면접후기</p></a></li>
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					<!-- <span class="glyphicon glyphicon-stats logo-small"></span> -->
+					<span class="fa fa-line-chart logo-small" ></span>
 						<p>월별그래프</p> <span class="caret"></span></a>
+
 					<ul class="dropdown-menu">
 						<li><a href="#section41">월별그래프_평균급여</a></li>
 						<li><a href="#section42">월별그래프_인원</a></li>
@@ -60,9 +70,11 @@
 		
 		
 		
-		<div class="col-sm-10" style="background-color: white;">
+		<div class="col-sm-11" >
 			<!-- 기업정보//////////////////////////////////////////////////////////////////////////////// -->
-			<div id="section1">
+			<div class="module">
+			
+			<div id="section1" >
 				<h3 id="title">기업정보</h3>
 				<br>
 
@@ -246,13 +258,14 @@
 					</div>
 				</div>
 
-
+</div>
 
 			</div>
 			<!-- 기업리뷰//////////////////////////////////////////////////////////////////////////////// -->
+			<div class="module">
 			<div id="section2">
 				<h3 id="title">기업리뷰</h3>
-				<button type="button" class="btn btn-default">기업리뷰 작성</button>
+				<button type="button" class="btn btn-infofault">기업리뷰 작성</button>
 				<p>Try to scroll this section and look at the navigation list
 					while scrolling!</p>
 				<div class="panel-group " id="accordion">
@@ -366,8 +379,8 @@
 									<input type="text" class="form-control"
 										placeholder="기업리뷰를 추가로 입력해주세요"> <span
 										class="input-group-btn">
-										<button type="button" class="btn btn-flat"
-											style="background-color: #FF9900">제출</button>
+										<button type="button"  class="btn btn-flat btn-info"
+											>제출</button>
 
 									</span>
 								</div>
@@ -751,12 +764,13 @@
 
 				</div>
 			</div>
-
+</div>
 
 			<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
+			<div class="module">
 			<div id="section3">
 				<h3 id="title">면접후기</h3>
-				<button type="button" class="btn btn-default" id="myBtn">면접후기
+				<button type="button" class="btn btn-info " id="myBtn">면접후기
 					작성</button>
 				<!--  <button type="button" class="btn btn-info btn-lg" id="myBtn">면접후기 작성</button> -->
 
@@ -1054,11 +1068,12 @@
 						</a></li>
 					</ul>
 				</nav>
-
+</div>
 
 			</div>
 
 			<!-- 그래프1//////////////////////////////////////////////////////////////////////////////// -->
+			<div class="module">
 			<div id="section41">
 				<h3 id="title">월별그래프-평균급여</h3>
 				<p>Try to scroll this section and look at the navigation list
@@ -1096,8 +1111,10 @@
 					</div>
 
 				</div>
+				</div>
 			</div>
 			<!-- 그래프2//////////////////////////////////////////////////////////////////////////////// -->
+		<div class="module">	
 			<div id="section42">
 				<h3 id="title">월별그래프-인원</h3>
 				<p>Try to scroll this section and look at the navigation list
@@ -1136,7 +1153,7 @@
 
 					</div>
 				</div>
-
+</div>
 			</div>
 
 
@@ -1263,7 +1280,7 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">제출</button>
+				<button type="button" class="btn btn-infofault" data-dismiss="modal">제출</button>
 			</div>
 		</div>
 
