@@ -1,6 +1,58 @@
+/*     layout    */
+* {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	height: 100%;
+}
+
+#wrap {
+	min-height: 100%;
+	position: relative;
+	padding-bottom: 19px; /* footer height */
+}
+
+header {
+/* 	background-color: #EFEFEF; */
+}
+
+section {
+/* 	background-color: #AFAFAF; */
+}
+
+ol {
+	margin: 0;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+/* 	color: white; */
+/* 	background-color: #333333; */
+}
+
+
+
+
+
+
+
+
+
+
+/*//////////////////////*/
 /* 사용용도 정의 안된 css */
 .jumbotron {
-	background-color: #f4511e;
 	color: #fff;
 	padding: 100px 25px;
 }
@@ -14,12 +66,12 @@
 }
 
 .logo-small {
-	color: #f4511e;
+	color: #dc1010cf;
 	font-size: 50px;
 }
 
 .logo {
-	color: #f4511e;
+	color: #dc1010cf;
 	font-size: 200px;
 }
 
@@ -37,15 +89,15 @@
 
 .carousel-control.right, .carousel-control.left {
 	background-image: none;
-	color: #f4511e;
+	color: #dc1010cf;
 }
 
 .carousel-indicators li {
-	border-color: #f4511e;
+	border-color: #dc1010cf;
 }
 
 .carousel-indicators li.active {
-	background-color: #f4511e;
+	background-color: #dc1010cf;
 }
 
 .item p {
@@ -89,8 +141,8 @@ footer {
 	background-color: #f9f9f9;
 }
 
-#inputError{
-	color : DarkRed ;
+#inputError {
+	color: DarkRed;
 	font-weight: 400;
 }
 /* 사용용도 정의 안된 css */

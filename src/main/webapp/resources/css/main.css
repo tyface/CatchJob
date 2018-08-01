@@ -1,0 +1,64 @@
+article {
+  width: 100%;
+  padding: 100px 25px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.container{
+	width:100%;
+}
+.input-group {
+  width: 680px;
+  margin: 20px;
+}
+.frijole-font{
+  font-family: 'Frijole', cursive;
+}
+.nanumpen-font{
+  font-family: 'Nanum Pen Script', cursive;
+}
+#h1-main {
+  text-align: center;
+  margin: auto;
+  width: 601px;
+	font-size: 120px;
+}
+
+#anton-font {
+  text-align: center;
+  margin: auto;
+  width: 600px;
+}
+
+#main-search-bar {
+  height : 60px;
+  font-size: 27px;
+  border: #333333 solid 2px;
+}
+
+#main-search-btn{
+  height : 60px;
+  font-size: 27px;
+  background-color: #333333;
+  border: #333333;
+}
+
+#main-center {
+   position: relative;
+
+}
+
+#main-center:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('../img/main-background4.jpg');
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    opacity : 0.6;
+    z-index: -1;
+}

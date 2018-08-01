@@ -25,13 +25,14 @@ public class EnterpriseController {
 	}
 
 	@RequestMapping(value = "/search")
-	public String getEntList(String keyword, Model model) {
+	public String viewEntList(String keyword, Model model) {
+		System.out.println("검색 키워드:" + keyword);
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);
 		model.addAttribute("entList", entService.searchEntList(data));
-
+		
 		// 기업 리스트 출력
-		return "enterpriseList";
+		return "main";
 	}
 
 	//// @RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)

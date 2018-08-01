@@ -14,7 +14,11 @@ public class MainController {
 		return "main";
 	}
 	
-
+	@RequestMapping(value = "/search")
+	public String search(String keyword) {
+		return "forward:enterprise/search";
+	}
+	
 	
 	@RequestMapping(value = "/companies", method = RequestMethod.GET)
 	public String companies() {
@@ -22,7 +26,6 @@ public class MainController {
 		
 		return "companies";
 	}
-	
 	
 	
 	@RequestMapping(value = "/nav", method = RequestMethod.GET)
