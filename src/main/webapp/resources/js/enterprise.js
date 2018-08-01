@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#select").text("인원" + "입니다..");
+	$("#select").text("인원");
 	$("#numOfEnt").text("98141");
 	$("#numOfInd").text("37");
 	$("#numOfTotEnt").text("28");
