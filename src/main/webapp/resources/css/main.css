@@ -14,6 +14,7 @@ article {
 }
 .frijole-font{
   font-family: 'Frijole', cursive;
+  font-size: 25px;
 }
 .nanumpen-font{
   font-family: 'Nanum Pen Script', cursive;
@@ -46,6 +47,7 @@ article {
 
 #main-center {
    position: relative;
+   height: 100%;
 
 }
 
@@ -55,7 +57,7 @@ article {
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('../img/main-background4.jpg');
+    background-image: url('../img/main-background1.jpg');
     background-size: 100%;
     width: 100%;
     height: 100%;
