@@ -28,10 +28,11 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/nav", method = RequestMethod.GET)
-	public String nav() {
+	
+	@RequestMapping(value = "/ex", method = RequestMethod.GET)
+	public String ex() {
 		
-		return "nav";
+		return "ex";
 	}
 
 	@RequestMapping(value = "/modals", method = RequestMethod.GET)
@@ -70,10 +71,10 @@ public class MainController {
 		return "source/table";
 	}
 	
-	@RequestMapping(value = "/interview", method = RequestMethod.GET)
+	@RequestMapping(value = "/a", method = RequestMethod.GET)
 	public String interview() {
 		
-		return "interview";
+		return "a";
 	}
 	
 	
