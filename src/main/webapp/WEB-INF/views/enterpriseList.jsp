@@ -12,22 +12,22 @@
 <title>Bootstrap Theme Company Page</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/bower_components/Ionicons/css/ionicons.min.css">
-
 <style>
 #entListPage {
 	border: 1px solid lightgray;
 	width: 730px;
 	margin: 10px auto;
 	background-color: white;
-	border-radius: 10px;
-	
+	box-sizing: border-box;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
 }
 #entListEachPage {
 	width: 700px;
@@ -63,6 +63,10 @@
 	clear: left;
 }
 
+body {
+    position: relative;
+    background-color: #EAEAEA;
+}
 </style>
 <script>
 $(document).ready(function() {
@@ -88,7 +92,9 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<%-- ${entList}--%>
+
+<%-- ${entList}
+ --%>
 <article>
 
 <div id="entListPage">	
@@ -96,7 +102,7 @@ $(document).ready(function() {
 		<div id="entListEachPage">
 				<div class="row-fluid">
 					<div style="display: inline-block; overflow: hidden; height: auto;">
-						<a href="#" id="entName">(주)삼성전자</a>
+						<a href="#" id="entName"> (주)삼성전자 </a>
 
 						<div class="btn mailbox-star" id="btnFollow">
 							<a href="#"><i class="fa fa-heart"
