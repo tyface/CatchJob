@@ -61,10 +61,10 @@ public class MainController {
 		return "source/star";
 	}
 	
-	@RequestMapping(value = "/table", method = RequestMethod.GET)
-	public String table() {
+	@RequestMapping(value = "/enterprise", method = RequestMethod.GET)
+	public String enterprise() {
 		
-		return "source/table";
+		return "enterprise";
 	}
 	
 	@RequestMapping(value = "/a", method = RequestMethod.GET)

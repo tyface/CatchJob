@@ -1,5 +1,5 @@
 /* 사용용도 정의 안된 css */
-.jumbotron {
+/* .jumbotron {
 	background-color: #f4511e;
 	color: #fff;
 	padding: 100px 25px;
@@ -92,5 +92,35 @@ footer {
 #inputError{
 	color : DarkRed ;
 	font-weight: 400;
-}
+} */
 /* 사용용도 정의 안된 css */
+
+
+/* 제목부분 */
+ .jumbotron {
+      background-color: #f4511e;
+      color: #fff;
+      padding: 100px 25px;
+      font-family: Montserrat, sans-serif;
+  }
+
+/* 기업 순위 옆으로 움직이는거 */
+  .carousel-control.right, .carousel-control.left {
+      background-image: none;
+      color: #f4511e;
+  }
+  .carousel-indicators li {
+      border-color: #f4511e;
+  }
+  .carousel-indicators li.active {
+      background-color: #f4511e;
+  }
+/* 기업순위 옆으로 움직이는 거 중... 아래 공백을 위해 필요한 것. (margin 때문에 필요함 아니면 따로 값 줘도 됨) */
+  .item h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      font-weight: 400;
+      font-style: italic;
+      margin: 70px 0;
+  }
+

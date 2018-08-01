@@ -14,11 +14,15 @@
 	<!-- 부트스트랩 스타일시트 파일 링크 설정
 	contextpath는 절대 경로를 만들기 위해서 추가 -->
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
-<link href="${pageContext.request.contextPath}/resources/css/my.css" rel="stylesheet" >
-<script	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
+  
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
+<link href="${pageContext.request.contextPath}/resources/css/my.css" rel="stylesheet" >
+  <%-- <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> --%>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
 
 
 </head>
@@ -26,6 +30,6 @@
 
 <body class="skin-blue sidebar-mini">
 
-  <header class="main-header">
+ <header class="main-header">
     <jsp:include page="login-nav.jsp" flush="true"/>
   </header>
