@@ -29,14 +29,7 @@ public class MainController {
 		return "forward:enterprise/search";
 	}
 	
-	
-	@RequestMapping(value = "/enterprise-view", method = RequestMethod.GET)
-	public String enterpriseView() {
-		System.out.println("메인화면 접속");
-		
-		return "enterprise-view";
-	}
-	
+
 
 	
 }
