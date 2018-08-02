@@ -30,60 +30,13 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/companies", method = RequestMethod.GET)
-	public String companies() {
+	@RequestMapping(value = "/enterprise-view", method = RequestMethod.GET)
+	public String enterpriseView() {
 		System.out.println("메인화면 접속");
 		
-		return "companies";
+		return "enterprise-view";
 	}
 	
-	@RequestMapping(value = "/ex", method = RequestMethod.GET)
-	public String ex() {
-		
-		return "ex";
-	}
 
-	@RequestMapping(value = "/modals", method = RequestMethod.GET)
-	public String modals() {
-		
-		return "source/modals";
-	}
-
-	@RequestMapping(value = "/input", method = RequestMethod.GET)
-	public String input() {
-		
-		return "source/input";
-	}
-	
-	@RequestMapping(value = "/button", method = RequestMethod.GET)
-	public String button() {
-		
-		return "source/button";
-	}
-	
-	@RequestMapping(value = "/follow", method = RequestMethod.GET)
-	public String follow() {
-		
-		return "source/follow";
-	}
-	
-	@RequestMapping(value = "/star", method = RequestMethod.GET)
-	public String star() {
-		
-		return "source/star";
-	}
-	
-	@RequestMapping(value = "/enterprise", method = RequestMethod.GET)
-	public String enterprise() {
-		
-		return "enterprise";
-	}
-	
-	@RequestMapping(value = "/a", method = RequestMethod.GET)
-	public String interview() {
-		
-		return "a";
-	}
-	
 	
 }

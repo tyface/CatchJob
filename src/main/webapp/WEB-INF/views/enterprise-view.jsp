@@ -1,89 +1,30 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
 
+<jsp:include page="include/header.jsp" flush="true"/> 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<title>Bootstrap Example</title>
-
-
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-
-<link rel="stylesheet"	href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet"	href="${contextPath}/resources/bower_components/Ionicons/css/ionicons.min.css">
-<link rel="stylesheet"	href="${contextPath}/resources/dist/css/AdminLTE.min.css">
-<link rel="stylesheet"	href="${contextPath}/resources/dist/css/skins/_all-skins.min.css">	
-<link rel="stylesheet"	href="${contextPath}/resources/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-
-<!-- bootstrap.min.css -->
-
-<!-- jQuery 3 -->
-<script	src="${contextPath}/resources/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script	src="${contextPath}/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<script	src="${contextPath}/resources/bower_components/chart.js/Chart.js"></script>
-<script	src="${contextPath}/resources/bower_components/fastclick/lib/fastclick.js"></script>
-<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
-<script src="${contextPath}/resources/dist/js/demo.js"></script>
-<script	src="${contextPath}/resources/bower_components/jquery/dist/jquery.min.js"></script>
-<script	src="${contextPath}/resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script	src="${contextPath}/resources/bower_components/select2/dist/js/select2.full.min.js"></script>
-<script	src="${contextPath}/resources/plugins/input-mask/jquery.inputmask.js"></script>
-<script	src="${contextPath}/resources/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script	src="${contextPath}/resources/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-<script	src="${contextPath}/resources/bower_components/moment/min/moment.min.js"></script>
-<script	src="${contextPath}/resources/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script	src="${contextPath}/resources/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script	src="${contextPath}/resources/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<script	src="${contextPath}/resources/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<script	src="${contextPath}/resources/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script src="${contextPath}/resources/plugins/iCheck/icheck.min.js"></script>
-<script	src="${contextPath}/resources/bower_components/fastclick/lib/fastclick.js"></script>
-<script src="${contextPath}/resources/dist/js/adminlte.min.js"></script>
-<script src="${contextPath}/resources/dist/js/demo.js"></script>
-
-
+<script src="${pageContext.request.contextPath}/resources/bower_components/chart.js/Chart.js"></script>
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 
 <script	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/enterprise.css" rel="stylesheet" >
 
 
-</head>
 
-<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
-<%-- <jsp:include page="include/header.jsp" flush="true"/> --%>
+<div class="container module-main"  style="background-color:white;color:#fff;height:220px;">
 
-
-
-
-<div class="container"
-	style="background-color: #f4511e; color: #fff; height: 200px;">
-
-	<h1 style="padding-top: 50px">삼성전자</h1>
+	<h1 style="padding-top: 50px; color : #2196F3; ">삼성전자</h1>
 
       
-       <div class="btn btn-app mailbox-star"  id="btnFollow">
-         <a href="#" ><i class="fa fa-heart" style="color:red; font-size: 20px"></i></a>
-         <p>팔로우</p>
+       <div class="btn btn-app follow"  id="btnFollow" onclick="classToggle()">
+         <span class="glyphicon glyphicon-heart" style="font-size: 25px"></span> <p>팔로우</p>
       </div>
+      
       
 
 	<div style="float: right">
-		<button type="button" class="btn btn-default ">기업리뷰작성</button>
-		<button type="button" class="btn btn-default" id="myBtn2">면접후기
-			작성</button>
+		<button type="button" class="btn btn-info ">기업리뷰작성</button>
+		<button type="button" class="btn btn-info" id="myBtn2">면접후기
 	</div>
 
 
@@ -91,28 +32,37 @@
 <br>
 
 
-<div class="container">
-	<div class="row">
-		<nav class="col-sm-2" id="myScrollspy">
-			<ul class="nav nav-pills nav-stacked" data-spy="affix"
-				data-offset-top="205">
+<div class="container " >
+	<div class="row" >
+		<nav class="col-sm-1" id="myScrollspy" >
+	
+			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">	
 				<li style="height: 30px"></li>
-				<li><a href="#section1"><span
-						class="glyphicon glyphicon-bookmark  logo-small"></span>
-						<p>기업정보</p></a></li>
-				<li><a href="#section2"><span
-						class="glyphicon glyphicon-file logo-small"></span>
+				<li><a href="#section1">
+					<!-- <span class="glyphicon glyphicon-bookmark  logo-small" style="font-size: 50px"></span> -->
+					<span class="fa fa-building logo-small" ></span>
+		<!-- 			<span class="fa fa-building-o logo-small" ></span>
+					<span class="fa  fa-paw logo-small" ></span>
+					<span class="fa  fa-paw-o logo-small" ></span> -->
+					
+					<p>기업정보</p></a></li>
+				<li><a href="#section2">
+					<!-- <span class="glyphicon glyphicon-file logo-small"></span> -->
+					<span class="fa fa-weixin logo-small"></span>
 						<p>기업리뷰</p></a></li>
-				<li><a href="#section3"><span
-						class="glyphicon glyphicon-pencil logo-small"></span>
-						<p>면접후기</p></a></li>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"><span
-						class="glyphicon glyphicon-stats logo-small"></span>
+				<li><a href="#section3">
+					<!-- <span class="glyphicon glyphicon-pencil logo-small"></span> -->
+					<span class="fa fa-file-text logo-small"></span>
+					
+					<p>면접후기</p></a></li>
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					<!-- <span class="glyphicon glyphicon-stats logo-small"></span> -->
+					<span class="fa fa-line-chart logo-small" ></span>
 						<p>월별그래프</p> <span class="caret"></span></a>
+
 					<ul class="dropdown-menu">
-						<li><a href="#section41">월별그래프_인원</a></li>
-						<li><a href="#section42">월별그래프_평균급여</a></li>
+						<li><a href="#section41">월별그래프_평균급여</a></li>
+						<li><a href="#section42">월별그래프_인원</a></li>
 					</ul></li>
 			</ul>
 		</nav>
@@ -120,10 +70,12 @@
 		
 		
 		
-		<div class="col-sm-10">
+		<div class="col-sm-11" >
 			<!-- 기업정보//////////////////////////////////////////////////////////////////////////////// -->
-			<div id="section1">
-				<h3>기업정보</h3>
+			<div class="module">
+			
+			<div id="section1" >
+				<h3 id="title">기업정보</h3>
 				<br>
 
 				<div class="panel panel-default">
@@ -183,34 +135,6 @@
 						<br>
 
 
-						<!-- 						<div class="row">
-							<div class="col-sm-6">
-								<div class="well well-lg">
-									<span><b>인원</b></span> <span style="float: right"><b>98,141
-									</b>명</span>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="well well-lg">
-									<span><b>업력</b></span> <span style="float: right"><b>29
-									</b>년</span>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="well  well-lg">
-									<span><b>입사</b></span> <span style="float: right"><b>5,486
-									</b>명 <b>6.0 </b>%</span>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="well well-lg">
-									<span><b>퇴사</b></span> <span style="float: right"><b>3,104
-									</b>명 <b>3.0 </b>%</span>
-								</div>
-							</div>
-						</div> -->
 						<br>
 
 
@@ -334,13 +258,14 @@
 					</div>
 				</div>
 
-
+</div>
 
 			</div>
 			<!-- 기업리뷰//////////////////////////////////////////////////////////////////////////////// -->
+			<div class="module">
 			<div id="section2">
-				<h3>기업리뷰</h3>
-				<button type="button" class="btn btn-default">기업리뷰 작성</button>
+				<h3 id="title">기업리뷰</h3>
+				<button type="button" class="btn btn-infofault">기업리뷰 작성</button>
 				<p>Try to scroll this section and look at the navigation list
 					while scrolling!</p>
 				<div class="panel-group " id="accordion">
@@ -454,8 +379,8 @@
 									<input type="text" class="form-control"
 										placeholder="기업리뷰를 추가로 입력해주세요"> <span
 										class="input-group-btn">
-										<button type="button" class="btn btn-flat"
-											style="background-color: #FF9900">제출</button>
+										<button type="button"  class="btn btn-flat btn-info"
+											>제출</button>
 
 									</span>
 								</div>
@@ -839,12 +764,13 @@
 
 				</div>
 			</div>
-
+</div>
 
 			<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
+			<div class="module">
 			<div id="section3">
-				<h3>면접후기</h3>
-				<button type="button" class="btn btn-default" id="myBtn">면접후기
+				<h3 id="title">면접후기</h3>
+				<button type="button" class="btn btn-info " id="myBtn">면접후기
 					작성</button>
 				<!--  <button type="button" class="btn btn-info btn-lg" id="myBtn">면접후기 작성</button> -->
 
@@ -1122,231 +1048,8 @@
 					</div>
 
 
-					<!-- 면접후기3 -->
-					<div class="panel panel-default">
-						<div class="panel-heading font-gray">2018/07/11</div>
-						<div class="panel-body ">
-							<div class="col-sm-3">
-								<div>
-									<p>
-										<b>면접난이도</b>
-									</p>
-									<p style="color: #FFBB00">보통</p>
-									<div class="progress" style="height: 10px">
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #1DDB16"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #ABF200"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #FFBB00"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #D5D5D5"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #D5D5D5"></div>
-									</div>
+				
 
-
-								</div>
-								<br>
-
-								<div>
-									<p>
-										<b>면접일자</b>
-									</p>
-									<p>2018/06</p>
-									<br>
-								</div>
-								<div>
-									<p>
-										<b>면접경로</b>
-									</p>
-									<p>공개채용</p>
-									<br>
-								</div>
-
-							</div>
-							<div class="col-sm-9">
-								<table class="table">
-									<thead>
-										<tr>
-											<th colspan="4">"면접은 크게 인성,pt,창의 면접으로 나누어져 있고 당일 인원을 여러
-												조로 나눠서 각각 다른 순서로 면접을 진행함. 전공은 여러 전공이 섞여있음 다만 전공면접때는 각자 전공에
-												맞는 문제를 풀고 발표함"</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td colspan="4">
-												<p>
-													<b>면접질문</b>
-												</p>
-												<p class="font-gray">인성면접의 경우 부장급 이상의 임원분들이 들어오는데 전공에 대한
-													문제는 전혀 없었고 자소서와 에세이 기반으로 질문을 함. 본인의 경우에는 면접관분들이 답변이 마음에 들지
-													않았는지 계속 다른 대답을 해볼것을 요구함. 예를 들어 본인의 직무지원이유 그리고 포부 또 현재 사회의
-													이슈등에 대한질문 전공면접의 경우에는 3개의 키워드 중에서 하나를
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<p>
-													<b>질문에 대한 답변</b>
-												</p>
-												<p class="font-gray">선택하고 그 키워드와 관련된 3개의 소문제를 풀고 그 답변을
-													발표하였음 그런데 내 경우에는 키워드를 실제로 처음 들어본것이였고 나중에 보니 거의 모든 지원자들이
-													몰랐던것같음 그래서 대부분이 답변을 하지못하고 본인의 공부한것을 발표한것을 발표하였던 것으로 알고있고
-													본인의 경우는 나름 원인에서 유추해서 80퍼센트 정도는 답변하였고 면접관분들이 칭찬을 해주심</p>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<p>
-													<b>발표시기</b>
-												</p>
-												<p class="font-gray">17일 후</p>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<b>면접결과</b>
-												</p>
-											</td>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<span class="glyphicon glyphicon-thumbs-up"></span>합격
-												</p>
-											</td>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<b>면접경험</b>
-												</p>
-											</td>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<span class="glyphicon glyphicon-thumbs-up"></span>보통
-												</p>
-											</td>
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
-
-						</div>
-					</div>
-
-					<!-- 면접후기4 -->
-					<div class="panel panel-default">
-						<div class="panel-heading font-gray">2018/07/11</div>
-						<div class="panel-body ">
-							<div class="col-sm-3">
-								<div>
-									<p>
-										<b>면접난이도</b>
-									</p>
-									<p style="color: #ABF200">쉬움</p>
-									<div class="progress" style="height: 10px">
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #1DDB16"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #ABF200"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #D5D5D5"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #D5D5D5"></div>
-										<div class="progress-bar " role="progressbar"
-											style="width: 20%; background-color: #D5D5D5"></div>
-									</div>
-
-
-								</div>
-								<br>
-
-								<div>
-									<p>
-										<b>면접일자</b>
-									</p>
-									<p>2018/06</p>
-									<br>
-								</div>
-								<div>
-									<p>
-										<b>면접경로</b>
-									</p>
-									<p>공개채용</p>
-									<br>
-								</div>
-
-							</div>
-							<div class="col-sm-9">
-								<table class="table">
-									<thead>
-										<tr>
-											<th colspan="4">"면접은 크게 인성,pt,창의 면접으로 나누어져 있고 당일 인원을 여러
-												조로 나눠서 각각 다른 순서로 면접을 진행함. 전공은 여러 전공이 섞여있음 다만 전공면접때는 각자 전공에
-												맞는 문제를 풀고 발표함"</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td colspan="4">
-												<p>
-													<b>면접질문</b>
-												</p>
-												<p class="font-gray">인성면접의 경우 부장급 이상의 임원분들이 들어오는데 전공에 대한
-													문제는 전혀 없었고 자소서와 에세이 기반으로 질문을 함. 본인의 경우에는 면접관분들이 답변이 마음에 들지
-													않았는지 계속 다른 대답을 해볼것을 요구함. 예를 들어 본인의 직무지원이유 그리고 포부 또 현재 사회의
-													이슈등에 대한질문 전공면접의 경우에는 3개의 키워드 중에서 하나를
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<p>
-													<b>질문에 대한 답변</b>
-												</p>
-												<p class="font-gray">선택하고 그 키워드와 관련된 3개의 소문제를 풀고 그 답변을
-													발표하였음 그런데 내 경우에는 키워드를 실제로 처음 들어본것이였고 나중에 보니 거의 모든 지원자들이
-													몰랐던것같음 그래서 대부분이 답변을 하지못하고 본인의 공부한것을 발표한것을 발표하였던 것으로 알고있고
-													본인의 경우는 나름 원인에서 유추해서 80퍼센트 정도는 답변하였고 면접관분들이 칭찬을 해주심</p>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<p>
-													<b>발표시기</b>
-												</p>
-												<p class="font-gray">17일 후</p>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<b>면접결과</b>
-												</p>
-											</td>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<span class="glyphicon glyphicon-thumbs-up"></span>합격
-												</p>
-											</td>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<b>면접경험</b>
-												</p>
-											</td>
-											<td colspan="1" style="width: 25%">
-												<p>
-													<span class="glyphicon glyphicon-thumbs-up"></span>보통
-												</p>
-											</td>
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
-
-						</div>
-					</div>
 
 				</div>
 
@@ -1365,13 +1068,14 @@
 						</a></li>
 					</ul>
 				</nav>
-
+</div>
 
 			</div>
 
 			<!-- 그래프1//////////////////////////////////////////////////////////////////////////////// -->
+			<div class="module">
 			<div id="section41">
-				<h3>월별그래프_인원</h3>
+				<h3 id="title">월별그래프-평균급여</h3>
 				<p>Try to scroll this section and look at the navigation list
 					while scrolling!</p>
 
@@ -1407,10 +1111,12 @@
 					</div>
 
 				</div>
+				</div>
 			</div>
 			<!-- 그래프2//////////////////////////////////////////////////////////////////////////////// -->
+		<div class="module">	
 			<div id="section42">
-				<h3>월별그래프_평균급여</h3>
+				<h3 id="title">월별그래프-인원</h3>
 				<p>Try to scroll this section and look at the navigation list
 					while scrolling!</p>
 
@@ -1419,31 +1125,6 @@
 
 				<div class="panel panel-default">
 					<div class="panel-body">
-
-
-						<div class="box box-primary">
-							<div class="box box-info">
-								<div class="box-header with-border">
-									<h3 class="box-title">Line Chart</h3>
-
-									<!-- 										<div class="box-tools pull-right">
-											<button type="button" class="btn btn-box-tool"
-												data-widget="collapse">
-												<i class="fa fa-minus"></i>
-											</button>
-											<button type="button" class="btn btn-box-tool"
-												data-widget="remove">
-												<i class="fa fa-times"></i>
-											</button>
-										</div> -->
-								</div>
-								<div class="box-body">
-									<div class="chart">
-										<canvas id="lineChart2" style="height: 250px"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
 
 
 						<div class="box box-success">
@@ -1472,7 +1153,7 @@
 
 					</div>
 				</div>
-
+</div>
 			</div>
 
 
@@ -1599,7 +1280,7 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">제출</button>
+				<button type="button" class="btn btn-infofault" data-dismiss="modal">제출</button>
 			</div>
 		</div>
 
