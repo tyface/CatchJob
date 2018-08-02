@@ -15,9 +15,6 @@
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
-<!-- Ionicons -->
-<link rel="stylesheet"
-	href="${contextPath}/resources/bower_components/Ionicons/css/ionicons.min.css">
 <style>
 #entListPage {
 	border: 1px solid lightgray;
@@ -98,11 +95,11 @@ $(document).ready(function() {
 <article>
 
 <div id="entListPage">	
-	<c:forEach begin="0" varStatus="status" end="10">
+	<c:forEach begin="0" varStatus="status" end="10" var="entList" items="${entList}">
 		<div id="entListEachPage">
 				<div class="row-fluid">
 					<div style="display: inline-block; overflow: hidden; height: auto;">
-						<a href="#" id="entName"> (주)삼성전자 </a>
+						<a href="#" id="entName">${entList.entName}</a>
 
 						<div class="btn mailbox-star" id="btnFollow">
 							<a href="#"><i class="fa fa-heart"
@@ -110,18 +107,19 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div id="btnReview">
-						<button type="button" class="btn btn-info">
+						<button type="button" class="btn btn-info" onclick="#">
 							<span class="glyphicon glyphicon-pencil"> 리뷰작성 </span>
 						</button>
 					</div>
 					<div class="addrName clear">
-						<strong><a tag="#"> 제조/화학 </a></strong> <strong><a
-							tag="#"> 경기 </a></strong>
+						<strong><a tag="#">${entList.industryName}</a></strong>
+						<strong> │ </strong> 
+						<strong><a tag="#"> </a></strong>
 					</div>
 					<br>
 					<div class="row-fluid">
 						<div style="display: inline-block;" class="col-md-5">
-							<span class="fa fa-money"> 연봉 <a tag="#" id="salaryAvg">10,009
+							<span class="fa fa-money"> 연봉 <a tag="#" id="salaryAvg">10,009<!--연봉넣기 -->
 							</a>만원
 							</span>
 							<div class="stars" >
@@ -130,21 +128,21 @@ $(document).ready(function() {
 									class="glyphicon glyphicon-star"></span> <span
 									class="glyphicon glyphicon-star"></span> <span
 									class="glyphicon glyphicon-star-empty"></span> 기업평가 3.9 <small>/
-								</small> 5
+								</small> 5<!--기업평가넣기 -->
 							</div>
 						</div>
 						<div style="display: inline-block">
 							<button type="button" class="btn btn-default btn-lg" onclick="#"
 								style="bg-color: transparent; border: 0;">
-								기업리뷰 <br>3119
+								기업리뷰 <br>3119 <!--count 넣기 -->
 							</button>
 							<button type="button" class="btn btn-default btn-lg" onclick="#"
 								style="bg-color: transparent; border: 0;">
-								연봉정보 <br>6613
+								연봉정보 <br>6613<!--count 넣기 -->
 							</button>
 							<button type="button" class="btn btn-default btn-lg" onclick="#"
 								style="bg-color: transparent; border: 0;">
-								면접정보 <br>2262
+								면접정보 <br>2262<!--count 넣기 -->
 							</button>
 						</div>
 					</div>
