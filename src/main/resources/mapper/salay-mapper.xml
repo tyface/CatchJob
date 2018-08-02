@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.SalaryDao">
 	
-	<select id="selectListSalayRank" resultType="map">
+	<select id="selectListSalayRank" parameterType="int" resultType="hashMap">
 		SELECT 	 n.ENT_IDX, ENT_NM, SUM(PAY_AMT)/SUM(NPN_SBSCRBER_CNT) AS salay 
 		FROM 	 NPN_DTLS_TB n
 		JOIN 	 ENTERPRISE_TB e ON n.ENT_IDX = e.ENT_IDX
 		WHERE    PAY_YM LIKE CONCAT(left(sysdate(),4)-1,'%') 
+		AND 	 e.ENT_SBSCRB_ST = 1 
 		GROUP BY n.ENT_IDX 
-		ORDER BY salay DESC LIMIT 5;
+		ORDER BY salay DESC 
+		LIMIT #{RANK_VIEW_COUNT}
 	</select>
 
 </mapper>

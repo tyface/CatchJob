@@ -7,6 +7,6 @@
         <strong>Copyright &copy;<a href="${pageContext.request.contextPath}">Spring MVC Board</a></strong> All rights reserved.
       </footer>
 
-    <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    
   </body>
 </html>

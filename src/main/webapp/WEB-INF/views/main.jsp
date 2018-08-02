@@ -1,9 +1,11 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:include page="include/header.jsp" flush="true"/>
 <link href="https://fonts.googleapis.com/css?family=Frijole|Nanum+Pen+Script" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 <script>
+
 	$(function(){
 		$("#main-search-btn").on("click",function(){
 			$("#main-search-form").submit();
@@ -37,6 +39,7 @@
 			</form>
 
 		</article>
+		
 		<!--  하단 기업순위  시작 -->
 		<div class="container text-center bg-grey">
 			<div id="myCarousel" class="carousel slide text-center"	data-ride="carousel">
@@ -62,22 +65,16 @@
 					</div>
 					<div class="item">
 						<h3>연봉이 높은 회사</h3>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
+						<c:forEach var="salaryRank" items="${salaryRankList}">
+							<a href="enterprise/view?ent_idx=${salaryRank.ENT_IDX}">${salaryRank.ENT_NM}</a><br>
+						</c:forEach>
 						<h4></h4>
 					</div>
 					<div class="item">
 						<h3>사원수가 많은 회사</h3>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
-						<p>삼성(주)드림클래스</p>
+						<c:forEach var="empCntRank" items="${empCntRankList}">
+							<a href="enterprise/view?ent_idx=${empCntRank.ENT_IDX}">${empCntRank.ENT_NM}</a><br>
+						</c:forEach>
 						<h4></h4>
 					</div>
 				</div>

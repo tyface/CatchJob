@@ -2,23 +2,25 @@ package com.CatchJob.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.CatchJob.service.EnterpriseServiceImp;
 import com.CatchJob.service.SalaryServiceImp;
 
 @Controller
 public class MainController {
 	@Autowired
-	SalaryServiceImp svc;
+	SalaryServiceImp salarySvc;
+	@Autowired
+	EnterpriseServiceImp entSvc;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
+	@RequestMapping(value = "/")
+	public String home(Model model) {
 		System.out.println("메인화면 접속");
-		
-		svc.getRankList();
-		
-		
+		model.addAttribute("salaryRankList",salarySvc.getSalayRankList());
+		model.addAttribute("empCntRankList",entSvc.getEmpCntList());
 		return "main";
 	}
 	
@@ -34,8 +36,6 @@ public class MainController {
 		
 		return "companies";
 	}
-	
-	
 	
 	@RequestMapping(value = "/ex", method = RequestMethod.GET)
 	public String ex() {

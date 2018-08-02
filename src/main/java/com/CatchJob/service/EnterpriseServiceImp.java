@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.NationalPension;
@@ -18,7 +19,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	private EnterpriseDao entDao;
 	
 	@Override
-	public List<Enterprise> searchEntList(Map<String, String> data) {
+	public List<Enterprise> getEntList(Map<String, String> data) {
 		return entDao.selectListEnt(data);
 	}
 
@@ -38,6 +39,11 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	public NationalPension avgPayGraph(int entIndex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Map<String, String>> getEmpCntList() {
+		return entDao.selectListEmpCntRank(Constants.Config.RANK_VIEW_COUNT);
 	}
 
 

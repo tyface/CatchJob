@@ -28,19 +28,19 @@ public class EnterpriseController {
 	public String getEntList(String keyword, Model model) {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);
-		model.addAttribute("entList", entService.searchEntList(data));
+		model.addAttribute("entList", entService.getEntList(data));
 
 		// 기업 리스트 출력
-		return "enterpriseList";
+		return "enterprise-list";
 	}
 
-	//// @RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
-	// public String entDetailsForm(int entIndex, Model model) {
-	// // 기업 상세페이지 출력화면
-	// model.addAttribute("ent", entService.selectEnt(entIndex));
-	// return null;
-	// }
-	//
+	 @RequestMapping(value = "/view")
+	 public String entDetailsForm(int entIndex, Model model) {
+//	  기업 상세페이지 출력화면
+	 model.addAttribute("enterprise-view", entService.getEntInfo(entIndex));
+	 return null;
+	 }
+	
 	//// @RequestMapping(value = "/EnterpriseService", method = RequestMethod.POST)
 	// public String empCountGraph(int entIndex, Model model) {
 	// // 그래프 - 인원(국민연금 총 가입자수,국민연금 신규가입자수,국민연금 가입해지자수 반환)
