@@ -39,7 +39,7 @@
 			</form>
 
 		</article>
-		
+
 		<!--  하단 기업순위  시작 -->
 		<div class="container text-center bg-grey">
 			<div id="myCarousel" class="carousel slide text-center"	data-ride="carousel">
@@ -66,14 +66,14 @@
 					<div class="item">
 						<h3>연봉이 높은 회사</h3>
 						<c:forEach var="salaryRank" items="${salaryRankList}">
-							<a href="enterprise/view?ent_idx=${salaryRank.ENT_IDX}">${salaryRank.ENT_NM}</a><br>
+							<a href="enterprise/view?entIndex=${salaryRank.ENT_IDX}">${salaryRank.ENT_NM}</a><br>
 						</c:forEach>
 						<h4></h4>
 					</div>
 					<div class="item">
 						<h3>사원수가 많은 회사</h3>
 						<c:forEach var="empCntRank" items="${empCntRankList}">
-							<a href="enterprise/view?ent_idx=${empCntRank.ENT_IDX}">${empCntRank.ENT_NM}</a><br>
+							<a href="enterprise/view?entIndex=${empCntRank.ENT_IDX}">${empCntRank.ENT_NM}</a><br>
 						</c:forEach>
 						<h4></h4>
 					</div>

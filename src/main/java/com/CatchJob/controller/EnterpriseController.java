@@ -34,13 +34,13 @@ public class EnterpriseController {
 		return "enterprise-list";
 	}
 
-	 @RequestMapping(value = "/view")
-	 public String entDetailsForm(int entIndex, Model model) {
-//	  기업 상세페이지 출력화면
-	 model.addAttribute("enterprise-view", entService.getEntInfo(entIndex));
-	 return null;
-	 }
-	
+	@RequestMapping(value = "/view")
+	public String entDetailsForm(int entIndex, Model model) {
+		// 기업 상세페이지 출력화면
+		model.addAttribute("enterprise-view", entService.getEntInfo(entIndex));
+		return "enterprise-list";
+	}
+
 	//// @RequestMapping(value = "/EnterpriseService", method = RequestMethod.POST)
 	// public String empCountGraph(int entIndex, Model model) {
 	// // 그래프 - 인원(국민연금 총 가입자수,국민연금 신규가입자수,국민연금 가입해지자수 반환)

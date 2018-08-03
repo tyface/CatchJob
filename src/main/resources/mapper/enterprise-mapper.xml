@@ -5,27 +5,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.CatchJob.dao.EnterpriseDao">
 	
 	<select id="selectListEnt" resultMap="entMap">
-		SELECT    e.*, n.NPN_NW_SBSCRBER_CNT, n.NPN_SCBT_CNT
-		FROM 	  ENTERPRISE_TB e
-		LEFT JOIN NPN_DTLS_TB n
-		ON 		  e.ENT_IDX = n.ENT_IDX
-		WHERE     e.ENT_SBSCRB_ST = 1 
-		AND n.PAY_YM = (	SELECT 	  MAX(n2.PAY_YM)
-							FROM 	  ENTERPRISE_TB e2
-							LEFT JOIN NPN_DTLS_TB n2
-							ON 		  e2.ENT_IDX = n2.ENT_IDX
-							WHERE     e2.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
-							AND       e.ENT_IDX = e2.ENT_IDX
-							GROUP BY  e2.ent_idx )		  				
-		ORDER BY  LENGTH(ENT_NM) ASC, ENT_NM ASC;
+		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.SALARY, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
+		FROM 		ENTERPRISE_TB ent
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		LEFT JOIN 	LEGAL_DONG_TB ld 
+		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
+		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
+		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
+		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
+		ORDER BY 	LENGTH(ent.ENT_NM),ent.ENT_NM
+		
 	</select>
 	
 	<select id="selectListEmpCntRank" parameterType="int" resultType="hashMap">
-		SELECT ENT_IDX, ENT_NM
-		FROM ENTERPRISE_TB 
-		WHERE ENT_SBSCRB_ST = 1 
-		ORDER BY ENT_EMPLOYEE_CNT DESC 
-		LIMIT #{RANK_VIEW_COUNT}
+		SELECT 		ent.ENT_IDX, ent.ENT_NM, up.NPN_SBSCRBER_CNT
+		FROM 		ENTERPRISE_TB ent
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		WHERE 		ent.ENT_SBSCRB_ST = 1 
+		ORDER BY 	up.NPN_SBSCRBER_CNT DESC 
+		LIMIT 		5
 	</select>
 
 	<resultMap type="enterprise" id="entMap">
