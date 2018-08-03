@@ -1,19 +1,151 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="include/header.jsp" flush="true"/> 
 
-<script src="${pageContext.request.contextPath}/resources/bower_components/chart.js/Chart.js"></script>
+
 <link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 
-<script	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>  
+
 <link href="${pageContext.request.contextPath}/resources/css/enterprise.css" rel="stylesheet" >
 
+<script>
+$(document).ready(function(){
+	   
+	
+	var test = JSON.parse('${viewDataJson}');
+
+ 	var month = new Array(); //월
+ 	var salary = new Array(); //연금정보
+ 	var totalPerson = new Array(); //총 인원
+ 	var newPerson = new Array();
+ 	var outPerson = new Array();
+ 	
+
+	for(var i in test){	
+		var num = Math.round((test[i]['PAY_AMT'])/0.09/test[i]['NPN_SBSCRBER_CNT']);
+		/* var result = addComma(num);
+		alert(result);
+		 */
+		 month.push(test[i]['PAY_YM']) ;
+		salary.push(num) ;
+		totalPerson.push(test[i]['NPN_SBSCRBER_CNT']) ;
+		newPerson.push(test[i]['NPN_NW_SBSCRBER_CNT']) ;
+		outPerson.push(test[i]['NPN_SCBT_CNT']) ; 
+		//alert(test[i]['PAY_AMT']);
+	} 
+/* 숫자에 컴마 찍는 함수 */
+  /* 	function addComma(num) {
+	 	   var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	 	   return num.toString().replace(regexp, ',');
+	 	} */
+	
+	var ctx1 = document.getElementById("lineChart").getContext('2d');
+	var lineChart = new Chart(ctx1, {
+		type: 'bar',
+		data: {
+			labels: month,
+			datasets: [{
+					type: 'line',
+					label: '평균 급여',
+					borderColor: '#2196F3',
+					borderWidth: 3,
+					fill: false,
+					data: salary,
+				}  ], 
+				borderWidth: 1
+		},
+		 options: {
+		        elements: {
+		            line: {
+		                tension: 0, // disables bezier curves
+		            }
+		        }
+		    }
+		
+	});	 
+	
+	
+
+	
+	// comboBarLineChart
+	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
+	var comboBarLineChart = new Chart(ctx2, {
+		type: 'bar',
+		data: {
+			labels: month,
+			datasets: [{
+					type: 'line',
+					label: '총 인원',
+					borderColor: '#484c4f',
+					borderWidth: 3,
+					fill: false,
+					data: totalPerson,
+				}, {
+					type: 'bar',
+					label: '입사자',
+					backgroundColor: '#059BFF',
+					data: newPerson,
+					borderColor: 'white',
+					borderWidth: 0
+				}, {
+					type: 'bar',
+					label: '퇴사자',
+					backgroundColor: '#FF6B8A',
+					data: outPerson,
+				}], 
+				borderWidth: 1
+		},
+		options: {
+	        elements: {
+	            line: {
+	                tension: 0, // disables bezier curves
+	            }
+	        }
+	    }
+	
+	});	
+			
+	// pieChart
+	var ctx3 = document.getElementById("pieChart").getContext('2d');
+	var pieChart = new Chart(ctx3, {
+		type: 'pie',
+		data: {
+				datasets: [{
+					data: [12, 19, 3, 5, 2],
+					backgroundColor: [
+						'rgba(255,0,0,1)',
+						'rgba(255, 94, 0, 1)',
+						'rgba(255, 187, 0, 1)',
+						'rgba(171,242,0, 1)',
+						'rgba(29,219,22, 1)',
+						
+					],
+					label: 'Dataset 1'
+				}],
+				labels: [
+					"매우어려움",
+					"어려움",
+					"보통",
+					"쉬움",
+					"매우쉬움"
+				]
+			},
+			options: {
+				responsive: true
+			}
+	 
+	});
+	
+});
+</script>
 
 
 <div class="container module-main"  style="background-color:white;color:#fff;height:220px;">
 
-	<h1 style="padding-top: 50px; color : #2196F3; ">삼성전자</h1>
+	<h1 style="padding-top: 50px; color : #2196F3; "> ${viewData[0].ENT_INDUTY_NM} </h1>
 
       
        <div class="btn btn-app follow"  id="btnFollow" onclick="classToggle()">
@@ -806,15 +938,25 @@
 											</button>
 										</div> -->
 								</div>
+								
+								
 								<div class="row">
 									<div class="col-sm-4"></div>
-									<div class="col-sm-4">
-										<div class="box-body">
-											<canvas id="pieChart" style="height: 100px"></canvas>
-										</div>
+													
+								<div class="col-sm-4">
+									<div class="card-header">
+										<i class="fa fa-table"></i> Pie Chart
 									</div>
+										
+									<div class="card-body">
+										<canvas id="pieChart"></canvas>
+									</div>
+									<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+								</div><!-- end card-->					
+			
 									<div class="col-sm-4"></div>
 								</div>
+								
 							</div>
 
 
@@ -1083,12 +1225,22 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 
-						<div class="box box-primary">
+
+						<div class="card-header">
+							<i class="fa fa-table"></i> Combo Bar Line Chart
+						</div>
+							
+						<div class="card-body">
+							<canvas id="lineChart"></canvas>
+						</div>							
+						<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+							
+						<!-- <div class="box box-primary">
 							<div class="box box-info">
 								<div class="box-header with-border">
 									<h3 class="box-title">Line Chart</h3>
 
-									<!-- <div class="box-tools pull-right">
+									<div class="box-tools pull-right">
 											<button type="button" class="btn btn-box-tool"
 												data-widget="collapse">
 												<i class="fa fa-minus"></i>
@@ -1097,7 +1249,7 @@
 												data-widget="remove">
 												<i class="fa fa-times"></i>
 											</button>
-										</div> -->
+										</div>
 								</div>
 								<div class="box-body">
 									<div class="chart">
@@ -1105,7 +1257,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 
 
 					</div>
@@ -1121,17 +1273,29 @@
 					while scrolling!</p>
 
 				<!-- 그래프 -->
-
-
+				
+		
 				<div class="panel panel-default">
 					<div class="panel-body">
 
-
+										
+					
+						<div class="card-header">
+							<i class="fa fa-table"></i> Combo Bar Line Chart
+						</div>
+							
+						<div class="card-body">
+							<canvas id="comboBarLineChart"></canvas>
+						</div>							
+						<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+							
+				
+<!-- 
 						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Bar Chart</h3>
 
-								<!-- 									<div class="box-tools pull-right">
+																	<div class="box-tools pull-right">
 										<button type="button" class="btn btn-box-tool"
 											data-widget="collapse">
 											<i class="fa fa-minus"></i>
@@ -1140,14 +1304,14 @@
 											data-widget="remove">
 											<i class="fa fa-times"></i>
 										</button>
-									</div> -->
+									</div>
 							</div>
 							<div class="box-body">
 								<div class="chart">
 									<canvas id="barChart" style="height: 230px"></canvas>
 								</div>
 							</div>
-						</div>
+						</div> -->
 
 
 
@@ -1286,8 +1450,6 @@
 
 	</div>
 </div>
-
-
 
 
 

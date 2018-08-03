@@ -14,11 +14,16 @@ public interface EnterpriseService {
 	// 평균연봉, 평균연봉..)
 	public Enterprise getEntInfo(int entIndex);
 
-	// 그래프 - 인원(국민연금 총 가입자수,국민연금 신규가입자수,국민연금 가입해지자수 반환)
-	public NationalPension empCountGraph(int entIndex);
+	
+	// 그래프 - 인원
+	public List<Map<String,String>> empCountGraph(int ent_idx);
 
-	// 그래프 - 평균급여(납입날짜, 납입금액 반환)
-	public NationalPension avgPayGraph(int entIndex);
+	// 그래프 - 평균급여
+	public List<Map<String,String>> avgPayGraph(int entIndex);
+	
+	
+	
+	
 	
 	public List<Map<String, String>> getEmpCntList();
 

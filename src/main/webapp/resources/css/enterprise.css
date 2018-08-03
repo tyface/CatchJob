@@ -67,7 +67,7 @@ div.col-sm-9 div {
       top: 20px;
       z-index: 9999 !important;
   }
-  div.col-sm-11 div {
+  div.col-sm-10 div {
       height: 250px;
       font-size: 28px;
   }
@@ -210,3 +210,42 @@ div.col-sm-9 div {
 	font: bold 18px Helvetica, Arial, sans-serif;
 	vertical-align: middle;
 } /* 별점EMD */
+
+
+.logo-small {
+	color: #2196F3;
+	font-size: 50px;
+}
+
+.module{
+    box-sizing: border-box;
+    margin: 0 0 16px 0; 
+    padding: 20px;
+    background-color: white;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+}
+.module-main{
+    box-sizing: border-box;
+   
+    padding: 20px;
+    background-color: white;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+}
+
+
+
+.col-sm-1{
+	padding: 0px;
+	
+}
+
+
+
+
+
+
+
