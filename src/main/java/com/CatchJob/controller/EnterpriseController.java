@@ -38,7 +38,7 @@ public class EnterpriseController {
 	public String entDetailsForm(int entIndex, Model model) {
 		// 기업 상세페이지 출력화면
 		model.addAttribute("enterprise-view", entService.getEntInfo(entIndex));
-		return "enterprise-list";
+		return "enterprise-view";
 	}
 
 	//// @RequestMapping(value = "/EnterpriseService", method = RequestMethod.POST)

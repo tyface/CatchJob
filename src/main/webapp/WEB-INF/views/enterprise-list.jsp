@@ -117,8 +117,8 @@ $(document).ready(function() {
 						<strong><a tag="#"> </a></strong>
 					</div>
 					<br>
-					<div class="row-fluid">
-						<div style="display: inline-block;" class="col-md-5">
+					<div class="row">
+						<div class="col-md-5">
 							<span class="fa fa-money"> 연봉 <a tag="#" id="salaryAvg">10,009<!--연봉넣기 -->
 							</a>만원
 							</span>
@@ -131,14 +131,10 @@ $(document).ready(function() {
 								</small> 5<!--기업평가넣기 -->
 							</div>
 						</div>
-						<div style="display: inline-block">
+							<div class="col-md-offset-7">
 							<button type="button" class="btn btn-default btn-lg" onclick="#"
 								style="bg-color: transparent; border: 0;">
 								기업리뷰 <br>3119 <!--count 넣기 -->
-							</button>
-							<button type="button" class="btn btn-default btn-lg" onclick="#"
-								style="bg-color: transparent; border: 0;">
-								연봉정보 <br>6613<!--count 넣기 -->
 							</button>
 							<button type="button" class="btn btn-default btn-lg" onclick="#"
 								style="bg-color: transparent; border: 0;">
