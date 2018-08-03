@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.NationalPension;
 
 @Service
 public class EnterpriseServiceImp implements EnterpriseService {
@@ -29,15 +28,15 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return null;
 	}
 
+	// 그래프 - 인원
 	@Override
-	public NationalPension empCountGraph(int entIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String,String>> empCountGraph(int ent_idx) {		
+		return entDao.selectGraphInf(ent_idx);
 	}
 
+	// 그래프 - 평균급여
 	@Override
-	public NationalPension avgPayGraph(int entIndex) {
-		// TODO Auto-generated method stub
+	public List<Map<String,String>> avgPayGraph(int entIndex) {
 		return null;
 	}
 

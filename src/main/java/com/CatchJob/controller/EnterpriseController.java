@@ -1,7 +1,10 @@
 package com.CatchJob.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.CatchJob.service.EnterpriseService;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/enterprise")
@@ -35,10 +39,31 @@ public class EnterpriseController {
 	}
 
 	 @RequestMapping(value = "/view")
-	 public String entDetailsForm(int entIndex, Model model) {
+	 public String entDetailsForm(int ent_idx, Model model) {
+//		 System.out.println(ent_idx);
+//		 System.out.println(entService.empCountGraph(ent_idx));
+//		 System.out.println("리스트 길이!: "+entService.empCountGraph(ent_idx).size());
+		List<Map<String, String>> viewData = entService.empCountGraph(ent_idx);
+		System.out.println(viewData);
+		 model.addAttribute("viewDataSize", entService.empCountGraph(ent_idx).size());
+		 
+		 
+		 
+//		 request.setAttribute("viewDataSize", entService.empCountGraph(ent_idx).size());
 //	  기업 상세페이지 출력화면
-	 model.addAttribute("enterprise-view", entService.getEntInfo(entIndex));
-	 return null;
+//model.addAttribute("enterprise-view",entService.getEntInfo(entIndex));
+	 model.addAttribute("viewData", viewData);
+	 model.addAttribute("viewDataJson",new Gson().toJson(viewData));
+	 
+	 System.out.println("==================="+new Gson().toJson(viewData));
+	 
+	 return "enterprise-view";
+	 }
+	 
+	 @RequestMapping(value = "/test")
+	 public String test(Model model) {
+		 model.addAttribute("enterprise-view",entService.empCountGraph(3) );
+	 return "test";
 	 }
 	
 	//// @RequestMapping(value = "/EnterpriseService", method = RequestMethod.POST)
