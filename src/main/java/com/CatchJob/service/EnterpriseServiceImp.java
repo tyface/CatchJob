@@ -19,6 +19,10 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	
 	@Override
 	public List<Enterprise> getEntList(Map<String, String> data) {
+		for(Enterprise ent : entDao.selectListEnt(data)) {
+			ent.getSalaryAvg();
+		}
+		 
 		return entDao.selectListEnt(data);
 	}
 
@@ -45,6 +49,8 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entDao.selectListEmpCntRank(Constants.Config.RANK_VIEW_COUNT);
 	}
 
-
+	public double salaryCalculation(int payAmtAvg) {
+		return payAmtAvg / 0.09 * 12;
+	}
 
 }

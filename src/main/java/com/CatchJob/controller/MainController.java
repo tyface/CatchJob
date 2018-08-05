@@ -5,21 +5,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.CatchJob.service.EnterpriseServiceImp;
-import com.CatchJob.service.SalaryServiceImp;
+import com.CatchJob.service.EnterpriseService;
+import com.CatchJob.service.RecordService;
+import com.CatchJob.service.SalaryService;
 
 @Controller
 public class MainController {
 	@Autowired
-	SalaryServiceImp salarySvc;
+	SalaryService salaryService;
 	@Autowired
-	EnterpriseServiceImp entSvc;
+	EnterpriseService entService;
+	@Autowired
+	RecordService recordService;
 	
 	@RequestMapping(value = "/")
 	public String home(Model model) {
 		System.out.println("메인화면 접속");
-		model.addAttribute("salaryRankList",salarySvc.getSalayRankList());
-		model.addAttribute("empCntRankList",entSvc.getEmpCntList());
+		model.addAttribute("salaryRankList",salaryService.getSalayRankList());
+		model.addAttribute("empCntRankList",entService.getEmpCntList());
+		model.addAttribute("popularSearcheList",recordService.getPopularSearcheList());
 		return "main";
 	}
 	

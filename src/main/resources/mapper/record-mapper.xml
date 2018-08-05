@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CatchJob.dao.RecodeDao">
+	<insert id="insertViewRecode" parameterType="map">
+		INSERT INTO VIEW_RECORD_TB(VIEW_IDX,ENT_IDX,BROWSER,CONN_IP,VISIT_DT)
+		VALUES(0, #{ENT_IDX}, #{BROWSER}, #{CONN_IP}, sysdate())
+	</insert>
+	<select id="selectListPopularSearches" parameterType="int" resultType="map">
+		SELECT tmp.ENT_IDX,ent.ENT_NM from (
+			SELECT ENT_IDX,COUNT(ENT_IDX) AS searcheCount
+			FROM VIEW_RECORD_TB 
+			WHERE VISIT_DT > date_add(NOW(), INTERVAL -1 MONTH)  
+			GROUP BY ENT_IDX
+			ORDER BY searcheCount DESC
+			LIMIT 5) tmp
+		INNER JOIN ENTERPRISE_TB ent
+		ON tmp.ENT_IDX = ent.ENT_IDX;
+	</select>
+</mapper>
+
