@@ -39,15 +39,18 @@ public class EnterpriseController {
 	}
 
 	 @RequestMapping(value = "/view")
-	 public String entDetailsForm(int ent_idx, Model model) {
-		List<Map<String, String>> viewData = entService.empCountGraph(ent_idx);
-		System.out.println(viewData);
+	 public String entDetailsForm(int entIndex, Model model) {
+//		List<Map<String, String>> viewData = entService.empCountGraph(entIndex);
+//		Map<String, String> person = entService.selectEntPeopleInfo(entIndex);
+//		System.out.println(viewData);
 //		 model.addAttribute("viewDataSize", entService.empCountGraph(ent_idx).size());
-		 model.addAttribute("viewData", viewData);
-		 model.addAttribute("viewDataJson",new Gson().toJson(viewData));
-		 
+//		 model.addAttribute("viewData", viewData);
+		 model.addAttribute("viewDataJson",new Gson().toJson(entService.empCountGraph(entIndex)));
+//		 model.addAttribute("viewData",new Gson().toJson(viewData));
 //		 System.out.println("==================="+new Gson().toJson(viewData));
-		 
+		 model.addAttribute("entInfo",entService.getEntInfo(entIndex));
+		 model.addAttribute("personJson",new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
+
 		 return "enterprise-view";
 		 }
 
