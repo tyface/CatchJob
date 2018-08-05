@@ -12,8 +12,45 @@
 <link href="${pageContext.request.contextPath}/resources/css/enterprise.css" rel="stylesheet" >
 
 <script>
+
+/* 숫자에 컴마 찍는 함수 */
+	function addComma(num) {
+ 	   var regexp = /\B(?=(\d{3})+(?!\d))/g;
+ 	   return num.toString().replace(regexp, ',');
+ 	} 
+
 $(document).ready(function(){
 	   
+
+	
+	 var payAmtAvg = $("#payAmtAvg").text();
+ 	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";  
+	payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
+ 
+ 	 payAmtAvg = addComma(payAmtAvg); 
+
+	 $("#payAmtAvg").text(payAmtAvg); 
+	 
+	 var dt = new Date();
+	 var currentYear = dt.getFullYear();
+	 var establishmentYear = $("#establishmentYear").text();
+	 establishmentYear = establishmentYear.substr(0,4); 
+	 var currier = currentYear-establishmentYear;
+	 $("#establishmentYear").text(currier);
+	
+	 var personJson = JSON.parse('${personJson}');
+	 $("#newPerson").text(personJson['newPerson']);
+	 $("#outPerson").text(personJson['outPerson']);
+//	 alert(personJson['newPerson']/$("#person").text())
+	 var newPersonPercent =parseFloat(( personJson['newPerson']/$("#person").text() )*100).toFixed(2);
+	 var outPersonPercent =parseFloat(( personJson['outPerson']/$("#person").text() )*100).toFixed(2);
+	 $("#newPersonPercent").text(newPersonPercent);
+	 $("#outPersonPercent").text(outPersonPercent);
+	// alert(newPersonPercent);
+	// alert(outPersonPercent);
+	 
+	 
+	 
 	
 	var test = JSON.parse('${viewDataJson}');
 
@@ -36,11 +73,7 @@ $(document).ready(function(){
 		outPerson.push(test[i]['NPN_SCBT_CNT']) ; 
 		//alert(test[i]['PAY_AMT']);
 	} 
-/* 숫자에 컴마 찍는 함수 */
-  /* 	function addComma(num) {
-	 	   var regexp = /\B(?=(\d{3})+(?!\d))/g;
-	 	   return num.toString().replace(regexp, ',');
-	 	} */
+
 	
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
@@ -62,7 +95,14 @@ $(document).ready(function(){
 		            line: {
 		                tension: 0, // disables bezier curves
 		            }
-		        }
+		        },
+		        scales: {
+                    yAxes: [{
+                            ticks: {
+                                max: 3000000
+                            }
+                        }]
+                }
 		    }
 		
 	});	 
@@ -145,7 +185,7 @@ $(document).ready(function(){
 
 <div class="container module-main"  style="background-color:white;color:#fff;height:220px;">
 
-	<h1 style="padding-top: 50px; color : #2196F3; "> ${viewData[0].ENT_INDUTY_NM} </h1>
+	<h1 style="padding-top: 50px; color : #2196F3; ">  ${entInfo.ENT_NM}</h1>
 
       
        <div class="btn btn-app follow"  id="btnFollow" onclick="classToggle()">
@@ -156,7 +196,7 @@ $(document).ready(function(){
 
 	<div style="float: right">
 		<button type="button" class="btn btn-info ">기업리뷰작성</button>
-		<button type="button" class="btn btn-info" id="myBtn2">면접후기
+		<button type="button" class="btn btn-info" id="myBtn2">면접후기</button>
 	</div>
 
 
@@ -172,25 +212,25 @@ $(document).ready(function(){
 				<li style="height: 30px"></li>
 				<li><a href="#section1">
 					<!-- <span class="glyphicon glyphicon-bookmark  logo-small" style="font-size: 50px"></span> -->
-					<span class="fa fa-building logo-small" ></span>
+					<span class="fa fa-building logo-small" style="display: block;"></span>
 		<!-- 			<span class="fa fa-building-o logo-small" ></span>
 					<span class="fa  fa-paw logo-small" ></span>
 					<span class="fa  fa-paw-o logo-small" ></span> -->
 					
-					<p>기업정보</p></a></li>
+					기업정보</a></li>
 				<li><a href="#section2">
 					<!-- <span class="glyphicon glyphicon-file logo-small"></span> -->
-					<span class="fa fa-weixin logo-small"></span>
-						<p>기업리뷰</p></a></li>
+					<span class="fa fa-weixin logo-small"  style="display: block;"></span>
+						리뷰코멘트</a></li>
 				<li><a href="#section3">
 					<!-- <span class="glyphicon glyphicon-pencil logo-small"></span> -->
-					<span class="fa fa-file-text logo-small"></span>
+					<span class="fa fa-file-text logo-small"  style="display: block;"></span>
 					
-					<p>면접후기</p></a></li>
+					면접후기</a></li>
 				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					<!-- <span class="glyphicon glyphicon-stats logo-small"></span> -->
-					<span class="fa fa-line-chart logo-small" ></span>
-						<p>월별그래프</p> <span class="caret"></span></a>
+					<span class="fa fa-line-chart logo-small"  style="display: block;"></span>
+						월별그래프 <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
 						<li><a href="#section41">월별그래프_평균급여</a></li>
@@ -208,21 +248,18 @@ $(document).ready(function(){
 			
 			<div id="section1" >
 				<h3 id="title">기업정보</h3>
-				<br>
 
 				<div class="panel panel-default">
 					<div class="panel-body" style="color: black">
 
 						<div class="row">
-							<div class="col-sm-3">
-								<span><b>소재지</b> </span><span> &nbsp;|&nbsp;&nbsp; 수원</span>
+							<div class="col-sm-6">
+								<span><b>소재지</b> </span><span> &nbsp;|&nbsp;&nbsp; ${entInfo.ADDR_BCITY_NM} &nbsp; ${entInfo.ADDR_SIGNGU_NM}</span>
 							</div>
-							<div class="col-sm-3">
-								<span><b>산업군</b> </span><span> &nbsp;|&nbsp;&nbsp; 제조업</span>
+							<div class="col-sm-6">
+								<span><b>산업군</b> </span><span> &nbsp;|&nbsp;&nbsp; ${entInfo.ENT_INDUTY_NM}</span>
 							</div>
-							<div class="col-sm-3">
-								<span><b>기업구분</b> </span><span> &nbsp;|&nbsp;&nbsp; KOSPI</span>
-							</div>
+						
 						</div>
 
 
@@ -235,14 +272,15 @@ $(document).ready(function(){
 								<button type="button" class="btn btn-default btn-lg btn-block"
 									id="btnA">
 									<span style="float: left"><b>인원</b></span> <span
-										style="float: right"><b>98,141 </b>명</span>
+										style="float: right"><b id="person">${entInfo.NPN_SBSCRBER_CNT } </b>명</span>
 								</button>
 							</div>
 							<div class="col-sm-6">
 								<button type="button" class="btn btn-default btn-lg btn-block"
 									id="btnB">
-									<span  style="float: left"><b>업력</b></span> <span style="float: right"><b>29
-									</b>년</span>
+									<span  style="float: left"><b>업력</b></span> 
+									<span style="float: right"><b id = "establishmentYear" >${entInfo.ENT_FOND_YMD}</b>
+									년</span>
 								</button>
 							</div>
 						</div>
@@ -252,15 +290,15 @@ $(document).ready(function(){
 							<div class="col-sm-6">
 								<button type="button" class="btn btn-default btn-lg btn-block"
 									id="btnC">
-									<span  style="float: left"><b>입사</b></span> <span style="float: right"><b>5,486
-									</b>명 <b>6.0 </b>%</span>
+									<span  style="float: left"><b>입사</b></span> <span style="float: right"><b id="newPerson">${person.newPerson}
+									 &nbsp;</b> &nbsp;명  &nbsp; &nbsp;<b id="newPersonPercent"></b> &nbsp;%</span>
 								</button>
 							</div>
 							<div class="col-sm-6">
 								<button type="button" class="btn btn-default btn-lg btn-block"
 									id="btnD">
-									<span  style="float: left"><b>퇴사</b></span> <span style="float: right"><b>3,104
-									</b>명 <b>3.0 </b>%</span>
+									<span  style="float: left"><b>퇴사</b></span> <span style="float: right"><b id="outPerson">${person.outPerson}
+									 &nbsp;</b> &nbsp;명  &nbsp; &nbsp;<b id="outPersonPercent"></b> &nbsp;%</span>
 								</button>
 							</div>
 						</div>
@@ -356,21 +394,8 @@ $(document).ready(function(){
 
 
 						<div class="row">
-							<div class="col-sm-6">
-								<div class="col-sm-5">
-									<p style="text-align: right;">
-										<b>올해 입사자 평균연봉</b>
-									</p>
-									<p style="text-align: right;">(국민연금)</p>
 
-								</div>
-								<div class="col-sm-7">
-									<h1>
-										<b>6,663 만원</b>
-									</h1>
-								</div>
-							</div>
-							<div class="col-sm-6">
+				
 								<div class="col-sm-5">
 
 									<p style="text-align: right;">
@@ -380,10 +405,10 @@ $(document).ready(function(){
 								</div>
 								<div class="col-sm-7">
 									<h1>
-										<b>10,250 만원</b>
+										<b ><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span>만원</b>
 									</h1>
 								</div>
-							</div>
+			
 						</div>
 
 
@@ -393,11 +418,11 @@ $(document).ready(function(){
 </div>
 
 			</div>
-			<!-- 기업리뷰//////////////////////////////////////////////////////////////////////////////// -->
+			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 			<div id="section2">
-				<h3 id="title">기업리뷰</h3>
-				<button type="button" class="btn btn-infofault">기업리뷰 작성</button>
+				<h3 id="title">리뷰코멘트</h3>
+				<button type="button" class="btn btn-infofault">리뷰코멘트 작성</button>
 				<p>Try to scroll this section and look at the navigation list
 					while scrolling!</p>
 				<div class="panel-group " id="accordion">
