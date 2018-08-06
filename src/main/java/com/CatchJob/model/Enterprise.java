@@ -1,6 +1,5 @@
 package com.CatchJob.model;
 
-
 /* 기업정보 */
 public class Enterprise {
 	private int entIndex; // 사업장 식별번호
@@ -16,6 +15,7 @@ public class Enterprise {
 	private int employeeCount; // 사원수(월단위 갱신)
 	private int entranceCount; // 입사자수(년간)
 	private int retirementCount; // 퇴사자수(년간)
+	private int salaryAvg; // 평균연봉(년간)
 	private float evaluationAvg; // 기업 평가점수(리뷰등록마다 갱신) TODO
 
 	public int getEntIndex() {
@@ -130,14 +130,22 @@ public class Enterprise {
 		this.evaluationAvg = evaluationAvg;
 	}
 
+	public int getSalaryAvg() {
+		return salaryAvg;
+	}
+
+	public void setSalaryAvg(int salaryAvg) {
+		this.salaryAvg = salaryAvg;
+	}
+
 	@Override
 	public String toString() {
 		return "Enterprise [entIndex=" + entIndex + ", entName=" + entName + ", entBizRegNum=" + entBizRegNum
 				+ ", industryCode=" + industryCode + ", industryName=" + industryName + ", entStyleType=" + entStyleType
 				+ ", entSubscriberFlag=" + entSubscriberFlag + ", entFlag=" + entFlag + ", entFoundationDate="
 				+ entFoundationDate + ", entRoadAddrName=" + entRoadAddrName + ", employeeCount=" + employeeCount
-				+ ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount + ", evaluationAvg="
-				+ evaluationAvg + "]";
+				+ ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount + ", salaryAvg="
+				+ salaryAvg + ", evaluationAvg=" + evaluationAvg + "]";
 	}
 
 }

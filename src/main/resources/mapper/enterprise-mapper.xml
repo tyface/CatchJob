@@ -5,36 +5,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.CatchJob.dao.EnterpriseDao">
 
 	<select id="selectListEnt" resultMap="entMap">
-		SELECT ent.ENT_IDX,
-		ent.ENT_NM, ent.ENT_INDUTY_NM,up.SALARY, up.NPN_SBSCRBER_CNT,
-		ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
-		FROM ENTERPRISE_TB ent
-		LEFT JOIN
-		UPDATE_ENT_INFO_TB up
-		ON ent.ENT_IDX = up.ENT_IDX
-		LEFT JOIN
-		LEGAL_DONG_TB ld
-		ON ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD
-		AND ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
-		AND ld.ADDR_EMD_CD =
-		IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
-		WHERE
-		ent.ENT_SBSCRB_ST = 1 AND ent.ENT_NM LIKE CONCAT('%',#{keyword},'%')
-		ORDER BY LENGTH(ent.ENT_NM),ent.ENT_NM
-
+		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
+		FROM 		ENTERPRISE_TB ent
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		LEFT JOIN 	LEGAL_DONG_TB ld 
+		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
+		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
+		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
+		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
+		ORDER BY 	LENGTH(ent.ENT_NM),ent.ENT_NM
+		
 	</select>
-
-	<select id="selectListEmpCntRank" parameterType="int"
-		resultType="hashMap">
-		SELECT ent.ENT_IDX, ent.ENT_NM, up.NPN_SBSCRBER_CNT
-		FROM
-		ENTERPRISE_TB ent
-		LEFT JOIN UPDATE_ENT_INFO_TB up
-		ON ent.ENT_IDX =
-		up.ENT_IDX
-		WHERE ent.ENT_SBSCRB_ST = 1
-		ORDER BY up.NPN_SBSCRBER_CNT DESC
-		LIMIT 5
+	
+	<select id="selectListEmpCntRank" parameterType="int" resultType="map">
+		SELECT 		ent.ENT_IDX, ent.ENT_NM, up.NPN_SBSCRBER_CNT
+		FROM 		ENTERPRISE_TB ent
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		WHERE 		ent.ENT_SBSCRB_ST = 1 
+		ORDER BY 	up.NPN_SBSCRBER_CNT DESC 
+		LIMIT 		#{RANK_VIEW_COUNT}
 	</select>
 <select id="selectEntInfo" parameterType="int"		resultType="map">
 		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,ent.ENT_FOND_YMD,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
@@ -80,6 +71,7 @@ SELECT a.ENT_IDX,sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as 
 		<result property="entranceCount" column="NPN_NW_SBSCRBER_CNT" />
 		<result property="retirementCount" column="NPN_SCBT_CNT" />
 		<result property="evaluationAvg" column="EVALUATION_AVG" />
+		<result property="salaryAvg" column="PAY_AMT_AVG" />
 	</resultMap>
 </mapper>
 

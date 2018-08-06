@@ -124,3 +124,55 @@ footer {
       margin: 70px 0;
   }
 
+
+/* Star 기업리스트 페이지 */
+#entListPage {
+	border: 1px solid lightgray;
+	width: 730px;
+	margin: 10px auto;
+	background-color: white;
+	box-sizing: border-box;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+}
+#entListEachPage {
+	width: 700px;
+	height: 200px;
+	margin: 0 auto;
+	border-bottom: 1px dashed #ccc;
+	padding: 30px 30px 0px 30px;
+	overflow: hidden;
+	font-size: 15px;
+}
+
+.fa {
+	font-size: 17px;
+}
+
+#entName {
+	font-size: 25px;
+}
+
+
+#btnFollow{
+	color: #ffcc00;
+	font-size: 20px;
+	padding:0px;
+}
+
+#btnReview {
+	display: inline-block;
+	float: right;
+}
+
+.clear {
+	clear: left;
+}
+
+body {
+    position: relative;
+    background-color: #EAEAEA;
+}
+/* End 기업리스트 페이지  */
+

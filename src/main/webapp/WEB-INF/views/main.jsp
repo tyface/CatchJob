@@ -54,13 +54,10 @@
 					<div class="item active">
 						<div class="item">
 							<h3>인기검색회사</h3>
-							<p>삼성(주)드림클래스</p>
-							<p>삼성(주)드림클래스</p>
-							<p>삼성(주)드림클래스</p>
-							<p>삼성(주)드림클래스</p>
-							<p>삼성(주)드림클래스</p>
-							<p>삼성(주)드림클래스</p>
-							<h4></h4>
+							<c:forEach var="popularRank" items="${popularSearcheList}">
+							<a href="enterprise/view?entIndex=${popularRank.ENT_IDX}">${popularRank.ENT_NM}</a><br>
+						</c:forEach>
+						<h4></h4>
 						</div>
 					</div>
 					<div class="item">

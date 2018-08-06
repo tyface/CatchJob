@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.NationalPension;
 
 public interface EnterpriseService {
 	// 검색한 기업 리스트 출력

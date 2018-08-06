@@ -12,7 +12,7 @@ public class IndustryCode {
 		return industryCode;
 	}
 	public void setIndustryCode(int industryCode) {
-		industryCode = industryCode;
+		this.industryCode = industryCode;
 	}
 	public String getLargeCatagory() {
 		return largeCatagory;
