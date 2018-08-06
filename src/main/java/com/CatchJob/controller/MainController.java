@@ -38,6 +38,11 @@ public class MainController {
 		return "forward:enterprise/search";
 	}
 	
+	@RequestMapping(value = "/admin")
+	public String admin() {
+		return "admin/admin-main";
+	}
+
 	@RequestMapping(value = "/profile")
 	public String profile(Model model, HttpSession session) {
 		Map<String, Object> data = new HashMap<String,Object>();
@@ -51,7 +56,6 @@ public class MainController {
 		
 		return "profile-interviews";
 	}
-
 
 	
 }
