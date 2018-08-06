@@ -38,28 +38,34 @@ public class EnterpriseController {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);
 		model.addAttribute("entList", entService.getEntList(data));
-		model.addAttribute("countList", entService.getEntList(data));
+
 		// 기업 리스트 출력
 		return "enterprise-list";
 	}
 
 	 @RequestMapping(value = "/view")
+<<<<<<< HEAD
 	 public String entDetailsForm(int entIndex,HttpServletRequest req, Model model) throws UnknownHostException {
 		List<Map<String, String>> viewData = entService.empCountGraph(entIndex);
-		Map<String, String> person = entService.selectEntPeopleInfo(entIndex);
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("ENT_IDX", Integer.toString(entIndex));
 		mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
 		mapData.put("BROWSER", req.getHeader("User-Agent"));
 		recordService.regViewRecord(mapData);
 		System.out.println(viewData);
-//		  model.addAttribute("viewDataSize", entService.empCountGraph(ent_idx).size());
-//		model.addAttribute("viewData", viewData);
-		model.addAttribute("viewDataJson",new Gson().toJson(entService.empCountGraph(entIndex)));
-//		model.addAttribute("viewData",new Gson().toJson(viewData));
-//		  System.out.println("==================="+new Gson().toJson(viewData));
-		model.addAttribute("entInfo",entService.getEntInfo(entIndex));
-		model.addAttribute("personJson",new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
+=======
+	 public String entDetailsForm(int entIndex, Model model) {
+//		List<Map<String, String>> viewData = entService.empCountGraph(entIndex);
+//		Map<String, String> person = entService.selectEntPeopleInfo(entIndex);
+//		System.out.println(viewData);
+>>>>>>> 8917c3dd2a44aa7cbf07342fe7c21e1c7dc62d7b
+//		 model.addAttribute("viewDataSize", entService.empCountGraph(ent_idx).size());
+//		 model.addAttribute("viewData", viewData);
+		 model.addAttribute("viewDataJson",new Gson().toJson(entService.empCountGraph(entIndex)));
+//		 model.addAttribute("viewData",new Gson().toJson(viewData));
+//		 System.out.println("==================="+new Gson().toJson(viewData));
+		 model.addAttribute("entInfo",entService.getEntInfo(entIndex));
+		 model.addAttribute("personJson",new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
 
 		 return "enterprise-view";
 		 }

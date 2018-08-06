@@ -279,11 +279,11 @@ compile 		group: 'org.mybatis', 			name: 'mybatis', 			version:'3.4.5'
 compile 		group: 'org.mybatis', 			name: 'mybatis-spring', 	version:'1.3.1'
 
 compile 		group: 'ch.qos.logback', 		name: 'logback-classic', 	version:'1.1.3'
-
 compile 		group: 'log4j', 				name: 'log4j', 				version:'1.2.17'
 
 //compile 		group: 'com.oracle', 			name: 'ojdbc6', 			version:'12.1.0.1-atlassian-hosted' //오라클용 디펜던시
-compile 		group: 'org.mariadb.jdbc', 		name: 'mariadb-java-client', version: '2.2.5'
+compile 		group: 'org.mariadb.jdbc', 		name: 'mariadb-java-client', version: '2.2.5' //마리아db 커넥터
+compile			group: 'org.apache.commons', 			name: 'commons-dbcp2', version: '2.1.1' //datasource
 
 
 compile 		group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
@@ -296,6 +296,8 @@ compile 		group: 'org.springframework.security', name: 'spring-security-web', ve
 compile 		group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.3.RELEASE'
 compile 		group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.2.3.RELEASE'
 compile 		group: 'com.google.code.gson',		   name: 'gson', version: '2.8.0'
+
+compile 		group: 'com.github.scribejava', 		name: 'scribejava-apis', 		version: '5.5.0'
 
 
 }
