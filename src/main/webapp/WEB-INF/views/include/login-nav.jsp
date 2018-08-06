@@ -290,7 +290,7 @@ $(document).ready(function(){
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">CATCH JOB</a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
     </div>
 
     <form class="navbar-form navbar-left" action="/action_page.php">

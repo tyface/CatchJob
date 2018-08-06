@@ -13,4 +13,5 @@
 		<typeAlias alias="map" type="java.util.Map" />
 	</typeAliases>
 
+
 </configuration>

@@ -9,13 +9,15 @@ public class Enterprise {
 	private String industryName; // 업종명
 	private String entStyleType; // 사업장형태구분(1:법인,2:개인)
 	private String entSubscriberFlag; // 사업장가입상태(1:등록,2:탈퇴) TODO
-	private String entFlag; // 사업장 표출상태(1:사용,2:삭제,3:대기) TODO
 	private String entFoundationDate; // 설립일
-	private String entRoadAddrName; // 사업장도로명주소 TODO 사업장 소재지로 변경(시군구 까지 표출)
+	private String bcityName; // 시,도 이름
+	private String signguName; // 시,군,구 이름
 	private int employeeCount; // 사원수(월단위 갱신)
 	private int entranceCount; // 입사자수(년간)
 	private int retirementCount; // 퇴사자수(년간)
 	private int salaryAvg; // 평균연봉(년간)
+	private int reviewCount; // 리뷰개수
+	private int interviewCount; // 면접후기개수
 	private float evaluationAvg; // 기업 평가점수(리뷰등록마다 갱신) TODO
 
 	public int getEntIndex() {
@@ -74,14 +76,6 @@ public class Enterprise {
 		this.entSubscriberFlag = entSubscriberFlag;
 	}
 
-	public String getEntFlag() {
-		return entFlag;
-	}
-
-	public void setEntFlag(String entFlag) {
-		this.entFlag = entFlag;
-	}
-
 	public String getEntFoundationDate() {
 		return entFoundationDate;
 	}
@@ -90,12 +84,20 @@ public class Enterprise {
 		this.entFoundationDate = entFoundationDate;
 	}
 
-	public String getEntRoadAddrName() {
-		return entRoadAddrName;
+	public String getBcityName() {
+		return bcityName;
 	}
 
-	public void setEntRoadAddrName(String entRoadAddrName) {
-		this.entRoadAddrName = entRoadAddrName;
+	public void setBcityName(String bcityName) {
+		this.bcityName = bcityName;
+	}
+
+	public String getSignguName() {
+		return signguName;
+	}
+
+	public void setSignguName(String signguName) {
+		this.signguName = signguName;
 	}
 
 	public int getEmployeeCount() {
@@ -122,14 +124,6 @@ public class Enterprise {
 		this.retirementCount = retirementCount;
 	}
 
-	public float getEvaluationAvg() {
-		return evaluationAvg;
-	}
-
-	public void setEvaluationAvg(float evaluationAvg) {
-		this.evaluationAvg = evaluationAvg;
-	}
-
 	public int getSalaryAvg() {
 		return salaryAvg;
 	}
@@ -138,14 +132,39 @@ public class Enterprise {
 		this.salaryAvg = salaryAvg;
 	}
 
+	public int getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+	public int getInterviewCount() {
+		return interviewCount;
+	}
+
+	public void setInterviewCount(int interviewCount) {
+		this.interviewCount = interviewCount;
+	}
+
+	public float getEvaluationAvg() {
+		return evaluationAvg;
+	}
+
+	public void setEvaluationAvg(float evaluationAvg) {
+		this.evaluationAvg = evaluationAvg;
+	}
+
 	@Override
 	public String toString() {
 		return "Enterprise [entIndex=" + entIndex + ", entName=" + entName + ", entBizRegNum=" + entBizRegNum
 				+ ", industryCode=" + industryCode + ", industryName=" + industryName + ", entStyleType=" + entStyleType
-				+ ", entSubscriberFlag=" + entSubscriberFlag + ", entFlag=" + entFlag + ", entFoundationDate="
-				+ entFoundationDate + ", entRoadAddrName=" + entRoadAddrName + ", employeeCount=" + employeeCount
+				+ ", entSubscriberFlag=" + entSubscriberFlag + ", entFoundationDate=" + entFoundationDate
+				+ ", bcityName=" + bcityName + ", signguName=" + signguName + ", employeeCount=" + employeeCount
 				+ ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount + ", salaryAvg="
-				+ salaryAvg + ", evaluationAvg=" + evaluationAvg + "]";
+				+ salaryAvg + ", reviewCount=" + reviewCount + ", interviewCount=" + interviewCount + ", evaluationAvg="
+				+ evaluationAvg + "]";
 	}
 
 }

@@ -5,8 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.CatchJob.dao.EnterpriseDao">
 
 	<select id="selectListEnt" resultMap="entMap">
-		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
+		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
+					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
 		FROM 		ENTERPRISE_TB ent
+		LEFT JOIN 	REVIEW_TB revw 
+		ON 			ent.ENT_IDX = revw.ENT_IDX
+		LEFT JOIN 	INTERVIEW_TB intvw 
+		ON 			ent.ENT_IDX = intvw.ENT_IDX
 		LEFT JOIN 	UPDATE_ENT_INFO_TB up
 		ON 			ent.ENT_IDX = up.ENT_IDX
 		LEFT JOIN 	LEGAL_DONG_TB ld 
@@ -14,8 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
 		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
+		GROUP BY 	ent.ENT_IDX
 		ORDER BY 	LENGTH(ent.ENT_NM),ent.ENT_NM
-		
 	</select>
 	
 	<select id="selectListEmpCntRank" parameterType="int" resultType="map">
@@ -27,7 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY 	up.NPN_SBSCRBER_CNT DESC 
 		LIMIT 		#{RANK_VIEW_COUNT}
 	</select>
-<select id="selectEntInfo" parameterType="int"		resultType="map">
+	
+	<select id="selectEntInfo" parameterType="int" resultType="map">
 		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,ent.ENT_FOND_YMD,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
 		FROM 		ENTERPRISE_TB ent
 		LEFT JOIN 	UPDATE_ENT_INFO_TB up
@@ -37,16 +43,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
     	WHERE ent.ENT_IDX = #{ENT_IDX}
-</select>
-<!-- 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합) -->
-<select id="selectEntPeopleInfo" parameterType="int" resultType="map">
-SELECT a.ENT_IDX,sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as outPerson
+	</select>
+	
+	<!-- 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합) -->
+	<select id="selectEntPeopleInfo" parameterType="int" resultType="map">
+	SELECT a.ENT_IDX,sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as outPerson
 		FROM (SELECT ENT_IDX,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM
 		FROM NPN_DTLS_TB
 		WHERE ENT_IDX = #{ENT_IDX}
 		order by PAY_YM desc		    	
 		limit 12)a
-</select>
+	</select>
+	
 	<select id="selectGraphInf" parameterType="int"
 		resultType="hashMap">
 		SELECT
@@ -64,14 +72,16 @@ SELECT a.ENT_IDX,sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as 
 		<result property="industryName" column="ENT_INDUTY_NM" />
 		<result property="entStyleType" column="ENT_STLE_TYPE" />
 		<result property="entSubscriberFlag" column="ENT_SBSCRB_ST" />
-		<result property="entFlag" column="ENT_FL" />
 		<result property="entFoundationDate" column="ENT_FOND_YMD" />
-		<result property="entRoadAddrName" column="ENT_ROADADDR_NM" />
+		<result property="bcityName" column="ADDR_BCITY_NM" />
+		<result property="signguName" column="ADDR_SIGNGU_NM" />
 		<result property="employeeCount" column="ENT_EMPLOYEE_CNT" />
 		<result property="entranceCount" column="NPN_NW_SBSCRBER_CNT" />
 		<result property="retirementCount" column="NPN_SCBT_CNT" />
 		<result property="evaluationAvg" column="EVALUATION_AVG" />
 		<result property="salaryAvg" column="PAY_AMT_AVG" />
+		<result property="reviewCount" column="REVW_CNT" />
+		<result property="interviewCount" column="INTVW_CNT" />
 	</resultMap>
 	
 	<!-- 면접후기 작성하기 -->
