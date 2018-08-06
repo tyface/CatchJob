@@ -128,20 +128,34 @@ footer {
 /* Star 기업리스트 페이지 */
 #entListPage {
 	border: 1px solid lightgray;
-	width: 730px;
-	margin: 10px auto;
+	width: 100%;
+	height: 100%;
+	margin: auto;
 	background-color: white;
 	box-sizing: border-box;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
-    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+  box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
 }
-#entListEachPage {
-	width: 700px;
-	height: 200px;
-	margin: 0 auto;
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+    #entListPage {
+        width: 100%;
+    }
+}
+/* Desktop */
+@media (min-width:1025px) {
+    #entListPage {
+        width: 70%;
+    }
+}
+
+.entList {
+	width: 90%;
+	height: 150px;
+	margin: auto;
 	border-bottom: 1px dashed #ccc;
-	padding: 30px 30px 0px 30px;
+	padding:3%;
 	overflow: hidden;
 	font-size: 15px;
 }
