@@ -30,7 +30,9 @@ public class MemberController {
 		boolean result = MemberService.login(mberId, mberPw);
 		String data = "";
 		if (result) {
-			session.setAttribute("mberId", mberId);
+			Member member = MemberService.getMemberById(mberId);
+			session.setAttribute("mberIndex", member.getMberIndex());
+	
 			data = "{\"result\" : true}";
 		} else {
 			data = "{\"result\" : false}";
@@ -82,12 +84,12 @@ public class MemberController {
 	/*  로그아웃  */
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("mberId");
+		session.removeAttribute("mberIndex");
 		return "redirect:/";
 	}
 	
 
-	/* 탈퇴  */
+	/* 탈퇴 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(Member member) {
 		if (MemberService.updateMember(member)) {
@@ -97,7 +99,7 @@ public class MemberController {
 			return null;
 		}
 	}
-
+ */
 	
 	/*@RequestMapping("/naverlogin")
 	public void naverLogin(HttpServletRequest request) {
