@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT 		#{RANK_VIEW_COUNT}
 	</select>
 	
-	<select id="selectEntInfo" parameterType="int"		resultType="map">
+	<select id="selectEntInfo" parameterType="int" resultType="map">
 		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,ent.ENT_FOND_YMD,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
 		FROM 		ENTERPRISE_TB ent
 		LEFT JOIN 	UPDATE_ENT_INFO_TB up
@@ -72,9 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="industryName" column="ENT_INDUTY_NM" />
 		<result property="entStyleType" column="ENT_STLE_TYPE" />
 		<result property="entSubscriberFlag" column="ENT_SBSCRB_ST" />
-		<result property="entFlag" column="ENT_FL" />
 		<result property="entFoundationDate" column="ENT_FOND_YMD" />
-		<result property="entRoadAddrName" column="ENT_ROADADDR_NM" />
+		<result property="bcityName" column="ADDR_BCITY_NM" />
+		<result property="signguName" column="ADDR_SIGNGU_NM" />
 		<result property="employeeCount" column="ENT_EMPLOYEE_CNT" />
 		<result property="entranceCount" column="NPN_NW_SBSCRBER_CNT" />
 		<result property="retirementCount" column="NPN_SCBT_CNT" />
