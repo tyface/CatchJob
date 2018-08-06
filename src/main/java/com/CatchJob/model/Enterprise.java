@@ -16,6 +16,8 @@ public class Enterprise {
 	private int entranceCount; // 입사자수(년간)
 	private int retirementCount; // 퇴사자수(년간)
 	private int salaryAvg; // 평균연봉(년간)
+	private int reviewCount; // 리뷰개수
+	private int interviewCount; // 면접후기개수
 	private float evaluationAvg; // 기업 평가점수(리뷰등록마다 갱신) TODO
 
 	public int getEntIndex() {
@@ -138,6 +140,22 @@ public class Enterprise {
 		this.salaryAvg = salaryAvg;
 	}
 
+	public int getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+	public int getInterviewCount() {
+		return interviewCount;
+	}
+
+	public void setInterviewCount(int interviewCount) {
+		this.interviewCount = interviewCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Enterprise [entIndex=" + entIndex + ", entName=" + entName + ", entBizRegNum=" + entBizRegNum
@@ -145,7 +163,8 @@ public class Enterprise {
 				+ ", entSubscriberFlag=" + entSubscriberFlag + ", entFlag=" + entFlag + ", entFoundationDate="
 				+ entFoundationDate + ", entRoadAddrName=" + entRoadAddrName + ", employeeCount=" + employeeCount
 				+ ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount + ", salaryAvg="
-				+ salaryAvg + ", evaluationAvg=" + evaluationAvg + "]";
+				+ salaryAvg + ", reviewCount=" + reviewCount + ", interviewCount=" + interviewCount + ", evaluationAvg="
+				+ evaluationAvg + "]";
 	}
 
 }
