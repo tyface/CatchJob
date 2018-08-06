@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.CatchJob.model.Enterprise;
+import com.CatchJob.model.Interview;
 
 public interface EnterpriseService {
 	// 검색한 기업 리스트 출력
@@ -29,5 +30,18 @@ public interface EnterpriseService {
 	
 	
 	public List<Map<String, String>> getEmpCntList();
+	
+	
+	
+	
+	
+	
+	// 면접후기 추가
+	public boolean  insertInterview(Interview interview);
+
+	// 면접후기 수정
+	public boolean  updateInterview(Interview interview);
+	//면접정보 가져오기
+	public Map<String,String> selectListByIndex(Map<String, Object> data);
 
 }

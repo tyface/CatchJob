@@ -23,6 +23,6 @@ public interface InterviewDao {
 	public List<Interview> selectListByEntIndex(Map<String, String> data);
 
 	// 면접후기 삭제
-	// public int deleteInterview(int mberIndex, int EntIndex); TODO 사용안함
+	//public int deleteInterview(int mberIndex, int EntIndex); TODO 사용안함
 
 }

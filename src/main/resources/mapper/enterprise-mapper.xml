@@ -83,5 +83,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="reviewCount" column="REVW_CNT" />
 		<result property="interviewCount" column="INTVW_CNT" />
 	</resultMap>
+	
+	<!-- 면접후기 작성하기 -->
+	<insert id="insertInterview" parameterType="interview" >
+		INSERT INTO INTERVIEW_TB (MBER_IDX,ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTERVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT) 
+		VALUES (#{mberIndex},#{entIndex},#{intrvwDifficulty},#{intrvwDate},#{intrvwRoute},#{intrvwReview},#{intrvwQuestion},#{intrvwAnswer},#{intrvwFlag},#{intrvwResult},#{intrvwExperience},#{presentationDate},sysdate())
+	</insert>
+	<update id="updateInterview" parameterType="interview" >
+		UPDATE INTERVIEW_TB
+		SET INTRVW_DFFLY=#{intrvwDifficulty},INTRVW_YM=#{intrvwDate},INTRVW_ROUTE=#{intrvwRoute},INTRVW_REVW=#{intrvwReview},INTRVW_QESTN=#{intrvwQuestion},INTRVW_ANSWER=#{intrvwAnswer},INTERVW_FL=#{intrvwFlag},INTRVW_RESULT=#{intrvwResult},INTRVW_EXPRNC=#{intrvwExperience},PRESNATN_DT=#{presentationDate},sysdate()
+		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=#{mberIndex}
+	</update>
+	
+	<select id="selectListByIndex" parameterType="map" resultType="map">
+		SELECT e.ENT_NM, MBER_IDX,e.ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTERVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT
+		FROM INTERVIEW_TB i
+		LEFT JOIN ENTERPRISE_TB e
+		ON i.ENT_IDX = e.ENT_IDX
+		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex}
+	</select>
+
+	<resultMap type="interview" id="interviewMap">
+		<result property="mberIndex" column="MBER_IDX" />
+		<result property="entIndex" column="ENT_IDX" />
+		<result property="intrvwDifficulty" column="INTRVW_DFFLY" />
+		<result property="intrvwDate" column="INTRVW_YM" />
+		<result property="intrvwRoute" column="INTRVW_ROUTE" />
+		<result property="intrvwReview" column="INTRVW_REVW" />
+		<result property="intrvwQuestion" column="INTRVW_QESTN" />
+		<result property="intrvwAnswer" column="INTRVW_ANSWER" />
+		<result property="intrvwFlag" column="INTERVW_FL" />
+		<result property="intrvwResult" column="INTRVW_RESULT" />
+		<result property="intrvwExperience" column="INTRVW_EXPRNC" />
+		<result property="presentationDate" column="PRESNATN_DT" />
+		<result property="regDate" column="REG_DT" />
+	</resultMap>
 </mapper>
 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.CatchJob.model.Interview;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.RecordService;
 import com.google.gson.Gson;
@@ -58,7 +60,37 @@ public class EnterpriseController {
 		model.addAttribute("entInfo",entService.getEntInfo(entIndex));
 		model.addAttribute("personJson",new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
 
-		 return "enterprise-view";
-		 }
+		return "enterprise-view";
+	}
+
+	@RequestMapping(value = "/writeInterview")
+	public void writeInterview(Interview interview, HttpSession session) {
+		System.out.println("진입성공-------------------------123");
+		interview.setMberIndex((int) (session.getAttribute("mberIndex")));
+		interview.setIntrvwFlag("1");
+		System.out.println(interview);
+//		boolean result = entService.insertInterview(interview);
+		entService.insertInterview(interview);
+		
+		
+	
+	}
+	
+	@RequestMapping(value = "/updateInterview")
+	public void updateInterview(Interview interview, HttpSession session) {
+		System.out.println("진입성공-------------------------");
+		interview.setMberIndex((int) (session.getAttribute("mberIndex")));
+		interview.setIntrvwFlag("1");
+		System.out.println(interview);
+//		boolean result = entService.insertInterview(interview);
+		Map<String, Object> data = new HashMap<String,Object>();
+		data.put("mberIndex", (int)(session.getAttribute("mberIndex")));
+		data.put("entIndex", interview.getEntIndex());
+		entService.updateInterview(interview);
+		
+
+	}
+	
+
 
 }
