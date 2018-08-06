@@ -1356,7 +1356,9 @@ $(document).ready(function(){
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<div class="modal-content">
+		<div class="modal-content"  >
+		<form action="writeInterview" id="writeForm" method="post">
+		<input type="hidden" name="entIndex" value="${entInfo.ENT_IDX}">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">면접후기 작성</h4>
@@ -1364,81 +1366,85 @@ $(document).ready(function(){
 			<div class="modal-body ">
 
 				<!-- 기업명  -->
-				<div class="form-group">
+	<!-- 			<div class="form-group">
 					<label>기업명</label> <select class="form-control">
 						<option>삼성전자</option>
 						<option></option>
 						<option></option>
 						<option></option>
 					</select>
+				</div> -->
+
+				<div class="form-group">
+					<label>기업명</label>
+						<input type="text" class="form-control"
+								value="${entInfo.ENT_NM}" readonly="readonly">
 				</div>
-
-
-				<!-- 면접경험 radio-->
+				<!-- 면접경험 radio...........intrvwExperience-->
 				<div class="form-group">
 					<label>면접 경험 </label>
 					<div class="radio">
-						<label> <input type="radio" name="optionsRadios"
-							id="optionsRadios1" value="option1" checked>부정적
+						<label> <input type="radio" name="intrvwExperience"
+							id="optionsRadios1" value="1" checked >부정적
 						</label>
 					</div>
 					<div class="radio">
-						<label> <input type="radio" name="optionsRadios"
-							id="optionsRadios2" value="option2">보통
+						<label> <input type="radio" name="intrvwExperience"
+							id="optionsRadios2" value="2">보통
 						</label>
 					</div>
 					<div class="radio">
-						<label> <input type="radio" name="optionsRadios"
-							id="optionsRadios3" value="option3">긍정적
+						<label> <input type="radio" name="intrvwExperience"
+							id="optionsRadios3" value="3">긍정적
 						</label>
 					</div>
 				</div>
 
-				<!-- 면접에서 채용까지의 과정 요약 -->
+				<!--면접후기// 면접에서 채용까지의 과정 요약 -->
 				<div class="form-group">
 					<label>면접에서 채용까지의 과정 요약</label>
-					<textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-				</div>
+					<textarea class="form-control" rows="3" name="intrvwReview" placeholder="Enter ..."></textarea>
+				</div> 
 				<!-- 면접질문 입력하기 -->
 				<div class="form-group">
 					<label>면접질문 입력하기</label>
-					<textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+					<textarea class="form-control" rows="3"  name="intrvwQuestion" placeholder="Enter ..."></textarea>
 				</div>
 				<!-- 면접에 대한 답변 -->
 				<div class="form-group">
 					<label>작성한 면접질문에 대한 답변을 입력하세요.</label>
-					<textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+					<textarea class="form-control" rows="3" name="intrvwAnswer"  placeholder="Enter ..."></textarea>
 				</div>
 
 				<!-- 면접난이도 -->
 				<div class="form-group">
-					<label>면접난이도</label> <select class="form-control">
-						<option>매우 쉬움</option>
-						<option>쉬움</option>
-						<option>보통</option>
-						<option>어려움</option>
-						<option>매우 어려움</option>
+					<label>면접난이도</label> <select class="form-control" name="intrvwDifficulty">
+						<option  value="1">매우 쉬움</option>
+						<option  value="2">쉬움</option>
+						<option  value="3">보통</option>
+						<option  value="4">어려움</option>
+						<option  value="5">매우 어려움</option>
 					</select>
 				</div>
 				<!-- 면접결과 -->
 				<div class="form-group">
-					<label>이 기업에 합격하셨나요?</label> <select class="form-control">
-						<option>합격</option>
-						<option>불합격</option>
-						<option>대기중</option>
-						<option>합격했으나 취업하지 않음</option>
+					<label>이 기업에 합격하셨나요?</label> <select class="form-control" name="intrvwResult">
+						<option value="1">합격</option>
+						<option value="2">불합격</option>
+						<option value="3">대기중</option>
+						<option value="4">합격했으나 취업하지 않음</option>
 
 					</select>
 				</div>
 				<!-- 면접경로 -->
 				<div class="form-group">
-					<label>면접경로</label> <select class="form-control">
-						<option>공채</option>
-						<option>온라인지원</option>
-						<option>직원추천</option>
-						<option>헤드헌터</option>
-						<option>학교 취업지원센터</option>
-						<option>기타</option>
+					<label>면접경로</label> <select class="form-control" name="intrvwRoute">
+						<option value="1">공채</option>
+						<option value="2">온라인지원</option>
+						<option value="3">직원추천</option>
+						<option value="4">헤드헌터</option>
+						<option value="5">학교 취업지원센터</option>
+						<option value="6">기타</option>
 					</select>
 				</div>
 
@@ -1450,7 +1456,7 @@ $(document).ready(function(){
 						<div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						</div>
-						<input type="text" class="form-control pull-right" id="datepicker">
+						<input type="text" class="form-control pull-right" name="intrvwDate" id="datepicker" placeholder="YYYYMM">
 					</div>
 				</div>
 				<!-- 면접일자/발표시기  -->
@@ -1458,8 +1464,8 @@ $(document).ready(function(){
 					<label>발표시기</label>
 					<div class="row">
 						<div class="col-sm-11">
-							<input type="text" class="form-control"
-								placeholder="면접 결과 발표까지 걸린 시간 ">
+							<input type="text" class="form-control"  name="presentationDate" 
+								placeholder="면접 결과 발표까지 걸린 시간 " >
 						</div>
 						<div class="col-sm-1">
 							<p>일</p>
@@ -1469,8 +1475,9 @@ $(document).ready(function(){
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-infofault" data-dismiss="modal">제출</button>
+				<button type="submit" class="btn btn-infofault" >제출</button> <!-- data-dismiss="modal" -->
 			</div>
+		</form>	
 		</div>
 
 	</div>

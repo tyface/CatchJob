@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
+import com.CatchJob.model.Interview;
 
 @Service
 public class EnterpriseServiceImp implements EnterpriseService {
@@ -33,8 +34,9 @@ public class EnterpriseServiceImp implements EnterpriseService {
 //	}
 	// 기업식별 번호로  기업 정보 가져오기 
 	@Override
-	public Map<String,String> getEntInfo(int entIndex) {		
-		return entDao.selectEntInfo(entIndex);
+	public Map<String,String> getEntInfo(int entIndex) {
+		Map<String,String> entInfo = entDao.selectEntInfo(entIndex);
+		return entInfo;
 	}
 
 	// 그래프 - 인원
@@ -63,4 +65,31 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return payAmtAvg / 0.09 * 12;
 	}
 
+	@Override
+	public boolean  insertInterview(Interview interview) {
+		int result = entDao.insertInterview(interview);
+		if(result > 0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
+
+	@Override
+	public boolean  updateInterview(Interview interview) {
+		int result = entDao.updateInterview(interview);
+		if(result > 0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
+	//면접정보 가져오기 
+	@Override
+	public Map<String,String> selectListByIndex(Map<String, Object> data) {
+		System.out.println("서비스-------------------------------------123");
+		return entDao.selectListByIndex(data);
+	}
+
+	
 }

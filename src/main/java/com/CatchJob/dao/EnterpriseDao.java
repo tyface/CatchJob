@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.CatchJob.model.Enterprise;
+import com.CatchJob.model.Interview;
 
 @Repository
 public interface EnterpriseDao {
@@ -29,4 +30,11 @@ public interface EnterpriseDao {
 	// public int updateEnt(Enterprise ent); TODO 기업정보를 따로 수정할경우가 아직 없음
 	// public int deleteEnt(Enterprise ent); TODO 기업정보를 따로 삭제할경우가 아직 없음
 	
+	
+	// 면접후기 추가
+	public int insertInterview(Interview interview);
+	// 면접후기 수정
+	public int updateInterview(Interview interview);
+	// 면접후기 찾기, 파라미터로 기업식별번호와 회원식별번호 보내주기!
+	public Map<String,String> selectListByIndex(Map<String, Object> data);
 }
