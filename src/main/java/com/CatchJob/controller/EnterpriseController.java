@@ -53,5 +53,11 @@ public class EnterpriseController {
 
 		 return "enterprise-view";
 		 }
+	 
+	 @RequestMapping(value = "/test")
+		public void test(String test, Model model) {
+			System.out.println(test);
+			
+		}
 
 }
