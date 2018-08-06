@@ -32,7 +32,11 @@ public class MainController {
 		return "forward:enterprise/search";
 	}
 	
-
+	@RequestMapping(value = "/admin")
+	public String admin() {
+		return "admin/admin-main";
+	}
+	
 
 	
 }

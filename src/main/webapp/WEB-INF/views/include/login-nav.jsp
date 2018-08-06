@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 로그인 전! -->
-<c:if test="${mberId == null}">
+<c:if test="${mberIndex == null}">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -36,69 +36,69 @@
              <button  id="btnLoginGoogle" class="btn btn-success btn-block">
              <span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>  
              
-                       	
+                          
  <!-- 네이버아이디로로그인 버튼 노출 영역 -->
   <div id="naver_id_login">
-  	<a id="naverIdLogin_loginButton" href="#">
-  		<img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60">
-  	</a>
+     <a id="naverIdLogin_loginButton" href="#">
+        <img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60">
+     </a>
   </div>
   <!-- //네이버아이디로로그인 버튼 노출 영역 -->
  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/resources/js/naver-login-sdk-2.0.js"></script>
 <script type="text/javascript">
-	var url = "http://localhost:8081/catchjob";
-	var naver_id_login = new naver_id_login(
-			"l2e7IfACkCtDXVSFiwXY",
-			url+"/naverlogin");
-	var state = naver_id_login.getUniqState();
-	naver_id_login.setButton("green", 5, 30);
-	naver_id_login
-			.setDomain(url);
-	naver_id_login.setState(state);
-	naver_id_login.setPopup();
-	naver_id_login.init_naver_id_login();
+   var url = "http://localhost:8081/catchjob";
+   var naver_id_login = new naver_id_login(
+         "l2e7IfACkCtDXVSFiwXY",
+         url+"/naverlogin");
+   var state = naver_id_login.getUniqState();
+   naver_id_login.setButton("green", 5, 30);
+   naver_id_login
+         .setDomain(url);
+   naver_id_login.setState(state);
+   naver_id_login.setPopup();
+   naver_id_login.init_naver_id_login();
 
 
-	
-	
-/* 	var naverLogin = new naver.LoginWithNaverId(
-		{
-			clientId: "l2e7IfACkCtDXVSFiwXY",
-			callbackUrl: "http://" + window.location.hostname + ((location.port==""||location.port==undefined)?"":":" + location.port) + "/oauth/sample/callback.html",
-			isPopup: false,
-			loginButton: {color: "green", type: 3, height: 60}
-		}
-	);
-	(4) 네아로 로그인 정보를 초기화하기 위하여 init을 호출
-	naverLogin.init();
-	
-	(4-1) 임의의 링크를 설정해줄 필요가 있는 경우 
-	$("#gnbLogin").attr("href", naverLogin.generateAuthorizeUrl());
+   
+   
+/*    var naverLogin = new naver.LoginWithNaverId(
+      {
+         clientId: "l2e7IfACkCtDXVSFiwXY",
+         callbackUrl: "http://" + window.location.hostname + ((location.port==""||location.port==undefined)?"":":" + location.port) + "/oauth/sample/callback.html",
+         isPopup: false,
+         loginButton: {color: "green", type: 3, height: 60}
+      }
+   );
+   (4) 네아로 로그인 정보를 초기화하기 위하여 init을 호출
+   naverLogin.init();
+   
+   (4-1) 임의의 링크를 설정해줄 필요가 있는 경우 
+   $("#gnbLogin").attr("href", naverLogin.generateAuthorizeUrl());
 
-	 (5) 현재 로그인 상태를 확인 
-	window.addEventListener('load', function () {
-		naverLogin.getLoginStatus(function (status) {
-			if (status) {
-				 (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다.
-				setLoginStatus();
-			}
-		});
-	});
+    (5) 현재 로그인 상태를 확인 
+   window.addEventListener('load', function () {
+      naverLogin.getLoginStatus(function (status) {
+         if (status) {
+             (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다.
+            setLoginStatus();
+         }
+      });
+   });
 
-	 (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다. 
-	function setLoginStatus() {
-		var profileImage = naverLogin.user.getProfileImage();
-		var nickName = naverLogin.user.getNickName();
-		$("#naverIdLogin_loginButton").html('<br><br><img src="' + profileImage + '" height=50 /> <p>' + nickName + '님 반갑습니다.</p>');
-		$("#gnbLogin").html("Logout");
-		$("#gnbLogin").attr("href", "#");
-		 (7) 로그아웃 버튼을 설정하고 동작을 정의합니다. 
-		$("#gnbLogin").click(function () {
-			naverLogin.logout();
-			location.reload();
-		});
-	} 
+    (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다. 
+   function setLoginStatus() {
+      var profileImage = naverLogin.user.getProfileImage();
+      var nickName = naverLogin.user.getNickName();
+      $("#naverIdLogin_loginButton").html('<br><br><img src="' + profileImage + '" height=50 /> <p>' + nickName + '님 반갑습니다.</p>');
+      $("#gnbLogin").html("Logout");
+      $("#gnbLogin").attr("href", "#");
+       (7) 로그아웃 버튼을 설정하고 동작을 정의합니다. 
+      $("#gnbLogin").click(function () {
+         naverLogin.logout();
+         location.reload();
+      });
+   } 
  */
 </script>
 
@@ -132,46 +132,46 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		$("#myBtnLogin").click(function() {
-			$("#myModalLogin").modal("show");
-		});
+   $(document).ready(function() {
+      $("#myBtnLogin").click(function() {
+         $("#myModalLogin").modal("show");
+      });
 
-		 $("#loginHide").click(function(){
-		        $("#myModalLogin").modal("hide");
-		    });
+       $("#loginHide").click(function(){
+              $("#myModalLogin").modal("hide");
+          });
 
-		$("#loginForm").on("submit", function() {
-			$.ajax({
-				type : "post",
-				url : "${pageContext.request.contextPath}/login",
-				data : {
-					"mberId" : $("#loginId").val(),
-					"mberPw" : $("#loginPw").val()
-				},
-				dataType : "json",
-				success : function(data) {
-					if (data.result) {
-						$("#myModalLogin").modal("hide");
-						window.location.reload();
-					} else {
-						alert("비밀번호를 다시 입력해 주세요");
-					}
-				},
-				error : function() {
-					alert("아이디를 다시 입력해 주세요")
-				}
-			});
-			return false;
-		});
-		//모달 초기화
-		$('.modal').on('hidden.bs.modal', function (e) {
-		    $(this).find('form')[0].reset()
-		});
-	});
+      $("#loginForm").on("submit", function() {
+         $.ajax({
+            type : "post",
+            url : "${pageContext.request.contextPath}/login",
+            data : {
+               "mberId" : $("#loginId").val(),
+               "mberPw" : $("#loginPw").val()
+            },
+            dataType : "json",
+            success : function(data) {
+               if (data.result) {
+                  $("#myModalLogin").modal("hide");
+                  window.location.reload();
+               } else {
+                  alert("비밀번호를 다시 입력해 주세요");
+               }
+            },
+            error : function() {
+               alert("아이디를 다시 입력해 주세요")
+            }
+         });
+         return false;
+      });
+      //모달 초기화
+      $('.modal').on('hidden.bs.modal', function (e) {
+          $(this).find('form')[0].reset()
+      });
+   });
 </script>
 
-	<%-- 회 원 가 입 Sign Up  --%>
+   <%-- 회 원 가 입 Sign Up  --%>
    <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalSignUp" role="dialog">
@@ -203,16 +203,16 @@
                <input type="password" class="form-control" id="signUpPwCheck" placeholder="Enter password">
             </div>
            <!-- 회원가입 실패 시 보이는 창 -->
-			<div class="form-group has-error has-feedback hidden" id="signUpFail">
-  				<div class="input-group">
-   				 <span class="input-group-addon">
-   			 		<span class = "glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-   			 		</span>
-  				  <input type="text" class="form-control" id="inputError" aria-describedby="inputGroupSuccess1Status"
-  			  	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
- 				 </div>
- 		 	</div>
- 		 	  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
+         <div class="form-group has-error has-feedback hidden" id="signUpFail">
+              <div class="input-group">
+                <span class="input-group-addon">
+                   <span class = "glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                   </span>
+                <input type="text" class="form-control" id="inputError" aria-describedby="inputGroupSuccess1Status"
+                value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
+              </div>
+           </div>
+             <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
           </form>
         </div>
 
@@ -236,56 +236,56 @@ $(document).ready(function(){
         $("#myModalSignUp").modal("hide");
     });
 
-	$("#signUpForm").on("submit", function() {
-		$.ajax({
-			type : "post",
-			url : "${pageContext.request.contextPath}/join",
-			data : {
-				"signUpId" : $("#signUpId").val(),
-				"signUpPw" : $("#signUpPw").val(),
-				"signUpPwCheck" : $("#signUpPwCheck").val()
+   $("#signUpForm").on("submit", function() {
+      $.ajax({
+         type : "post",
+         url : "${pageContext.request.contextPath}/join",
+         data : {
+            "signUpId" : $("#signUpId").val(),
+            "signUpPw" : $("#signUpPw").val(),
+            "signUpPwCheck" : $("#signUpPwCheck").val()
 
-			
-			
-			},
-			dataType : "json",
-			success : function(data) {
-				if (data.result) {
-					// 회원가입 성공
-					alert("해당 이메일로 인증 메일이 발송되었습니다");
-					$("#myModalSignUp").modal("hide");
-					window.location.reload();
-				} else {
-					//비밀번호가 다릅니다.
-					$("#signUpFail").removeClass('hidden');
-				}
-			},
-			error : function() {
-				//이미 가입된 이메일입니다
-				$("#signUpFail").removeClass('hidden');
-			}
-		});
-		return false;
-	});
-	
-/* 	페이스북
-	 $.ajaxSetup({ cache: true });
-	  $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
-	    FB.init({
-	      appId: '{2015281072116483}',
-	      version: 'v3.1'
-	    });     
-	    $('#loginbutton,#feedbutton').removeAttr('disabled');
-	    FB.getLoginStatus(updateStatusCallback);
-	  });
-	   */
+         
+         
+         },
+         dataType : "json",
+         success : function(data) {
+            if (data.result) {
+               // 회원가입 성공
+               alert("해당 이메일로 인증 메일이 발송되었습니다");
+               $("#myModalSignUp").modal("hide");
+               window.location.reload();
+            } else {
+               //비밀번호가 다릅니다.
+               $("#signUpFail").removeClass('hidden');
+            }
+         },
+         error : function() {
+            //이미 가입된 이메일입니다
+            $("#signUpFail").removeClass('hidden');
+         }
+      });
+      return false;
+   });
+   
+/*    페이스북
+    $.ajaxSetup({ cache: true });
+     $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
+       FB.init({
+         appId: '{2015281072116483}',
+         version: 'v3.1'
+       });     
+       $('#loginbutton,#feedbutton').removeAttr('disabled');
+       FB.getLoginStatus(updateStatusCallback);
+     });
+      */
 
 });
 </script>
 </c:if>
 
 <!-- 로그인 후! -->
-<c:if test="${mberId != null}">
+<c:if test="${mberIndex != null}">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
