@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 로그인 전! -->
-<c:if test="${mberId == null}">
+<c:if test="${mberIndex == null}">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -285,7 +285,7 @@ $(document).ready(function(){
 </c:if>
 
 <!-- 로그인 후! -->
-<c:if test="${mberId != null}">
+<c:if test="${mberIndex != null}">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
