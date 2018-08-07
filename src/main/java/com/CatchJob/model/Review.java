@@ -2,6 +2,7 @@ package com.CatchJob.model;
 
 /* 리뷰 */
 public class Review {
+	private String question;
 	private int reviewIndex; // 리뷰 식별번호
 	private int entIndex; // 기업 식별번호
 	private int mberIndex; // 회원 식별번호
@@ -75,11 +76,21 @@ public class Review {
 		this.regDate = regDate;
 	}
 
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
 	@Override
 	public String toString() {
-		return "Review [reviewIndex=" + reviewIndex + ", entIndex=" + entIndex + ", mberIndex=" + mberIndex
-				+ ", questionNum=" + questionNum + ", evaluationScore=" + evaluationScore + ", contents=" + contents
-				+ ", reviewFlag=" + reviewFlag + ", regDate=" + regDate + "]";
+		return "Review [question=" + question + ", reviewIndex=" + reviewIndex + ", entIndex=" + entIndex
+				+ ", mberIndex=" + mberIndex + ", questionNum=" + questionNum + ", evaluationScore=" + evaluationScore
+				+ ", contents=" + contents + ", reviewFlag=" + reviewFlag + ", regDate=" + regDate + "]";
 	}
+
+	
 
 }

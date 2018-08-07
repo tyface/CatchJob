@@ -102,6 +102,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON i.ENT_IDX = e.ENT_IDX
 		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex}
 	</select>
+	
+	<select id="selectListByEntIdx" parameterType="int" resultMap="interviewMap">
+		SELECT *
+		FROM INTERVIEW_TB
+		WHERE ENT_IDX=#{entIndex}
+	</select>
+	<!-- 면접후기 면접난이도 Pie Chart 그리기 -->
+	<select id="interviewPieChart" parameterType="int" resultType="map">
+		SELECT INTRVW_DFFLY, count(INTRVW_DFFLY) as count
+		FROM INTERVIEW_TB
+		WHERE ENT_IDX=#{entIndex}
+		GROUP BY INTRVW_DFFLY
+		ORDER BY INTRVW_DFFLY
+	</select>
 
 	<resultMap type="interview" id="interviewMap">
 		<result property="mberIndex" column="MBER_IDX" />
@@ -117,6 +131,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="intrvwExperience" column="INTRVW_EXPRNC" />
 		<result property="presentationDate" column="PRESNATN_DT" />
 		<result property="regDate" column="REG_DT" />
+	</resultMap>     
+	
+
+	<select id="reviewList" parameterType="map" resultMap="reviewMap">
+		SELECT * 
+		FROM REVIEW_QESTN_TB q
+		LEFT JOIN REVIEW_TB r
+		ON r.QESTN_NO=q.QESTN_NO
+		WHERE r.ENT_IDX=#{entIndex} AND r.QESTN_NO=#{questionNum} 
+		ORDER BY r.REVW_IDX desc
+	</select>
+	<resultMap type="review" id="reviewMap">
+		<result property="question" column="QUESTION"/>
+	    <result property="reviewIndex" column="REVW_IDX"/>
+		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
+		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
+		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->
+		<result property="questionNum" column="QESTN_NO"/>		<!-- 질문 식별번호 -->
+		<result property="evaluationScore" column="EVALUATION"/>	<!-- 기업 평가 점수 -->
+		<result property="contents" column="CONTENTS"/>		<!--  리뷰 내용-->
+		<result property="reviewFlag" column="REVW_FL"/>		<!-- 리뷰 상태(1:사용,2:삭제,3:대기) TODO -->
+		<result property="regDate" column="REG_DT"/>			<!-- 작성일 -->
 	</resultMap>
+	
 </mapper>
 
