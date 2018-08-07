@@ -41,16 +41,15 @@
 	<c:forEach begin="0" varStatus="status" end="9" var="ent" items="${entList}">
 		<div class="row entList">
 
-			<div class="col-xs-8">
-				<a href="enterprise/view?entIndex=${ent.entIndex}" id="entName">${ent.entName}</a>
-				<div class="btn mailbox-star" id="btnFollow">
-					<a href="#"><i class="fa fa-heart" style="color: red; font-size: 20px;"></i></a>
+			<div class="col-sm-8">
+				<div class="row">
+					<a href="enterprise/view?entIndex=${ent.entIndex}" class="p25">${ent.entName}</a>
+						<a href="#"  class="btn mailbox-star" class="btnFollow"><i class="fa fa-heart" style="color: red; font-size: 20px;"></i></a>
 				</div>
-				<div class="addrName clear row">
-					<div class="col-sm-6"> </div>
-					<strong>${ent.industryName} | ${ent.bcityName} ${ent.signguName}</strong>
+				<div class="row visible-lg visible-md visible-sm">
+					${ent.industryName} | ${ent.bcityName} ${ent.signguName}
 				</div>
-				<div class="stars">
+				<div class="stars row">
 					<c:forEach begin="1" end="${ent.evaluationAvg}" step="1">
 						<span class="glyphicon glyphicon-star"></span>
 					</c:forEach>
@@ -61,20 +60,15 @@
 				</div>
 			</div>
 
-			<div class="col-xs-4">
+			<div class="col-sm-4">
 				<div class="row">
-					<center><div class="fa fa-money"> 연봉 ${ent.salaryAvg} 만원</div> </center>
+					 <p class="text-center p-1"> 연봉 ${ent.salaryAvg} 만원</p>
 				</div>
 				<div class="row">
-					<button type="button" class="btn btn-default btn-lg col-sm-6"
-						onclick="entDtlView(${ent.entIndex},'section2')">
-						리뷰 코멘트 <br>${ent.reviewCount}
-					</button>
-					<button type="button" class="btn btn-default btn-lg col-sm-6"
-						onclick="entDtlView(${ent.entIndex},'section3')">
-						면접정보 <br>${ent.interviewCount}
-						count 넣기
-					</button>
+					<div class="col-xs-6 text-center cell-1"><strong>${ent.reviewCount}</strong><a href=""><br>리뷰코멘트</a></div>
+					<div class="col-xs-6 text-center cell-2"><strong>${ent.interviewCount}</strong><a href=""><br>면접정보</a></div>
+					<%-- <button type="button" class="btn btn-default btn-sm col-sm-6"	onclick="entDtlView(${ent.entIndex},'section3')">
+					</button> --%>
 				</div>
 			</div>
 

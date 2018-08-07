@@ -15,7 +15,7 @@
 	contextpath는 절대 경로를 만들기 위해서 추가 -->
 
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/my.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/public.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 

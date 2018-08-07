@@ -19,25 +19,19 @@
 	<section>
 
 		<article id="main-center">
+				<!-- 			슬로건 -->
+				<p class="frijole-font" >Find The Job That Fits Your Life</p>
+				<h1 class="frijole-font" id="h1-main">CATct!! <br>JOB.</h1>
 
-			<!-- 			슬로건 -->
-			<p class="frijole-font" >Find The Job That Fits Your Life</p>
-			<h1 class="frijole-font" id="h1-main">CATct!! JOB.</h1>
-
-			<!-- 			검색바 -->
-			<form action="search" class="form-inline" id="main-search-form">
-				<div class="input-group">
-					<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required>
-					<div class="input-group-btn">
-						<button type="button" class="btn btn-danger" id="main-search-btn">
+				<!-- 			검색바 -->
+				<form action="search" class="form-inline row" id="main-search-form">
+						<div class="col-xs-11">
+							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required>
+						</div>
+						<div class="col-xs-1">
 							<span class="glyphicon glyphicon-search"></span>
-						</button>
-					</div>
-
-				</div>
-
-			</form>
-
+						</div>
+				</form>
 		</article>
 
 		<!--  하단 기업순위  시작 -->

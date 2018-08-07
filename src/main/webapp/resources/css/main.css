@@ -10,18 +10,44 @@ article {
   width: 680px;
   margin: 20px;
 }
+
+/* Mobile */
 .frijole-font{
   font-family: 'Frijole', cursive;
-  font-size: 25px;
+  font-size: 16px;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .frijole-font {
+        font-size: 20px;
+    }
+}
+/* Desktop */
+@media (min-width:1025px) {
+    .frijole-font {
+        font-size: 25px;
+    }
 }
 .nanumpen-font{
   font-family: 'Nanum Pen Script', cursive;
 }
+
+/* Mobile */
 #h1-main {
-  text-align: center;
   margin: auto;
-  width: 601px;
-	font-size: 120px;
+	font-size: 66px;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  #h1-main  {
+    font-size: 96px;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  #h1-main  {
+    font-size: 126px;
+  }
 }
 
 #anton-font {
@@ -30,35 +56,75 @@ article {
   width: 600px;
 }
 
+/* Mobile */
+#main-search-form{
+  width: 100%;
+  margin: auto;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  #main-search-form  {
+      width: 90%;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  #main-search-form  {
+      width: 70%;
+  }
+}
+
+/* Mobile */
+#main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+  padding: 0px;
+  height : 45px;
+  font-size: 18px;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  #main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+    height : 60px;
+    font-size: 27px;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  #main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+    height : 60px;
+    font-size: 27px;
+  }
+}
+
+/* Mobile */
+#main-search-form div:last-child{
+  color: #fff;
+  background-color: #333333;
+  margin-left: -3px;
+  padding-top: 12px;
+  border-radius: 0px 4px 4px 0px;
+}
+
 #main-search-bar {
-  height : 60px;
-  font-size: 27px;
+  width: 100%;
   border: #333333 solid 2px;
 }
 
-#main-search-btn{
-  height : 60px;
-  font-size: 27px;
-  background-color: #333333;
-  border: #333333;
-}
-
 #main-center {
-   position: relative;
-   height: 100%;
+  position: relative;
+  height: 100%;
 
 }
 
 #main-center:after {
-    content : "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: url('../img/main-background1.jpg');
-    background-size: 100%;
-    width: 100%;
-    height: 100%;
-    opacity : 0.6;
-    z-index: -1;
+  content : "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('../img/main-background1.jpg');
+  background-size: 100%;
+  width: 100%;
+  height: 100%;
+  opacity : 0.6;
+  z-index: -1;
 }

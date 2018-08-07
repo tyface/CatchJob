@@ -5,20 +5,16 @@
 <c:if test="${mberIndex == null}">
 
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
-    </div>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
+  <div class="f-left">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
+  </div>
+  <div class="f-right nav-btn-1">
+    <a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a>&nbsp;&nbsp;
+    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
   </div>
 </nav>
 
 <%-- 로 그 인  Login --%>
-<div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalLogin" role="dialog">
     <div class="modal-dialog">
@@ -33,10 +29,10 @@
             <div class="form-group">
             <button  id="btnLoginFacebook" class="btn btn-success btn-block">
             <span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b></button>
-             <button  id="btnLoginGoogle" class="btn btn-success btn-block">
-             <span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>  
-             
-                          
+              <button  id="btnLoginGoogle" class="btn btn-success btn-block">
+              <span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>
+
+
  <!-- 네이버아이디로로그인 버튼 노출 영역 -->
   <div id="naver_id_login">
      <a id="naverIdLogin_loginButton" href="#">
@@ -53,15 +49,14 @@
          url+"/naverlogin");
    var state = naver_id_login.getUniqState();
    naver_id_login.setButton("green", 5, 30);
-   naver_id_login
-         .setDomain(url);
+   naver_id_login.setDomain(url);
    naver_id_login.setState(state);
    naver_id_login.setPopup();
    naver_id_login.init_naver_id_login();
 
 
-   
-   
+
+
 /*    var naverLogin = new naver.LoginWithNaverId(
       {
          clientId: "l2e7IfACkCtDXVSFiwXY",
@@ -72,11 +67,11 @@
    );
    (4) 네아로 로그인 정보를 초기화하기 위하여 init을 호출
    naverLogin.init();
-   
-   (4-1) 임의의 링크를 설정해줄 필요가 있는 경우 
+
+   (4-1) 임의의 링크를 설정해줄 필요가 있는 경우
    $("#gnbLogin").attr("href", naverLogin.generateAuthorizeUrl());
 
-    (5) 현재 로그인 상태를 확인 
+    (5) 현재 로그인 상태를 확인
    window.addEventListener('load', function () {
       naverLogin.getLoginStatus(function (status) {
          if (status) {
@@ -86,19 +81,19 @@
       });
    });
 
-    (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다. 
+    (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다.
    function setLoginStatus() {
       var profileImage = naverLogin.user.getProfileImage();
       var nickName = naverLogin.user.getNickName();
       $("#naverIdLogin_loginButton").html('<br><br><img src="' + profileImage + '" height=50 /> <p>' + nickName + '님 반갑습니다.</p>');
       $("#gnbLogin").html("Logout");
       $("#gnbLogin").attr("href", "#");
-       (7) 로그아웃 버튼을 설정하고 동작을 정의합니다. 
+       (7) 로그아웃 버튼을 설정하고 동작을 정의합니다.
       $("#gnbLogin").click(function () {
          naverLogin.logout();
          location.reload();
       });
-   } 
+   }
  */
 </script>
 
@@ -129,7 +124,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <script>
    $(document).ready(function() {
@@ -245,8 +240,8 @@ $(document).ready(function(){
             "signUpPw" : $("#signUpPw").val(),
             "signUpPwCheck" : $("#signUpPwCheck").val()
 
-         
-         
+
+
          },
          dataType : "json",
          success : function(data) {
@@ -267,14 +262,14 @@ $(document).ready(function(){
       });
       return false;
    });
-   
+
 /*    페이스북
     $.ajaxSetup({ cache: true });
      $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
        FB.init({
          appId: '{2015281072116483}',
          version: 'v3.1'
-       });     
+       });
        $('#loginbutton,#feedbutton').removeAttr('disabled');
        FB.getLoginStatus(updateStatusCallback);
      });

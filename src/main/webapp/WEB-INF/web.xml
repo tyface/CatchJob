@@ -12,7 +12,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
 		classpath*:config/context-*.xml
 		</param-value>
 	</context-param>
-<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
