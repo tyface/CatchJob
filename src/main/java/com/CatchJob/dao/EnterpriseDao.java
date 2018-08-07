@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.Interview;
+import com.CatchJob.model.Review;
 
 @Repository
 public interface EnterpriseDao {
@@ -37,4 +38,11 @@ public interface EnterpriseDao {
 	public int updateInterview(Interview interview);
 	// 면접후기 찾기, 파라미터로 기업식별번호와 회원식별번호 보내주기!
 	public Map<String,String> selectListByIndex(Map<String, Object> data);
+	// 면접후기 VIEW
+	public List<Interview>  selectListByEntIdx(int entIndex);
+	// 면접후기 Pie Chart
+	public List<Map<String,String>> interviewPieChart (int entIndex);
+	
+	//리뷰 보기	
+	public List<Review> reviewList(Map<String, String> data);
 }

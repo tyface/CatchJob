@@ -21,57 +21,6 @@ $(document).ready(function(){
 			$("#myModal").modal();
 		});
 
-		$("#btnA").click(function() {
-			//alert("버튼A 눌림!");
-
-			$("#select").text("인원");
-			$("#numOfEnt").text("98141");
-			$("#numOfInd").text("37");
-			$("#numOfTotEnt").text("28");
-			// var entPer =  DB의 '국민연금 총 가입자 수' 가져오면 됨
-			// var indPer = 동종산업군 전체 '국민연금 총 가입자 수' / 동종산업군 수
-			// var toEntPer = 전체기업의 '국민연금 총 가입자 수' / 전체 기업 수
-			$("#entPer").css('width', '60%');
-			$("#indPer").css('width', '10%');
-			$("#toEntPer").css('width', '100%');
-
-		});
-
-		$("#btnB").click(function() {
-			//alert("버튼B 눌림!");
-			$("#select").text("업력");
-			$("#numOfEnt").text("23");
-			$("#numOfInd").text("30");
-			$("#numOfTotEnt").text("60");
-
-			$("#entPer").css('width', "100%");
-			$("#indPer").css('width', '30%');
-			$("#toEntPer").css('width', '60%');
-		});
-
-		$("#btnC").click(function() {
-			//alert("버튼C 눌림!");
-			$("#select").text("입사");
-			$("#numOfEnt").text("5486");
-			$("#numOfInd").text("60");
-			$("#numOfTotEnt").text("40");
-
-			$("#entPer").css('width', '30%');
-			$("#indPer").css('width', '60%');
-			$("#toEntPer").css('width', '40%');
-		});
-
-		$("#btnD").click(function() {
-			//alert("버튼D 눌림!");
-			$("#select").text("퇴사");
-			$("#numOfEnt").text("3104");
-			$("#numOfInd").text("60");
-			$("#numOfTotEnt").text("30");
-
-			$("#entPer").css('width', '40%');
-			$("#indPer").css('width', '60%');
-			$("#toEntPer").css('width', '30%');
-		});
 		
 		
 		
@@ -174,14 +123,5 @@ $(document).ready(function(){
 });
 
 
-/* 팔로우 */	
-function classToggle(){
-	$("#btnFollow").toggleClass("following");
-}
 
-//function payAmpAvg(){
-//	//$("#btnFollow").toggleClass("following");
-//	
-//	alert($("#payAmtAvg").val());
-//}	
 	

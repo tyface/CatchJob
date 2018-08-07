@@ -1,59 +1,4 @@
-/* body {
-	position: relative;
-	background-color: #EAEAEA;
-}
 
-.affix {
-	top: 20px;
-	z-index: 9999 !important;
-}
-
-div.col-sm-9 div {
-	height: 250px;
-	font-size: 28px;
-}
-  #section1 {padding: 50px 20px 20px 20px;color: #fff; background-color: #1E88E5;}
-  #section2 {padding: 50px 20px 20px 20px;color: #fff; background-color: #673ab7;}
-  #section3 {padding: 50px 20px 20px 20px;color: #fff; background-color: #ff9800;}
-  #section41 {padding: 50px 20px 20px 20px;color: #fff; background-color: #00bcd4;}
-  #section42 {padding: 50px 20px 20px 20px;color: #fff; background-color: #009688;}
-#section1 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ffffff;
-}
-
-#section2 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ffffff;
-}
-
-#section3 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ffffff;
-}
-
-#section41 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ffffff;
-}
-
-#section42 {
-	padding: 50px 20px 20px 20px;
-	color: #fff;
-	background-color: #ffffff;
-}
-
-@media screen and (max-width: 810px) {
-	#section1, #section2, #section3, #section41, #section42 {
-		margin-left: 150px;
-		padding-bottom: 20px;
-	}
-}
- */
  #title{
  	color:#2196F3;
  	font-weight: bolder;
@@ -71,19 +16,13 @@ div.col-sm-9 div {
       height: 250px;
       font-size: 28px;
   }
-  #section1 {color: black; background-color: #ffffff;}
-  #section2 {color: black; background-color: #ffffff;}
-  #section3 {color: black; background-color: #ffffff;}
-  #section41 {color: black; background-color: #ffffff;}
-  #section42 {color: black; background-color: #ffffff;}
+ 
+#section1, #section2, #section3, #section41, #section42  {
+   	color: black; 
+   	background-color: #ffffff;
+	margin-left: 0px;
+}
 
-  
-  @media screen and (max-width: 810px) {
-    #section1, #section2, #section3, #section41, #section42  {
-    		
-        margin-left: 150px;
-    }
-  }
 /* 팔로우  */
 .follow {
 	color: gray;
@@ -244,8 +183,46 @@ div.col-sm-9 div {
 }
 
 
+.progress-bar{
+	background-color: #EAEAEA
+}
+.intrvwlv1 .bar1,.intrvwlv2 .bar1,.intrvwlv3 .bar1,.intrvwlv4 .bar1,.intrvwlv5 .bar1{
+	/* 첫번째 칸*/	
+	background-color: #1DDB16
+	
+}
+.intrvwlv2 .bar2,.intrvwlv3 .bar2,.intrvwlv4 .bar2,.intrvwlv5 .bar2{
+	/*두번째 칸*/
+	background-color: #ABF200
+	
+}
+.intrvwlv3 .bar3,.intrvwlv4 .bar3,.intrvwlv5 .bar3{
+	/*세번째 칸*/
+	background-color: #FFBB00
+}
+.intrvwlv4 .bar4,.intrvwlv5 .bar4{
+	/*네번째 칸*/
+	background-color: #FF5E00
+}
+.intrvwlv5 .bar5{
+	/*다섯번재 칸*/
+	background-color: #FF0000
+}
 
-
-
+.intrvwlv1 .intrvwDifficulty{
+	color: #1DDB16
+}
+.intrvwlv2 .intrvwDifficulty{
+	color: #ABF200
+}
+.intrvwlv3 .intrvwDifficulty{
+	color: #FFBB00
+}
+.intrvwlv4 .intrvwDifficulty{
+	color: #FF5E00
+}
+.intrvwlv5 .intrvwDifficulty{
+	color: #FF0000
+}
 
 
