@@ -96,12 +96,12 @@ $(document).ready(function () {
 </script>
  
 <nav class="navbar navbar-inverse">
-	<div class="navbar-header col-md-4 container">
-		<div class="row">
+	<div class="navbar-header">
+
 		
 		<div class="navbar-brand"><a id="sidebarCollapse">
 		&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-th-list">&nbsp;</span>Admin Page</a></div>
- 		</div>
+
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">

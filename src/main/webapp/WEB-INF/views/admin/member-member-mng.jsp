@@ -12,12 +12,12 @@
 		<%@ include file="/WEB-INF/views/admin/admin-nav-sidebar.jsp"%> 
 		
 		
-			<div class="col-md-9 main">
+			<div class="col-sm-9 main">
 				<h1 class="page-header"
 					style="text-align: center; font-weight: bold;">[ 회원 그룹 관리 ]</h1>
 				<br>
 				<div class="col-md-offset-1">
-					<div class="row" style="margin: 20px">
+					<div style="margin: 20px">
 						<div class="col-md-6">
 							<div class="row">
 									<select class="col-md-2" style="width: 90px; height: 25px">
