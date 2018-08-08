@@ -9,8 +9,8 @@
     <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
   </div>
   <div class="f-right nav-btn-1">
-    <a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a>&nbsp;&nbsp;
-    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+    <a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a>&nbsp;&nbsp;
+    <a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a>
   </div>
 </nav>
 
