@@ -37,11 +37,6 @@ public class MainController {
 	public String search(String keyword) {
 		return "forward:enterprise/search";
 	}
-	
-	@RequestMapping(value = "/admin")
-	public String admin() {
-		return "admin/admin-main";
-	}
 
 	@RequestMapping(value = "/profile")
 	public String profile(Model model, HttpSession session) {
