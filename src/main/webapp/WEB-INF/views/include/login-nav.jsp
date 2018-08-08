@@ -9,8 +9,8 @@
     <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
   </div>
   <div class="f-right nav-btn-1">
-    <a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a>&nbsp;&nbsp;
-    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+    <a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a>&nbsp;&nbsp;
+    <a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a>
   </div>
 </nav>
 
@@ -31,76 +31,7 @@
             <span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b></button>
               <button  id="btnLoginGoogle" class="btn btn-success btn-block">
               <span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>
-
-
- <!-- 네이버아이디로로그인 버튼 노출 영역 -->
-  <div id="naver_id_login">
-     <a id="naverIdLogin_loginButton" href="#">
-        <img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.0" height="60">
-     </a>
-  </div>
-  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
- <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script src="${pageContext.request.contextPath}/resources/js/naver-login-sdk-2.0.js"></script>
-<script type="text/javascript">
-   var url = "http://localhost:8081/catchjob";
-   var naver_id_login = new naver_id_login(
-         "l2e7IfACkCtDXVSFiwXY",
-         url+"/naverlogin");
-   var state = naver_id_login.getUniqState();
-   naver_id_login.setButton("green", 5, 30);
-   naver_id_login.setDomain(url);
-   naver_id_login.setState(state);
-   naver_id_login.setPopup();
-   naver_id_login.init_naver_id_login();
-
-
-
-
-/*    var naverLogin = new naver.LoginWithNaverId(
-      {
-         clientId: "l2e7IfACkCtDXVSFiwXY",
-         callbackUrl: "http://" + window.location.hostname + ((location.port==""||location.port==undefined)?"":":" + location.port) + "/oauth/sample/callback.html",
-         isPopup: false,
-         loginButton: {color: "green", type: 3, height: 60}
-      }
-   );
-   (4) 네아로 로그인 정보를 초기화하기 위하여 init을 호출
-   naverLogin.init();
-
-   (4-1) 임의의 링크를 설정해줄 필요가 있는 경우
-   $("#gnbLogin").attr("href", naverLogin.generateAuthorizeUrl());
-
-    (5) 현재 로그인 상태를 확인
-   window.addEventListener('load', function () {
-      naverLogin.getLoginStatus(function (status) {
-         if (status) {
-             (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다.
-            setLoginStatus();
-         }
-      });
-   });
-
-    (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다.
-   function setLoginStatus() {
-      var profileImage = naverLogin.user.getProfileImage();
-      var nickName = naverLogin.user.getNickName();
-      $("#naverIdLogin_loginButton").html('<br><br><img src="' + profileImage + '" height=50 /> <p>' + nickName + '님 반갑습니다.</p>');
-      $("#gnbLogin").html("Logout");
-      $("#gnbLogin").attr("href", "#");
-       (7) 로그아웃 버튼을 설정하고 동작을 정의합니다.
-      $("#gnbLogin").click(function () {
-         naverLogin.logout();
-         location.reload();
-      });
-   }
- */
-</script>
-
-
-
-
-</div>
+			</div>
 
           <form role="form" method="post" id="loginForm">
             <div class="form-group">
