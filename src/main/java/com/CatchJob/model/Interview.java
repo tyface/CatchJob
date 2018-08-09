@@ -4,6 +4,7 @@ package com.CatchJob.model;
 public class Interview {
 	private int mberIndex; // 회원 식별번호
 	private int entIndex; // 기업 식별번호
+	private String entName; // 사업장명
 	private String intrvwDifficulty; // 면접난이도(1~5)
 	private String intrvwDate; // 면접날짜
 	private String intrvwRoute; // 면접경로(1:공채,2:온라인지원,3:직원추천,4:헤드헌터,5:학교 취업지원센터,6:기타)
@@ -120,13 +121,24 @@ public class Interview {
 		this.regDate = regDate;
 	}
 
+	public String getEntName() {
+		return entName;
+	}
+
+	public void setEntName(String entName) {
+		this.entName = entName;
+	}
+
 	@Override
 	public String toString() {
-		return "Interview [mberIndex=" + mberIndex + ", entIndex=" + entIndex + ", intrvwDifficulty=" + intrvwDifficulty
-				+ ", intrvwDate=" + intrvwDate + ", intrvwRoute=" + intrvwRoute + ", intrvwReview=" + intrvwReview
-				+ ", intrvwQuestion=" + intrvwQuestion + ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag
-				+ ", intrvwResult=" + intrvwResult + ", intrvwExperience=" + intrvwExperience + ", presentationDate="
-				+ presentationDate + ", regDate=" + regDate + "]";
+		return "Interview [mberIndex=" + mberIndex + ", entIndex=" + entIndex + ", entName=" + entName
+				+ ", intrvwDifficulty=" + intrvwDifficulty + ", intrvwDate=" + intrvwDate + ", intrvwRoute="
+				+ intrvwRoute + ", intrvwReview=" + intrvwReview + ", intrvwQuestion=" + intrvwQuestion
+				+ ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag + ", intrvwResult=" + intrvwResult
+				+ ", intrvwExperience=" + intrvwExperience + ", presentationDate=" + presentationDate + ", regDate="
+				+ regDate + "]";
 	}
+
+	
 
 }

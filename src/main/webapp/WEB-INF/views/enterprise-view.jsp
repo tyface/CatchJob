@@ -17,14 +17,56 @@
 
 <script>
 
-
-$(document).ready(function(){
-	
+//$(document).ready(function(){
+var status = "logout";
+$(function(){
+	//alert(${mberIndex});
+	if('${mberIndex}'==''){
+		//alert(status);
+	}else{
+		status = "login";
+		//alert(status);
+	}
+		
 	entInf();
 	chart();
+	starScore();
+	
+	$("#write-btn").on("click", function(){
+		alert("기업리뷰를 성공적으로 작성하였습니다^^");
+		$("#writeForm").submit();
+		$("#myModal").modal("hide");
+		window.location.reload();
+	})
+			
+	    $(".mailbox-star").click(function (e) {
+	        e.preventDefault();
+	        //detect type
+	        var $this = $(this).find("a > i");
+	        var glyph = $this.hasClass("glyphicon");
+	        var fa = $this.hasClass("fa");
+
+	        //Switch states
+	        if (glyph) {
+	          $this.toggleClass("glyphicon-heart");
+	          $this.toggleClass("glyphicon-heart-empty");
+	        }
+
+	        if (fa) {
+	          $this.toggleClass("fa-heart");
+	          $this.toggleClass("fa-heart-o");
+	        }
+	      });
+  
+  /* 모달----------------------------------------------------------------------  */
+      $("#myBtn").click(function(){
+          $("#myModal").modal();
+      });
+      $("#myBtn2").click(function(){
+          $("#myModal").modal();
+      });
 
 	
-
 	 
 	 var interviewJson = JSON.parse('${interviewJson}');
 	 for(var i in interviewJson){	
@@ -44,6 +86,49 @@ $(document).ready(function(){
 		}    
 	
 	 }
+	 
+
+		 $(".reviewForm").on("submit", function(){ 
+			 alert("버튼눌림")
+		 
+			if(status =="logout"){
+				alert("로그인 후 이용 가능합니다");
+				return false; 
+			}else{
+				alert("등록!")
+			
+				var contents = $(".contents").val();
+				var evaluationScore = $("#starScore").text();
+				var questionNum = $("#questionNum").val();
+				var entIndex = $("#entIndex").val();
+				alert(contents);
+				alert(evaluationScore);
+				alert(questionNum);
+				alert(entIndex);
+				  $.ajax({
+					url:"${pageContext.request.contextPath}/enterprise/test",
+					type:"post",
+					data:{ "contents" : contents,
+						"evaluationScore" : evaluationScore,
+						"questionNum" : questionNum,
+						"entIndex" : entIndex
+						
+					},
+					dataType: "json", 
+					success : function(result){
+						if(result){
+							alert("등록되었습니다.");
+						}else{
+							alert("등록 실패하였습니다.");
+						}			
+					}				
+				});
+				 return false; 
+				
+			}
+			
+ 	});  
+			
 });
 
 function entInf(){
@@ -73,7 +158,7 @@ function entInf(){
 	 $("#outPersonPercent").text(outPersonPercent);
 	// alert(newPersonPercent);
 	// alert(outPersonPercent);
-	 
+	$("#numOfEnt").text($("#person").text());
 	 $("#btnA").click(function() {
 			//alert("버튼A 눌림!");
 
@@ -126,7 +211,7 @@ function entInf(){
 			$("#toEntPer").css('width', '30%');
 		});
 		
-		
+	
 		
 	
 }
@@ -178,7 +263,8 @@ function chart(){
 		        scales: {
                     yAxes: [{
                             ticks: {
-                                max: 3000000
+                             //  max:3900000,
+                            //   min:3100000
                             }
                         }]
                 }
@@ -278,49 +364,54 @@ function chart(){
 	});
 	
 }
+function starScore(){
+    /* 별점 */
+	  //star rating
+	    var starRating = function(){
+	      var $star = $(".star-input"),
+	          $result = $star.find("output>b");
+	      $(document)
+	/*         .on("focusin", ".star-input>.input", function(){
+	        $(this).addClass("focus");
+	      })
+	        .on("focusout", ".star-input>.input", function(){
+	        var $this = $(this);
+	        setTimeout(function(){
+	          if($this.find(":focus").length === 0){
+	            $this.removeClass("focus");
+	          }
+	        }, 100);
+	      }) */
+	        .on("change", ".star-input :radio", function(){
+	        //여기여기서 값 넘겨주기 !!
+	       // alert($(this).next().text())
+	        $result.text($(this).next().text());
+	      })
+	        .on("mouseover", ".star-input label", function(){
+	        	$result.text($(this).text());
+	        
+	      })
+	        .on("mouseleave", ".star-input>.input", function(){
+	        var $checked = $star.find(":checked");
+	        //alert("$checked:"+$checked);
+	        if($checked.length === 0){
+	          $result.text("0");
+	        } else {
+	          $result.text($checked.next().text());
+	        }
+	      });
+	    };
+	    starRating();	
+}
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
    return num.toString().replace(regexp, ',');
 } 
 
-function doAjax(num){
-	//alert("야호야호~");
-	//var d = "1";
-	
-	$.ajax({	
-		url : "test",
-		data : {"d": num, "entIndex":"${entInfo.ENT_IDX}"},
-		dataType: 'json',
-		success: function(data){
-			//var reviewJson = JSON.parse('$(data)');
-			//alert(num);
-			for(var i in data){
-				//alert(data[i].question);
-				//var tr = $("<tr>");
-				
-				$(".aa"+i).text(data[i].evaluationScore);
-				$(".bb"+i).text(data[i].regDate);
-				$(".cc"+i).text(data[i].contents);
-				/* $("<td>").text(data[i].evaluationScore).appendTo(tr);
-				$("<td>").text(data[i].regDate).appendTo(tr);
-				$("<td>").text(data[i].contents).appendTo(tr);
-				
-				tr.appendTo(table); */
-			}
-			
-			//var reviewJson = JSON.parse('${data}');
-			
-			
-		}, 
-		error: function(reauest, status, error){
-			//alert("실패~");
-		}
-	});
-}
 </script>
 
-
+<%=session.getAttribute("mberIndex")%>
 <div class="container module-main"
 	style="background-color: white; color: #fff; height: 220px;">
 
@@ -518,34 +609,17 @@ function doAjax(num){
 
 							<br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 							<div class="row">
-
-
-								<div class="col-sm-5">
-
-									<p style="text-align: right;">
+								<div class="col-sm-2">
+									<p>
 										<b> 평균연봉</b>
 									</p>
-									<p style="text-align: right;">(국민연금)</p>
+									<p>(국민연금)</p>
 								</div>
-								<div class="col-sm-7">
-									<h1>
+								<div class="col-sm-4">
+									<h2>
 										<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span>만원</b>
-									</h1>
+									</h2>
 								</div>
 
 							</div>
@@ -558,499 +632,117 @@ function doAjax(num){
 
 			</div>
 			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////////// -->
-			
+
 			<div class="module">
 				<div id="section2">
 					<h3 id="title">리뷰코멘트</h3>
 					<button type="button" class="btn btn-infofault">리뷰코멘트 작성</button>
 					<div class="panel-group " id="accordion">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapse1" onclick="doAjax(1)">${reviewList[0].question}<span style="color: #6799FF">(16)</span>
-										<span style="float: right; margin-right: 20%">4.1 <span
-											class="glyphicon glyphicon-star"></span> <span
-											class="glyphicon glyphicon-star"></span> <span
-											class="glyphicon glyphicon-star"></span> <span
-											class="glyphicon glyphicon-star"></span> <span
-											class="glyphicon glyphicon-star-empty"></span>
-									</span>
 
-									</a>
-								</h4>
-							</div>
-
-							<div id="collapse1" class="panel-collapse collapse in">
-								<div class="panel-body" style="color: black">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>총16개의 복지리뷰 코멘트</th>												
-											</tr>
-										</thead>
-										<tbody>
-								<c:forEach begin="0" varStatus="status" var="reviewList" items="${reviewList}">
-									<tr>
-										<td>
-											<p>	
-												<small>
-													<span class="glyphicon glyphicon-star"></span>
-														<%-- ${reviewList.evaluationScore}.0  --%>
-														<span class="aa${status.index}"></span>
-														.0
-													<a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-													<%-- ${reviewList.regDate} --%>
-													<span class="bb${status.index}"></span>
-												</small>
-											</p><%--  ${reviewList.contents} --%><span class="cc${status.index}"></span>
-											
-										</td>
-									</tr>
-								</c:forEach>
-											
-											<tr>
-												<td style="text-align: center"><nav>
-														<ul class="pagination">
-															<li><a href="#" aria-label="Previous"> <span
-																	aria-hidden="true">&laquo;</span>
-															</a></li>
-															<li><a href="#">1</a></li>
-															<li><a href="#">2</a></li>
-															<li><a href="#">3</a></li>
-															<li><a href="#">4</a></li>
-															<li><a href="#">5</a></li>
-															<li><a href="#" aria-label="Next"> <span
-																	aria-hidden="true">&raquo;</span>
-															</a></li>
-														</ul>
-													</nav></td>
-											</tr>
-										</tbody>
-									</table>
-
-
-									<div>
-										<span class="star-input"> <span class="input" id="star">
-												<input type="radio" name="star-input" id="p2" value="1"><label
-												for="p2">1</label> <input type="radio" name="star-input"
-												id="p4" value="2"><label for="p4">2</label> <input
-												type="radio" name="star-input" id="p6" value="3"><label
-												for="p6">3</label> <input type="radio" name="star-input"
-												id="p8" value="4"><label for="p8">4</label> <input
-												type="radio" name="star-input" id="p10" value="5"><label
-												for="p10">5</label>
-
-										</span> <output for="star-input">
-												<b>0</b> 점
-											</output>
+						<c:forEach begin="0" end="5" varStatus="status"
+							items="${question}" var="question">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion"
+											href="#collapse${status.count}">${question.QUESTION}<span
+											style="color: #6799FF"> (${question.COUNT}) </span> <span
+											style="float: right; margin-right: 20%">4.1 <span
+												class="glyphicon glyphicon-star"></span> <span
+												class="glyphicon glyphicon-star"></span> <span
+												class="glyphicon glyphicon-star"></span> <span
+												class="glyphicon glyphicon-star"></span> <span
+												class="glyphicon glyphicon-star-empty"></span>
 										</span>
+
+										</a>
+									</h4>
+								</div>
+
+								<div id="collapse${status.count}"
+									class="panel-collapse collapse">
+									<!-- in -->
+									<div class="panel-body" style="color: black">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>총${question.COUNT}개의 복지리뷰 코멘트</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="reviewList" items="${reviewList}"
+													varStatus="index">
+
+													<c:if test="${reviewList.questionNum eq question.QESTN_NO}">
+
+														<tr>
+															<td>
+																<p>
+																	<small><span class="glyphicon glyphicon-star"></span>
+																		${reviewList.evaluationScore}.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
+																		${reviewList.regDate}</small>
+																</p> <span>${reviewList.contents}</span>
+															</td>
+														</tr>
+													</c:if>
+												</c:forEach>
+
+<!-- 												<tr>
+													<td style="text-align: center"><nav>
+															<ul class="pagination">
+																<li><a href="#" aria-label="Previous"> <span
+																		aria-hidden="true">&laquo;</span>
+																</a></li>
+																<li><a href="#">1</a></li>
+																<li><a href="#">2</a></li>
+																<li><a href="#">3</a></li>
+																<li><a href="#">4</a></li>
+																<li><a href="#">5</a></li>
+																<li><a href="#" aria-label="Next"> <span
+																		aria-hidden="true">&raquo;</span>
+																</a></li>
+															</ul>
+														</nav></td>
+												</tr> -->
+											</tbody>
+										</table>
+
+<form id="reviewForm" class="reviewForm" name="reviewForm">
+<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
+<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
+
+										<div>
+											<span class="star-input"> 
+											<span class="input"	id="star"> 
+											<input type="radio" name="star-input" id="p2" value="1">
+											<label for="p2">1</label> 
+											<input type="radio" name="star-input" id="p4" value="2">
+											<label for="p4">2</label> 
+											<input type="radio" name="star-input" id="p6" value="3">
+											<label for="p6">3</label> 
+											<input type="radio" name="star-input" id="p8" value="4">
+											<label for="p8">4</label> 
+											<input type="radio" name="star-input" id="p10" value="5">
+											<label for="p10">5</label>
+
+											</span> <output for="star-input">
+													<b id="starScore">0</b> 점
+												</output>
+											</span>
+										</div>
+
+										<div class="input-group input-group-sm">
+											<input type="text" class="form-control contents" name="contents" id="contents" placeholder="기업리뷰를 추가로 입력해주세요"> 
+											<span class="input-group-btn">
+												<input type="submit" class="btn btn-flat btn-info" id="review-btn" value="제출">
+											</span>
+										</div>
+</form>
 									</div>
+								</div>
+							</div>
+						</c:forEach>
 
-									<div class="input-group input-group-sm">
-										<input type="text" class="form-control"
-											placeholder="기업리뷰를 추가로 입력해주세요"> <span
-											class="input-group-btn">
-											<button type="button" class="btn btn-flat btn-info">제출</button>
-
-										</span>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<!-- <div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapse2">
-										<div class="row">
-											<div class="col-sm-9">
-												질문2 <span style="color: #6799FF">(201)</span>
-											</div>
-											<div class="col-sm-3">
-												4.1 <span class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star-empty"></span>
-											</div>
-										</div>
-									</a>
-								</h4>
-							</div>
-							<div id="collapse2" class="panel-collapse collapse">
-								<div class="panel-body" style="color: black">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>총16개의 복지리뷰 코멘트</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 너무 과한 건강검진 이런건 좋긴한데 너무 좋다..
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 임직원의 건강 검진의 경우 강북삼성병원 종합검진센터에서 최고의 검진 서비스를 받음. 배우자의경우
-													40세미만 격년. 40세 이상의경우 1회/년 진행
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 본사 내 한가족 플라자에 있는 병원에서 주기적인 무료 건강검진 진행, 감기와 같은 가벼운 질병도 무료
-													진단, 약 처방 지원 등 굉장히 만족스러운 건강 복지 (하지만 치과 진료는 굉장히 수준이 떨어짐)
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 1년에 한번 있는 건강검진
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 삼성병원의 건강검진서비스를 이용할 수 있음
-												</td>
-											</tr>
-											<tr>
-												<td style="text-align: center"><nav>
-														<ul class="pagination">
-															<li><a href="#" aria-label="Previous"> <span
-																	aria-hidden="true">&laquo;</span>
-															</a></li>
-															<li><a href="#">1</a></li>
-															<li><a href="#">2</a></li>
-															<li><a href="#">3</a></li>
-															<li><a href="#">4</a></li>
-															<li><a href="#">5</a></li>
-															<li><a href="#" aria-label="Next"> <span
-																	aria-hidden="true">&raquo;</span>
-															</a></li>
-														</ul>
-													</nav></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div> -->
-					<!-- 	<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapse3">
-										<div class="row">
-											<div class="col-sm-9">
-												질문3 <span style="color: #6799FF">(201)</span>
-											</div>
-											<div class="col-sm-3">
-												4.1 <span class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star-empty"></span>
-											</div>
-										</div>
-									</a>
-								</h4>
-							</div>
-							<div id="collapse3" class="panel-collapse collapse">
-								<div class="panel-body" style="color: black">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>총16개의 복지리뷰 코멘트</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 너무 과한 건강검진 이런건 좋긴한데 너무 좋다..
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 임직원의 건강 검진의 경우 강북삼성병원 종합검진센터에서 최고의 검진 서비스를 받음. 배우자의경우
-													40세미만 격년. 40세 이상의경우 1회/년 진행
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 본사 내 한가족 플라자에 있는 병원에서 주기적인 무료 건강검진 진행, 감기와 같은 가벼운 질병도 무료
-													진단, 약 처방 지원 등 굉장히 만족스러운 건강 복지 (하지만 치과 진료는 굉장히 수준이 떨어짐)
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 1년에 한번 있는 건강검진
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 삼성병원의 건강검진서비스를 이용할 수 있음
-												</td>
-											</tr>
-											<tr>
-												<td style="text-align: center"><nav>
-														<ul class="pagination">
-															<li><a href="#" aria-label="Previous"> <span
-																	aria-hidden="true">&laquo;</span>
-															</a></li>
-															<li><a href="#">1</a></li>
-															<li><a href="#">2</a></li>
-															<li><a href="#">3</a></li>
-															<li><a href="#">4</a></li>
-															<li><a href="#">5</a></li>
-															<li><a href="#" aria-label="Next"> <span
-																	aria-hidden="true">&raquo;</span>
-															</a></li>
-														</ul>
-													</nav></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div> -->
-						<!-- <div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapse4">
-										<div class="row">
-											<div class="col-sm-9">
-												질문4 <span style="color: #6799FF">(201)</span>
-											</div>
-											<div class="col-sm-3">
-												4.1 <span class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star-empty"></span>
-											</div>
-										</div>
-									</a>
-								</h4>
-							</div>
-							<div id="collapse4" class="panel-collapse collapse">
-								<div class="panel-body" style="color: black">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>총16개의 복지리뷰 코멘트</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 너무 과한 건강검진 이런건 좋긴한데 너무 좋다..
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 임직원의 건강 검진의 경우 강북삼성병원 종합검진센터에서 최고의 검진 서비스를 받음. 배우자의경우
-													40세미만 격년. 40세 이상의경우 1회/년 진행
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 본사 내 한가족 플라자에 있는 병원에서 주기적인 무료 건강검진 진행, 감기와 같은 가벼운 질병도 무료
-													진단, 약 처방 지원 등 굉장히 만족스러운 건강 복지 (하지만 치과 진료는 굉장히 수준이 떨어짐)
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 1년에 한번 있는 건강검진
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 삼성병원의 건강검진서비스를 이용할 수 있음
-												</td>
-											</tr>
-											<tr>
-												<td style="text-align: center"><nav>
-														<ul class="pagination">
-															<li><a href="#" aria-label="Previous"> <span
-																	aria-hidden="true">&laquo;</span>
-															</a></li>
-															<li><a href="#">1</a></li>
-															<li><a href="#">2</a></li>
-															<li><a href="#">3</a></li>
-															<li><a href="#">4</a></li>
-															<li><a href="#">5</a></li>
-															<li><a href="#" aria-label="Next"> <span
-																	aria-hidden="true">&raquo;</span>
-															</a></li>
-														</ul>
-													</nav></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div> -->
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapse5">
-										<div class="row">
-											<div class="col-sm-9">
-												질문5 <span style="color: #6799FF">(201)</span>
-											</div>
-											<div class="col-sm-3">
-												4.1 <span class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star"></span> <span
-													class="glyphicon glyphicon-star-empty"></span>
-											</div>
-										</div>
-									</a>
-								</h4>
-							</div>
-							<div id="collapse5" class="panel-collapse collapse">
-								<div class="panel-body" style="color: black">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>총16개의 복지리뷰 코멘트</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 너무 과한 건강검진 이런건 좋긴한데 너무 좋다..
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 임직원의 건강 검진의 경우 강북삼성병원 종합검진센터에서 최고의 검진 서비스를 받음. 배우자의경우
-													40세미만 격년. 40세 이상의경우 1회/년 진행
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 본사 내 한가족 플라자에 있는 병원에서 주기적인 무료 건강검진 진행, 감기와 같은 가벼운 질병도 무료
-													진단, 약 처방 지원 등 굉장히 만족스러운 건강 복지 (하지만 치과 진료는 굉장히 수준이 떨어짐)
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 1년에 한번 있는 건강검진
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<p>
-														<small><span class="glyphicon glyphicon-star"></span>
-															5.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-															2018.05.02</small>
-													</p> 삼성병원의 건강검진서비스를 이용할 수 있음
-												</td>
-											</tr>
-											<tr>
-												<td style="text-align: center"><nav>
-														<ul class="pagination">
-															<li><a href="#" aria-label="Previous"> <span
-																	aria-hidden="true">&laquo;</span>
-															</a></li>
-															<li><a href="#">1</a></li>
-															<li><a href="#">2</a></li>
-															<li><a href="#">3</a></li>
-															<li><a href="#">4</a></li>
-															<li><a href="#">5</a></li>
-															<li><a href="#" aria-label="Next"> <span
-																	aria-hidden="true">&raquo;</span>
-															</a></li>
-														</ul>
-													</nav></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
 
 
 					</div>
@@ -1533,7 +1225,7 @@ function doAjax(num){
 
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-infofault">제출</button>
+					<button type="submit" class="btn btn-infofault" >제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>

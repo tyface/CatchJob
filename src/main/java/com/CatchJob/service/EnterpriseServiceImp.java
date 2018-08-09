@@ -84,11 +84,20 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			return false;
 		}
 	}
+	@Override
+	public boolean deleteInterview(Map<String, String> data) {
+		int result = entDao.deleteInterview(data);
+		if (result > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	// 면접정보 가져오기- 회원이 면접리뷰 수정할 때 필요 
 	@Override
-	public Map<String, String> selectListByIndex(Map<String, Object> data) {
-		System.out.println("서비스-------------------------------------123");
+	public Interview selectListByIndex(Map<String, String> data) {  
+		
 		return entDao.selectListByIndex(data);
 	}
 	/* 면접후기 뿌려주기 */
@@ -179,15 +188,18 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entDao.interviewPieChart(entIndex);
 	}
 
+	
+	
 	@Override
-	public List<Review> reviewList(Map<String, String> data) {
+	public List<Interview> selectListByMemberIdx(int memberIndex) {
 		
-		return entDao.reviewList(data);
+		return entDao.selectListByMemberIdx(memberIndex);
 	}
 	
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
 	}
+
 
 
 

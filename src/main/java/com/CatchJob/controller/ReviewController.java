@@ -1,4 +1,4 @@
-package com.CatchJob.controller;
+/*package com.CatchJob.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,3 +59,4 @@ public class ReviewController {
 		return null;
 	}
 }
+*/
