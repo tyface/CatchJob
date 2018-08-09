@@ -1,6 +1,5 @@
 package com.CatchJob.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +11,8 @@ import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.Interview;
 import com.CatchJob.model.Review;
+
+
 
 @Service
 public class EnterpriseServiceImp implements EnterpriseService {
@@ -140,7 +141,9 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			}
 		}
 		/* 면접 결과 */		
-		for(int i = 0 ; i<result.size();i++) {			
+		for(int i = 0 ; i<result.size();i++) {	
+			System.out.println("======");
+			System.out.println(result.get(i));
 			switch (result.get(i).getIntrvwResult()) {
 			case "1":
 				result.get(i).setIntrvwResult("합격");

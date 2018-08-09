@@ -1,15 +1,50 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
+
+
 <jsp:include page="include/header.jsp" flush="true"/>
 <link href="https://fonts.googleapis.com/css?family=Frijole|Nanum+Pen+Script" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
-<script>
 
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+$(function() {
+
+    var availableCity = ["서울","부산","대구","광주","울산"];
+
+    $("#city").autocomplete({
+
+        source: availableCity,
+
+        select: function(event, ui) {
+
+            console.log(ui.item);
+
+        },
+
+        focus: function(event, ui) {
+
+            return false;
+
+            //event.preventDefault();
+
+        }
+
+    });
+
+});
+
+//]]>
 	$(function(){
 		$("#main-search-btn").on("click",function(){
 			$("#main-search-form").submit();
-
 		})
 
 	})
@@ -17,7 +52,13 @@
 
 	<!-- CONTENTS -->
 	<section>
+		<%-- <div class="ui-widget">
 
+		  <label for="city">도시: </label>
+
+		  <input id="city">
+
+		</div> --%>
 		<article id="main-center">
 				<!-- 			슬로건 -->
 				<p class="frijole-font" >Find The Job That Fits Your Life</p>
@@ -26,7 +67,7 @@
 				<!-- 			검색바 -->
 				<form action="search" class="form-inline row" id="main-search-form">
 						<div class="col-xs-11">
-							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required>
+							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required autocomplete=off>
 						</div>
 						<div class="col-xs-1">
 							<span class="glyphicon glyphicon-search"></span>
