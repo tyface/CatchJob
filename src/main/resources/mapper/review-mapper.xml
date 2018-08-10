@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CatchJob.dao.ReviewDao">
+	<!-- 리뷰 등록 -->
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO REVIEW_TB (ENT_IDX,MBER_IDX,QESTN_NO,`CONTENTS`,EVALUATION,REVW_FL,REG_DT)
+		VALUES (#{entIndex},${mberIndex},#{questionNum},#{contents},#{evaluationScore},#{reviewFlag},sysdate())
+	</insert>
+
+	<resultMap type="review" id="reviewMap">
+		<result property="entName" column="ENT_NM"/>
+		<result property="question" column="QUESTION"/>
+		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
+		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
+		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->
+		<result property="questionNum" column="QESTN_NO"/>		<!-- 질문 식별번호 -->
+		<result property="evaluationScore" column="EVALUATION"/>	<!-- 기업 평가 점수 -->
+		<result property="contents" column="CONTENTS"/>		<!--  리뷰 내용-->
+		<result property="reviewFlag" column="REVW_FL"/>		<!-- 리뷰 상태(1:사용,2:삭제,3:대기) TODO -->
+		<result property="regDate" column="REG_DT"/>			<!-- 작성일 -->
+	</resultMap>
+	
+	<!-- 질문가져오기 -->
+	<select id="question" resultType="map">
+		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG
+		FROM REVIEW_QESTN_TB qes
+		LEFT JOIN REVIEW_TB rev
+		ON qes.QESTN_NO = rev.QESTN_NO
+		GROUP BY qes.QESTN_NO
+		ORDER BY qes.QESTN_NO
+	</select>
+	
+	<select id="reviewList" parameterType="int" resultMap="reviewMap">		
+		SELECT * 
+		FROM REVIEW_QESTN_TB q
+		LEFT JOIN REVIEW_TB r
+		ON r.QESTN_NO=q.QESTN_NO
+		WHERE r.ENT_IDX=#{entIndex}  
+		ORDER BY r.REG_DT desc
+	</select>
+	
+	<select id="reviewListByMember" parameterType="int" resultMap="reviewMap">
+		SELECT  e.ENT_IDX,e.ENT_NM, q.QESTN_NO, q.QUESTION, r.REG_DT
+		FROM REVIEW_QESTN_TB q
+		LEFT JOIN REVIEW_TB r
+		ON r.QESTN_NO=q.QESTN_NO
+		LEFT JOIN ENTERPRISE_TB e		
+		ON r.ENT_IDX=e.ENT_IDX
+		WHERE r.MBER_IDX=75
+		ORDER BY r.REG_DT desc
+	</select>
+	<!-- 
+	<select id="reviewListByQNum" parameterType="map" resultMap="reviewMap">
+		SELECT * 
+		FROM REVIEW_QESTN_TB q
+		LEFT JOIN REVIEW_TB r
+		ON r.QESTN_NO=q.QESTN_NO
+		WHERE r.ENT_IDX=#{entIndex} AND r.QESTN_NO=#{questionNum} 
+		ORDER BY r.REVW_IDX desc
+	</select>
+	 -->
+
+</mapper>
