@@ -31,10 +31,10 @@ public class MainController {
 	public String search(String keyword) {
 		return "forward:enterprise/search";
 	}
-	@RequestMapping(value = "/interviews")
-	public String profile() {
-		return "forward:profile/interviews";
-	}
+//	@RequestMapping(value = "/interviews")
+//	public String profile() {
+//		return "forward:profile/interviews";
+//	}
 //	@RequestMapping(value = "/profile")
 //	public String profile(Model model, HttpSession session) {
 //		Map<String, Object> data = new HashMap<String,Object>();

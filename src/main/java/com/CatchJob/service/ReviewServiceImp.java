@@ -1,5 +1,6 @@
 package com.CatchJob.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class ReviewServiceImp implements ReviewService {
 	}
 	@Override
 	public List<Map<String, String>> question() {
+
 		return reviewDao.question();
 	}
 	@Override
@@ -52,11 +54,16 @@ public class ReviewServiceImp implements ReviewService {
 		List<Review> reviewList = reviewDao.reviewList(entIndex);
 		return reviewList;
 	}
-	//질문별로 리뷰 보기
+	/*//질문별로 리뷰 보기
 	@Override
 	public List<Review> reviewListByQNum(Map<String, String> data) {
 		
 		return reviewDao.reviewListByQNum(data);
+	}*/
+	//수정 삭제 페이지에 리뷰 띄우기		
+	@Override
+	public List<Review> reviewListByMember(int memberIndex) {
+		return reviewDao.reviewListByMember(memberIndex);
 	}
 
 }

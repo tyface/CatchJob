@@ -31,6 +31,8 @@ public interface ReviewDao {
 	public List<Map<String, String>> question();
 	//리뷰 보기	
 	public List<Review> reviewList(int entIndex);
-	//질문별로 리뷰 보기
-	public List<Review> reviewListByQNum(Map<String, String> data);
+	//수정 삭제 페이지에 리뷰 띄우기	
+	public List<Review> reviewListByMember(int memberIndex);
+	/*//질문별로 리뷰 보기
+	public List<Review> reviewListByQNum(Map<String, String> data);*/
 }
