@@ -5,9 +5,15 @@
   float:right;
 }
 .nav-btn-1 {
+  width:200px;
   margin-top: 15px;
-  margin-right: 15px;
+
 }
+.nav-btn-1 a {
+   text-decoration:none;
+     color: #9d9d9d;
+}
+
 /* 세로줄  TODO미사용 */
 .v1 {
       width: 1px;
@@ -30,7 +36,24 @@
 .p-1{
 
 }
-
+.stars-on::after{
+  content: '\f005';
+  color: #f3f403;
+  font: normal normal normal 20px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: none;
+  margin-right: 2px;
+}
+.stars-off::after{
+  content: '\f005';
+  color: #d2d2d2;
+  font: normal normal normal 20px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: none;
+  margin-right: 2px;
+}
 
 /* 제목부분 */
  .jumbotron {

@@ -1,6 +1,5 @@
 package com.CatchJob.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +11,8 @@ import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.Interview;
 import com.CatchJob.model.Review;
+
+
 
 @Service
 public class EnterpriseServiceImp implements EnterpriseService {
@@ -153,26 +154,20 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			}
 		}
 		/* 면접 결과 */		
-		for(int i = 0 ; i<result.size();i++) {		
-			try {
-				switch (result.get(i).getIntrvwResult()) {
-				case "1":
-					result.get(i).setIntrvwResult("합격");
-					break;
-				case "2":
-					result.get(i).setIntrvwResult("불합격");
-					break;
-				case "3":
-					result.get(i).setIntrvwResult("대기중");
-					break;
-				case "4":
-					result.get(i).setIntrvwRoute("합격했으나 취업하지 않음");
-					break;
-				//default : result.get(i).setIntrvwRoute("합격했으나 취업하지 않음");;
-				//break;
-				}
-			}catch(NullPointerException e) {
-				System.out.println("널값임..");
+		for(int i = 0 ; i<result.size();i++) {			
+			switch (result.get(i).getIntrvwResult()) {
+			case "1":
+				result.get(i).setIntrvwResult("합격");
+				break;
+			case "2":
+				result.get(i).setIntrvwResult("불합격");
+				break;
+			case "3":
+				result.get(i).setIntrvwResult("대기중");
+				break;
+			case "4":
+				result.get(i).setIntrvwRoute("합격했으나 취업하지 않음");
+				break;
 			}
 		}
 		/* 면접  경험*/		

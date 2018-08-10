@@ -9,8 +9,8 @@
     <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
   </div>
   <div class="f-right nav-btn-1">
-    <a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a>&nbsp;&nbsp;
-    <a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+    <div class="col-xs-6"><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
+    <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
   </div>
 </nav>
 
@@ -213,46 +213,34 @@ $(document).ready(function(){
 <!-- 로그인 후! -->
 <c:if test="${mberIndex != null}">
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-    <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
+  <nav class="navbar navbar-inverse">
+
+    <div class="f-left">
+      <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
     </div>
 
-    <form class="navbar-form navbar-left" action="/action_page.php">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" name="search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    <div class="f-right nav-btn-1">
 
-    <ul class="nav navbar-nav navbar-right">
-<!--        <li class="active"><a href="#">Home</a></li>
-       <li><a href="#">Page 1</a></li>
-       <li><a href="#">Page 2</a></li> -->
-       <li class="dropdown">
+      <div class="dropdown col-xs-6">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="#">기업리뷰 작성</a></li>
           <li><a href="#">면접후기 작성</a></li>
         </ul>
-      </li>
-       <li class="dropdown">
+      </div>
+
+      <div class="dropdown col-xs-6">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="${pageContext.request.contextPath}/profile/settings">계정</a></li>
-          <li><a href="${pageContext.request.contextPath}/profile/reviews">활동내역</a></li>
-          <li><a href="${pageContext.request.contextPath}/profile/enterprise-follows">관심정보</a></li>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="#">계정</a></li>
+          <li><a href="#">활동내역</a></li>
+          <li><a href="#">관심정보</a></li>
           <li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
         </ul>
-      </li>
-    </ul>
+      </div>
 
-  </div>
-</nav>
+    </div>
+
+  </nav>
 
 </c:if>

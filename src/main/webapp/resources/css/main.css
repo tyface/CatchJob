@@ -64,13 +64,13 @@ article {
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {
   #main-search-form  {
-      width: 90%;
+      width: 70%;
   }
 }
 /* Desktop */
 @media (min-width:1025px) {
   #main-search-form  {
-      width: 70%;
+      width: 50%;
   }
 }
 
@@ -95,7 +95,7 @@ article {
   }
 }
 
-/* Mobile */
+
 #main-search-form div:last-child{
   color: #fff;
   background-color: #333333;

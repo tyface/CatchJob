@@ -2,42 +2,67 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
-
 <jsp:include page="include/header.jsp" flush="true" />
-<link rel="stylesheet"
-	href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
+
+
 <script>
+var list = new Array();
+<c:forEach items="${entList}" var="item">
+list.push("${item}");
+</c:forEach>
+alert(list);
 
-	function entDtlView(entIndex,section){
-		location.href="${contextPath}"+"/enterprise/view?entIndex="+entIndex+"#"+section;
-	};
+$(function() {
+	/* 무한 스크롤 코딩*/
 
-	$(function() {
 
-		$(".mailbox-star").click(function (e) {
-			e.preventDefault();
-			//detect type
-			var $this = $(this).find("a > i");
-			var glyph = $this.hasClass("glyphicon");
-			var fa = $this.hasClass("fa");
+	$(document).scroll(function() {
+		var maxHeight = $(document).height();
+		var currentScroll = $(window).scrollTop() + $(window).height();
 
-			//Switch states
-			if (glyph) {
-			  $this.toggleClass("glyphicon-heart");
-			  $this.toggleClass("glyphicon-heart-empty");
-			}
 
-			if (fa) {
-			  $this.toggleClass("fa-heart");
-			  $this.toggleClass("fa-heart-o");
-			}
-		});
 
+		if (maxHeight <= currentScroll + 1) {
+				//
+				// $.ajax({file:"enterprise-list-append.jsp",
+				//
+				// 				success:function(result) {
+				//
+				// 				$("#entListPage").html(result);
+				//
+				// 		}});
+//
+				// $("#entListPage").append()
+		}
+	})
+
+
+	$(".mailbox-star").click(function (e) {
+		e.preventDefault();
+		//detect type
+		var $this = $(this).find("a > i");
+		var glyph = $this.hasClass("glyphicon");
+		var fa = $this.hasClass("fa");
+
+		//Switch states
+		if (glyph) {
+		  $this.toggleClass("glyphicon-heart");
+		  $this.toggleClass("glyphicon-heart-empty");
+		}
+
+		if (fa) {
+		  $this.toggleClass("fa-heart");
+		  $this.toggleClass("fa-heart-o");
+		}
+	});
 
 });
 </script>
 
 <article id="entListPage">
+
 	<c:forEach begin="0" varStatus="status" end="9" var="ent" items="${entList}">
 		<div class="row entList">
 
@@ -49,26 +74,24 @@
 				<div class="row visible-lg visible-md visible-sm">
 					${ent.industryName} | ${ent.bcityName} ${ent.signguName}
 				</div>
-				<div class="stars row">
-					<c:forEach begin="1" end="${ent.evaluationAvg}" step="1">
-						<span class="glyphicon glyphicon-star"></span>
-					</c:forEach>
-					<c:forEach begin="${ent.evaluationAvg}" end="4" step="1">
-						<span class="glyphicon glyphicon-star-empty"></span>
-					</c:forEach>
-					<span class="ent-score">${ent.evaluationAvg}</span> <small>/</small>5
+				<div class="row">
+					<p class="p-1">평균연봉 ${ent.salaryAvg} 만원   </p>
 				</div>
 			</div>
 
 			<div class="col-sm-4">
-				<div class="row">
-					 <p class="text-center p-1"> 연봉 ${ent.salaryAvg} 만원</p>
+				<div class="row text-center">
+					<c:forEach begin="1" end="${ent.evaluationAvg}" step="1">
+						<span class="stars-on"></span>
+					</c:forEach>
+					<c:forEach begin="${ent.evaluationAvg}" end="4" step="1">
+						 <span class="stars-off"></span>
+					</c:forEach>
+					<span class="ent-score">${ent.evaluationAvg}</span>
 				</div>
 				<div class="row">
-					<div class="col-xs-6 text-center cell-1"><strong>${ent.reviewCount}</strong><a href=""><br>리뷰코멘트</a></div>
-					<div class="col-xs-6 text-center cell-2"><strong>${ent.interviewCount}</strong><a href=""><br>면접정보</a></div>
-					<%-- <button type="button" class="btn btn-default btn-sm col-sm-6"	onclick="entDtlView(${ent.entIndex},'section3')">
-					</button> --%>
+					<div class="col-xs-6 text-center cell-1"><strong>${ent.reviewCount}</strong><a href="${contextPath}/enterprise/view?entIndex=${ent.entIndex}#section2"><br>리뷰코멘트</a></div>
+					<div class="col-xs-6 text-center cell-2"><strong>${ent.interviewCount}</strong><a href="${contextPath}/enterprise/view?entIndex=${ent.entIndex}#section3"><br>면접정보</a></div>
 				</div>
 			</div>
 
