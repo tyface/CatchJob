@@ -5,29 +5,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Admin Page</title>
-
+<style>
+	.row{
+		padding:15px;
+	}
+	.page-header{
+		text-align: center; 
+		font-weight: bold;
+	}
+</style>
 </head>
 <body>
-
-		<%@ include file="/WEB-INF/views/admin/admin-nav-sidebar.jsp"%> 
-		
-		
-			<div class="col-sm-9 main">
-				<h1 class="page-header"
-					style="text-align: center; font-weight: bold;">[ 회원 그룹 관리 ]</h1>
-				<br>
+	<%@ include file="/WEB-INF/views/admin/admin-nav-sidebar.jsp"%> 
+		<div class="col-sm-9 main">
+				<h1 class="page-header" style="margin-bottom: 50px">[ 회원 그룹 관리 ]</h1><br>
 				<div class="col-md-offset-1">
-					<div style="margin: 20px">
 						<div class="col-md-6">
 							<div class="row">
-									<select class="col-md-2" style="width: 90px; height: 25px">
-										<option>5</option>
-										<option>10</option>
-										<option>15</option>
-										<option>20</option>
-									</select>
-								<div class="col-md-2">entries</div>
-
+								<div class="col-md-5">
+									<label for="quantity">
+									<input type ="number" min="5" max="20" value="10" step="5" id="quantity" style="width: 90px; height: 25px"></label>
+									&nbsp; entries</div> 	
 								<form action="search" class="form-inline pull-right">
 									<div class="input-group">
 										<input type="text" name="keyword" class="form-control"
@@ -49,26 +47,17 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach begin="1" end="10">
+									<c:forEach var="board" items="${viewData.boardList}" begin="1" end="10">
 										<tr>
-											<td>1</td>
-											<td>test@naver.com</td>
-											<td>일반</td>
+											<td>${board.num}</td>
+											<td><a href="board?command=board_view&num=${board.num}">${board.title}</td>
+											<td>${board.name}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-							<div style="text-align: center">
-								<ul class="pagination pagination-sm">
-									<li><a href="#">&laquo;</a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
-							</div>
+
+				  <%@ include file = "include/pagination.jsp" %>		
 						</div>
 
 						<div class="col-md-5 pull-right">
@@ -174,7 +163,6 @@
 								</div>
 							</form>
 						</div>
-					</div>
 				</div>
 			</div>
 		</div>	<!--<div class="row"> end -->

@@ -5,24 +5,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Admin Page</title>
-
+<style>
+	.row{
+		padding:15px;
+	}
+	.page-header{
+		text-align: center; 
+		font-weight: bold;
+	}
+</style>
 <body>
 		<%@ include file="/WEB-INF/views/admin/admin-nav-sidebar.jsp"%> 
-	<div class="col-sm-9 main" id="content">
-				<h1 class="page-header"
-					style="text-align: center; font-weight: bold;">[ 관리자 그룹 관리 ]</h1>
-				<br>
+	<div class="col-sm-9 main">
+				<h1 class="page-header" style="margin-bottom:50px">[ 관리자 그룹 관리 ]</h1>
 				<div class="col-md-offset-1">
-					<div style="margin: 20px">
 						<div class="col-md-6">
 							<div class="row">
-									<select class="col-md-2" style="width: 90px; height: 25px">
-										<option>5</option>
-										<option>10</option>
-										<option>15</option>
-										<option>20</option>
-									</select>
-								<div class="col-md-2">entries</div>
+								<div class="col-md-5">
+									<label for="quantity">
+									<input type ="number" min="5" max="20" value="10" step="5" id="quantity" style="width: 90px; height: 25px"></label>
+									&nbsp; entries</div> 
 
 								<form action="search" class="form-inline pull-right">
 									<div class="input-group">
@@ -137,7 +139,6 @@
 								</div>
 							</form>
 						</div>
-					</div>
 				</div>
 			</div><!-- div id="content" end -->
 			

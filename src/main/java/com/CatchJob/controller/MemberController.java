@@ -88,52 +88,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-
-	/* 탈퇴 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(Member member) {
-		if (MemberService.updateMember(member)) {
-			// 회원탈퇴 성공
-			return null;
-		} else {
-			return null;
-		}
-	}
- */
-	
-	/*@RequestMapping("/naverlogin")
-	public void naverLogin(HttpServletRequest request) {
-		
-			System.out.println("/naverlogin 요청 받았습니다.");
-
-			
-			//검색어를 이용해서 네이버에 요청하고 응답을 받는다. 
-			//응답받은 데이터를 모델로 만들어서 jsp로 전달
-			// CSRF 방지를 위한 상태 토큰 검증 검증
-			// 세션 또는 별도의 저장 공간에 저장된 상태 토큰과 콜백으로 전달받은 state 파라미터의 값이 일치해야 함
-
-			// 콜백 응답에서 state 파라미터의 값을 가져옴
-			String state = request.queryParams(“state”);
-
-			// 세션 또는 별도의 저장 공간에서 상태 토큰을 가져옴
-			String storedState = request.session().attribute(“state”);
-
-			if( !state.equals( storedState ) ) {
-			    return RESPONSE_UNAUTHORIZED; //401 unauthorized
-			} else {
-			    Return RESPONSE_SUCCESS; //200 success
-			}
-	}*/
-	
-	  /*수정 
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String updateForm(HttpSession session, Model model) {
-		String id = (String) session.getAttribute("userid");
-		model.addAttribute("member", MemberService.getMemberById(id));
-
-		return null;
-	}
-
+	 /*수정, 탈퇴 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(Member member) {
 		if (MemberService.updateMember(member)) {
@@ -143,5 +98,7 @@ public class MemberController {
 			return null;
 		}
 	}
-*/
+	
+	
+
 }

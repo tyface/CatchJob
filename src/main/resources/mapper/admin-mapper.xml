@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CatchJob.dao.AdminDao">
+	<update id="updateOne" parameterType="admin">
+		UPDATE ADMIN_TB SET
+		ADMIN_IDX=#{adminIndex},ADMIN_ID=#{adminId},ADMIN_PW=#{adminPw},ADMIN_LV=#{adminLv}  
+		WHERE ADMIN_IDX=#{adminIndex}
+	</update>
+	<select id="selectOne" parameterType="int" resultMap="adminMap">
+		SELECT *
+		FROM ADMIN_TB WHERE ADMIN_IDX=#{adminIndex}
+	</select>
+	<select id="selectListAdmin" resultMap="adminMap">
+		SELECT *
+		FROM ADMIN_TB
+	</select>
+	<select id="selectById" parameterType="map" resultMap="adminMap">
+		SELECT * FROM ADMIN_TB WHERE ADMIN_ID=#{adminId}
+	</select>
+	
+	<resultMap type="admin" id="adminMap">
+		<result property="adminIndex" column="ADMIN_IDX" />
+		<result property="adminId" column="ADMIN_ID" />
+		<result property="adminPw" column="ADMIN_PW" />
+		<result property="adminLv" column="ADMIN_LV" />
+	</resultMap>
+
+</mapper>
+

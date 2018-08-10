@@ -18,24 +18,23 @@
 	
 			<div class="col-md-9 main">
 				<h1 class="page-header"
-					style="text-align: center; font-weight: bold;">[ 리뷰 관리 ]</h1>
+					style="text-align: center; font-weight: bold;">[ QnA 관리 ]</h1>
 				<br>
 				<div class="col-md-offset-1">
 					<div class="row" style="margin: 20px">
 
 							<div class="row">
-									<select class="col-md-2" style="width: 90px; height: 25px">
-										<option>5</option>
-										<option>10</option>
-										<option>15</option>
-										<option>20</option>
-									</select>
-								<div class="col-md-1">entries</div>
+								<div class="col-sm-5">
+									<label for="quantity">
+									<input type ="number" min="5" max="20" value="10" step="5" id="quantity" style="width: 90px; height: 25px"></label>
+								entries
+								</div> 
 						
-								<div class="col-md-offset-4 col-xs-2">
+								<div class="row">
+								<div class="col-xs-2">
 									<select>
-										<option>기업명</option>
-										<option>기업코드</option>
+										<option>제목</option>
+										<option>작성자</option>
 									</select>
 								</div>
 								<form action="search" class="form-inline col-xs-4">
@@ -49,29 +48,29 @@
 										</div>
 									</div>
 								</form>
-								
-								
-
+				
 							</div>
 							<br>
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
 										<th>NO</th>
+										<th>제목</th>
 										<th>작성자</th>
-										<th>기업명</th>
-										<th>기업코드</th>
-										<th>내용보기</th>
+										<th>작성일자</th>
+										<th>답글여부</th>
+										<th>표출여부</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach begin="1" end="10">
 										<tr>
 											<td>1</td>
+											<td>문의 사항 입니다</td>
 											<td>tester</td>
-											<td>비트컴퍼니</td>
-											<td>COM000000001</td>
-											<td><input class="btn btn-info" type="button" value="내용보기"></input></td>
+											<td>2018-08-08</td>
+											<td>N</td>
+											<td>Y</td>
 										</tr>
 									</c:forEach>
 								</tbody>

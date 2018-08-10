@@ -10,11 +10,6 @@
 
 <style>
 
-.wrapper {	
-	margin-top: 80px;
-  margin-bottom: 80px;
-}
-
 .form-signin {
   max-width: 380px;
   padding: 15px 35px 45px;
@@ -55,8 +50,6 @@
 	}
 }
 
-
-
 </style>
 </head>
 <body>
@@ -70,7 +63,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<div class="navbar-brand" ><a href="#" style="color:white">
+		<div class="navbar-brand" ><a href="/catchjob/admin" style="color:white">
 		&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-th-list" >&nbsp;</span>Admin Page</a></div>
  		</div>
 	</div>
@@ -78,23 +71,21 @@
 	
 	<div class="container" style="margin-top:200px">
 
-		<form class="form-signin">
+		<form class="form-signin" action="" method="post">
 			<h2 class="form-signin-heading">Please login</h2>
 			<div class="input-group">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span> <input type="text"
-					class="form-control" name="id" placeholder="Admin ID" required=""
-					autofocus="" />
+					class="form-control" name="adminId" placeholder="Admin ID"/>
 			</div>
-			<br />
-			<div class="input-group">
+		
+			<div class="input-group" style="margin-top:10px">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-lock"></i></span> <input type="password"
-					class="form-control" name="password" placeholder="Admin Password"
-					required="" />
+					class="form-control" name="adminPw" placeholder="Admin Password"/>
 			</div>
-			<br/><br/>
-			<button class="btn btn-lg btn-info pull-right col-md-4" type="submit">Join</button>
+			
+			<button class="btn btn-lg btn-info pull-right col-md-4" type="submit" style="margin-top:20px">login</button>
 		</form>
 	</div>	
 
