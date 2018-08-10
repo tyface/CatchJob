@@ -122,7 +122,9 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				break;
 			case "5":
 				result.get(i).setIntrvwDifficulty("매우 쉬움");
-				break;	
+				break;
+			//default : result.get(i).setIntrvwDifficulty("매우 쉬움");;
+			//	break;
 			}
 		}
 		/* 면접 경로 */		
@@ -146,39 +148,54 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			case "6":
 				result.get(i).setIntrvwRoute("기타");
 				break;	
+			//default : result.get(i).setIntrvwRoute("기타");;
+			//break;
 			}
 		}
 		/* 면접 결과 */		
-		for(int i = 0 ; i<result.size();i++) {			
-			switch (result.get(i).getIntrvwResult()) {
-			case "1":
-				result.get(i).setIntrvwResult("합격");
-				break;
-			case "2":
-				result.get(i).setIntrvwResult("불합격");
-				break;
-			case "3":
-				result.get(i).setIntrvwResult("대기중");
-				break;
-			case "4":
-				result.get(i).setIntrvwRoute("합격했으나 취업하지 않음");
-				break;
+		for(int i = 0 ; i<result.size();i++) {		
+			try {
+				switch (result.get(i).getIntrvwResult()) {
+				case "1":
+					result.get(i).setIntrvwResult("합격");
+					break;
+				case "2":
+					result.get(i).setIntrvwResult("불합격");
+					break;
+				case "3":
+					result.get(i).setIntrvwResult("대기중");
+					break;
+				case "4":
+					result.get(i).setIntrvwRoute("합격했으나 취업하지 않음");
+					break;
+				//default : result.get(i).setIntrvwRoute("합격했으나 취업하지 않음");;
+				//break;
+				}
+			}catch(NullPointerException e) {
+				System.out.println("널값임..");
 			}
 		}
 		/* 면접  경험*/		
-		for(int i = 0 ; i<result.size();i++) {			
-			switch (result.get(i).getIntrvwExperience()) {
-			case "1":
-				result.get(i).setIntrvwExperience("부정적");
-				break;
-			case "2":
-				result.get(i).setIntrvwExperience("보통");
-				break;
-			case "3":
-				result.get(i).setIntrvwExperience("긍정적");
-				break;		
+		for(int i = 0 ; i<result.size();i++) {	
+			try {
+				switch (result.get(i).getIntrvwExperience()) {
+				case "1":
+					result.get(i).setIntrvwExperience("부정적");
+					break;
+				case "2":
+					result.get(i).setIntrvwExperience("보통");
+					break;
+				case "3":
+					result.get(i).setIntrvwExperience("긍정적");
+					break;	
+				//default : result.get(i).setIntrvwExperience("긍정적");;
+				//break;
+				}
+			}catch(NullPointerException e) {
+				System.out.println("널값임..");
 			}
 		}
+		
 		
 		return result;
 	}

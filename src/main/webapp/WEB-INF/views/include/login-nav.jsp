@@ -244,9 +244,9 @@ $(document).ready(function(){
        <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">계정</a></li>
-          <li><a href="#">활동내역</a></li>
-          <li><a href="#">관심정보</a></li>
+          <li><a href="${pageContext.request.contextPath}/profile/settings">계정</a></li>
+          <li><a href="${pageContext.request.contextPath}/profile/reviews">활동내역</a></li>
+          <li><a href="${pageContext.request.contextPath}/profile/enterprise-follows">관심정보</a></li>
           <li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
         </ul>
       </li>
