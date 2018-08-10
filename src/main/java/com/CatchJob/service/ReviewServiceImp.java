@@ -65,5 +65,10 @@ public class ReviewServiceImp implements ReviewService {
 	public List<Review> reviewListByMember(int memberIndex) {
 		return reviewDao.reviewListByMember(memberIndex);
 	}
+	//수정 할 데이터 가져오기
+	@Override
+	public Review review(Map<String, String> data) {
+		return reviewDao.review(data);
+	}
 
 }
