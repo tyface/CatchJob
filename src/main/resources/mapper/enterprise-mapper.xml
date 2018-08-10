@@ -126,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM INTERVIEW_TB
 		WHERE ENT_IDX=#{entIndex}
 		GROUP BY INTRVW_DFFLY
-		ORDER BY INTRVW_DFFLY
+		ORDER BY INTRVW_DFFLY 
 	</select>
 
 	<resultMap type="interview" id="interviewMap">
