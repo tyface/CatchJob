@@ -83,6 +83,7 @@ ul ul a {
     padding-left: 30px !important;
 
 }
+
 </style>
 <script>
 
@@ -105,8 +106,8 @@ $(document).ready(function () {
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#"><span class="glyphicon glyphicon-user">&nbsp;</span> ADMIN_1님 접속 상태입니다</a></li>
-			<li class="pull-right"><button class="btn btn-danger navbar-btn">로그아웃</button>&nbsp;</li>
+			<li><a href="#"><span class="glyphicon glyphicon-user">&nbsp;</span>${adminId} 님 접속 상태입니다</a></li>
+			<li class="pull-right"><button class="btn btn-danger navbar-btn" onclick="location.href='logout'">로그아웃</button>&nbsp;</li>
 		</ul>
 	</div>
 	</nav>
@@ -123,10 +124,10 @@ $(document).ready(function () {
               <i class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a>
 				<ul class="collapse list-unstyled" id="pageSubmenu1">
 				    <li>
-				        <a href="mngMber">회원 그룹</a>
+				        <a href="${pageContext.request.contextPath}/admin/mngMber">회원 그룹</a>
 				    </li>
 				    <li>
-				        <a href="mngAdmin">관리자 그룹</a>
+				        <a href="${pageContext.request.contextPath}/admin/mngAdmin">관리자 그룹</a>
 				    </li>
 				</ul>
             </li>
@@ -137,10 +138,10 @@ $(document).ready(function () {
               
 				<ul class="collapse list-unstyled" id="pageSubmenu2">
 				    <li>
-				        <a href="mngEnt">기업 관리</a>
+				        <a href="${pageContext.request.contextPath}/admin/mngEnt">기업 관리</a>
 				    </li>
 				    <li>
-				        <a href="mngReview">리뷰 관리</a>
+				        <a href="${pageContext.request.contextPath}/admin/mngReview">리뷰 관리</a>
 				    </li>
 				</ul>
             </li>
@@ -170,14 +171,14 @@ $(document).ready(function () {
 
               <i class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a></a>
 				<ul class="collapse list-unstyled" id="pageSubmenu5">
-				    <li>
-				        <a href="#">메인화면 관리</a>
+				 	<li>
+				        <a href="${pageContext.request.contextPath}/admin/mngMain">메인화면 관리</a>
 				    </li>
 				     <li>
-				        <a href="#">QnA 관리</a>
+				        <a href="${pageContext.request.contextPath}/admin/mngQnA">QnA 관리</a>
 				    </li>
 				     <li>
-				        <a href="#">팝업 관리</a>
+				        <a href="${pageContext.request.contextPath}/admin/mngPopUp">팝업 관리</a>
 				    </li>
 				</ul>
             </li>
