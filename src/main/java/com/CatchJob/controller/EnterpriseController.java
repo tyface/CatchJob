@@ -76,7 +76,7 @@ public class EnterpriseController {
 		model.addAttribute("interviewJson", new Gson().toJson(entService.selectListByEntIdx(entIndex)));
 		model.addAttribute("interviewPieChartJson", new Gson().toJson(entService.interviewPieChart(entIndex)));
 		model.addAttribute("reviewList", reviewService.reviewList(entIndex));
-		model.addAttribute("review", reviewService.reviewListByQNum(reviewMap));
+		//model.addAttribute("review", reviewService.reviewListByQNum(reviewMap));
 		
 		model.addAttribute("question", reviewService.question());
 

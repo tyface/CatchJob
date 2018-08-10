@@ -86,25 +86,33 @@ $(function(){
 		}    
 	
 	 }
+	 	
 	 
+	 	$(".review-btn").on("click",function(){
+	 		/* alert($(this).val());
+	 		
+	 		
+	 	})
+	 	
 
-		 $(".reviewForm").on("submit", function(){ 
-			 alert("버튼눌림")
-		 
+		 $(".reviewForm").on("submit", function(){  */
+			 var statusCount = $(this).next().val();
+			 //alert($(this).next().val());
+		 //안녕
 			if(status =="logout"){
 				alert("로그인 후 이용 가능합니다");
 				return false; 
 			}else{
-				alert("등록!")
-			
-				var contents = $(".contents").val();
+				//alert("등록!")
+				//alert($(".contents").prop("value"))
+				var contents = $("#contents"+statusCount).val();
 				var evaluationScore = $("#starScore").text();
-				var questionNum = $("#questionNum").val();
+				var questionNum = statusCount;
 				var entIndex = $("#entIndex").val();
-				alert(contents);
-				alert(evaluationScore);
-				alert(questionNum);
-				alert(entIndex);
+				//alert("내용:"+contents+"   질문번호:"+statusCount);
+				//alert(evaluationScore);
+				//alert(questionNum);
+				//alert(entIndex);
 				  $.ajax({
 					url:"${pageContext.request.contextPath}/enterprise/test",
 					type:"post",
@@ -371,7 +379,7 @@ function starScore(){
 	      var $star = $(".star-input"),
 	          $result = $star.find("output>b");
 	      $(document)
-	/*         .on("focusin", ".star-input>.input", function(){
+	         .on("focusin", ".star-input>.input", function(){
 	        $(this).addClass("focus");
 	      })
 	        .on("focusout", ".star-input>.input", function(){
@@ -381,7 +389,7 @@ function starScore(){
 	            $this.removeClass("focus");
 	          }
 	        }, 100);
-	      }) */
+	      }) 
 	        .on("change", ".star-input :radio", function(){
 	        //여기여기서 값 넘겨주기 !!
 	       // alert($(this).next().text())
@@ -647,7 +655,7 @@ function addComma(num) {
 										<a data-toggle="collapse" data-parent="#accordion"
 											href="#collapse${status.count}">${question.QUESTION}<span
 											style="color: #6799FF"> (${question.COUNT}) </span> <span
-											style="float: right; margin-right: 20%">4.1 <span
+											style="float: right; margin-right: 20%">${question.AVG} <span
 												class="glyphicon glyphicon-star"></span> <span
 												class="glyphicon glyphicon-star"></span> <span
 												class="glyphicon glyphicon-star"></span> <span
@@ -666,7 +674,7 @@ function addComma(num) {
 										<table class="table">
 											<thead>
 												<tr>
-													<th>총${question.COUNT}개의 복지리뷰 코멘트</th>
+													<th>총${question.COUNT}개의 기업리뷰 코멘트</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -707,34 +715,35 @@ function addComma(num) {
 											</tbody>
 										</table>
 
-<form id="reviewForm" class="reviewForm" name="reviewForm">
+<form id="reviewForm" class="reviewForm" name="reviewForm" >
 <input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
 <input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
 
 										<div>
-											<span class="star-input"> 
-											<span class="input"	id="star"> 
-											<input type="radio" name="star-input" id="p2" value="1">
-											<label for="p2">1</label> 
-											<input type="radio" name="star-input" id="p4" value="2">
-											<label for="p4">2</label> 
-											<input type="radio" name="star-input" id="p6" value="3">
-											<label for="p6">3</label> 
-											<input type="radio" name="star-input" id="p8" value="4">
-											<label for="p8">4</label> 
-											<input type="radio" name="star-input" id="p10" value="5">
-											<label for="p10">5</label>
-
-											</span> <output for="star-input">
+											<span class="star-input">
+												<span class="input"	id="star">
+												<input type="radio" name="star-input" id="p2" value="1">
+												<label for="p2">1</label> 
+												<input type="radio" name="star-input" id="p4" value="2">
+												<label for="p4">2</label> 
+												<input type="radio" name="star-input" id="p6" value="3">
+												<label for="p6">3</label> 
+												<input type="radio" name="star-input" id="p8" value="4">
+												<label for="p8">4</label> 
+												<input type="radio" name="star-input" id="p10" value="5">
+												<label for="p10">5</label>
+											</span> 
+												<output for="star-input">
 													<b id="starScore">0</b> 점
 												</output>
 											</span>
 										</div>
 
 										<div class="input-group input-group-sm">
-											<input type="text" class="form-control contents" name="contents" id="contents" placeholder="기업리뷰를 추가로 입력해주세요"> 
+											<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
 											<span class="input-group-btn">
-												<input type="submit" class="btn btn-flat btn-info" id="review-btn" value="제출">
+												<input type="submit" class="btn btn-flat btn-info review-btn" id="review-btn" value="제출">
+												<input type="hidden" id="statusCount" value="${status.count}">
 											</span>
 										</div>
 </form>
