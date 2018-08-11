@@ -3,21 +3,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
 <jsp:include page="include/header.jsp" flush="true" />
+<script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 
+</script>
 <link rel="stylesheet" href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 
 
 <script>
-var list = new Array();
-<c:forEach items="${entList}" var="item">
-list.push("${item}");
-</c:forEach>
-alert(list);
+
+var entList = JSON.parse('${entList1}');
+
 
 $(function() {
+	// appendEntList(entList);
 	/* 무한 스크롤 코딩*/
-
-
 	$(document).scroll(function() {
 		var maxHeight = $(document).height();
 		var currentScroll = $(window).scrollTop() + $(window).height();
@@ -25,6 +24,7 @@ $(function() {
 
 
 		if (maxHeight <= currentScroll + 1) {
+				appendEntList(entList);
 				//
 				// $.ajax({file:"enterprise-list-append.jsp",
 				//
@@ -61,21 +61,21 @@ $(function() {
 });
 </script>
 
-<article id="entListPage">
+<article id="ent-list-box">
 
 	<c:forEach begin="0" varStatus="status" end="9" var="ent" items="${entList}">
-		<div class="row entList">
+		<div class="row ent-list">
 
 			<div class="col-sm-8">
 				<div class="row">
 					<a href="enterprise/view?entIndex=${ent.entIndex}" class="p25">${ent.entName}</a>
-						<a href="#"  class="btn mailbox-star" class="btnFollow"><i class="fa fa-heart" style="color: red; font-size: 20px;"></i></a>
+					<a href="#"  class="btn mailbox-star" class="btnFollow"><i class="fa fa-heart" style="color: red; font-size: 20px;"></i></a>
 				</div>
 				<div class="row visible-lg visible-md visible-sm">
 					${ent.industryName} | ${ent.bcityName} ${ent.signguName}
 				</div>
 				<div class="row">
-					<p class="p-1">평균연봉 ${ent.salaryAvg} 만원   </p>
+					<p class="p-1">평균연봉 ${ent.salaryAvg} 만원 </p>
 				</div>
 			</div>
 
@@ -98,7 +98,7 @@ $(function() {
 		</div>
 	</c:forEach>
 
-	<div style="text-align: center">
+	<%-- <div style="text-align: center">
 		<ul class="pagination">
 			<li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 			<li><a href="#">1</a></li>
@@ -108,7 +108,7 @@ $(function() {
 			<li><a href="#">5</a></li>
 			<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 		</ul>
-	</div>
+	</div>--%>
 </article>
 
 <jsp:include page="include/footer.jsp" flush="true" />
