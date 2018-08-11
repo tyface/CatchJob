@@ -1,5 +1,9 @@
 package com.CatchJob.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,15 +11,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Admin;
 import com.CatchJob.service.AdminService;
+import com.CatchJob.service.MemberService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	AdminService adminService;
+	@Autowired
+	MemberService memberService;
 
 	/* 로그인폼 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -54,15 +62,26 @@ public class AdminController {
 			return null;
 		}
 	}
-
-	/* 회원 관리 */
-	@RequestMapping(value = "/mngMber")
-	public String mngMber() {
+	
+	@RequestMapping(value = "/mngMber", method = RequestMethod.GET)
+	public String mngMber(Model model, String page, String msgPerPage) { 
+		int pageNumber = 1;	
+		if (page != null) {
+			pageNumber = Integer.parseInt(page);
+		} 
+		int numOfMsgPage = 10;
+		if (msgPerPage != null) {
+			numOfMsgPage = Integer.parseInt(msgPerPage);
+		}
+		Map<String, Object> viewData = memberService.getMessageList(pageNumber,numOfMsgPage);
+		model.addAttribute("viewData", viewData);
 		
-		
-		return "admin/member-member-mng";
+		return "admin/member-member-mng";						
 	}
 
+	
+	
+	
 	@RequestMapping(value = "/mngAdmin")
 	public String mngAdmin() {
 		return "admin/member-admin-mng";

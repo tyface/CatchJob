@@ -15,7 +15,7 @@
 	}
 </style>
 <body>
-		<%@ include file="/WEB-INF/views/admin/admin-nav-sidebar.jsp"%> 
+		<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%> 
 	<div class="col-sm-9 main">
 				<h1 class="page-header" style="margin-bottom:50px">[ 관리자 그룹 관리 ]</h1>
 				<div class="col-md-offset-1">
