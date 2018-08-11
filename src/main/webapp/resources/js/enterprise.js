@@ -1,6 +1,6 @@
-$(document).ready(function(){
+$(function() {
 	//payAmpAvg();
-	
+
 	$("#select").text("인원");
 	$("#numOfEnt").text("98141");
 	$("#numOfInd").text("37");
@@ -21,9 +21,9 @@ $(document).ready(function(){
 			$("#myModal").modal();
 		});
 
-		
-		
-		
+
+
+
 	    $(".mailbox-star").click(function (e) {
 	        e.preventDefault();
 	        //detect type
@@ -42,7 +42,7 @@ $(document).ready(function(){
 	          $this.toggleClass("fa-heart-o");
 	        }
 	      });
-  
+
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
           $("#myModal").modal();
@@ -88,15 +88,15 @@ $(document).ready(function(){
 	    };
 	    starRating();
 	    /* 별점END -----------------------------------------------*/
-	    
-	    
-	    
-	  
-	    
-		
+
+
+
+
+
+
 		/*화면 느리게 이동하는거 ---------------- 순서 무조건 맨 마지막에 ★★★★★★★★★★★*/
 		// Add scrollspy to <body>
-		  $('body').scrollspy({target: ".navbar", offset: 50});   
+		  $('body').scrollspy({target: ".navbar", offset: 50});
 
 		  // Add smooth scrolling on all links inside the navbar
 		  $("#myNavbar a").on('click', function(event) {
@@ -113,7 +113,7 @@ $(document).ready(function(){
 		      $('html, body').animate({
 		        scrollTop: $(hash).offset().top
 		      }, 800, function(){
-		   
+
 		        // Add hash (#) to URL when done scrolling (default click behavior)
 		        window.location.hash = hash;
 		      });
@@ -123,5 +123,42 @@ $(document).ready(function(){
 });
 
 
+function appendEntList(entList){
+	var appendObject;
 
-	
+	alert(entList.length);
+	for(var i = 0;i < entList.length;i++){
+		appendObject = $("<div/>",{
+			class:"row ent-list",
+			append:$("<div/>",{
+				class:"col-sm-8",
+				append:$("<div/>",{
+					class:"row",
+					append:$("<a/>",{
+						class:"p25",
+						href:"row",
+						html:entList[i].entName,
+						before:"123123132"
+					})
+				})
+			})
+		})
+		// appendObject = $("<div/>",{
+		// 	class:"row ent-list",
+		// }).append($("<div/>",{
+		// 	class:"col-sm-8",
+		// })).append($("<div/>",{
+		// 	class:"row",
+		// })).append($("<a/>",{
+		// 	class:"p25",
+		// 	href:"row",
+		// 	html:entList[i].entName
+		// }))
+
+
+
+		$("#ent-list-box").append(appendObject)
+	}
+
+
+}

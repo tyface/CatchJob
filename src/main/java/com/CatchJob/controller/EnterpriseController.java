@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.CatchJob.model.Interview;
-import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.RecordService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 @Controller
 @RequestMapping("/enterprise")
@@ -32,7 +32,7 @@ public class EnterpriseController {
 	private EnterpriseService entService;
 	@Autowired
 	private RecordService recordService;
-
+	
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
 	public String entListForm() {
 		// 기업 리스트 출력화면
@@ -43,9 +43,18 @@ public class EnterpriseController {
 	public String getEntList(String keyword, Model model) {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);
+		
+		                            
+		Gson gson = new GsonBuilder().create();
+		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
+//			System.out.println(gson.toJson(entService.getEntList(data), type));
+//		JSONArray js = JSONArray.formObject(entService.getEntList(data));
+//		model.addAttribute("entList1",gson.toJson(entService.getEntList(data)));
+		System.out.println(myCustomArray);
+		model.addAttribute("entList1",myCustomArray);
 		model.addAttribute("entList", entService.getEntList(data));
-		model.addAttribute("countList", entService.getEntList(data));
-
+//		model.addAttribute("countList", entService.getEntList(data));
+//		model.addAttribute("entList1", entService.getEntList(data));
 		// 기업 리스트 출력
 		return "enterprise-list";
 	}
