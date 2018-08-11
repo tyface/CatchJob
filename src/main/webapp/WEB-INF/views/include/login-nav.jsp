@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 로그인 전! -->
+
 <c:if test="${mberIndex == null}">
 
 <nav class="navbar navbar-inverse">
@@ -13,8 +13,7 @@
     <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
   </div>
 </nav>
-
-<%-- 로 그 인  Login --%>
+ 
   <!-- Modal -->
   <div class="modal fade" id="myModalLogin" role="dialog">
     <div class="modal-dialog">
@@ -97,7 +96,7 @@
    });
 </script>
 
-   <%-- 회 원 가 입 Sign Up  --%>
+ 
    <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalSignUp" role="dialog">
@@ -231,9 +230,9 @@ $(document).ready(function(){
 
       <div class="dropdown col-xs-6">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="#">계정</a></li>
-          <li><a href="#">활동내역</a></li>
+          <li><a href="${pageContext.request.contextPath}/profile/interviews">활동내역</a></li>
           <li><a href="#">관심정보</a></li>
           <li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
         </ul>

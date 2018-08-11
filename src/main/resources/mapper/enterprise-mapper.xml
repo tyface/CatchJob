@@ -89,24 +89,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO INTERVIEW_TB (MBER_IDX,ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTERVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT) 
 		VALUES (#{mberIndex},#{entIndex},#{intrvwDifficulty},#{intrvwDate},#{intrvwRoute},#{intrvwReview},#{intrvwQuestion},#{intrvwAnswer},#{intrvwFlag},#{intrvwResult},#{intrvwExperience},#{presentationDate},sysdate())
 	</insert>
-	<update id="updateInterview" parameterType="interview" >
+	<update id="updateInterview" parameterType="interview" ><!-- ,INTERVW_FL=#{intrvwFlag} -->
 		UPDATE INTERVIEW_TB
-		SET INTRVW_DFFLY=#{intrvwDifficulty},INTRVW_YM=#{intrvwDate},INTRVW_ROUTE=#{intrvwRoute},INTRVW_REVW=#{intrvwReview},INTRVW_QESTN=#{intrvwQuestion},INTRVW_ANSWER=#{intrvwAnswer},INTERVW_FL=#{intrvwFlag},INTRVW_RESULT=#{intrvwResult},INTRVW_EXPRNC=#{intrvwExperience},PRESNATN_DT=#{presentationDate},sysdate()
+		SET INTRVW_DFFLY=#{intrvwDifficulty},INTRVW_YM=#{intrvwDate},INTRVW_ROUTE=#{intrvwRoute},INTRVW_REVW=#{intrvwReview},INTRVW_QESTN=#{intrvwQuestion},INTRVW_ANSWER=#{intrvwAnswer},INTRVW_RESULT=#{intrvwResult},INTRVW_EXPRNC=#{intrvwExperience},PRESNATN_DT=#{presentationDate}
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=#{mberIndex}
 	</update>
-	
-	<select id="selectListByIndex" parameterType="map" resultType="map">
+	<delete id="deleteInterview" parameterType="map">
+		DELETE FROM INTERVIEW_TB
+		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=#{mberIndex}
+	</delete>
+	<!-- 계정에서 인터뷰 수정할 때 필요.../ -->
+	<select id="selectListByIndex" parameterType="map" resultMap="interviewMap">
 		SELECT e.ENT_NM, MBER_IDX,e.ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTERVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT
 		FROM INTERVIEW_TB i
 		LEFT JOIN ENTERPRISE_TB e
 		ON i.ENT_IDX = e.ENT_IDX
 		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex}
 	</select>
-	
 	<select id="selectListByEntIdx" parameterType="int" resultMap="interviewMap">
 		SELECT *
 		FROM INTERVIEW_TB
 		WHERE ENT_IDX=#{entIndex}
+	</select>
+	<!-- 계정에서 인터뷰 정보 출력할때 필요.. -->
+	<select id="selectListByMemberIdx" parameterType="int" resultMap="interviewMap">
+		SELECT ent.ENT_IDX, ent.ENT_NM, itv.MBER_IDX, itv.INTRVW_DFFLY, itv.INTRVW_RESULT, itv.REG_DT
+		FROM INTERVIEW_TB itv
+		LEFT JOIN ENTERPRISE_TB ent
+		ON itv.ENT_IDX = ent.ENT_IDX
+		WHERE itv.MBER_IDX=#{mberIndex}
+		ORDER BY itv.REG_DT desc
 	</select>
 	<!-- 면접후기 면접난이도 Pie Chart 그리기 -->
 	<select id="interviewPieChart" parameterType="int" resultType="map">
@@ -114,10 +126,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM INTERVIEW_TB
 		WHERE ENT_IDX=#{entIndex}
 		GROUP BY INTRVW_DFFLY
-		ORDER BY INTRVW_DFFLY
+		ORDER BY INTRVW_DFFLY 
 	</select>
 
 	<resultMap type="interview" id="interviewMap">
+		<result property="entName" column="ENT_NM" />
 		<result property="mberIndex" column="MBER_IDX" />
 		<result property="entIndex" column="ENT_IDX" />
 		<result property="intrvwDifficulty" column="INTRVW_DFFLY" />
@@ -134,26 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>     
 	
 
-	<select id="reviewList" parameterType="map" resultMap="reviewMap">
-		SELECT * 
-		FROM REVIEW_QESTN_TB q
-		LEFT JOIN REVIEW_TB r
-		ON r.QESTN_NO=q.QESTN_NO
-		WHERE r.ENT_IDX=#{entIndex} AND r.QESTN_NO=#{questionNum} 
-		ORDER BY r.REVW_IDX desc
-	</select>
-	<resultMap type="review" id="reviewMap">
-		<result property="question" column="QUESTION"/>
-	    <result property="reviewIndex" column="REVW_IDX"/>
-		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
-		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
-		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->
-		<result property="questionNum" column="QESTN_NO"/>		<!-- 질문 식별번호 -->
-		<result property="evaluationScore" column="EVALUATION"/>	<!-- 기업 평가 점수 -->
-		<result property="contents" column="CONTENTS"/>		<!--  리뷰 내용-->
-		<result property="reviewFlag" column="REVW_FL"/>		<!-- 리뷰 상태(1:사용,2:삭제,3:대기) TODO -->
-		<result property="regDate" column="REG_DT"/>			<!-- 작성일 -->
-	</resultMap>
+
 	
 </mapper>
 

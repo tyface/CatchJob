@@ -16,10 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Interview;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.RecordService;
+import com.CatchJob.service.ReviewService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -32,7 +34,9 @@ public class EnterpriseController {
 	private EnterpriseService entService;
 	@Autowired
 	private RecordService recordService;
-	
+	@Autowired
+	private ReviewService reviewService;
+
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
 	public String entListForm() {
 		// 기업 리스트 출력화면
@@ -58,7 +62,7 @@ public class EnterpriseController {
 		// 기업 리스트 출력
 		return "enterprise-list";
 	}
-
+  
 	@RequestMapping(value = "/view")
 	public String entDetailsForm(int entIndex, HttpServletRequest req, Model model) throws UnknownHostException {
 
@@ -81,35 +85,56 @@ public class EnterpriseController {
 		model.addAttribute("interview", entService.selectListByEntIdx(entIndex));
 		model.addAttribute("interviewJson", new Gson().toJson(entService.selectListByEntIdx(entIndex)));
 		model.addAttribute("interviewPieChartJson", new Gson().toJson(entService.interviewPieChart(entIndex)));
-		model.addAttribute("reviewList", entService.reviewList(reviewMap));
+		model.addAttribute("reviewList", reviewService.reviewList(entIndex));
+		//model.addAttribute("review", reviewService.reviewListByQNum(reviewMap));
+		
+		model.addAttribute("question", reviewService.question());
 
-		 //System.out.println("123==="+entService.reviewList(reviewMap));
+		 System.out.println("123==="+entService.getEntInfo(entIndex));
 		return "enterprise-view";
 	}
+	@ResponseBody
+	@RequestMapping(value = "/test")
+	public boolean test(HttpSession session, Review review) throws IOException {
+		
+		//Review review = new Review();
+		//review.setContents(req.getParameter("contents"));
+		//review.setEntIndex(Integer.parseInt((req.getParameter("entIndex"))));
+		//review.setEvaluationScore(Integer.parseInt(req.getParameter("evaluationScore")));
+		review.setMberIndex((int) (session.getAttribute("mberIndex")));
+		//review.setQuestionNum(Integer.parseInt(req.getParameter("questionNum")));
+		review.setReviewFlag("1");
+		//System.out.println("진입성공~!789");
+		//req.getParameter("contents");
+		//req.getParameter("evaluationScore");
+		//System.out.println(req.getParameter("questionNum"));
+		//System.out.println(req.getParameter("evaluationScore"));
 
+		//System.out.println("review: "+review);
+		System.out.println("review:"+review);
+		boolean result = reviewService.insertReview(review);
+		
+		//String data="";
+		if(result) {
+			return true;
+		}else {
+			return false;			
+		}		
+		//resp.getWriter().println(data);	
+	}
+	
 	@RequestMapping(value = "/writeInterview")
-	public void writeInterview(Interview interview, HttpSession session) {
-		System.out.println("진입성공-------------------------123");
+	public String writeInterview(Interview interview, HttpSession session) {
 		interview.setMberIndex((int) (session.getAttribute("mberIndex")));
 		interview.setIntrvwFlag("1");
-		System.out.println(interview);
 		// boolean result = entService.insertInterview(interview);
 		entService.insertInterview(interview);
+		
+		return "redirect:view?entIndex="+interview.getEntIndex();
 	}
 
-	@RequestMapping(value = "/updateInterview")
-	public void updateInterview(Interview interview, HttpSession session) {
-		System.out.println("진입성공-------------------------");
-		interview.setMberIndex((int) (session.getAttribute("mberIndex")));
-		interview.setIntrvwFlag("1");
-		System.out.println(interview);
-		// boolean result = entService.insertInterview(interview);
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("mberIndex", (int) (session.getAttribute("mberIndex")));
-		data.put("entIndex", interview.getEntIndex());
-		entService.updateInterview(interview);
-	}
 
+/*
 	@RequestMapping(value = "/test")
 	public void updateInterview1(HttpServletRequest req,HttpServletResponse resp, Model model) throws UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8");
@@ -124,7 +149,7 @@ public class EnterpriseController {
 		
 		//List<Review> result = entService.reviewList(reviewMap);
 		try {
-			resp.getWriter().println(new Gson().toJson(entService.reviewList(reviewMap)));
+			resp.getWriter().println(new Gson().toJson(reviewService.reviewList(reviewMap)));
 		} catch (IOException e) {
 			System.out.println("IOException ---------------------");
 		}
@@ -133,5 +158,5 @@ public class EnterpriseController {
 		
 
 	}
-
+*/
 }

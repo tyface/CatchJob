@@ -85,11 +85,20 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			return false;
 		}
 	}
+	@Override
+	public boolean deleteInterview(Map<String, String> data) {
+		int result = entDao.deleteInterview(data);
+		if (result > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	// 면접정보 가져오기- 회원이 면접리뷰 수정할 때 필요 
 	@Override
-	public Map<String, String> selectListByIndex(Map<String, Object> data) {
-		System.out.println("서비스-------------------------------------123");
+	public Interview selectListByIndex(Map<String, String> data) {  
+		
 		return entDao.selectListByIndex(data);
 	}
 	/* 면접후기 뿌려주기 */
@@ -114,7 +123,9 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				break;
 			case "5":
 				result.get(i).setIntrvwDifficulty("매우 쉬움");
-				break;	
+				break;
+			//default : result.get(i).setIntrvwDifficulty("매우 쉬움");;
+			//	break;
 			}
 		}
 		/* 면접 경로 */		
@@ -138,12 +149,12 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			case "6":
 				result.get(i).setIntrvwRoute("기타");
 				break;	
+			//default : result.get(i).setIntrvwRoute("기타");;
+			//break;
 			}
 		}
 		/* 면접 결과 */		
-		for(int i = 0 ; i<result.size();i++) {	
-			System.out.println("======");
-			System.out.println(result.get(i));
+		for(int i = 0 ; i<result.size();i++) {			
 			switch (result.get(i).getIntrvwResult()) {
 			case "1":
 				result.get(i).setIntrvwResult("합격");
@@ -160,19 +171,26 @@ public class EnterpriseServiceImp implements EnterpriseService {
 			}
 		}
 		/* 면접  경험*/		
-		for(int i = 0 ; i<result.size();i++) {			
-			switch (result.get(i).getIntrvwExperience()) {
-			case "1":
-				result.get(i).setIntrvwExperience("부정적");
-				break;
-			case "2":
-				result.get(i).setIntrvwExperience("보통");
-				break;
-			case "3":
-				result.get(i).setIntrvwExperience("긍정적");
-				break;		
+		for(int i = 0 ; i<result.size();i++) {	
+			try {
+				switch (result.get(i).getIntrvwExperience()) {
+				case "1":
+					result.get(i).setIntrvwExperience("부정적");
+					break;
+				case "2":
+					result.get(i).setIntrvwExperience("보통");
+					break;
+				case "3":
+					result.get(i).setIntrvwExperience("긍정적");
+					break;	
+				//default : result.get(i).setIntrvwExperience("긍정적");;
+				//break;
+				}
+			}catch(NullPointerException e) {
+				System.out.println("널값임..");
 			}
 		}
+		
 		
 		return result;
 	}
@@ -182,15 +200,18 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entDao.interviewPieChart(entIndex);
 	}
 
+	
+	
 	@Override
-	public List<Review> reviewList(Map<String, String> data) {
+	public List<Interview> selectListByMemberIdx(int memberIndex) {
 		
-		return entDao.reviewList(data);
+		return entDao.selectListByMemberIdx(memberIndex);
 	}
 	
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
 	}
+
 
 
 

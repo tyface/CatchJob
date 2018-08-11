@@ -1,8 +1,8 @@
-$(function() {
+$(document).ready(function(){
 	//payAmpAvg();
 
 	$("#select").text("인원");
-	$("#numOfEnt").text("98141");
+	$("#numOfEnt").text("6");
 	$("#numOfInd").text("37");
 	$("#numOfTotEnt").text("28");
 	// var entPer =  DB의 '국민연금 총 가입자 수' 가져오면 됨
@@ -13,17 +13,11 @@ $(function() {
 	$("#toEntPer").css('width', '100%');
 
 
-		$("#myBtn").click(function() {
-			$("#myModal").modal();
-		});
+		
 
-		$("#myBtn2").click(function() {
-			$("#myModal").modal();
-		});
-
-
-
-
+		
+		
+		
 	    $(".mailbox-star").click(function (e) {
 	        e.preventDefault();
 	        //detect type
@@ -42,7 +36,7 @@ $(function() {
 	          $this.toggleClass("fa-heart-o");
 	        }
 	      });
-
+  
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
           $("#myModal").modal();
@@ -88,12 +82,12 @@ $(function() {
 	    };
 	    starRating();
 	    /* 별점END -----------------------------------------------*/
-
-
-
-
-
-
+	    
+	    
+	    
+	  
+	    
+		
 		/*화면 느리게 이동하는거 ---------------- 순서 무조건 맨 마지막에 ★★★★★★★★★★★*/
 		// Add scrollspy to <body>
 		  $('body').scrollspy({target: ".navbar", offset: 50});
