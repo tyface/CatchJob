@@ -23,14 +23,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<!-- 질문가져오기 -->
-	<select id="question" resultType="map">
+	<select id="question" parameterType="int"  resultType="map">
 		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG
-		FROM REVIEW_QESTN_TB qes
-		LEFT JOIN REVIEW_TB rev
+		FROM   REVIEW_QESTN_TB qes
+		LEFT OUTER JOIN REVIEW_TB rev
 		ON qes.QESTN_NO = rev.QESTN_NO
+		AND rev.ENT_IDX=#{entIndex}
 		GROUP BY qes.QESTN_NO
-		ORDER BY qes.QESTN_NO
+		ORDER BY qes.QESTN_NO;	
 	</select>
+	
+	
 	
 	<select id="reviewList" parameterType="int" resultMap="reviewMap">		
 		SELECT * 

@@ -7,6 +7,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
@@ -20,6 +23,19 @@
 //$(document).ready(function(){
 var status = "logout";
 $(function(){
+	
+	$('.stars').barrating({
+	    theme: 'fontawesome-stars',
+	   	onSelect: function(value, text, event){
+	    	      alert(value)
+	    }
+	});
+	
+	
+	
+	
+	
+	
 	//alert(${mberIndex});
 	if('${mberIndex}'==''){
 		//alert(status);
@@ -89,13 +105,10 @@ $(function(){
 	 	
 	 
 	 	$(".review-btn").on("click",function(){
-	 		/* alert($(this).val());
+	 		var point = $(this).parent().parent().prev().children().val();
+	 		alert(point);
 	 		
 	 		
-	 	})
-	 	
-
-		 $(".reviewForm").on("submit", function(){  */
 			 var statusCount = $(this).next().val();
 			 //alert($(this).next().val());
 		 //안녕
@@ -106,7 +119,6 @@ $(function(){
 				//alert("등록!")
 				//alert($(".contents").prop("value"))
 				var contents = $("#contents"+statusCount).val();
-				var evaluationScore = $("#starScore").text();
 				var questionNum = statusCount;
 				var entIndex = $("#entIndex").val();
 				//alert("내용:"+contents+"   질문번호:"+statusCount);
@@ -114,10 +126,10 @@ $(function(){
 				//alert(questionNum);
 				//alert(entIndex);
 				  $.ajax({
-					url:"${pageContext.request.contextPath}/enterprise/test",
+					url:"${pageContext.request.contextPath}/enterprise/writeReview",
 					type:"post",
 					data:{ "contents" : contents,
-						"evaluationScore" : evaluationScore,
+						"evaluationScore" : point,
 						"questionNum" : questionNum,
 						"entIndex" : entIndex
 						
@@ -653,15 +665,16 @@ function addComma(num) {
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion"
-											href="#collapse${status.count}">${question.QUESTION}<span
-											style="color: #6799FF"> (${question.COUNT}) </span> <span
-											style="float: right; margin-right: 20%">${question.AVG} <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star-empty"></span>
-										</span>
+											href="#collapse${status.count}">${question.QUESTION} 
+											<span style="color: #6799FF"> (${question.COUNT}) </span> 
+											<span style="float: right; margin-right: 20%">${question.AVG} 
+											   <c:forEach begin="1" end="${question.AVG}" step="1">
+								                  <span class="stars-on"></span>
+								               </c:forEach>								               
+								               <c:forEach begin="${question.AVG}" end="4" step="1">
+								                   <span class="stars-off"></span>
+								               </c:forEach>
+										</SPAN>
 
 										</a>
 									</h4>
@@ -715,28 +728,22 @@ function addComma(num) {
 											</tbody>
 										</table>
 
-<form id="reviewForm" class="reviewForm" name="reviewForm" >
-<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
-<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
+										<form id="reviewForm" class="reviewForm" name="reviewForm" >
+										<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
+										<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
 
-										<div>
-											<span class="star-input">
-												<span class="input"	id="star">
-												<input type="radio" name="star-input" id="p2" value="1">
-												<label for="p2">1</label> 
-												<input type="radio" name="star-input" id="p4" value="2">
-												<label for="p4">2</label> 
-												<input type="radio" name="star-input" id="p6" value="3">
-												<label for="p6">3</label> 
-												<input type="radio" name="star-input" id="p8" value="4">
-												<label for="p8">4</label> 
-												<input type="radio" name="star-input" id="p10" value="5">
-												<label for="p10">5</label>
-											</span> 
-												<output for="star-input">
-													<b id="starScore">0</b> 점
-												</output>
-											</span>
+										<div value="11">
+											<select class="stars">
+											    <option value="1">1</option>
+											    <option value="2">2</option>
+											    <option value="3">3</option>
+											    <option value="4">4</option>
+											    <option value="5">5</option>
+											</select>
+
+											<output for="star-input">
+												<b id="starScore">0</b> 점
+											</output>
 										</div>
 
 										<div class="input-group input-group-sm">

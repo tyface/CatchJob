@@ -45,10 +45,11 @@ public class ReviewServiceImp implements ReviewService {
 		}
 	}
 	@Override
-	public List<Map<String, String>> question() {
+	public List<Map<String, String>> question(int entIndex) {
 
-		return reviewDao.question();
+		return reviewDao.question(entIndex);
 	}
+	
 	@Override
 	public List<Review> reviewList(int entIndex) {
 		List<Review> reviewList = reviewDao.reviewList(entIndex);

@@ -38,7 +38,7 @@
 }
 .stars-on::after{
   content: '\f005';
-  color: #f3f403;
+  color: #FFE400;
   font: normal normal normal 20px/1 FontAwesome;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
