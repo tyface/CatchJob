@@ -18,5 +18,14 @@ public interface MemberService {
 	public boolean updateMember(Member member);
 	
 	public Member getMemberById(String mberId);
+	
+	public Map<String, Object> getMessageList(int pageNumber, int numOfMsgPage);
+	public int calPageTotalCount(int totalCount, int numOfMsgPage);
+	public int getStartPage(int pageNum);
+	public int getEndPage(int pageNum);
+
+	public List<Member> getBoardList(int pageNumber, int numOfMsgPage);
+	
+	
 
 }

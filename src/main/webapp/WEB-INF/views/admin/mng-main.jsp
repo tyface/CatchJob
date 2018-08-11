@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/admin/admin-nav-sidebar.jsp"%> 
+	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%> 
 			
 			<div class="col-md-9 main">
 			

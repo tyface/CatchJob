@@ -17,13 +17,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
-	<select id="selectListMember" resultMap="memberMap">
+	<select id="selectListMember" parameterType="map" resultMap="memberMap">
 		SELECT *
 		FROM MEMBER_TB
 	</select>
-	<select id="selectById" parameterType="map" resultMap="memberMap">
+	<select id="selectById" parameterType="String" resultMap="memberMap">
 		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}
 	</select>
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER_TB
+	</select>
+	<select id="selectListPerPage" parameterType="map" resultMap="memberMap">
+		SELECT * FROM (
+			SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.MBER_IDX, m.MBER_ID, m.MBER_PW, m.MBER_TYPE, m.USE_FL, m.REG_DT, m.LAST_DT
+			FROM (
+				SELECT MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT 
+				FROM MEMBER_TB,  (select @ROWNUM := 0) a
+			ORDER BY MBER_IDX) m) n
+		WHERE rnum 
+		BETWEEN #{firstRow} AND #{endRow};
+	</select>
+	
 	<resultMap type="member" id="memberMap">
 		<result property="mberIndex" column="MBER_IDX" />
 		<result property="mberId" column="MBER_ID" />
@@ -33,6 +48,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="regDate" column="REG_DT" />
 		<result property="lastDate" column="LAST_DT" />
 	</resultMap>
-
 </mapper>
-
