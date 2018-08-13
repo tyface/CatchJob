@@ -4,8 +4,6 @@
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
 <jsp:include page="include/header.jsp" flush="true" />
 <script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
-
-</script>
 <link rel="stylesheet" href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 
 
@@ -38,27 +36,31 @@ $(function() {
 //
 				// $("#entListPage").append()
 		}
-	})
+
+		$(".mailbox-star").on("click",function (e) {
+			e.preventDefault();
+
+			//detect type
+			var $this = $(this).children("i");
+			var glyph = $this.hasClass("glyphicon");
+			var fa = $this.hasClass("fa");
+			//Switch states
+			if (glyph) {
+				$this.toggleClass("glyphicon-heart");
+				$this.toggleClass("glyphicon-heart-empty");
+			}
+			if (fa) {
+				$this.toggleClass("fa-heart");
+				$this.toggleClass("fa-heart-o");
+			}
+		});
 
 
-	$(".mailbox-star").click(function (e) {
-		e.preventDefault();
-		//detect type
-		var $this = $(this).find("a > i");
-		var glyph = $this.hasClass("glyphicon");
-		var fa = $this.hasClass("fa");
+})
 
-		//Switch states
-		if (glyph) {
-		  $this.toggleClass("glyphicon-heart");
-		  $this.toggleClass("glyphicon-heart-empty");
-		}
 
-		if (fa) {
-		  $this.toggleClass("fa-heart");
-		  $this.toggleClass("fa-heart-o");
-		}
-	});
+
+
 
 });
 </script>
@@ -104,8 +106,8 @@ $(function() {
 			</div>
 
 		</div>
-	</c:forEach> --%>
-	<%-- <div style="text-align: center">
+	</c:forEach>
+ <div style="text-align: center">
 		<ul class="pagination">
 			<li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
 			<li><a href="#">1</a></li>
