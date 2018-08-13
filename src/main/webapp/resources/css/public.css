@@ -1,3 +1,23 @@
+body {
+    position: relative;
+    background-color: #EAEAEA;
+}
+article {
+  width: 100%;
+  text-align: center;
+  padding-top: 50px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.navbar {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  width: 100%;
+  z-index:999;
+}
+
+
 .f-left {
   float:left;
 }
@@ -142,8 +162,23 @@
 	clear: left;
 }
 
-body {
-    position: relative;
-    background-color: #EAEAEA;
-}
 /* End 기업리스트 페이지  */
+
+/* 맨위로 가기 버튼 */
+.move-top {
+    position: fixed;
+    right: 5%;
+    bottom: 40px;
+    z-index: 999;
+}
+@media (min-width:768px) and (max-width:1024px) {
+  .move-top {
+    right: 8%;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .move-top {
+    right: 11%;
+  }
+}

@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 	//payAmpAvg();
 
 	$("#select").text("인원");
@@ -13,11 +13,11 @@ $(document).ready(function(){
 	$("#toEntPer").css('width', '100%');
 
 
-		
 
-		
-		
-		
+
+
+
+
 	    $(".mailbox-star").click(function (e) {
 	        e.preventDefault();
 	        //detect type
@@ -36,7 +36,7 @@ $(document).ready(function(){
 	          $this.toggleClass("fa-heart-o");
 	        }
 	      });
-  
+
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
           $("#myModal").modal();
@@ -82,12 +82,12 @@ $(document).ready(function(){
 	    };
 	    starRating();
 	    /* 별점END -----------------------------------------------*/
-	    
-	    
-	    
-	  
-	    
-		
+
+
+
+
+
+
 		/*화면 느리게 이동하는거 ---------------- 순서 무조건 맨 마지막에 ★★★★★★★★★★★*/
 		// Add scrollspy to <body>
 		  $('body').scrollspy({target: ".navbar", offset: 50});
@@ -116,43 +116,120 @@ $(document).ready(function(){
 
 });
 
-
-function appendEntList(entList){
+/* 무한 스크롤 페이징*/
+function appendEntList(entList,pageNum,pageViewCount){
 	var appendObject;
+	var firstNum = pageNum * pageViewCount;
+	var lastNum = firstNum + 9 ;
 
-	alert(entList.length);
-	for(var i = 0;i < entList.length;i++){
-		appendObject = $("<div/>",{
-			class:"row ent-list",
-			append:$("<div/>",{
-				class:"col-sm-8",
-				append:$("<div/>",{
-					class:"row",
-					append:$("<a/>",{
-						class:"p25",
-						href:"row",
-						html:entList[i].entName,
-						before:"123123132"
-					})
-				})
-			})
-		})
-		// appendObject = $("<div/>",{
-		// 	class:"row ent-list",
-		// }).append($("<div/>",{
-		// 	class:"col-sm-8",
-		// })).append($("<div/>",{
-		// 	class:"row",
-		// })).append($("<a/>",{
-		// 	class:"p25",
-		// 	href:"row",
-		// 	html:entList[i].entName
-		// }))
-
-
-
-		$("#ent-list-box").append(appendObject)
+	if(firstNum >= entList.length || lastNum >= entList.length){
+		return;
 	}
 
+	for(var i = firstNum; i < lastNum;i++){
 
+		/* 별점 만들기 */
+		var stars = "";
+		for(var j = 0;j < 5;j++){
+			if(j < entList[i].evaluationAvg){
+				stars += "<span class=stars-on/>";
+			}else{
+				stars += "<span class=stars-off/>";
+			}
+		}
+
+
+		appendObject =
+			$("<div/>",{
+				class:"row ent-list",
+				append: [$("<div/>",{
+									class:"col-sm-8",
+									append:	[$("<div/>",{
+														class:"row",
+														append: [$("<a/>",{
+																				class:"p25",
+																				href:"enterprise/view?entIndex="+entList[i].entIndex ,
+																				html:entList[i].entName
+																			}),
+																			$("<a/>",{
+																				class:"btn mailbox-star btnFollow",
+																				append:	$("<i/>", {
+																									class:"fa fa-heart",
+																									style:"color: red; font-size: 20px;"
+																								})
+																		  })]
+													}),
+													$("<div/>",{
+														class:"row visible-lg visible-md visible-sm",
+														text:entList[i].industryName + " | " + entList[i].bcityName + " " + entList[i].signguName
+													}),
+													$("<div/>",{
+														class:"row",
+														append: $("<p/>", {
+																			class:"p-1",
+																			text:"평균연봉 " + entList[i].salaryAvg + " 만원"
+																		})
+													})
+													]
+								}),
+								$("<div/>",{
+									class:"col-sm-4",
+									append:[$("<div/>",{
+														class:"row text-center",
+														append: [stars,
+																		$("<span/>",{
+																			class:"ent-score",
+																			html:entList[i].evaluationAvg
+																		})]
+													}),
+													$("<div/>",{
+														class:"row",
+														append: [$("<div/>",{
+																			class:"col-xs-6 text-center cell-1",
+																			append:[$("<strong/>",{
+																								text:entList[i].reviewCount
+																							}),"<br>",
+																							$("<a/>",{
+																								href:"",
+																								html:"리뷰코멘트"
+																							})
+																							]
+																			}),
+																			$("<div/>",{
+																				class:"col-xs-6 text-center cell-2",
+																				append:[$("<strong/>",{
+																									text:entList[i].interviewCount
+																								}),"<br>",
+																								$("<a/>",{
+																									href:"",
+																									html:"면접정보"
+																								})
+																								]
+																			})
+																		]
+													})
+													]
+								})
+								]
+			})
+		$("#ent-list-box").append(appendObject)
+	}
 }
+
+/* 맨위로 버튼*/
+$(function() {
+	 $(window).scroll(function() {
+			 if ($(this).scrollTop() > 500) {
+					 $('.move-top').fadeIn();
+			 } else {
+					 $('.move-top').fadeOut();
+			 }
+	 });
+
+	 $(".move-top").click(function() {
+			 $('html, body').animate({
+					 scrollTop : 0
+			 }, 400);
+			 return false;
+	 });
+});

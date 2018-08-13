@@ -10,12 +10,14 @@
 
 
 <script>
-
+var pageViewCount = 10;
+var pageNum = 0;
 var entList = JSON.parse('${entList1}');
 
 
 $(function() {
-	// appendEntList(entList);
+	appendEntList(entList, pageNum, pageViewCount);
+	pageNum ++;
 	/* 무한 스크롤 코딩*/
 	$(document).scroll(function() {
 		var maxHeight = $(document).height();
@@ -24,8 +26,8 @@ $(function() {
 
 
 		if (maxHeight <= currentScroll + 1) {
-				appendEntList(entList);
-				//
+				appendEntList(entList, pageNum, pageViewCount);
+				pageNum ++;
 				// $.ajax({file:"enterprise-list-append.jsp",
 				//
 				// 				success:function(result) {
@@ -63,13 +65,13 @@ $(function() {
 
 <article id="ent-list-box">
 
-	<c:forEach begin="0" varStatus="status" end="9" var="ent" items="${entList}">
+	<%-- <c:forEach begin="0" varStatus="status" end="9" var="ent" items="${entList}">
 		<div class="row ent-list">
 
 			<div class="col-sm-8">
 				<div class="row">
 					<a href="enterprise/view?entIndex=${ent.entIndex}" class="p25">${ent.entName}</a>
-					<a href="#"  class="btn mailbox-star" class="btnFollow"><i class="fa fa-heart" style="color: red; font-size: 20px;"></i></a>
+					<a href="#"  class="btn mailbox-star btnFollow"><i class="fa fa-heart" style="color: red; font-size: 20px;"></i></a>
 				</div>
 				<div class="row visible-lg visible-md visible-sm">
 					${ent.industryName} | ${ent.bcityName} ${ent.signguName}
@@ -90,14 +92,19 @@ $(function() {
 					<span class="ent-score">${ent.evaluationAvg}</span>
 				</div>
 				<div class="row">
-					<div class="col-xs-6 text-center cell-1"><strong>${ent.reviewCount}</strong><a href="${contextPath}/enterprise/view?entIndex=${ent.entIndex}#section2"><br>리뷰코멘트</a></div>
-					<div class="col-xs-6 text-center cell-2"><strong>${ent.interviewCount}</strong><a href="${contextPath}/enterprise/view?entIndex=${ent.entIndex}#section3"><br>면접정보</a></div>
+					<div class="col-xs-6 text-center cell-1">
+						<strong>${ent.reviewCount}</strong>
+						<a href="${contextPath}/enterprise/view?entIndex=${ent.entIndex}#section2"><br>리뷰코멘트</a>
+					</div>
+					<div class="col-xs-6 text-center cell-2">
+						<strong>${ent.interviewCount}</strong>
+						<a href="${contextPath}/enterprise/view?entIndex=${ent.entIndex}#section3"><br>면접정보</a>
+					</div>
 				</div>
 			</div>
 
 		</div>
-	</c:forEach>
-
+	</c:forEach> --%>
 	<%-- <div style="text-align: center">
 		<ul class="pagination">
 			<li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
@@ -110,5 +117,7 @@ $(function() {
 		</ul>
 	</div>--%>
 </article>
-
+	<button type="button" class="btn btn-default move-top" >
+		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+	</button>
 <jsp:include page="include/footer.jsp" flush="true" />
