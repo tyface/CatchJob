@@ -7,7 +7,7 @@
 	rel="stylesheet">
 <script>
 $(function(){
-	alert( "${originalData}" );
+	
 	//alert("INTRVW_EXPRNC:" + INTRVW_EXPRNC);
 /* 	$(".update").on("click",function(){
 		alert("선택된 기업요소: "+$(this).children().val());
@@ -40,7 +40,7 @@ $(function(){
 })
 
 function doUpdate(num){
-	 
+	 //alert("num: "+num);
 	 
 	$.ajax({	
 		url:"${pageContext.request.contextPath}/profile/interviewForm",
@@ -49,7 +49,7 @@ function doUpdate(num){
 		data : {"entIndex": num},
 		dataType: 'json',
 		success: function(data){
-			alert("성공~"+data);
+			//alert("성공~"+data);
 				$("#entName").val(data['entName']);
 				$("#intrvwReview").val(data['intrvwReview']);
 				$("#intrvwQuestion").val(data['intrvwQuestion']);
@@ -58,12 +58,12 @@ function doUpdate(num){
 				$("#presentationDate").val(data['presentationDate']);
 				$("#hiddenEntIndex").val(data['entIndex']);
 				
-				var INTRVW_ROUTE = data['intrvwDifficulty']+"";				
+				var INTRVW_DFFLY = data['intrvwDifficulty']+"";				
 				var INTRVW_RESULT = data['intrvwResult']+"";	//면접결과
-				var INTRVW_DFFLY = data['intrvwRoute']+"";		//면접난이도
+				var INTRVW_ROUTE = data['intrvwRoute']+"";		//면접난이도
 				var INTRVW_EXPRNC = data['intrvwExperience']+"";//면접경험 			 
 			 
-				$("#intrvwDifficulty").find('option[value="'+INTRVW_ROUTE+'"]').prop('selected', true);
+				$("#intrvwDifficulty").find('option[value="'+INTRVW_DFFLY+'"]').prop('selected', true);
 				$("#intrvwResult").find('option[value="' + INTRVW_RESULT + '"]').prop('selected', true);
 				$("#intrvwRoute").find('option[value="' + INTRVW_ROUTE + '"]').prop('selected', true);
 				$("#optionsRadios" + INTRVW_EXPRNC).prop('checked', true); 
@@ -82,51 +82,47 @@ function doDelete(entIndex){
 	alert("삭제할거니?ㅃ"+entIndex)
 }
 </script>
-안녕안녕 ${originalData}
 
-<br>
-
-
-<hr>
-${viewData}
-
-<div class="container">
-  <h2>Table</h2>
-  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
-  <div class="table-responsive">          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>기업명</th>
-        <th>면접결과</th>
-        <th>작성일</th>
-        <th>등록여부</th>
-        <th>
-        	수정 / 삭제
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach  items="${viewData}" var="viewData" varStatus="status">
+<article class="container">
+	<div class="module">
+	
+	  <h2>면접후기</h2>
+	  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
+	  <div class="table-responsive">          
+	  <table class="table">
+	    <thead>
 	      <tr>
-	        <td>${status.index}</td>
-	        <td>${viewData.entName}</td>
-	        <td>${viewData.intrvwResult}</td>
-	        <td>${viewData.regDate}</td>
-	        <td>${viewData.intrvwFlag}</td>
-	        <td>
-	        	<a class="update" onclick="doUpdate(${viewData.entIndex})">수정  </a> /
-	        	<%-- <a class="delete" onclick="doDelete(${viewData.entIndex})">삭제</a> --%>
-	        	<a class="delete" onclick="location.href='${pageContext.request.contextPath}/profile/deleteInterview?entIndex=${viewData.entIndex}'">삭제</a>
-	        </td>
+	<!--         <th>#</th> -->
+	        <th>기업명</th>
+	        <th>면접결과</th>
+	        <th>작성일</th>
+	<!--         <th>등록여부</th> -->
+	        <th>
+	        	수정 | 삭제
+	        </th>
 	      </tr>
-      </c:forEach>
-    </tbody>
-  </table>
-  </div>
-</div>
-
+	    </thead>
+	    <tbody>
+	    <c:forEach  items="${viewData}" var="viewData" varStatus="status">
+		      <tr>
+	<%-- 	        <td>${status.index}</td> --%>
+		        <td><a class="non-line" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${viewData.entIndex}'">${viewData.entName}</a></td>
+		        <td>${viewData.intrvwResult}</td>
+		        <td>${viewData.regDate}</td>
+	<%-- 	        <td>${viewData.intrvwFlag}</td> --%>
+		        <td>
+		        	<a class="update non-line" onclick="doUpdate(${viewData.entIndex})">수정  </a> |
+		        	<%-- <a class="delete" onclick="doDelete(${viewData.entIndex})">삭제</a> --%>
+		        	<a class="delete non-line" onclick="location.href='${pageContext.request.contextPath}/profile/deleteInterview?entIndex=${viewData.entIndex}'">삭제</a>
+		        </td>
+		      </tr>
+	      </c:forEach>
+	    </tbody>
+	  </table>
+	  </div>
+	
+	</div>
+</article>
 <!--  <button type="button" class="btn btn-info" id="myBtn">수정</button>
 <button type="button" class="btn btn-info" id="">삭제</button>
 

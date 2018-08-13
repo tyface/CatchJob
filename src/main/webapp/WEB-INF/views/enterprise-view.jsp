@@ -4,26 +4,31 @@
 <jsp:include page="include/header.jsp" flush="true" />
 
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
+ 
+
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/enterprise.css"
-	rel="stylesheet">
+
 
 <script>
 var entIndex = ${entInfo.ENT_IDX};
 //$(document).ready(function(){
 var status = "logout";
 $(function(){
-	//alert(entIndex+"---");
+	//alert(${mberIndex});
+	if('${mberIndex}'==''){
+		alert(status);
+	}else{
+		status = "login";
+		alert(status);
+	}
+
+	//alert("status: "+status);
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
@@ -36,13 +41,7 @@ $(function(){
 		
 	})
 	
-	//alert(${mberIndex});
-	if('${mberIndex}'==''){
-		//alert(status);
-	}else{
-		status = "login";
-		//alert(status);
-	}
+	
 	//getReviewList();	
 	entInf();
 	chart();
@@ -54,24 +53,41 @@ $(function(){
 		window.location.reload();
 	})
 			
-    $(".mailbox-star").click(function (e) {
-        e.preventDefault();
-        //detect type
-        var $this = $(this).find("a > i");
-        var glyph = $this.hasClass("glyphicon");
-        var fa = $this.hasClass("fa");
+   //Handle starring for glyphicon and font awesome
+    $(".follow-btn").click(function (e) {
+      e.preventDefault();// 기본적인 submit 행동을 취소합니다
+      
+      var $this = $(this).find("i");
+      var fa = $this.hasClass("fa");
+      var msg ="";
 
-        //Switch states
-        if (glyph) {
-          $this.toggleClass("glyphicon-heart");
-          $this.toggleClass("glyphicon-heart-empty");
-        }
-
-        if (fa) {
-          $this.toggleClass("fa-heart");
-          $this.toggleClass("fa-heart-o");
-        }
-      });
+	  if(status == "logout" & $this.hasClass("fa-heart-o")){
+	// 	  if($this.hasClass("fa-heart-o")){
+			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 페이지로 이동하시겠습니까?") != 0 ){
+				 /* 로그인 페이지로 이동 */    	
+				 alert("로그인 모달 띄우기 ");
+				 $("#myModalLogin").modal("show");
+	    	  }
+	// 	  }
+	  }else{/* 로그인 상태임 */
+			  if($this.hasClass("fa-heart-o")){
+		    	  alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
+		    	  $this.toggleClass("fa-heart-o");
+		    	  $this.toggleClass("fa-heart");
+			  
+			  }else{
+				  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
+					  alert("팔로잉이 해제되었습니다.");
+					  $this.toggleClass("fa-heart");
+					  $this.toggleClass("fa-heart-o");
+				  }
+				  else{
+				  }
+			  }
+		  
+	  }
+      
+});
   
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
@@ -419,22 +435,31 @@ function addComma(num) {
    return num.toString().replace(regexp, ',');
 } 
 
-</script>
+</script> 
+<!--   <aside class="main-sidebar">fdfdf -->
+<!--     <section class="sidebar">fdfdsfdf -->
+<!--     </section> -->
+<!--   </aside> -->
+  
+<!--   <div class="content-wrapper">fdsfdfdf -->
+<!--     <section class="content-header">fdfdf -->
+<!--     </section> -->
+<!--   </div> -->
 
-<%=session.getAttribute("mberIndex")%>
-<div class="container module-main"
-	style="background-color: white; color: #fff; height: 220px;">
-
+<div class="container module-main">
+	
+		
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
+	
 
-	<div class="btn mailbox-star" id="btnFollow">
-		<a href="#"><i class="fa fa-heart-o"
-			style="color: red; font-size: 20px;"></i></a>
-		<p>팔로우</p>
-	</div>
+<!-- 	<p class="follow follow-btn follow"> -->
+		<a href="#" class="follow follow-btn follow">
+			<i class="fa fa-heart-o follow"></i><!-- 123 -->
+		</a>
+<!-- 		<a>팔로우</a>		 -->
+<!-- 	</p> -->
 
-
-	<div style="float: right">
+	<div class="f-right">
 		<button type="button" class="btn btn-info" id="text-btn">기업리뷰작성</button>
 		<button type="button" class="btn btn-info" id="myBtn2">면접후기</button>
 	</div>
@@ -443,31 +468,30 @@ function addComma(num) {
 </div>
 <br>
 
-<div class="container ">
+  
+<div class="container">
 	<div class="row">
-		<nav class="col-sm-1" id="myScrollspy">
+		<nav class="col-sm-1 padding-zero" id="myScrollspy">
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
-				<li style="height: 30px"></li>
-				<li><a href="#section1"> <!-- <span class="glyphicon glyphicon-bookmark  logo-small" style="font-size: 50px"></span> -->
-						<span class="fa fa-building logo-small" style="display: block;"></span>
-						<!-- 			<span class="fa fa-building-o logo-small" ></span>
-					<span class="fa  fa-paw logo-small" ></span>
-					<span class="fa  fa-paw-o logo-small" ></span> --> 기업정보
+<!-- 				<li style="height: 30px"></li> -->
+				<li><a href="#section1"> 
+					<span class="fa fa-building logo-small" ></span>					
+						기업정보
 				</a></li>
-				<li><a href="#section2"> <!-- <span class="glyphicon glyphicon-file logo-small"></span> -->
-						<span class="fa fa-weixin logo-small" style="display: block;"></span>
+				<li><a href="#section2"> 
+						<span class="fa fa-weixin logo-small" ></span>
 						리뷰코멘트
 				</a></li>
-				<li><a href="#section3"> <!-- <span class="glyphicon glyphicon-pencil logo-small"></span> -->
-						<span class="fa fa-file-text logo-small" style="display: block;"></span>
+				<li><a href="#section3">
+						<span class="fa fa-file-text logo-small" ></span>
 
 						면접후기
 				</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <!-- <span class="glyphicon glyphicon-stats logo-small"></span> -->
-						<span class="fa fa-line-chart logo-small" style="display: block;"></span>
+					data-toggle="dropdown" href="#"> 
+						<span class="fa fa-line-chart logo-small" ></span>
 						월별그래프 <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
@@ -723,7 +747,7 @@ function addComma(num) {
 											<div class="input-group input-group-sm" >
 												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
 												<span class="input-group-btn">
-													<input type="submit" class="btn btn-flat btn-info review-btn" id="review-btn" value="제출"><!-- 123 -->
+													<input type="submit" class="btn btn-flat btn-info review-btn"  value="제출"><!-- 123 -->
 													<input type="hidden" id="statusCount" value="${status.count}">
 												</span>
 											</div>

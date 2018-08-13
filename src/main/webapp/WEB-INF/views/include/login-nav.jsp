@@ -266,25 +266,29 @@
 				JOB</a>
 		</div>
 
-		<div class="f-right nav-btn-1">
+		<div class="f-right nav-btn-1"> 
 
-			<div class="dropdown col-xs-6">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-					class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span></a>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-					<li><a href="#">기업리뷰 작성</a></li>
-					<li><a href="#">면접후기 작성</a></li>
-				</ul>
-			</div>
+<!-- 			<div class="dropdown col-xs-6"> -->
+<!-- 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span -->
+<!-- 					class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span></a> -->
+<!-- 				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"> -->
+<!-- 					<li><a href="#">기업리뷰 작성</a></li> -->
+<!-- 					<li><a href="#">면접후기 작성</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
 
-			<div class="dropdown col-xs-6">
+			<div class="dropdown col-xs-6 f-right" >
+
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 					class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-					<li><a href="#">계정</a></li>
-					<li><a
-						href="${pageContext.request.contextPath}/profile/interviews">활동내역</a></li>
-					<li><a href="#">관심정보</a></li>
+				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+					<li class="dropdown-header">활동내역</li>
+					<li><a href="${pageContext.request.contextPath}/profile/reviews">기업리뷰 작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/profile/interviews">면접후기 작성</a></li>
+					<li role="presentation" class="divider"></li>
+					<li class="dropdown-header">관심정보</li>
+					<li><a href="#">팔로잉 기업</a></li>
+					 <li role="presentation" class="divider"></li>
 					<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 				</ul>
 			</div>

@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="include/header.jsp" flush="true" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
@@ -38,7 +35,7 @@ function updateForm(num, questionNum){
 		dataType: "json",
 		success: function(review){
 			var evaluationScore = review.evaluationScore;
-			alert("성공~evaluationScore:"+evaluationScore+"만족도:");
+			//alert("성공~evaluationScore:"+evaluationScore+"만족도:");
 			$("#entName").val(review.entName);
 			$("#question").val(review.question);
 			$("#evaluationScore").text(evaluationScore);
@@ -56,7 +53,7 @@ function updateForm(num, questionNum){
 }
 function deleteReview(entIndex,questionNum){
 	//alert("삭제하시겠습니까?");
-	msg ="삭제하시겠습니까?";
+	var msg ="삭제하시겠습니까?";
 	if(confirm(msg)!=0){
 		//Yes click
 		$.ajax({
@@ -88,44 +85,43 @@ function deleteReview(entIndex,questionNum){
 </script>
 
 
-
-
-안녕안녕 여기는 특정 사용자가 작성한 리뷰코멘트 수정/삭제 페이지란다
-<div class="container">
-  <h2>Table</h2>
-  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
-  <div class="table-responsive">          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>기업명</th>
-        <th>질문내용</th>
-        <th>작성일</th>  
-        <th>
-        	수정 / 삭제
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
+<article class="container">
+	<div class="module">
+	  <h2>리뷰 코멘트</h2>
+	  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
+	  <div class="table-responsive">          
+	  <table class="table">
+	    <thead>
 	      <tr>
-	        <td>${status.index}</td>
-	        <td>${reviewList.entName}</td>
-	        <td>${reviewList.question}</td>
-	        <td>${reviewList.regDate}</td>
-	        <td>
-	        	<a class="update" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </a> |
-	        	<%-- <a class="delete" onclick="doDelete(${viewData.entIndex})">삭제</a> --%>
-	        	<a class="delete" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </a>
-<%-- 	        	<a class="delete" onclick="location.href='${pageContext.request.contextPath}/profile/deleteReview?entIndex=${reviewList.entIndex}&questionNum=${reviewList.questionNum}'">삭제</a> --%>
-	        </td>
+<!-- 	        <th>#</th> -->
+	        <th>기업명</th>
+	        <th>질문내용</th>
+	        <th>작성일</th>  
+	        <th>
+	        	수정 / 삭제
+	        </th>
 	      </tr>
-      </c:forEach>
-    </tbody>
-  </table>
-  </div>
-</div>
+	    </thead>
+	    <tbody>
+	    <c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
+		      <tr>
+<%-- 		        <td>${status.index}</td> --%>
+		        <td><a class="non-line" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</a></td>
+		        <td>${reviewList.question}</td>
+		        <td>${reviewList.regDate}</td>
+		        <td>
+		        	<a class="update non-line" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </a> |
+		        	<%-- <a class="delete" onclick="doDelete(${viewData.entIndex})">삭제</a> --%>
+		        	<a class="delete non-line" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </a>
+	<%-- 	        	<a class="delete" onclick="location.href='${pageContext.request.contextPath}/profile/deleteReview?entIndex=${reviewList.entIndex}&questionNum=${reviewList.questionNum}'">삭제</a> --%>
+		        </td>
+		      </tr>
+	      </c:forEach>
+	    </tbody>
+	  </table>
+	  </div>
+	</div>
+</article>
 
 <!--  <button type="button" class="btn btn-info" id="myBtn">수정</button>
 <button type="button" class="btn btn-info" id="">삭제</button>
