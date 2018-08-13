@@ -45,6 +45,25 @@ public class ReviewServiceImp implements ReviewService {
 		}
 	}
 	@Override
+	public boolean updateReview(Review review) {
+		int result = reviewDao.updateReview(review);
+		if(result > 0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
+	//리뷰 삭제	
+	@Override
+	public boolean deleteReview(Map<String, String> data) {
+		int result = reviewDao.deleteReview(data);
+		if(result > 0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
+	@Override
 	public List<Map<String, String>> question(int entIndex) {
 
 		return reviewDao.question(entIndex);

@@ -8,19 +8,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO REVIEW_TB (ENT_IDX,MBER_IDX,QESTN_NO,`CONTENTS`,EVALUATION,REVW_FL,REG_DT)
 		VALUES (#{entIndex},${mberIndex},#{questionNum},#{contents},#{evaluationScore},#{reviewFlag},sysdate())
 	</insert>
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW_TB
+		SET `CONTENTS`=#{contents}, EVALUATION=#{evaluationScore}
+		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
+	</update>
+	<delete id="deleteReview" parameterType="map">
+		DELETE FROM REVIEW_TB
+		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
+	</delete>
 
-	<resultMap type="review" id="reviewMap">
-		<result property="entName" column="ENT_NM"/>
-		<result property="question" column="QUESTION"/>
-		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
-		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
-		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->
-		<result property="questionNum" column="QESTN_NO"/>		<!-- 질문 식별번호 -->
-		<result property="evaluationScore" column="EVALUATION"/>	<!-- 기업 평가 점수 -->
-		<result property="contents" column="CONTENTS"/>		<!--  리뷰 내용-->
-		<result property="reviewFlag" column="REVW_FL"/>		<!-- 리뷰 상태(1:사용,2:삭제,3:대기) TODO -->
-		<result property="regDate" column="REG_DT"/>			<!-- 작성일 -->
-	</resultMap>
+
 	
 	<!-- 질문가져오기 -->
 	<select id="question" parameterType="int"  resultType="map">
@@ -74,5 +72,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY r.REVW_IDX desc
 	</select>
 	 -->
-
+	<resultMap type="review" id="reviewMap">
+		<result property="entName" column="ENT_NM"/>
+		<result property="question" column="QUESTION"/>
+		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
+		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
+		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->
+		<result property="questionNum" column="QESTN_NO"/>		<!-- 질문 식별번호 -->
+		<result property="evaluationScore" column="EVALUATION"/>	<!-- 기업 평가 점수 -->
+		<result property="contents" column="CONTENTS"/>		<!--  리뷰 내용-->
+		<result property="reviewFlag" column="REVW_FL"/>		<!-- 리뷰 상태(1:사용,2:삭제,3:대기) TODO -->
+		<result property="regDate" column="REG_DT"/>			<!-- 작성일 -->
+	</resultMap>
 </mapper>

@@ -19,22 +19,22 @@
 	rel="stylesheet">
 
 <script>
-
+var entIndex = ${entInfo.ENT_IDX};
 //$(document).ready(function(){
 var status = "logout";
 $(function(){
-	
+	//alert(entIndex+"---");
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
-	    	      alert(value)
+	    	     // alert(value);
+	    	      $(".starScore").text(value);	    	      
 	    }
 	});
 	
-	
-	
-	
-	
+	$("#text-btn").on("click", function(){
+		
+	})
 	
 	//alert(${mberIndex});
 	if('${mberIndex}'==''){
@@ -43,10 +43,9 @@ $(function(){
 		status = "login";
 		//alert(status);
 	}
-		
+	//getReviewList();	
 	entInf();
 	chart();
-	starScore();
 	
 	$("#write-btn").on("click", function(){
 		alert("기업리뷰를 성공적으로 작성하였습니다^^");
@@ -55,24 +54,24 @@ $(function(){
 		window.location.reload();
 	})
 			
-	    $(".mailbox-star").click(function (e) {
-	        e.preventDefault();
-	        //detect type
-	        var $this = $(this).find("a > i");
-	        var glyph = $this.hasClass("glyphicon");
-	        var fa = $this.hasClass("fa");
+    $(".mailbox-star").click(function (e) {
+        e.preventDefault();
+        //detect type
+        var $this = $(this).find("a > i");
+        var glyph = $this.hasClass("glyphicon");
+        var fa = $this.hasClass("fa");
 
-	        //Switch states
-	        if (glyph) {
-	          $this.toggleClass("glyphicon-heart");
-	          $this.toggleClass("glyphicon-heart-empty");
-	        }
+        //Switch states
+        if (glyph) {
+          $this.toggleClass("glyphicon-heart");
+          $this.toggleClass("glyphicon-heart-empty");
+        }
 
-	        if (fa) {
-	          $this.toggleClass("fa-heart");
-	          $this.toggleClass("fa-heart-o");
-	        }
-	      });
+        if (fa) {
+          $this.toggleClass("fa-heart");
+          $this.toggleClass("fa-heart-o");
+        }
+      });
   
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
@@ -103,28 +102,23 @@ $(function(){
 	
 	 }
 	 	
-	 
-	 	$(".review-btn").on("click",function(){
-	 		var point = $(this).parent().parent().prev().children().val();
-	 		alert(point);
-	 		
-	 		
-			 var statusCount = $(this).next().val();
-			 //alert($(this).next().val());
-		 //안녕
+	 	
+	 	$(".review-btn").on("click",function(){<!-- 123 -->
+// 	 		var point = $(this).closest().closest().prev().children().text();
+// 	 		alert(point)
+			var point = $(this).parent().parent().prev().children().children("div").text();
+			alert(point);
+// 	 		var point = $(".starScore").text();
+// 	 		point = point.substr(0,1);
+			var statusCount = $(this).next().val();
 			if(status =="logout"){
 				alert("로그인 후 이용 가능합니다");
 				return false; 
 			}else{
-				//alert("등록!")
-				//alert($(".contents").prop("value"))
+				//alert("등록!"+point)
 				var contents = $("#contents"+statusCount).val();
 				var questionNum = statusCount;
 				var entIndex = $("#entIndex").val();
-				//alert("내용:"+contents+"   질문번호:"+statusCount);
-				//alert(evaluationScore);
-				//alert(questionNum);
-				//alert(entIndex);
 				  $.ajax({
 					url:"${pageContext.request.contextPath}/enterprise/writeReview",
 					type:"post",
@@ -138,9 +132,11 @@ $(function(){
 					success : function(result){
 						if(result){
 							alert("등록되었습니다.");
+							//getReviewList(questionNum);
 						}else{
 							alert("등록 실패하였습니다.");
-						}			
+						}	
+						getReviewList(questionNum);
 					}				
 				});
 				 return false; 
@@ -150,6 +146,43 @@ $(function(){
  	});  
 			
 });
+
+function getReviewList(questionNum){/* 456 */
+	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
+	//alert(questionNum);
+	//var reviewListJson = JSON.parse('${reviewListJson}');
+	var reviews = $("#collapse"+questionNum+"  #reviews");
+	reviews.html("");
+	$.ajax({
+		url:"${pageContext.request.contextPath}/enterprise/reviewList/"+entIndex,
+		type:"get",
+		dataType:"json",
+		success : function(data){
+
+			$(data).each(function(){
+				
+				if((this.questionNum)==questionNum){
+					var regDate = this.regDate;
+					var evaluationScore = this.evaluationScore;
+					var contents = this.contents;//우선 이것만 먼저먼저
+					var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
+					//td.text(contents+"ㅜㅜ..");
+					//td.appendTo(reviews);
+				}
+				
+				
+			});
+		},
+		error : function(request,status,error){
+			alert("요청 실패하였습니다.");
+			$("#modal-modify").hide("slow");
+			alert("request :" + request + "\n"+
+					"status :" + status + "\n"+
+					"error :" + error);
+		}	
+	});
+	
+}
 
 function entInf(){
 	
@@ -270,8 +303,9 @@ function chart(){
 					borderColor: '#2196F3',
 					borderWidth: 3,
 					fill: false,
-					data: salary,
-				}  ], 
+					data: salary
+				}], 
+				
 				borderWidth: 1
 		},
 		 options: {
@@ -284,17 +318,13 @@ function chart(){
                     yAxes: [{
                             ticks: {
                              //  max:3900000,
-                            //   min:3100000
+                               min:0
                             }
                         }]
                 }
 		    }
 		
 	});	 
-	
-	
-
-	
 	// comboBarLineChart
 	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
 	var comboBarLineChart = new Chart(ctx2, {
@@ -331,8 +361,7 @@ function chart(){
 	        }
 	    }
 	
-	});	
-	
+	});		
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
 	 
 	 var chartData = new Array(0,0,0,0,0);
@@ -384,45 +413,6 @@ function chart(){
 	});
 	
 }
-function starScore(){
-    /* 별점 */
-	  //star rating
-	    var starRating = function(){
-	      var $star = $(".star-input"),
-	          $result = $star.find("output>b");
-	      $(document)
-	         .on("focusin", ".star-input>.input", function(){
-	        $(this).addClass("focus");
-	      })
-	        .on("focusout", ".star-input>.input", function(){
-	        var $this = $(this);
-	        setTimeout(function(){
-	          if($this.find(":focus").length === 0){
-	            $this.removeClass("focus");
-	          }
-	        }, 100);
-	      }) 
-	        .on("change", ".star-input :radio", function(){
-	        //여기여기서 값 넘겨주기 !!
-	       // alert($(this).next().text())
-	        $result.text($(this).next().text());
-	      })
-	        .on("mouseover", ".star-input label", function(){
-	        	$result.text($(this).text());
-	        
-	      })
-	        .on("mouseleave", ".star-input>.input", function(){
-	        var $checked = $star.find(":checked");
-	        //alert("$checked:"+$checked);
-	        if($checked.length === 0){
-	          $result.text("0");
-	        } else {
-	          $result.text($checked.next().text());
-	        }
-	      });
-	    };
-	    starRating();	
-}
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -445,14 +435,13 @@ function addComma(num) {
 
 
 	<div style="float: right">
-		<button type="button" class="btn btn-info ">기업리뷰작성</button>
+		<button type="button" class="btn btn-info" id="text-btn">기업리뷰작성</button>
 		<button type="button" class="btn btn-info" id="myBtn2">면접후기</button>
 	</div>
 
 
 </div>
 <br>
-
 
 <div class="container ">
 	<div class="row">
@@ -655,33 +644,34 @@ function addComma(num) {
 
 			<div class="module">
 				<div id="section2">
-					<h3 id="title">리뷰코멘트</h3>
+					<h3 id="title">리뷰코멘트</h3><!--456  -->
 					<button type="button" class="btn btn-infofault">리뷰코멘트 작성</button>
 					<div class="panel-group " id="accordion">
 
 						<c:forEach begin="0" end="5" varStatus="status"
 							items="${question}" var="question">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion"
-											href="#collapse${status.count}">${question.QUESTION} 
-											<span style="color: #6799FF"> (${question.COUNT}) </span> 
-											<span style="float: right; margin-right: 20%">${question.AVG} 
+							<div class="panel panel-default" >
+								<div class="panel-heading" onclick="getReviewList(${status.count})"><!-- 456 -->
+									<h4 class="panel-title row">
+										<a data-toggle="collapse" data-parent="#accordion"	href="#collapse${status.count}">
+											<span class="col-sm-8">
+												${question.QUESTION} 
+												<span style="color: #6799FF"> (${question.COUNT}) </span> 
+											</span>
+											<span class="col-sm-4">${question.AVG} 
 											   <c:forEach begin="1" end="${question.AVG}" step="1">
 								                  <span class="stars-on"></span>
 								               </c:forEach>								               
 								               <c:forEach begin="${question.AVG}" end="4" step="1">
 								                   <span class="stars-off"></span>
 								               </c:forEach>
-										</SPAN>
-
+											</span>
 										</a>
 									</h4>
 								</div>
 
 								<div id="collapse${status.count}"
-									class="panel-collapse collapse">
+									class="panel-collapse collapse " >
 									<!-- in -->
 									<div class="panel-body" style="color: black">
 										<table class="table">
@@ -690,70 +680,54 @@ function addComma(num) {
 													<th>총${question.COUNT}개의 기업리뷰 코멘트</th>
 												</tr>
 											</thead>
-											<tbody>
-												<c:forEach var="reviewList" items="${reviewList}"
-													varStatus="index">
+											<tbody id="reviews">
+<%-- 												<c:forEach var="reviewList" items="${reviewList}" varStatus="index"> --%>
 
-													<c:if test="${reviewList.questionNum eq question.QESTN_NO}">
+<%-- 													<c:if test="${reviewList.questionNum eq question.QESTN_NO}"> --%>
 
-														<tr>
-															<td>
-																<p>
-																	<small><span class="glyphicon glyphicon-star"></span>
-																		${reviewList.evaluationScore}.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-																		${reviewList.regDate}</small>
-																</p> <span>${reviewList.contents}</span>
-															</td>
-														</tr>
-													</c:if>
-												</c:forEach>
-
-<!-- 												<tr>
-													<td style="text-align: center"><nav>
-															<ul class="pagination">
-																<li><a href="#" aria-label="Previous"> <span
-																		aria-hidden="true">&laquo;</span>
-																</a></li>
-																<li><a href="#">1</a></li>
-																<li><a href="#">2</a></li>
-																<li><a href="#">3</a></li>
-																<li><a href="#">4</a></li>
-																<li><a href="#">5</a></li>
-																<li><a href="#" aria-label="Next"> <span
-																		aria-hidden="true">&raquo;</span>
-																</a></li>
-															</ul>
-														</nav></td>
-												</tr> -->
+<!-- 														<tr id="reviews"> -->
+<!-- 															<td> -->
+<!-- 																<p> -->
+<!-- 																	<small> -->
+<!-- 																		<span class="glyphicon glyphicon-star"></span> -->
+<%-- 																		${reviewList.evaluationScore}.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a> --%>
+<%-- 																		${reviewList.regDate} --%>
+<!-- 																	</small> -->
+<!-- 																</p>  -->
+<%-- 																<span>${reviewList.contents}</span> --%>
+<!-- 															</td> -->
+<%-- 													</c:if> --%>
+<%-- 												</c:forEach> --%>
+												
 											</tbody>
 										</table>
 
 										<form id="reviewForm" class="reviewForm" name="reviewForm" >
-										<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
-										<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
-
-										<div value="11">
-											<select class="stars">
-											    <option value="1">1</option>
-											    <option value="2">2</option>
-											    <option value="3">3</option>
-											    <option value="4">4</option>
-											    <option value="5">5</option>
-											</select>
-
-											<output for="star-input">
-												<b id="starScore">0</b> 점
-											</output>
-										</div>
-
-										<div class="input-group input-group-sm">
-											<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
-											<span class="input-group-btn">
-												<input type="submit" class="btn btn-flat btn-info review-btn" id="review-btn" value="제출">
-												<input type="hidden" id="statusCount" value="${status.count}">
-											</span>
-										</div>
-</form>
+											<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
+											<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
+	
+											<div>
+												<select class="stars">
+												    <option value="1">1</option>
+												    <option value="2">2</option>
+												    <option value="3">3</option>
+												    <option value="4">4</option>
+												    <option value="5">5</option>
+												</select>
+	
+												<output for="star-input">
+													<b class="starScore">0</b> 점
+												</output>
+											</div>
+	
+											<div class="input-group input-group-sm" >
+												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
+												<span class="input-group-btn">
+													<input type="submit" class="btn btn-flat btn-info review-btn" id="review-btn" value="제출"><!-- 123 -->
+													<input type="hidden" id="statusCount" value="${status.count}">
+												</span>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>
