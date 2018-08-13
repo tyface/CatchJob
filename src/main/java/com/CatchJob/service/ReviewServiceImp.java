@@ -45,10 +45,11 @@ public class ReviewServiceImp implements ReviewService {
 		}
 	}
 	@Override
-	public List<Map<String, String>> question() {
+	public List<Map<String, String>> question(int entIndex) {
 
-		return reviewDao.question();
+		return reviewDao.question(entIndex);
 	}
+	
 	@Override
 	public List<Review> reviewList(int entIndex) {
 		List<Review> reviewList = reviewDao.reviewList(entIndex);
@@ -64,6 +65,11 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public List<Review> reviewListByMember(int memberIndex) {
 		return reviewDao.reviewListByMember(memberIndex);
+	}
+	//수정 할 데이터 가져오기
+	@Override
+	public Review review(Map<String, String> data) {
+		return reviewDao.review(data);
 	}
 
 }

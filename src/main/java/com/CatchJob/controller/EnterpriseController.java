@@ -63,21 +63,26 @@ public class EnterpriseController {
 	}
   
 	@RequestMapping(value = "/view")
-	public String entDetailsForm(int entIndex, HttpServletRequest req, Model model) throws UnknownHostException {
+	public String entDetailsForm(int entIndex, HttpServletRequest req, Model model)  {
 
 		// 기업정보 표출될때마다 viewCount올리는 부분
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("ENT_IDX", Integer.toString(entIndex));
-		mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
+		try {
+			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
+		} catch (UnknownHostException e) {
+			System.out.println("errer");
+		}
 		mapData.put("BROWSER", req.getHeader("User-Agent"));
 		recordService.regViewRecord(mapData);
 		// End
+		System.out.println("123123123---???");
 
 		// 리뷰 표출될 때 필요한 정보 : 기업식별번호, 질문번호(1~5)
 		Map<String, String> reviewMap = new HashMap<String, String>();
 		reviewMap.put("entIndex", Integer.toString(entIndex));
 		reviewMap.put("questionNum", "1");
-		System.out.println(reviewMap);
+		//System.out.println(reviewMap);
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(entIndex));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
@@ -86,14 +91,15 @@ public class EnterpriseController {
 		model.addAttribute("interviewPieChartJson", new Gson().toJson(entService.interviewPieChart(entIndex)));
 		model.addAttribute("reviewList", reviewService.reviewList(entIndex));
 		//model.addAttribute("review", reviewService.reviewListByQNum(reviewMap));
+		model.addAttribute("question", reviewService.question(entIndex));
+		System.out.println(reviewService.question(entIndex));
 		
-		model.addAttribute("question", reviewService.question());
-
+		System.out.println("123123123---");
 		 System.out.println("123==="+entService.getEntInfo(entIndex));
 		return "enterprise-view";
 	}
 	@ResponseBody
-	@RequestMapping(value = "/test")
+	@RequestMapping(value = "/writeReview")
 	public boolean test(HttpSession session, Review review) throws IOException {
 		
 		//Review review = new Review();

@@ -28,11 +28,15 @@ public interface ReviewDao {
 	// 리뷰 등록(
 	public int insertReview(Review review);
 	//질문출력
-	public List<Map<String, String>> question();
+	public List<Map<String, String>> question(int entIndex);
+	
 	//리뷰 보기	
 	public List<Review> reviewList(int entIndex);
 	//수정 삭제 페이지에 리뷰 띄우기	
 	public List<Review> reviewListByMember(int memberIndex);
+	//수정 할 데이터 가져오기
+	public Review review(Map<String, String> data);
+	
 	/*//질문별로 리뷰 보기
 	public List<Review> reviewListByQNum(Map<String, String> data);*/
 }
