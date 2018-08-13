@@ -1,14 +1,12 @@
 package com.CatchJob.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Interview;
+import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.RecordService;
 import com.CatchJob.service.ReviewService;

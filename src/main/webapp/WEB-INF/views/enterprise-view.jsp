@@ -27,18 +27,18 @@ $(function(){
 		status = "login";
 		//alert(status);
 	}
-		
+
 	entInf();
 	chart();
 	starScore();
-	
+
 	$("#write-btn").on("click", function(){
 		alert("기업리뷰를 성공적으로 작성하였습니다^^");
 		$("#writeForm").submit();
 		$("#myModal").modal("hide");
 		window.location.reload();
 	})
-			
+
 	    $(".mailbox-star").click(function (e) {
 	        e.preventDefault();
 	        //detect type
@@ -57,7 +57,7 @@ $(function(){
 	          $this.toggleClass("fa-heart-o");
 	        }
 	      });
-  
+
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
           $("#myModal").modal();
@@ -66,42 +66,36 @@ $(function(){
           $("#myModal").modal();
       });
 
-	
-	 
+
+
 	 var interviewJson = JSON.parse('${interviewJson}');
-	 for(var i in interviewJson){	
+	 for(var i in interviewJson){
 		// alert(interviewJson[i]['intrvwDifficulty']);
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
-		
-		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
-			$("#difficulty"+i).addClass("intrvwlv5");	
-		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
-			$("#difficulty"+i).addClass("intrvwlv4");	
-		}else if(interviewJson[i]['intrvwDifficulty'] == '보통'){
-			$("#difficulty"+i).addClass("intrvwlv3");	
-		}else if(interviewJson[i]['intrvwDifficulty'] == '쉬움'){
-			$("#difficulty"+i).addClass("intrvwlv2");	
-		}else if(interviewJson[i]['intrvwDifficulty'] == '매우 쉬움'){
-			$("#difficulty"+i).addClass("intrvwlv1");	
-		}    
-	
-	 }
-	 	
-	 
-	 	$(".review-btn").on("click",function(){
-	 		/* alert($(this).val());
-	 		
-	 		
-	 	})
-	 	
 
-		 $(".reviewForm").on("submit", function(){  */
+		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
+			$("#difficulty"+i).addClass("intrvwlv5");
+		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
+			$("#difficulty"+i).addClass("intrvwlv4");
+		}else if(interviewJson[i]['intrvwDifficulty'] == '보통'){
+			$("#difficulty"+i).addClass("intrvwlv3");
+		}else if(interviewJson[i]['intrvwDifficulty'] == '쉬움'){
+			$("#difficulty"+i).addClass("intrvwlv2");
+		}else if(interviewJson[i]['intrvwDifficulty'] == '매우 쉬움'){
+			$("#difficulty"+i).addClass("intrvwlv1");
+		}
+
+	 }
+
+
+	 	$(".review-btn").on("click",function(){
+	 	alert($(this).val());
 			 var statusCount = $(this).next().val();
 			 //alert($(this).next().val());
 		 //안녕
 			if(status =="logout"){
 				alert("로그인 후 이용 가능합니다");
-				return false; 
+				return false;
 			}else{
 				//alert("등록!")
 				//alert($(".contents").prop("value"))
@@ -120,42 +114,42 @@ $(function(){
 						"evaluationScore" : evaluationScore,
 						"questionNum" : questionNum,
 						"entIndex" : entIndex
-						
+
 					},
-					dataType: "json", 
+					dataType: "json",
 					success : function(result){
 						if(result){
 							alert("등록되었습니다.");
 						}else{
 							alert("등록 실패하였습니다.");
-						}			
-					}				
+						}
+					}
 				});
-				 return false; 
-				
+				 return false;
+
 			}
-			
- 	});  
-			
+
+ 	});
+
 });
 
 function entInf(){
-	
+
 	 var payAmtAvg = $("#payAmtAvg").text();
-	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";  
+	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";
 	payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
 
-	 payAmtAvg = addComma(payAmtAvg); 
+	 payAmtAvg = addComma(payAmtAvg);
 
-	 $("#payAmtAvg").text(payAmtAvg); 
-	 
+	 $("#payAmtAvg").text(payAmtAvg);
+
 	 var dt = new Date();
 	 var currentYear = dt.getFullYear();
 	 var establishmentYear = $("#establishmentYear").text();
-	 establishmentYear = establishmentYear.substr(0,4); 
+	 establishmentYear = establishmentYear.substr(0,4);
 	 var currier = currentYear-establishmentYear;
 	 $("#establishmentYear").text(currier);
-	
+
 	 var personJson = JSON.parse('${personJson}');
 	 $("#newPerson").text(personJson['newPerson']);
 	 $("#outPerson").text(personJson['outPerson']);
@@ -218,10 +212,10 @@ function entInf(){
 			$("#indPer").css('width', '60%');
 			$("#toEntPer").css('width', '30%');
 		});
-		
-	
-		
-	
+
+
+
+
 }
 function chart(){
 	var viewDataJson = JSON.parse('${viewDataJson}');
@@ -231,9 +225,9 @@ function chart(){
  	var totalPerson = new Array(); //총 인원
  	var newPerson = new Array();
  	var outPerson = new Array();
- 	
 
-	for(var i in viewDataJson){	
+
+	for(var i in viewDataJson){
 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
 		/* var result = addComma(num);
 		alert(result);
@@ -242,11 +236,11 @@ function chart(){
 		salary.push(num) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
+		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
 		//alert(test[i]['PAY_AMT']);
-	} 
+	}
 
-	
+
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
 		type: 'bar',
@@ -259,7 +253,7 @@ function chart(){
 					borderWidth: 3,
 					fill: false,
 					data: salary,
-				}  ], 
+				}  ],
 				borderWidth: 1
 		},
 		 options: {
@@ -277,12 +271,12 @@ function chart(){
                         }]
                 }
 		    }
-		
-	});	 
-	
-	
 
-	
+	});
+
+
+
+
 	// comboBarLineChart
 	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
 	var comboBarLineChart = new Chart(ctx2, {
@@ -308,7 +302,7 @@ function chart(){
 					label: '퇴사자',
 					backgroundColor: '#FF6B8A',
 					data: outPerson,
-				}], 
+				}],
 				borderWidth: 1
 		},
 		options: {
@@ -318,15 +312,15 @@ function chart(){
 	            }
 	        }
 	    }
-	
-	});	
-	
+
+	});
+
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
-	 
+
 	 var chartData = new Array(0,0,0,0,0);
 
   	  for(var i in interviewPieChartJson){
- 		 
+
 	     if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '1'){
 	    	 chartData[0]=interviewPieChartJson[i]['count'];
 	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '2'){
@@ -338,8 +332,8 @@ function chart(){
 	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '5'){
 	    	 chartData[4]=interviewPieChartJson[i]['count'];
 	     }
-  	 }       
-	 
+  	 }
+
 	// pieChart
 	var ctx3 = document.getElementById("pieChart").getContext('2d');
 	var pieChart = new Chart(ctx3, {
@@ -353,7 +347,7 @@ function chart(){
 						'rgba(255, 187, 0, 1)',
 						'rgba(171,242,0, 1)',
 						'rgba(29,219,22, 1)',
-						
+
 					],
 					label: 'Dataset 1'
 				}],
@@ -368,9 +362,9 @@ function chart(){
 			options: {
 				responsive: true
 			}
-	 
+
 	});
-	
+
 }
 function starScore(){
     /* 별점 */
@@ -389,7 +383,7 @@ function starScore(){
 	            $this.removeClass("focus");
 	          }
 	        }, 100);
-	      }) 
+	      })
 	        .on("change", ".star-input :radio", function(){
 	        //여기여기서 값 넘겨주기 !!
 	       // alert($(this).next().text())
@@ -397,7 +391,7 @@ function starScore(){
 	      })
 	        .on("mouseover", ".star-input label", function(){
 	        	$result.text($(this).text());
-	        
+
 	      })
 	        .on("mouseleave", ".star-input>.input", function(){
 	        var $checked = $star.find(":checked");
@@ -409,13 +403,13 @@ function starScore(){
 	        }
 	      });
 	    };
-	    starRating();	
+	    starRating();
 }
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
    return num.toString().replace(regexp, ',');
-} 
+}
 
 </script>
 
@@ -723,16 +717,16 @@ function addComma(num) {
 											<span class="star-input">
 												<span class="input"	id="star">
 												<input type="radio" name="star-input" id="p2" value="1">
-												<label for="p2">1</label> 
+												<label for="p2">1</label>
 												<input type="radio" name="star-input" id="p4" value="2">
-												<label for="p4">2</label> 
+												<label for="p4">2</label>
 												<input type="radio" name="star-input" id="p6" value="3">
-												<label for="p6">3</label> 
+												<label for="p6">3</label>
 												<input type="radio" name="star-input" id="p8" value="4">
-												<label for="p8">4</label> 
+												<label for="p8">4</label>
 												<input type="radio" name="star-input" id="p10" value="5">
 												<label for="p10">5</label>
-											</span> 
+											</span>
 												<output for="star-input">
 													<b id="starScore">0</b> 점
 												</output>
@@ -740,7 +734,7 @@ function addComma(num) {
 										</div>
 
 										<div class="input-group input-group-sm">
-											<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
+											<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" >
 											<span class="input-group-btn">
 												<input type="submit" class="btn btn-flat btn-info review-btn" id="review-btn" value="제출">
 												<input type="hidden" id="statusCount" value="${status.count}">
@@ -1040,7 +1034,7 @@ function addComma(num) {
 								at 11:59 PM</div>
 
 
-							<!-- 
+							<!--
 						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Bar Chart</h3>
@@ -1186,7 +1180,7 @@ function addComma(num) {
 									<select class="form-control" name="intrvwRoute">
 										<option value="1">2018</option>
 										<option value="2">2017</option>
-										<option value="3">2016</option>					
+										<option value="3">2016</option>
 									</select>
 								</div>
 								<div class="col-sm-1">년
