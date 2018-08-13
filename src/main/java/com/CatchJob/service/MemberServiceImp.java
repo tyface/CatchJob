@@ -17,13 +17,13 @@ import jdk.nashorn.internal.parser.Parser;
 
 @Service
 public class MemberServiceImp implements MemberService {
+	
+	private static final int NUM_OF_NAVI_PAGE = 5;
 
-	private static final int NUM_OF_NAVI_PAGE = 3;
 	
 	@Autowired
 	private MemberDao memberDao;
 	
-
 	@Override
 	public List<Member> getListMembers(Map<String, String> map) {
 		return memberDao.selectListMember(map);
@@ -111,48 +111,33 @@ public class MemberServiceImp implements MemberService {
 		map.put("firstRow", String.valueOf(firstRow));
 		map.put("endRow",  String.valueOf(endRow));
 		
-		viewData.put("currentPage",pageNumber);
-		viewData.put("boardList",  memberDao.selectListPerPage(map));
-		viewData.put("pageTotalCount",calPageTotalCount(totalCount, numOfMsgPage));
+		viewData.put("currentPage", pageNumber);
+		viewData.put("boardList", memberDao.selectListMember(map));
+		viewData.put("pageTotalCount", calPageTotalCount(totalCount, numOfMsgPage));
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);
-		
-		System.out.println("-----------서비스 시작---------------");
-		System.out.println("currentPage	" + pageNumber);
-		System.out.println("boardList	" + memberDao.selectListPerPage(map));
-		System.out.println("pageTotalCount	" + calPageTotalCount(totalCount, numOfMsgPage));
-		System.out.println("startPage	" + getStartPage(pageNumber));
-		System.out.println("endPage	" + getEndPage(pageNumber));
-		System.out.println("msgPerPage	" + numOfMsgPage);
-		System.out.println("-----------서비스 끝---------------");
 		return viewData;
 	}
-	
+
 	public int calPageTotalCount(int totalCount, int numOfMsgPage) {
 		int pageTotalCount = 0;
-		if(totalCount != 0) {
-			pageTotalCount = (int)Math.ceil(
-					((double)totalCount / numOfMsgPage));
+		if (totalCount != 0) {
+			pageTotalCount = (int) Math.ceil(((double) totalCount / numOfMsgPage));
 		}
 		return pageTotalCount;
 	}
-	
+
 	public int getStartPage(int pageNum) {
-		int startPage = ((pageNum-1)/NUM_OF_NAVI_PAGE)*NUM_OF_NAVI_PAGE + 1;
+		int startPage = ((pageNum - 1) / NUM_OF_NAVI_PAGE) * NUM_OF_NAVI_PAGE + 1;
 		return startPage;
 	}
-	
+
 	public int getEndPage(int pageNum) {
-		int endPage = (((pageNum-1)/NUM_OF_NAVI_PAGE)+1)* NUM_OF_NAVI_PAGE;
+		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
 
-
-	@Override
-	public List<Member> getBoardList(int pageNumber, int numOfMsgPage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
 }

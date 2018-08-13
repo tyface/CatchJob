@@ -19,14 +19,12 @@ public interface MemberDao {
 	// 회원 찾기
 	public Member selectOne(int mberIndex);
 
-	// 회원 리스트 출력
-	public List<Member> selectListMember(Map<String, String> map);
-	
 	// 회원 아이디 찾기
 	public Member selectById(String mberId);
 	
 	//페이징 처리
 	public int selectCount();
-	public List<Member> selectListPerPage(Map<String, String> map);
-
+	
+	public List<Member> selectListMember(Map<String, String> map);
+	
 }
