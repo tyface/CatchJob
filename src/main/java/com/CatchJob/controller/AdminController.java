@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Admin;
+import com.CatchJob.model.Member;
 import com.CatchJob.service.AdminService;
 import com.CatchJob.service.MemberService;
 
@@ -39,7 +40,7 @@ public class AdminController {
 			Admin admin = adminService.getAdminById(adminId);
 			session.setAttribute("adminIndex", admin.getAdminIndex());
 			session.setAttribute("adminId", adminId);
-			return "admin/member-member-mng";
+			return "redirect:/admin/mngMber";
 		} else {
 			return "admin/admin-login";
 		}
@@ -62,9 +63,9 @@ public class AdminController {
 			return null;
 		}
 	}
-	
-	@RequestMapping(value = "/mngMber", method = RequestMethod.GET)
-	public String mngMber(Model model, String page, String msgPerPage) { 
+	/* 회원 그룹 관리 */
+	@RequestMapping("/mngMber")
+	public String mngMber(Model model, String page, String msgPerPage, String num) { 
 		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
@@ -76,14 +77,33 @@ public class AdminController {
 		Map<String, Object> viewData = memberService.getMessageList(pageNumber,numOfMsgPage);
 		model.addAttribute("viewData", viewData);
 		
+		if(num!=null) {
+			Member member = memberService.getMember(Integer.parseInt(num));
+			model.addAttribute("member", member);
+		}
+		
 		return "admin/member-member-mng";						
 	}
 
-	
-	
-	
+	/* 관리자 그룹 관리 */
 	@RequestMapping(value = "/mngAdmin")
-	public String mngAdmin() {
+	public String mngAdmin(Model model, String page, String msgPerPage, String num) {
+		int pageNumber = 1;	
+		if (page != null) {
+			pageNumber = Integer.parseInt(page);
+		} 
+		int numOfMsgPage = 10;
+		if (msgPerPage != null) {
+			numOfMsgPage = Integer.parseInt(msgPerPage);
+		}
+		Map<String, Object> viewData = adminService.getMessageList(pageNumber,numOfMsgPage);
+		model.addAttribute("viewData", viewData);
+		
+		if(num!=null) {
+			Admin admin = adminService.getAdmin(Integer.parseInt(num));
+			model.addAttribute("admin", admin);
+		}
+		
 		return "admin/member-admin-mng";
 	}
 
