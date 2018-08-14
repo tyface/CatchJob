@@ -102,7 +102,7 @@
    });
 </script>
 
-
+ 
    <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalSignUp" role="dialog">
@@ -244,7 +244,7 @@ $(document).ready(function(){
 					</h4>
 				</div>
 				<div class="modal-body" style="padding: 40px 50px;">
-
+					
 
 					<form role="form" method="post" id="loginForm">
 						<div class="form-group has-feedback">
@@ -269,7 +269,7 @@ $(document).ready(function(){
 					</form>
 					<div class="form-group">
 					    <p>- OR -</p>
-
+					    
 						<button id="btnLoginFacebook" class="btn btn-success btn-block">
 							<i class="fa fa-facebook"></i> Sign in using Facebook
 						</button>
@@ -278,16 +278,16 @@ $(document).ready(function(){
 						</button>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer">					
 					<a href="#">I forgot my password</a>
-					<a href="#myModalSignUp" data-toggle="modal" id="loginHide">Register a new membership</a>
+					<a href="#myModalSignUp" data-toggle="modal" id="loginHide">Register a new membership</a>					
 				</div>
 			</div>
 		</div>
 	</div>
 
 
-
+	
 
 	<div class="container">
 		<!-- Modal -->
@@ -295,7 +295,7 @@ $(document).ready(function(){
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
-				<div class="modal-content">
+				<div class="modal-content">				
 					<div class="modal-header" style="padding: 35px 50px;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4>
@@ -304,9 +304,9 @@ $(document).ready(function(){
 					</div>
 
 					<div class="modal-body" style="padding: 40px 50px;">
-
-
-
+					
+						
+						
 						<form role="form" method="post" id="signUpForm">
 							<div class="form-group has-feedback">
 <!-- 								<label for="signUpId"> -->
@@ -321,7 +321,7 @@ $(document).ready(function(){
 <!-- 									class="glyphicon glyphicon-eye-open"></span> Password</label> -->
 								<!-- 비밀번호 -->
 								<input type="password" class="form-control" id="signUpPw" placeholder="Password">
-								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+								 <span class="glyphicon glyphicon-lock form-control-feedback"></span> 
 <!-- 								<span style="line-height: 50%"><br></span> -->
 							</div>
 					        <div class="form-group has-feedback">
@@ -353,7 +353,7 @@ $(document).ready(function(){
 								<i class="fa fa-google-plus"></i> Sign in using Google+
 							</button>
 						</div>
-
+							
 						</form>
 
 
@@ -361,7 +361,7 @@ $(document).ready(function(){
 
 					<div class="modal-footer">
 						 <a href="#myModalLogin" data-toggle="modal" id="signUpHide">I already have a membership</a>
-
+					
 
 					</div>
 				</div>
@@ -370,7 +370,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 
-
+	
 </c:if>
 
 <!-- 로그인 후! -->
@@ -383,7 +383,7 @@ $(document).ready(function(){
 				JOB</a>
 		</div>
 
-		<div class="f-right nav-btn-1">
+		<div class="f-right nav-btn-1"> 
 
 <!-- 			<div class="dropdown col-xs-6"> -->
 <!-- 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span -->
