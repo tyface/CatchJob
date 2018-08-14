@@ -9,6 +9,16 @@ article {
   margin-bottom: 30px;
   text-align: center;
 }
+#signinButton{
+
+  background-image: url('../img/btn_google_signin_light_normal_web@2x.png');
+  background-size: 244px 50px;
+  height: 50px;
+  width: 244px;
+  border: none;
+
+}
+
 .navbar {
   margin: 0;
   padding: 0;
@@ -136,6 +146,18 @@ article {
 	padding:3%;
 	overflow: hidden;
 	font-size: 15px;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .ent-list {
+    text-align: left;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .ent-list {
+    text-align: left;
+  }
 }
 
 .fa {

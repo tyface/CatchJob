@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <c:if test="${mberIndex == null}">
 
 <nav class="navbar navbar-inverse">
@@ -13,7 +12,7 @@
     <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
   </div>
 </nav>
- 
+
   <!-- Modal -->
   <div class="modal fade" id="myModalLogin" role="dialog">
     <div class="modal-dialog">
@@ -25,12 +24,19 @@
           <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-            <div class="form-group">
+          <div class="form-group">
             <button  id="btnLoginFacebook" class="btn btn-success btn-block">
-            <span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b></button>
-              <button  id="btnLoginGoogle" class="btn btn-success btn-block">
-              <span class="glyphicon glyphicon-off"></span> Login in with <b>Google</b></button>
-			</div>
+              <span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b>
+            </button>
+            <button  id="signinButton"
+              class="g-signin"
+              data-callback="signinCallback"
+              data-clientid="179069955047-28grth32od8hr7j9uiis6b8qrbgovb72.apps.googleusercontent.com"
+              data-cookiepolicy="single_host_origin"
+              data-requestvisibleactions="http://schemas.google.com/AddActivity"
+              data-scope="https://www.googleapis.com/auth/plus.login">
+            </button>
+			    </div>
 
           <form role="form" method="post" id="loginForm">
             <div class="form-group">
@@ -96,7 +102,7 @@
    });
 </script>
 
- 
+
    <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModalSignUp" role="dialog">
@@ -243,3 +249,49 @@ $(document).ready(function(){
   </nav>
 
 </c:if>
+<script type="text/javascript">
+    (function() {
+     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+     po.src = 'https://apis.google.com/js/client:plusone.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+   })();
+
+     function signinCallback(authResult) {
+
+      if (authResult['access_token']) {
+        console.log(authResult['access_token']);
+        googleAuthToken = authResult['access_token'];
+        gapi.auth.setToken(authResult); // 반환된 토큰을 저장합니다.
+        getEmail();
+        // 승인 성공
+        // 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
+      } else if (authResult['error']) {
+        alert('오류 발생: ' + authResult['error'])
+        // 오류가 발생했습니다.
+        // 가능한 오류 코드:
+        //   "access_denied" - 사용자가 앱에 대한 액세스 거부
+        //   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
+        // console.log('오류 발생: ' + authResult['error']);
+      }
+    }
+
+    function getEmail(){ // userinfo 메소드를 사용할 수 있도록 oauth2 라이브러리를 로드합니다.
+      gapi.client.load('oauth2', 'v2', function() {
+        var request = gapi.client.oauth2.userinfo.get();
+        request.execute(getEmailCallback);
+      });
+    }
+    function getEmailCallback(obj){
+      var el = document.getElementById('email');
+      var email = '';
+      for (var field in obj) {
+        console.log(obj[field]);
+      }//for문으로 값이 뭐가 나오는지 일일이 확인
+      email = 'Email: ' + obj['email'];
+      alert(email)
+      // el.innerHTML = email;
+      // toggleElement('email');
+    }
+
+
+</script>
