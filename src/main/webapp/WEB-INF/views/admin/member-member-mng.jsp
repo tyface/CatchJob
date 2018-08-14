@@ -21,17 +21,10 @@
 	}
 </style>
 <script>
-function newPage(num) {
-	var url="mngMber?msgPerPage="+$("#quantity").val();
-/* 	var url=new Array();
-	url[0]="http://www.htmlforums.com";
-	url[1]="http://www.codingforums.com.";
-	url[2]="http://www.w3schools.com";
-	url[3]="http://www.webmasterworld.com";
-	window.location=url[num];`` */
-		window.location=url;
-}
-	
+	function newPage() {		
+		var url="mngMber?msgPerPage="+$("#quantity").val();		
+		window.location=url;	
+	}
 </script>
 </head>
 <body>
@@ -43,7 +36,7 @@ function newPage(num) {
 							<div class="row">
 								<div class="col-md-5">
 									<label for="quantity">
-									<input type="number" min="5" max="20" value="10" step="5" id="quantity"
+									<input type="number" min="5" max="15" step="5" id="quantity" value="${viewData.msgPerPage}"
 									 onclick="newPage()">
 									&nbsp; entries</label></div> 	
 
@@ -65,18 +58,39 @@ function newPage(num) {
 										<th>아이디</th>
 										<th>구분</th>
 									</tr>
-								<c:forEach var="member" items="${viewData.boardList}">
+								<c:forEach var="members" items="${viewData.boardList}">
 									 <tr>	
-										<td>${member.mberIndex}</td>
-										<td><a href="mngMber?num=${member.mberIndex}
-										">${member.mberId}</a></td>
-										<td>${member.mberType}</td> 
+										<td>${members.mberIndex}</td>
+										<td><a href="mngMber?num=${members.mberIndex}
+										">${members.mberId}</a></td>
+										<td>${members.mberType}</td> 
 									</tr> 
-									</c:forEach>   
-							
-							</table>
-
-				  <%@ include file = "include/pagination.jsp" %>		
+								</c:forEach>   						
+							</table>							  
+					<div class="pagination" id="pagination">
+							<ul class="pagination pagination-sm">
+								<c:if test="${viewData.startPage != 1}">	
+									<li class="page-item"><a class="page-link"  aria-label="Previous"
+									 	href="mngMber?page=${viewData.startPage-1}">
+									이전</a></li>
+								</c:if>
+								<c:forEach var="pageNum" begin="${viewData.startPage}" end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
+									<c:choose>
+										<c:when test="${pageNum == viewData.currentPage}">
+											<li class="page-item active" > <a class="page-link" 						
+											href="mngMber?page=${pageNum}">${pageNum}<span class="sr-only">(current)</span></a>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"> <a class="page-link" href="mngMber?page=${pageNum}">${pageNum}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${viewData.endPage < viewData.pageTotalCount}">
+									<li class="page-item"><a class="page-link" href="mngMber?page=${viewData.endPage+1}">
+									다음</a></li>
+								</c:if>
+							</ul> 
+						</div>	
 						</div>
 
 						<div class="col-md-5 pull-right">
@@ -85,28 +99,28 @@ function newPage(num) {
 									<label for="id" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="inputEmail3"
-											placeholder="아이디">
+											placeholder="아이디" value="${member.mberId}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="password" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
 										<input type="password" class="form-control" id="password"
-											placeholder="비밀번호">
+											placeholder="비밀번호" value="${member.mberPw}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="text" class="col-sm-4 control-label">구분</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="classification"
-											placeholder="구분">
+											placeholder="구분" value="${member.mberFlag}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="regDate"
-											placeholder="가입날짜">
+											placeholder="가입날짜" value="${member.regDate}">
 									</div>
 								</div>
 								<div class="form-group">
@@ -114,10 +128,10 @@ function newPage(num) {
 										방문날짜</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="lastDate"
-											placeholder="최근 방문날짜">
+											placeholder="최근 방문날짜" value="${member.lastDate}">
 									</div>
 								</div>
-								<div class="form-group">
+							<!-- 	<div class="form-group">
 									<div class="col-sm-4 control-label" style="font-weight: bold">사용
 										여부</div>
 									<div class="col-offset-1 col-sm-3">
@@ -170,7 +184,7 @@ function newPage(num) {
 										<input type="text" class="form-control" id="certifiedCode"
 											placeholder="기업인증 코드">
 									</div>
-								</div>
+								</div> -->
 
 
 								<div class="form-group">

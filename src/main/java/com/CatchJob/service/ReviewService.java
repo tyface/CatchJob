@@ -20,6 +20,10 @@ public interface ReviewService {
 */
 	// 리뷰 등록
 	public boolean insertReview(Review review);
+	// 리뷰 수정
+	public boolean updateReview(Review review);
+	//리뷰 삭제
+	public boolean deleteReview(Map<String, String> data);
 	//질문출력
 	public List<Map<String, String>> question(int entIndex);
 	

@@ -1,5 +1,6 @@
 package com.CatchJob.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,9 @@ import com.CatchJob.dao.AdminDao;
 import com.CatchJob.model.Admin;
 
 @Service
-public class AdminServiceImp implements AdminService {
+public class AdminServiceImp implements AdminService {	
+	private static final int NUM_OF_NAVI_PAGE = 5;
+
 	@Autowired
 	AdminDao adminDao;
 
@@ -52,9 +55,50 @@ public class AdminServiceImp implements AdminService {
 		} else {
 			return false;
 		}
+	}	
+	
+	/* 페이징 처리 */
+	public Map<String, Object> getMessageList(int pageNumber, int numOfMsgPage) {
+		Map<String, Object> viewData = new HashMap<String,Object>();
+	
+		int totalCount = 0;  	
+		totalCount  = adminDao.selectCount(); 		
+		int firstRow = 0;
+		int endRow =0;
+		firstRow = (pageNumber-1)*numOfMsgPage +1;
+		endRow = pageNumber*numOfMsgPage;
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("firstRow", String.valueOf(firstRow));
+		map.put("endRow",  String.valueOf(endRow));
+		
+		viewData.put("currentPage", pageNumber);
+		viewData.put("boardList", adminDao.selectListAdmin(map));
+		viewData.put("pageTotalCount", calPageTotalCount(totalCount, numOfMsgPage));
+		viewData.put("startPage", getStartPage(pageNumber));
+		viewData.put("endPage", getEndPage(pageNumber));
+		viewData.put("msgPerPage", numOfMsgPage);
+		return viewData;
 	}
 	
-	
+	public int calPageTotalCount(int totalCount, int numOfMsgPage) {
+		int pageTotalCount = 0;
+		if (totalCount != 0) {
+			pageTotalCount = (int) Math.ceil(((double) totalCount / numOfMsgPage));
+		}
+		return pageTotalCount;
+	}
+
+	public int getStartPage(int pageNum) {
+		int startPage = ((pageNum - 1) / NUM_OF_NAVI_PAGE) * NUM_OF_NAVI_PAGE + 1;
+		return startPage;
+	}
+
+	public int getEndPage(int pageNum) {
+		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
+		return endPage;
+	}
+
 	
 
 }

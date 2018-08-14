@@ -1,6 +1,7 @@
 body {
     position: relative;
     background-color: #EAEAEA;
+
 }
 article {
   width: 100%;
@@ -184,8 +185,6 @@ article {
 	clear: left;
 }
 
-/* End 기업리스트 페이지  */
-
 /* 맨위로 가기 버튼 */
 .move-top {
     position: fixed;
@@ -193,14 +192,107 @@ article {
     bottom: 40px;
     z-index: 999;
 }
-@media (min-width:768px) and (max-width:1024px) {
-  .move-top {
-    right: 8%;
-  }
+
+/* End 기업리스트 페이지  */
+
+/* 기업상세보기 페이지  */ 
+
+#section1, #section2, #section3, #section41, #section42  {
+   	color: black; 
+   	background-color: #ffffff;
+	margin-left: 0px;
 }
-/* Desktop */
-@media (min-width:1025px) {
-  .move-top {
-    right: 11%;
-  }
+.follow{
+	color:red;
+	font-size: 20px;
+	text-decoration:none;
+}
+.logo-small {
+/* 	color: #2196F3; */
+	font-size: 50px;
+	color: lime;
+/* width:50px; */
+	display: block;
+}
+.affix {
+    top: 20px;
+    z-index: 9999 !important;
+}
+.module{
+    box-sizing: border-box;
+    margin: 0 0 16px 0; 
+    padding: 20px;
+    background-color: white;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+}
+
+.module-main{
+    box-sizing: border-box;
+   background-color: white; color: #fff; height: 220px;
+   
+    padding: 20px;
+    background-color: white;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+}
+ #title{
+ 	color:#2196F3;
+ 	font-weight: bolder;
+ }
+
+/* view 좌측 side bar */
+.padding-zero{
+	padding: 0px;	
+}
+
+.progress-bar{
+	background-color: #EAEAEA
+}
+.intrvwlv1 .bar1,.intrvwlv2 .bar1,.intrvwlv3 .bar1,.intrvwlv4 .bar1,.intrvwlv5 .bar1{
+	/* 첫번째 칸*/	
+	background-color: #1DDB16	
+}
+.intrvwlv2 .bar2,.intrvwlv3 .bar2,.intrvwlv4 .bar2,.intrvwlv5 .bar2{
+	/*두번째 칸*/
+	background-color: #ABF200	
+}
+.intrvwlv3 .bar3,.intrvwlv4 .bar3,.intrvwlv5 .bar3{
+	/*세번째 칸*/
+	background-color: #FFBB00
+}
+.intrvwlv4 .bar4,.intrvwlv5 .bar4{
+	/*네번째 칸*/
+	background-color: #FF5E00
+}
+.intrvwlv5 .bar5{
+	/*다섯번재 칸*/
+	background-color: #FF0000
+}
+
+.intrvwlv1 .intrvwDifficulty{
+	color: #1DDB16
+}
+.intrvwlv2 .intrvwDifficulty{
+	color: #ABF200
+}
+.intrvwlv3 .intrvwDifficulty{
+	color: #FFBB00
+}
+.intrvwlv4 .intrvwDifficulty{
+	color: #FF5E00
+}
+.intrvwlv5 .intrvwDifficulty{
+	color: #FF0000
+}
+/* 기업상세보기 페이지  END */ 
+
+/**/
+.non-line{
+	text-decoration: none;
+	background-color: lime;
+	color: black;
+	
 }

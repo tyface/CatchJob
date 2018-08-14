@@ -4,75 +4,91 @@
 <jsp:include page="include/header.jsp" flush="true" />
 
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
+ 
+
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/enterprise.css"
-	rel="stylesheet">
+
 
 <script>
-
+var entIndex = ${entInfo.ENT_IDX};
 //$(document).ready(function(){
 var status = "logout";
 $(function(){
+	//alert(${mberIndex});
+	if('${mberIndex}'==''){
+		alert(status);
+	}else{
+		status = "login";
+		alert(status);
+	}
 
+	//alert("status: "+status);
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
+	    	     // alert(value);
+	    	      $(".starScore").text(value);	    	      
 	    }
 	});
-
-
-
-
-
-
-	//alert(${mberIndex});
-	if('${mberIndex}'==''){
-		//alert(status);
-	}else{
-		status = "login";
-		//alert(status);
-	}
-
+	
+	$("#text-btn").on("click", function(){
+		
+	})
+	
+	
+	//getReviewList();	
 	entInf();
 	chart();
-	starScore();
-
+	
 	$("#write-btn").on("click", function(){
 		alert("기업리뷰를 성공적으로 작성하였습니다^^");
 		$("#writeForm").submit();
 		$("#myModal").modal("hide");
 		window.location.reload();
 	})
+			
+   //Handle starring for glyphicon and font awesome
+    $(".follow-btn").click(function (e) {
+      e.preventDefault();// 기본적인 submit 행동을 취소합니다
+      
+      var $this = $(this).find("i");
+      var fa = $this.hasClass("fa");
+      var msg ="";
 
-	    $(".mailbox-star").click(function (e) {
-	        e.preventDefault();
-	        //detect type
-	        var $this = $(this).find("a > i");
-	        var glyph = $this.hasClass("glyphicon");
-	        var fa = $this.hasClass("fa");
-
-	        //Switch states
-	        if (glyph) {
-	          $this.toggleClass("glyphicon-heart");
-	          $this.toggleClass("glyphicon-heart-empty");
-	        }
-
-	        if (fa) {
-	          $this.toggleClass("fa-heart");
-	          $this.toggleClass("fa-heart-o");
-	        }
-	      });
-
+	  if(status == "logout" & $this.hasClass("fa-heart-o")){
+	// 	  if($this.hasClass("fa-heart-o")){
+			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 페이지로 이동하시겠습니까?") != 0 ){
+				 /* 로그인 페이지로 이동 */    	
+				 alert("로그인 모달 띄우기 ");
+				 $("#myModalLogin").modal("show");
+	    	  }
+	// 	  }
+	  }else{/* 로그인 상태임 */
+			  if($this.hasClass("fa-heart-o")){
+		    	  alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
+		    	  $this.toggleClass("fa-heart-o");
+		    	  $this.toggleClass("fa-heart");
+			  
+			  }else{
+				  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
+					  alert("팔로잉이 해제되었습니다.");
+					  $this.toggleClass("fa-heart");
+					  $this.toggleClass("fa-heart-o");
+				  }
+				  else{
+				  }
+			  }
+		  
+	  }
+      
+});
+  
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
           $("#myModal").modal();
@@ -81,48 +97,44 @@ $(function(){
           $("#myModal").modal();
       });
 
-
-
+	
+	 
 	 var interviewJson = JSON.parse('${interviewJson}');
-	 for(var i in interviewJson){
+	 for(var i in interviewJson){	
 		// alert(interviewJson[i]['intrvwDifficulty']);
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
-
+		
 		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
-			$("#difficulty"+i).addClass("intrvwlv5");
+			$("#difficulty"+i).addClass("intrvwlv5");	
 		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
-			$("#difficulty"+i).addClass("intrvwlv4");
+			$("#difficulty"+i).addClass("intrvwlv4");	
 		}else if(interviewJson[i]['intrvwDifficulty'] == '보통'){
-			$("#difficulty"+i).addClass("intrvwlv3");
+			$("#difficulty"+i).addClass("intrvwlv3");	
 		}else if(interviewJson[i]['intrvwDifficulty'] == '쉬움'){
-			$("#difficulty"+i).addClass("intrvwlv2");
+			$("#difficulty"+i).addClass("intrvwlv2");	
 		}else if(interviewJson[i]['intrvwDifficulty'] == '매우 쉬움'){
-			$("#difficulty"+i).addClass("intrvwlv1");
-		}
-
+			$("#difficulty"+i).addClass("intrvwlv1");	
+		}    
+	
 	 }
-
-
-	 	$(".review-btn").on("click",function(){
-
-	 		var point = $(this).parent().parent().prev().children().children("div").text();
-
-			 var statusCount = $(this).next().val();
-			 //alert($(this).next().val());
-		 //안녕
+	 	
+	 	
+	 	$(".review-btn").on("click",function(){<!-- 123 -->
+// 	 		var point = $(this).closest().closest().prev().children().text();
+// 	 		alert(point)
+			var point = $(this).parent().parent().prev().children().children("div").text();
+			alert(point);
+// 	 		var point = $(".starScore").text();
+// 	 		point = point.substr(0,1);
+			var statusCount = $(this).next().val();
 			if(status =="logout"){
 				alert("로그인 후 이용 가능합니다");
-				return false;
+				return false; 
 			}else{
-				//alert("등록!")
-				//alert($(".contents").prop("value"))
+				//alert("등록!"+point)
 				var contents = $("#contents"+statusCount).val();
 				var questionNum = statusCount;
 				var entIndex = $("#entIndex").val();
-				//alert("내용:"+contents+"   질문번호:"+statusCount);
-				//alert(evaluationScore);
-				//alert(questionNum);
-				//alert(entIndex);
 				  $.ajax({
 					url:"${pageContext.request.contextPath}/enterprise/writeReview",
 					type:"post",
@@ -130,42 +142,81 @@ $(function(){
 						"evaluationScore" : point,
 						"questionNum" : questionNum,
 						"entIndex" : entIndex
-
+						
 					},
-					dataType: "json",
+					dataType: "json", 
 					success : function(result){
 						if(result){
 							alert("등록되었습니다.");
+							//getReviewList(questionNum);
 						}else{
 							alert("등록 실패하였습니다.");
-						}
-					}
+						}	
+						getReviewList(questionNum);
+					}				
 				});
-				 return false;
-
+				 return false; 
+				
 			}
-
- 	});
-
+			
+ 	});  
+			
 });
 
-function entInf(){
+function getReviewList(questionNum){/* 456 */
+	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
+	//alert(questionNum);
+	//var reviewListJson = JSON.parse('${reviewListJson}');
+	var reviews = $("#collapse"+questionNum+"  #reviews");
+	reviews.html("");
+	$.ajax({
+		url:"${pageContext.request.contextPath}/enterprise/reviewList/"+entIndex,
+		type:"get",
+		dataType:"json",
+		success : function(data){
 
+			$(data).each(function(){
+				
+				if((this.questionNum)==questionNum){
+					var regDate = this.regDate;
+					var evaluationScore = this.evaluationScore;
+					var contents = this.contents;//우선 이것만 먼저먼저
+					var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
+					//td.text(contents+"ㅜㅜ..");
+					//td.appendTo(reviews);
+				}
+				
+				
+			});
+		},
+		error : function(request,status,error){
+			alert("요청 실패하였습니다.");
+			$("#modal-modify").hide("slow");
+			alert("request :" + request + "\n"+
+					"status :" + status + "\n"+
+					"error :" + error);
+		}	
+	});
+	
+}
+
+function entInf(){
+	
 	 var payAmtAvg = $("#payAmtAvg").text();
-	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";
+	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";  
 	payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
 
-	 payAmtAvg = addComma(payAmtAvg);
+	 payAmtAvg = addComma(payAmtAvg); 
 
-	 $("#payAmtAvg").text(payAmtAvg);
-
+	 $("#payAmtAvg").text(payAmtAvg); 
+	 
 	 var dt = new Date();
 	 var currentYear = dt.getFullYear();
 	 var establishmentYear = $("#establishmentYear").text();
-	 establishmentYear = establishmentYear.substr(0,4);
+	 establishmentYear = establishmentYear.substr(0,4); 
 	 var currier = currentYear-establishmentYear;
 	 $("#establishmentYear").text(currier);
-
+	
 	 var personJson = JSON.parse('${personJson}');
 	 $("#newPerson").text(personJson['newPerson']);
 	 $("#outPerson").text(personJson['outPerson']);
@@ -228,10 +279,10 @@ function entInf(){
 			$("#indPer").css('width', '60%');
 			$("#toEntPer").css('width', '30%');
 		});
-
-
-
-
+		
+	
+		
+	
 }
 function chart(){
 	var viewDataJson = JSON.parse('${viewDataJson}');
@@ -241,9 +292,9 @@ function chart(){
  	var totalPerson = new Array(); //총 인원
  	var newPerson = new Array();
  	var outPerson = new Array();
+ 	
 
-
-	for(var i in viewDataJson){
+	for(var i in viewDataJson){	
 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
 		/* var result = addComma(num);
 		alert(result);
@@ -252,11 +303,11 @@ function chart(){
 		salary.push(num) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
+		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
 		//alert(test[i]['PAY_AMT']);
-	}
+	} 
 
-
+	
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
 		type: 'bar',
@@ -268,8 +319,9 @@ function chart(){
 					borderColor: '#2196F3',
 					borderWidth: 3,
 					fill: false,
-					data: salary,
-				}  ],
+					data: salary
+				}], 
+				
 				borderWidth: 1
 		},
 		 options: {
@@ -282,17 +334,13 @@ function chart(){
                     yAxes: [{
                             ticks: {
                              //  max:3900000,
-                            //   min:3100000
+                               min:0
                             }
                         }]
                 }
 		    }
-
-	});
-
-
-
-
+		
+	});	 
 	// comboBarLineChart
 	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
 	var comboBarLineChart = new Chart(ctx2, {
@@ -318,7 +366,7 @@ function chart(){
 					label: '퇴사자',
 					backgroundColor: '#FF6B8A',
 					data: outPerson,
-				}],
+				}], 
 				borderWidth: 1
 		},
 		options: {
@@ -328,15 +376,14 @@ function chart(){
 	            }
 	        }
 	    }
-
-	});
-
+	
+	});		
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
-
+	 
 	 var chartData = new Array(0,0,0,0,0);
 
   	  for(var i in interviewPieChartJson){
-
+ 		 
 	     if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '1'){
 	    	 chartData[0]=interviewPieChartJson[i]['count'];
 	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '2'){
@@ -348,8 +395,8 @@ function chart(){
 	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '5'){
 	    	 chartData[4]=interviewPieChartJson[i]['count'];
 	     }
-  	 }
-
+  	 }       
+	 
 	// pieChart
 	var ctx3 = document.getElementById("pieChart").getContext('2d');
 	var pieChart = new Chart(ctx3, {
@@ -363,7 +410,7 @@ function chart(){
 						'rgba(255, 187, 0, 1)',
 						'rgba(171,242,0, 1)',
 						'rgba(29,219,22, 1)',
-
+						
 					],
 					label: 'Dataset 1'
 				}],
@@ -378,72 +425,42 @@ function chart(){
 			options: {
 				responsive: true
 			}
-
+	 
 	});
-
-}
-function starScore(){
-    /* 별점 */
-	  //star rating
-	    var starRating = function(){
-	      var $star = $(".star-input"),
-	          $result = $star.find("output>b");
-	      $(document)
-	         .on("focusin", ".star-input>.input", function(){
-	        $(this).addClass("focus");
-	      })
-	        .on("focusout", ".star-input>.input", function(){
-	        var $this = $(this);
-	        setTimeout(function(){
-	          if($this.find(":focus").length === 0){
-	            $this.removeClass("focus");
-	          }
-	        }, 100);
-	      })
-	        .on("change", ".star-input :radio", function(){
-	        //여기여기서 값 넘겨주기 !!
-	       // alert($(this).next().text())
-	        $result.text($(this).next().text());
-	      })
-	        .on("mouseover", ".star-input label", function(){
-	        	$result.text($(this).text());
-
-	      })
-	        .on("mouseleave", ".star-input>.input", function(){
-	        var $checked = $star.find(":checked");
-	        //alert("$checked:"+$checked);
-	        if($checked.length === 0){
-	          $result.text("0");
-	        } else {
-	          $result.text($checked.next().text());
-	        }
-	      });
-	    };
-	    starRating();
+	
 }
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
    return num.toString().replace(regexp, ',');
-}
+} 
 
-</script>
+</script> 
+<!--   <aside class="main-sidebar">fdfdf -->
+<!--     <section class="sidebar">fdfdsfdf -->
+<!--     </section> -->
+<!--   </aside> -->
+  
+<!--   <div class="content-wrapper">fdsfdfdf -->
+<!--     <section class="content-header">fdfdf -->
+<!--     </section> -->
+<!--   </div> -->
 
-<%=session.getAttribute("mberIndex")%>
-<div class="container module-main"
-	style="background-color: white; color: #fff; height: 220px;">
-
+<div class="container module-main">
+	
+		
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
+	
 
-	<div class="btn mailbox-star" id="btnFollow">
-		<a href="#"><i class="fa fa-heart-o"
-			style="color: red; font-size: 20px;"></i></a>
-		<p>팔로우</p>
-	</div>
+<!-- 	<p class="follow follow-btn follow"> -->
+		<a href="#" class="follow follow-btn follow">
+			<i class="fa fa-heart-o follow"></i><!-- 123 -->
+		</a>
+<!-- 		<a>팔로우</a>		 -->
+<!-- 	</p> -->
 
-
-	<div style="float: right">
-		<button type="button" class="btn btn-info ">기업리뷰작성</button>
+	<div class="f-right">
+		<button type="button" class="btn btn-info" id="text-btn">기업리뷰작성</button>
 		<button type="button" class="btn btn-info" id="myBtn2">면접후기</button>
 	</div>
 
@@ -451,32 +468,30 @@ function addComma(num) {
 </div>
 <br>
 
-
-<div class="container ">
+  
+<div class="container">
 	<div class="row">
-		<nav class="col-sm-1" id="myScrollspy">
+		<nav class="col-sm-1 padding-zero" id="myScrollspy">
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
-				<li style="height: 30px"></li>
-				<li><a href="#section1"> <!-- <span class="glyphicon glyphicon-bookmark  logo-small" style="font-size: 50px"></span> -->
-						<span class="fa fa-building logo-small" style="display: block;"></span>
-						<!-- 			<span class="fa fa-building-o logo-small" ></span>
-					<span class="fa  fa-paw logo-small" ></span>
-					<span class="fa  fa-paw-o logo-small" ></span> --> 기업정보
+<!-- 				<li style="height: 30px"></li> -->
+				<li><a href="#section1"> 
+					<span class="fa fa-building logo-small" ></span>					
+						기업정보
 				</a></li>
-				<li><a href="#section2"> <!-- <span class="glyphicon glyphicon-file logo-small"></span> -->
-						<span class="fa fa-weixin logo-small" style="display: block;"></span>
+				<li><a href="#section2"> 
+						<span class="fa fa-weixin logo-small" ></span>
 						리뷰코멘트
 				</a></li>
-				<li><a href="#section3"> <!-- <span class="glyphicon glyphicon-pencil logo-small"></span> -->
-						<span class="fa fa-file-text logo-small" style="display: block;"></span>
+				<li><a href="#section3">
+						<span class="fa fa-file-text logo-small" ></span>
 
 						면접후기
 				</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <!-- <span class="glyphicon glyphicon-stats logo-small"></span> -->
-						<span class="fa fa-line-chart logo-small" style="display: block;"></span>
+					data-toggle="dropdown" href="#"> 
+						<span class="fa fa-line-chart logo-small" ></span>
 						월별그래프 <span class="caret"></span></a>
 
 					<ul class="dropdown-menu">
@@ -653,33 +668,34 @@ function addComma(num) {
 
 			<div class="module">
 				<div id="section2">
-					<h3 id="title">리뷰코멘트</h3>
+					<h3 id="title">리뷰코멘트</h3><!--456  -->
 					<button type="button" class="btn btn-infofault">리뷰코멘트 작성</button>
 					<div class="panel-group " id="accordion">
 
 						<c:forEach begin="0" end="5" varStatus="status"
 							items="${question}" var="question">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion"
-											href="#collapse${status.count}">${question.QUESTION}
-											<span style="color: #6799FF"> (${question.COUNT}) </span>
-											<span style="float: right; margin-right: 20%">${question.AVG}
+							<div class="panel panel-default" >
+								<div class="panel-heading" onclick="getReviewList(${status.count})"><!-- 456 -->
+									<h4 class="panel-title row">
+										<a data-toggle="collapse" data-parent="#accordion"	href="#collapse${status.count}">
+											<span class="col-sm-8">
+												${question.QUESTION} 
+												<span style="color: #6799FF"> (${question.COUNT}) </span> 
+											</span>
+											<span class="col-sm-4">${question.AVG} 
 											   <c:forEach begin="1" end="${question.AVG}" step="1">
 								                  <span class="stars-on"></span>
-								               </c:forEach>
+								               </c:forEach>								               
 								               <c:forEach begin="${question.AVG}" end="4" step="1">
 								                   <span class="stars-off"></span>
 								               </c:forEach>
-										</SPAN>
-
+											</span>
 										</a>
 									</h4>
 								</div>
 
 								<div id="collapse${status.count}"
-									class="panel-collapse collapse">
+									class="panel-collapse collapse " >
 									<!-- in -->
 									<div class="panel-body" style="color: black">
 										<table class="table">
@@ -688,70 +704,54 @@ function addComma(num) {
 													<th>총${question.COUNT}개의 기업리뷰 코멘트</th>
 												</tr>
 											</thead>
-											<tbody>
-												<c:forEach var="reviewList" items="${reviewList}"
-													varStatus="index">
+											<tbody id="reviews">
+<%-- 												<c:forEach var="reviewList" items="${reviewList}" varStatus="index"> --%>
 
-													<c:if test="${reviewList.questionNum eq question.QESTN_NO}">
+<%-- 													<c:if test="${reviewList.questionNum eq question.QESTN_NO}"> --%>
 
-														<tr>
-															<td>
-																<p>
-																	<small><span class="glyphicon glyphicon-star"></span>
-																		${reviewList.evaluationScore}.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a>
-																		${reviewList.regDate}</small>
-																</p> <span>${reviewList.contents}</span>
-															</td>
-														</tr>
-													</c:if>
-												</c:forEach>
-
-<!-- 												<tr>
-													<td style="text-align: center"><nav>
-															<ul class="pagination">
-																<li><a href="#" aria-label="Previous"> <span
-																		aria-hidden="true">&laquo;</span>
-																</a></li>
-																<li><a href="#">1</a></li>
-																<li><a href="#">2</a></li>
-																<li><a href="#">3</a></li>
-																<li><a href="#">4</a></li>
-																<li><a href="#">5</a></li>
-																<li><a href="#" aria-label="Next"> <span
-																		aria-hidden="true">&raquo;</span>
-																</a></li>
-															</ul>
-														</nav></td>
-												</tr> -->
+<!-- 														<tr id="reviews"> -->
+<!-- 															<td> -->
+<!-- 																<p> -->
+<!-- 																	<small> -->
+<!-- 																		<span class="glyphicon glyphicon-star"></span> -->
+<%-- 																		${reviewList.evaluationScore}.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a> --%>
+<%-- 																		${reviewList.regDate} --%>
+<!-- 																	</small> -->
+<!-- 																</p>  -->
+<%-- 																<span>${reviewList.contents}</span> --%>
+<!-- 															</td> -->
+<%-- 													</c:if> --%>
+<%-- 												</c:forEach> --%>
+												
 											</tbody>
 										</table>
 
 										<form id="reviewForm" class="reviewForm" name="reviewForm" >
-										<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
-										<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
-
-										<div>
-											<select class="stars" name="text">
-											    <option value="1">1</option>
-											    <option value="2">2</option>
-											    <option value="3">3</option>
-											    <option value="4">4</option>
-											    <option value="5">5</option>
-											</select>
-
-											<output for="star-input">
-												<b id="starScore">0</b> 점
-											</output>
-										</div>
-
-										<div class="input-group input-group-sm">
-											<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" >
-											<span class="input-group-btn">
-												<input type="submit" class="btn btn-flat btn-info review-btn" id="review-btn" value="제출">
-												<input type="hidden" id="statusCount" value="${status.count}">
-											</span>
-										</div>
-</form>
+											<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
+											<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
+	
+											<div>
+												<select class="stars">
+												    <option value="1">1</option>
+												    <option value="2">2</option>
+												    <option value="3">3</option>
+												    <option value="4">4</option>
+												    <option value="5">5</option>
+												</select>
+	
+												<output for="star-input">
+													<b class="starScore">0</b> 점
+												</output>
+											</div>
+	
+											<div class="input-group input-group-sm" >
+												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
+												<span class="input-group-btn">
+													<input type="submit" class="btn btn-flat btn-info review-btn"  value="제출"><!-- 123 -->
+													<input type="hidden" id="statusCount" value="${status.count}">
+												</span>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -1045,7 +1045,7 @@ function addComma(num) {
 								at 11:59 PM</div>
 
 
-							<!--
+							<!-- 
 						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Bar Chart</h3>
@@ -1191,7 +1191,7 @@ function addComma(num) {
 									<select class="form-control" name="intrvwRoute">
 										<option value="1">2018</option>
 										<option value="2">2017</option>
-										<option value="3">2016</option>
+										<option value="3">2016</option>					
 									</select>
 								</div>
 								<div class="col-sm-1">년
