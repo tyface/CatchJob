@@ -1,163 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:if test="${mberIndex == null}">
-
-<nav class="navbar navbar-inverse">
-  <div class="f-left">
-    <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
-  </div>
-  <div class="f-right nav-btn-1">
-    <div class="col-xs-6"><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
-    <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
-  </div>
-</nav>
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModalLogin" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
-        </div>
-        <div class="modal-body" style="padding:40px 50px;">
-          <div class="form-group">
-            <button  id="btnLoginFacebook" class="btn btn-success btn-block">
-              <span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b>
-            </button>
-            <button  id="signinButton"
-              class="g-signin"
-              data-callback="signinCallback"
-              data-clientid="179069955047-28grth32od8hr7j9uiis6b8qrbgovb72.apps.googleusercontent.com"
-              data-cookiepolicy="single_host_origin"
-              data-requestvisibleactions="http://schemas.google.com/AddActivity"
-              data-scope="https://www.googleapis.com/auth/plus.login">
-            </button>
-			    </div>
-
-          <form role="form" method="post" id="loginForm">
-            <div class="form-group">
-              <label for="loginId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
-              <input type="email" class="form-control" id="loginId" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="loginPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="loginPw" placeholder="Enter password">
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
-            </div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
-          <p>Forgot <a href="#">Password</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
 <script>
-		$(document).ready(function() {
-			$("#myBtnLogin").click(function() {
-				$("#myModalLogin").modal("show");
-			});
 
-			$("#loginHide").click(function() {
-				$("#myModalLogin").modal("hide");
-			});
+$(document).ready(function() {
+	$("#myBtnLogin").click(function() {
+		$("#myModalLogin").modal("show");
+	});
 
-      $("#loginForm").on("submit", function() {
-         $.ajax({
-            type : "post",
-            url : "${pageContext.request.contextPath}/login",
-            data : {
-               "mberId" : $("#loginId").val(),
-               "mberPw" : $("#loginPw").val()
-            },
-            dataType : "json",
-            success : function(data) {
-               if (data.result) {
-                  $("#myModalLogin").modal("hide");
-                  window.location.reload();
-               } else {
-                  alert("비밀번호를 다시 입력해 주세요");
-               }
-            },
-            error : function() {
-               alert("아이디를 다시 입력해 주세요")
-            }
-         });
-         return false;
-      });
-      //모달 초기화
-      $('.modal').on('hidden.bs.modal', function (e) {
-          $(this).find('form')[0].reset()
-      });
-   });
-</script>
+	$("#loginHide").click(function() {
+		$("#myModalLogin").modal("hide");
+	});
 
- 
-   <div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="myModalSignUp" role="dialog">
-    <div class="modal-dialog">
+	$("#loginForm").on("submit", function() {
+		 $.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/login",
+				data : {
+					 "mberId" : $("#loginId").val(),
+					 "mberPw" : $("#loginPw").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					 if (data.result) {
+							$("#myModalLogin").modal("hide");
+							window.location.reload();
+					 } else {
+							alert("비밀번호를 다시 입력해 주세요");
+					 }
+				},
+				error : function() {
+					 alert("아이디를 다시 입력해 주세요")
+				}
+		 });
+		 return false;
+	});
+	//모달 초기화
+	$('.modal').on('hidden.bs.modal', function (e) {
+			$(this).find('form')[0].reset()
+	});
+});
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Sign Up</h4>
-        </div>
 
-        <div class="modal-body" style="padding:40px 50px;">
-            <div class="form-group">
-               <button  id="btnSignUpFacebook" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Facebook</b></button>
-                <button  id="btnSignUpGoogle" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Continue with <b>Google</b></button>
-           </div>
-          <form role="form" method="post" id="signUpForm">
-            <div class="form-group">
-              <label for="signUpId"><span class="glyphicon glyphicon-user"></span> Email Address</label>
-              <input type="email" class="form-control" id="signUpId" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="signUpPw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <!-- 비밀번호 -->
-              <input type="password" class="form-control" id="signUpPw" placeholder="Enter password">
-              <span style="line-height:50%"><br></span>
-              <!-- 비밀번호 확인  -->
-               <input type="password" class="form-control" id="signUpPwCheck" placeholder="Enter password">
-            </div>
-           <!-- 회원가입 실패 시 보이는 창 -->
-         <div class="form-group has-error has-feedback hidden" id="signUpFail">
-              <div class="input-group">
-                <span class="input-group-addon">
-                   <span class = "glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                   </span>
-                <input type="text" class="form-control" id="inputError" aria-describedby="inputGroupSuccess1Status"
-                value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
-              </div>
-           </div>
-             <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Sign Up</button>
-          </form>
-        </div>
 
-        <div class="modal-footer">
-          <p> Member? <a href="#myModalLogin" data-toggle="modal" id="signUpHide">Login</a></p>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<script>
 $(document).ready(function(){
     $("#myBtnSignUp").click(function(){
         $("#myModalSignUp").modal("show");
@@ -210,92 +95,79 @@ $(document).ready(function(){
 			 */
 
 		});
-	</script>
+</script>
 
 <c:if test="${mberIndex == null}">
 
-	<nav class="navbar navbar-inverse">
-		<div class="f-left">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH
-				JOB</a>
-		</div>
-		<div class="f-right nav-btn-1">
-			<div class="col-xs-6">
-				<a href="#" id="myBtnSignUp"><span
-					class="glyphicon glyphicon-user"></span> Sign Up</a>
-			</div>
-			<div class="col-xs-6">
-				<a href="#" id="myBtnLogin"><span
-					class="glyphicon glyphicon-log-in"></span> Login</a>
-			</div>
-		</div>
-	</nav>
+<nav class="navbar navbar-inverse">
+  <div class="f-left">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
+  </div>
+  <div class="f-right nav-btn-1">
+    <div class="col-xs-6"><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
+    <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
+  </div>
+</nav>
 
-	<!-- Modal -->
-	<div class="modal fade" id="myModalLogin" role="dialog">
-		<div class="modal-dialog">
+  <!-- Modal -->
+  <div class="modal fade" id="myModalLogin" role="dialog">
+    <div class="modal-dialog">
 
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header" style="padding: 35px 50px;">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4>
-						<span class="glyphicon glyphicon-lock"></span> Login
-					</h4>
-				</div>
-				<div class="modal-body" style="padding: 40px 50px;">
-					
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
 
-					<form role="form" method="post" id="loginForm">
+          <form role="form" method="post" id="loginForm">
 						<div class="form-group has-feedback">
-<!-- 							<label for="loginId"><span -->
-<!-- 								class="glyphicon glyphicon-user"></span> Email Address</label> -->
-							 <input type="email" class="form-control" id="loginId"	placeholder="Enter">
-							 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+								<input type="email" class="form-control" id="loginId"   placeholder="Enter">
+								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
 						<div class="form-group has-feedback">
-<!-- 							<label for="loginPw"><span -->
-<!-- 								class="glyphicon glyphicon-eye-open"></span> Password</label>  -->
-							<input type="password" class="form-control" id="loginPw" placeholder="Password">
-							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+							 <input type="password" class="form-control" id="loginPw" placeholder="Password">
+							 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
-						<div class="checkbox">
-							<label><input type="checkbox" value="" checked>Remember
-								me</label>
-						</div>
-						<button type="submit" class="btn btn-success btn-block">
-							<span class="glyphicon glyphicon-off"></span> Login
-						</button>
-					</form>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div>
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </form>
+
 					<div class="form-group">
-					    <p>- OR -</p>
-					    
-						<button id="btnLoginFacebook" class="btn btn-success btn-block">
-							<i class="fa fa-facebook"></i> Sign in using Facebook
+						<br><center><p>- OR -</p></center><br>
+						<button  id="btnLoginFacebook" class="btn btn-success btn-block">
+							<span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b>
 						</button>
-						<button id="btnLoginGoogle" class="btn btn-success btn-block">
-							<i class="fa fa-google-plus"></i> Sign in using Google+
+						<button  id="signinButton"
+							class="g-signin"
+							data-callback="signinCallback"
+							data-clientid="179069955047-28grth32od8hr7j9uiis6b8qrbgovb72.apps.googleusercontent.com"
+							data-cookiepolicy="single_host_origin"
+							data-requestvisibleactions="http://schemas.google.com/AddActivity"
+							data-scope="https://www.googleapis.com/auth/plus.login">
 						</button>
 					</div>
-				</div>
-				<div class="modal-footer">					
-					<a href="#">I forgot my password</a>
-					<a href="#myModalSignUp" data-toggle="modal" id="loginHide">Register a new membership</a>					
-				</div>
-			</div>
-		</div>
-	</div>
 
 
-	
 
-	<div class="container">
+        </div>
+        <div class="modal-footer">
+          <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
+          <p>Forgot <a href="#">Password</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 		<!-- Modal -->
 		<div class="modal fade" id="myModalSignUp" role="dialog">
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
-				<div class="modal-content">				
+				<div class="modal-content">
 					<div class="modal-header" style="padding: 35px 50px;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4>
@@ -304,9 +176,9 @@ $(document).ready(function(){
 					</div>
 
 					<div class="modal-body" style="padding: 40px 50px;">
-					
-						
-						
+
+
+
 						<form role="form" method="post" id="signUpForm">
 							<div class="form-group has-feedback">
 <!-- 								<label for="signUpId"> -->
@@ -321,7 +193,7 @@ $(document).ready(function(){
 <!-- 									class="glyphicon glyphicon-eye-open"></span> Password</label> -->
 								<!-- 비밀번호 -->
 								<input type="password" class="form-control" id="signUpPw" placeholder="Password">
-								 <span class="glyphicon glyphicon-lock form-control-feedback"></span> 
+								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 <!-- 								<span style="line-height: 50%"><br></span> -->
 							</div>
 					        <div class="form-group has-feedback">
@@ -353,7 +225,7 @@ $(document).ready(function(){
 								<i class="fa fa-google-plus"></i> Sign in using Google+
 							</button>
 						</div>
-							
+
 						</form>
 
 
@@ -361,16 +233,15 @@ $(document).ready(function(){
 
 					<div class="modal-footer">
 						 <a href="#myModalLogin" data-toggle="modal" id="signUpHide">I already have a membership</a>
-					
+
 
 					</div>
 				</div>
 
 			</div>
 		</div>
-	</div>
 
-	
+
 </c:if>
 
 <!-- 로그인 후! -->
@@ -383,7 +254,7 @@ $(document).ready(function(){
 				JOB</a>
 		</div>
 
-		<div class="f-right nav-btn-1"> 
+		<div class="f-right nav-btn-1">
 
 <!-- 			<div class="dropdown col-xs-6"> -->
 <!-- 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span -->
@@ -454,7 +325,6 @@ $(document).ready(function(){
         console.log(obj[field]);
       }//for문으로 값이 뭐가 나오는지 일일이 확인
       email = 'Email: ' + obj['email'];
-      alert(email)
       // el.innerHTML = email;
       // toggleElement('email');
     }
