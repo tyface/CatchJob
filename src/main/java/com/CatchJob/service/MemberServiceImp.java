@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,9 @@ import jdk.nashorn.internal.parser.Parser;
 @Service
 public class MemberServiceImp implements MemberService {
 	
+	private static final Logger logger = Logger.getLogger(MemberServiceImp.class);
 	private static final int NUM_OF_NAVI_PAGE = 5;
-
+	
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -104,16 +106,27 @@ public class MemberServiceImp implements MemberService {
 		totalCount  = memberDao.selectCount(); 		
 		int firstRow = 0;
 		int endRow =0;
-		firstRow = (pageNumber-1)*numOfMsgPage +1;
-		endRow = pageNumber*numOfMsgPage;
+		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		
+		
+		if(pageNumber > pageTotalCount) {
+			pageNumber = pageTotalCount;
+		}
+		System.out.println("pageNumber :  "  + pageNumber);
+		System.out.println("numOfMsgPage :  "  + numOfMsgPage);
+		
+		firstRow = (pageNumber-1)*numOfMsgPage +1;  
+		endRow = pageNumber*numOfMsgPage;  //
+		//pageNumber : 현재 페이지 
+		//numOfMsgPage : 한페이지 표시되는 숫자
+		//firstRow : 페이징 시작 숫자
+		//endRow : 페이징  끝숫자 
 		Map<String, String> map = new HashMap<>();
 		map.put("firstRow", String.valueOf(firstRow));
 		map.put("endRow",  String.valueOf(endRow));
-		
 		viewData.put("currentPage", pageNumber);
 		viewData.put("boardList", memberDao.selectListMember(map));
-		viewData.put("pageTotalCount", calPageTotalCount(totalCount, numOfMsgPage));
+		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);

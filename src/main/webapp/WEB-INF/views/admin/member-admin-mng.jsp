@@ -156,21 +156,19 @@
 									</div>
 								</div>
 			 -->
-								<br/>
+								
 								<div class="form-group">
 									<div class="col-sm-offset-8 col-sm-6">
 										<input type="submit" class="btn btn-info" value="수정하기">
 										<input type="reset" class="btn btn-warning" value="초기화">
-
 									</div>
 								</div>
 							</form>
 						</div>
 				</div>
-			</div><!-- div id="content" end -->
-			
+			</div><!-- div id="content" end -->			
 		</div>	<!--<div class="row"> end -->
 	</div><!--<div class="container-fluid"> end -->
-</div>
+
 </body>
 </html>
