@@ -146,7 +146,7 @@ article {
 	border-bottom: 1px dashed #ccc;
 	padding:3%;
 	overflow: hidden;
-	font-size: 15px;
+	font-size: 15px;	
 }
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {
@@ -287,6 +287,30 @@ article {
 .intrvwlv5 .intrvwDifficulty{
 	color: #FF0000
 }
+.cat-header{
+	/* 모달 헤더부분 */
+	color: white;
+	background-color: #FF007F;
+}
+.modal-footer{
+	background-color: #EAEAEA;
+}
+/* .modal-write-form{ */
+/* 	width:90%; */
+/* } */
+/* Tablet */
+/* @media (min-width:768px) and (max-width:1024px) { */
+/*   .modal-write-form { */
+/*     width:90%; */
+/*   } */
+/* } */
+/* Desktop */
+/* @media (min-width:1025px) { */
+/*   .modal-write-form{ */
+/*    width:60%; */
+/*   } */
+/* } */
+
 /* 기업상세보기 페이지  END */ 
 
 /**/
@@ -295,4 +319,14 @@ article {
 	background-color: lime;
 	color: black;
 	
+}
+.contents-wrap{
+	box-sizing: border-box;
+    
+    padding: 20px;
+    background-color: white;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+	margin-top: 20px;
 }

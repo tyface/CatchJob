@@ -2,6 +2,7 @@ package com.CatchJob.model;
 
 /* 기업정보 */
 public class Enterprise {
+	private int following; //팔로잉 기업..(팔로잉된 기업이면..1, 아니면0)
 	private int entIndex; // 사업장 식별번호
 	private String entName; // 사업장명
 	private String entBizRegNum; // 사업자등록번호 (앞자리6자리만 노출)
@@ -19,6 +20,16 @@ public class Enterprise {
 	private int reviewCount; // 리뷰개수
 	private int interviewCount; // 면접후기개수
 	private float evaluationAvg; // 기업 평가점수(리뷰등록마다 갱신) TODO
+
+	
+	
+	public int getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(int following) {
+		this.following = following;
+	}
 
 	public int getEntIndex() {
 		return entIndex;
@@ -158,13 +169,15 @@ public class Enterprise {
 
 	@Override
 	public String toString() {
-		return "Enterprise [entIndex=" + entIndex + ", entName=" + entName + ", entBizRegNum=" + entBizRegNum
-				+ ", industryCode=" + industryCode + ", industryName=" + industryName + ", entStyleType=" + entStyleType
-				+ ", entSubscriberFlag=" + entSubscriberFlag + ", entFoundationDate=" + entFoundationDate
-				+ ", bcityName=" + bcityName + ", signguName=" + signguName + ", employeeCount=" + employeeCount
-				+ ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount + ", salaryAvg="
-				+ salaryAvg + ", reviewCount=" + reviewCount + ", interviewCount=" + interviewCount + ", evaluationAvg="
-				+ evaluationAvg + "]";
+		return "Enterprise [following=" + following + ", entIndex=" + entIndex + ", entName=" + entName
+				+ ", entBizRegNum=" + entBizRegNum + ", industryCode=" + industryCode + ", industryName=" + industryName
+				+ ", entStyleType=" + entStyleType + ", entSubscriberFlag=" + entSubscriberFlag + ", entFoundationDate="
+				+ entFoundationDate + ", bcityName=" + bcityName + ", signguName=" + signguName + ", employeeCount="
+				+ employeeCount + ", entranceCount=" + entranceCount + ", retirementCount=" + retirementCount
+				+ ", salaryAvg=" + salaryAvg + ", reviewCount=" + reviewCount + ", interviewCount=" + interviewCount
+				+ ", evaluationAvg=" + evaluationAvg + "]";
 	}
+
+	
 
 }

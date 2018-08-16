@@ -36,8 +36,8 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	// }
 	// 기업식별 번호로 기업 정보 가져오기
 	@Override
-	public Map<String, String> getEntInfo(int entIndex) {
-		Map<String, String> entInfo = entDao.selectEntInfo(entIndex);
+	public Map<String, String> getEntInfo(Map<String, String> data) {
+		Map<String, String> entInfo = entDao.selectEntInfo(data);
 		return entInfo;
 	}
 
@@ -64,10 +64,21 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entDao.selectEntPeopleInfo(entIndex);
 	}
 
+	@Override
+	public List<Enterprise> getFollowsEntList(int memberIndex) {
+		
+		List<Enterprise> entList = entDao.selectListEntByMember(memberIndex);
+
+		for (Enterprise ent : entList) {
+			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
+		}
+		return entList;
+	}
 	
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
 	}
+
 
 
 

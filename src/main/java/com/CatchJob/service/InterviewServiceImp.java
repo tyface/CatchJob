@@ -17,10 +17,17 @@ public class InterviewServiceImp implements InterviewService{
 
 	@Override
 	public boolean insertInterview(Interview interview) {
-		int result = itvwDao.insertInterview(interview);
-		if (result > 0) {
+//		int result = itvwDao.insertInterview(interview);
+//		if (result > 0) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+		try{
+			itvwDao.insertInterview(interview);
 			return true;
-		} else {
+		}catch(Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}

@@ -4,8 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.EnterpriseDao">
 
-	<select id="selectListEnt" resultMap="entMap">
-		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
+	<select id="selectListEnt" parameterType="map" resultMap="entMap">
+<!-- 		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT,  -->
+<!-- 					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT -->
+<!-- 		FROM 		ENTERPRISE_TB ent -->
+<!-- 		LEFT JOIN 	REVIEW_TB revw  -->
+<!-- 		ON 			ent.ENT_IDX = revw.ENT_IDX -->
+<!-- 		LEFT JOIN 	INTERVIEW_TB intvw  -->
+<!-- 		ON 			ent.ENT_IDX = intvw.ENT_IDX -->
+<!-- 		LEFT JOIN 	UPDATE_ENT_INFO_TB up -->
+<!-- 		ON 			ent.ENT_IDX = up.ENT_IDX -->
+<!-- 		LEFT JOIN 	LEGAL_DONG_TB ld  -->
+<!-- 		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD  -->
+<!-- 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD -->
+<!-- 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 ) -->
+<!-- 		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%') -->
+<!-- 		GROUP BY 	ent.ENT_IDX -->
+<!-- 		ORDER BY 	LENGTH(ent.ENT_NM),ent.ENT_NM -->
+		SELECT  IF(fol.MBER_IDX is not null, 1, 0)  as FOLLOWING ,ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
 					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
 		FROM 		ENTERPRISE_TB ent
 		LEFT JOIN 	REVIEW_TB revw 
@@ -18,7 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
-		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
+		LEFT JOIN 	FOLLOWING_TB fol
+		ON 			fol.ENT_IDX=ent.ENT_IDX AND fol.MBER_IDX=<include refid="memberId"/>
+		
+		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%') 
 		GROUP BY 	ent.ENT_IDX
 		ORDER BY 	LENGTH(ent.ENT_NM),ent.ENT_NM
 	</select>
@@ -33,8 +52,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT 		#{RANK_VIEW_COUNT}
 	</select>
 	
-	<select id="selectEntInfo" parameterType="int" resultType="map">
-		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,ent.ENT_FOND_YMD,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
+	<select id="selectEntInfo" parameterType="map" resultType="map">
+<!-- 		SELECT  	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,ent.ENT_FOND_YMD,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM -->
+<!-- 		FROM 		ENTERPRISE_TB ent -->
+<!-- 		LEFT JOIN 	UPDATE_ENT_INFO_TB up -->
+<!-- 		ON 			ent.ENT_IDX = up.ENT_IDX -->
+<!-- 		LEFT JOIN 	LEGAL_DONG_TB ld  -->
+<!-- 		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD  -->
+<!-- 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD -->
+<!-- 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 ) -->
+<!--     	WHERE ent.ENT_IDX = #{ENT_IDX} -->    	
+    	SELECT  IF(fol.MBER_IDX is not null, 1, 0)  as FOLLOWING ,	ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,ent.ENT_FOND_YMD,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
 		FROM 		ENTERPRISE_TB ent
 		LEFT JOIN 	UPDATE_ENT_INFO_TB up
 		ON 			ent.ENT_IDX = up.ENT_IDX
@@ -42,7 +70,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
-    	WHERE ent.ENT_IDX = #{ENT_IDX}
+		LEFT JOIN 	FOLLOWING_TB fol
+		ON 			fol.ENT_IDX=ent.ENT_IDX AND fol.MBER_IDX=#{MBER_IDX}
+    	WHERE ent.ENT_IDX = #{ENT_IDX}    	
 	</select>
 	
 	<!-- 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합) -->
@@ -63,8 +93,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ENT_IDX = #{ENT_IDX}
 		ORDER BY PAY_YM
 	</select>
+	
+	<!-- 팔루우 기업 리스트 보기 -->
+	<select id="selectListEntByMember" parameterType="int" resultMap="entMap">
+		SELECT fol.MBER_IDX, ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
+					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
+		FROM  		FOLLOWING_TB fol
+		LEFT JOIN	ENTERPRISE_TB ent 
+		ON 			fol.ENT_IDX=ent.ENT_IDX
+		
+		LEFT JOIN 	REVIEW_TB revw 
+		ON 			ent.ENT_IDX = revw.ENT_IDX
+		LEFT JOIN 	INTERVIEW_TB intvw 
+		ON 			ent.ENT_IDX = intvw.ENT_IDX
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		LEFT JOIN 	LEGAL_DONG_TB ld 
+		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
+		AND 			ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
+		AND 			ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
+		WHERE 	   	fol.MBER_IDX=#{MBER_IDX}
+		GROUP BY 	ent.ENT_IDX
+	</select>
 
 	<resultMap type="enterprise" id="entMap">
+		<result property="following" column="FOLLOWING"/>
 		<result property="entIndex" column="ENT_IDX" />
 		<result property="entName" column="ENT_NM" />
 		<result property="entBizRegNum" column="ENT_BIZR_NO" />
@@ -84,7 +137,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="interviewCount" column="INTVW_CNT" />
 	</resultMap>
 	
-	
+	<sql id="memberId">
+		<choose>
+			<when test="MBER_IDX != null">
+				#{MBER_IDX}
+			</when>
+			<otherwise>
+				'0'
+			</otherwise>
+		
+		</choose>		
+	</sql>
 
 
 	
