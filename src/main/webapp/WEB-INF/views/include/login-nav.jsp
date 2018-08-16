@@ -211,7 +211,7 @@ $(document).ready(function(){
 
 		});
 	</script>
-
+</c:if>
 <c:if test="${mberIndex == null}">
 
 	<nav class="navbar navbar-inverse">
