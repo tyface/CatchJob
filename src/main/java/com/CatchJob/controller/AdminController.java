@@ -66,23 +66,50 @@ public class AdminController {
 	/* 회원 그룹 관리 */
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num) { 
-		int pageNumber = 1;	
+		System.out.println("*1");
+		int pageNumber = 0;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
-		} 
-		int numOfMsgPage = 10;
+		} else {
+			 pageNumber = 1;	
+		}
+		
+		int numOfMsgPage = 0;
 		if (msgPerPage != null) {
 			numOfMsgPage = Integer.parseInt(msgPerPage);
+		} else {
+			numOfMsgPage = 10;
 		}
 		Map<String, Object> viewData = memberService.getMessageList(pageNumber,numOfMsgPage);
 		model.addAttribute("viewData", viewData);
-		
+		System.out.println("*2");
 		if(num!=null) {
 			Member member = memberService.getMember(Integer.parseInt(num));
 			model.addAttribute("member", member);
 		}
 		
 		return "admin/member-member-mng";						
+	}
+	
+	@RequestMapping(value="/modifyMber", method=RequestMethod.POST)
+	public String mngMber(Model model, String mberId, String mberPw, String mberType, String regDate, String lastDate) { 
+		System.out.println("hhhhhhhhhh");
+		Member member = new Member();
+		member.setMberId(mberId);
+		member.setMberPw(mberPw);
+		member.setMberType(mberType);
+		member.setRegDate(regDate);
+		member.setLastDate(lastDate);
+		
+		boolean result = memberService.updateMember(member);
+
+		if(result) {
+			System.out.println("1");
+		} else {
+			System.out.println("2");
+		}
+		return "admin/member-member-mng";	
+									
 	}
 
 	/* 관리자 그룹 관리 */

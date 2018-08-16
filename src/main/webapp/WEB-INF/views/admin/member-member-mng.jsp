@@ -21,10 +21,13 @@
 	}
 </style>
 <script>
-	function newPage() {		
-		var url="mngMber?msgPerPage="+$("#quantity").val();		
-		window.location=url;	
+
+	function newPage() {	
+		var url="mngMber?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val();		
+		window.location=url;
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -36,8 +39,10 @@
 							<div class="row">
 								<div class="col-md-5">
 									<label for="quantity">
-									<input type="number" min="5" max="15" step="5" id="quantity" value="${viewData.msgPerPage}"
+									<input type="number" min="5" max="15" step="5" id="quantity" value="${viewData.msgPerPage}" 
 									 onclick="newPage()">
+								
+								
 									&nbsp; entries</label></div> 	
 
 								<form action="search" class="form-inline pull-right">
@@ -61,7 +66,7 @@
 								<c:forEach var="members" items="${viewData.boardList}">
 									 <tr>	
 										<td>${members.mberIndex}</td>
-										<td><a href="mngMber?num=${members.mberIndex}
+										<td><a href="mngMber?num=${members.mberIndex}&page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}
 										">${members.mberId}</a></td>
 										<td>${members.mberType}</td> 
 									</tr> 
@@ -70,56 +75,57 @@
 					<div class="pagination" id="pagination">
 							<ul class="pagination pagination-sm">
 								<c:if test="${viewData.startPage != 1}">	
-									<li class="page-item"><a class="page-link"  aria-label="Previous"
-									 	href="mngMber?page=${viewData.startPage-1}">
-									이전</a></li>
+									<li class="page-item"><a class="page-link"  aria-label="Previous" value="${pageNum}"
+									 	href="mngMber?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}">
+									<span aria-hidden='true'>&laquo;</span></a></li>
 								</c:if>
 								<c:forEach var="pageNum" begin="${viewData.startPage}" end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
 									<c:choose>
 										<c:when test="${pageNum == viewData.currentPage}">
-											<li class="page-item active" > <a class="page-link" 						
-											href="mngMber?page=${pageNum}">${pageNum}<span class="sr-only">(current)</span></a>
+											<li class="page-item active" > <a class="page-link" value="${pageNum}"						
+											href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}">${pageNum}<span class="sr-only">(current)</span></a>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"> <a class="page-link" href="mngMber?page=${pageNum}">${pageNum}</a>
+											<li class="page-item"> <a class="page-link" href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}" value="${pageNum}"
+											>${pageNum}</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${viewData.endPage < viewData.pageTotalCount}">
-									<li class="page-item"><a class="page-link" href="mngMber?page=${viewData.endPage+1}">
-									다음</a></li>
+									<li class="page-item"><a class="page-link" href="mngMber?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}" value="${pageNum}">
+									<span aria-hidden='true'>&raquo;</span></a></li>
 								</c:if>
 							</ul> 
 						</div>	
 						</div>
 
 						<div class="col-md-5 pull-right">
-							<form class="form-horizontal">
+							<form class="form-horizontal" action="modifyMber" method="post">
 								<div class="form-group">
-									<label for="id" class="col-sm-4 control-label">아이디</label>
+									<label for="mberId" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="inputEmail3"
+										<input type="text" class="form-control" name="mberId"
 											placeholder="아이디" value="${member.mberId}">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="password" class="col-sm-4 control-label">비밀번호</label>
+									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
-										<input type="password" class="form-control" id="password"
+										<input type="password" class="form-control" name="mberPw"
 											placeholder="비밀번호" value="${member.mberPw}">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="text" class="col-sm-4 control-label">구분</label>
+									<label for="mberType" class="col-sm-4 control-label">구분</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="classification"
-											placeholder="구분" value="${member.mberFlag}">
+										<input type="text" class="form-control" name="mberType"
+											placeholder="구분" value="${member.mberType}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="regDate"
+										<input type="text" class="form-control" name="regDate"
 											placeholder="가입날짜" value="${member.regDate}">
 									</div>
 								</div>
@@ -127,7 +133,7 @@
 									<label for="lastDate" class="col-sm-4 control-label">최근
 										방문날짜</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" id="lastDate"
+										<input type="text" class="form-control" name="lastDate"
 											placeholder="최근 방문날짜" value="${member.lastDate}">
 									</div>
 								</div>
@@ -185,13 +191,11 @@
 											placeholder="기업인증 코드">
 									</div>
 								</div> -->
-
-
+							
 								<div class="form-group">
 									<div class="col-sm-offset-8 col-sm-6">
-										<button type="button" class="btn btn-info">수정하기</button>
-										<button type="button" class="btn btn-warning">초기화</button>
-
+										<input type="submit" class="btn btn-info" value="수정하기">
+										<input type="reset" class="btn btn-warning" value="초기화">	
 									</div>
 								</div>
 							</form>

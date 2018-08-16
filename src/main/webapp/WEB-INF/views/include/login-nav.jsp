@@ -78,7 +78,7 @@ $(function() {
 		});
 });
 
-
+		});
 </script>
 
 <c:if test="${mberIndex == null}">
