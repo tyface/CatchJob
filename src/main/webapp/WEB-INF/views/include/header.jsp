@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/hello.js"></script>
 
 
 
@@ -29,7 +28,8 @@
 <body class="skin-blue sidebar-mini">
 	<div class="container-fluid">
 	  <header class="main-header">
-	    <jsp:include page="login-nav.jsp" flush="true"/>
+			<%@ include file="login-nav.jsp" %>
+	    <%-- <jsp:include page="login-nav.jsp" flush="true"/> --%>
 	  </header>
 
 		<div id="content-wrap">

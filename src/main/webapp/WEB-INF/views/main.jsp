@@ -3,8 +3,9 @@
 
 
 
+<%@ include file="include/header.jsp" %>
+<%-- <jsp:include page="include/header.jsp" flush="true"/> --%>
 
-<jsp:include page="include/header.jsp" flush="true"/>
 <link href="https://fonts.googleapis.com/css?family=Frijole|Nanum+Pen+Script" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 
@@ -126,4 +127,5 @@ $(function() {
 
 	</section>
 	<!-- CONTENTS - END -->
-<jsp:include page="include/footer.jsp" flush="true"/>
+<%-- <jsp:include page="include/footer.jsp" flush="true"/> --%>
+<%@ include file="include/footer.jsp" %>
