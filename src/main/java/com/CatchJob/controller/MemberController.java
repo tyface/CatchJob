@@ -153,13 +153,13 @@ public class MemberController {
 		member.setMberId(person.getAccountEmail());
 		member.setOauthId(person.getId());
 		
-		if(memberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
-			session.setAttribute("mberIndex", member.getMberIndex());
-		}else if(memberService.getMemberById(member.getMberId()) != null){
-			memberService.socialJoin(member);
-		}else{
+		if(memberService.getMemberById(member.getMberId()) == null) {
 			memberService.join(member);
+		}else if(memberService.getOauthId(member.getMberId(), member.getOauthId()) == null){
+			memberService.socialJoin(member);
 		}
+		
+		session.setAttribute("mberIndex", member.getMberIndex());
 		
 		return "redirect:/";
 	}

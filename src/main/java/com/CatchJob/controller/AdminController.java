@@ -122,8 +122,8 @@ public class AdminController {
 		}
 		member.setMberIndex(memberOne.getMberIndex());
 		
-		boolean result = memberService.updateMember(member);
-		
+		boolean result = memberService.modify(member);
+
 		if(result) {
 			System.out.println("update 정상 작동");			
 		} else {
