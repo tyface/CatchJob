@@ -108,7 +108,7 @@
 						</div>	
 						</div>
 
-						<div class="col-md-5 pull-right">
+						<div class="col-md-5">
 							<form class="form-horizontal" action="modifyMber" method="post">
 								<div class="form-group">
 									<label for="mberId" class="col-sm-4 control-label">아이디</label>

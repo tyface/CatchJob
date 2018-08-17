@@ -59,6 +59,15 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 	}
+	
+	public boolean updateMember(Member member) {
+		int rowCount = memberDao.updateMember(member);
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public boolean deleteMember(Member member) {
 		// 회원탈퇴
@@ -71,17 +80,7 @@ public class MemberServiceImp implements MemberService {
 		}
 	}
 
-	@Override
-	public boolean modify(Member member) {
-		// 회원 수정
-		int rowCount = memberDao.updateMember(member);
-		if (rowCount > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+
 	@Override
 	public boolean socialJoin(Member member) {
 		int result = memberDao.updateOauthId(member);

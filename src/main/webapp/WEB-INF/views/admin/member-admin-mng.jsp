@@ -113,7 +113,7 @@
 							</div>	
 						</div>
 
-						<div class="col-md-5 pull-right">
+						<div class="col-md-5">
 							<form class="form-horizontal" method="post" action="modifyAdmin">
 								<div class="form-group">
 									<label for="adminId" class="col-sm-4 control-label">아이디</label>
