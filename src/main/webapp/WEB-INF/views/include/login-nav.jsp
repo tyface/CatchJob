@@ -240,7 +240,8 @@ $(function() {
 					<li><a href="${pageContext.request.contextPath}/profile/interviews">면접후기 작성</a></li>
 					<li role="presentation" class="divider"></li>
 					<li class="dropdown-header">관심정보</li>
-					<li><a href="#">팔로잉 기업</a></li>
+					<li><a href="${pageContext.request.contextPath}/profile/follows">팔로잉 기업</a></li>
+					<li><a href="${pageContext.request.contextPath}/profile/recent">최근 본 기업</a></li>
 					 <li role="presentation" class="divider"></li>
 					<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 				</ul>

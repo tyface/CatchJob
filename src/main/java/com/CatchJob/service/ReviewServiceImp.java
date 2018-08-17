@@ -1,5 +1,6 @@
 package com.CatchJob.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +37,15 @@ public class ReviewServiceImp implements ReviewService {
 		return null;
 	}*/
 	@Override
-	public boolean insertReview(Review review) {
-		int result = reviewDao.insertReview(review);
-		if(result > 0) {
+	public boolean insertReview(Review review) {		
+		try {		
+			reviewDao.insertReview(review);
 			return true;
-		}else {			
+		}catch(Exception  e) {
+			e.printStackTrace();
 			return false;
 		}
+		
 	}
 	@Override
 	public boolean updateReview(Review review) {

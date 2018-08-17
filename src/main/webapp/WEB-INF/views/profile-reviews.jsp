@@ -86,7 +86,7 @@ function deleteReview(entIndex,questionNum){
 
 
 <article class="container">
-	<div class="module">
+	<div class="contents-wrap">
 	  <h2>리뷰 코멘트</h2>
 	  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
 	  <div class="table-responsive">          
@@ -139,7 +139,7 @@ function deleteReview(entIndex,questionNum){
 				<input type="hidden" name="entIndex" id="hiddenEntIndex" >
 				<input type="hidden" name="questionNum" id="hiddenQuestionNum" >
 				<input type="hidden" name="evaluationScore" id="hiddenEvaluationScore" >
-				<div class="modal-header">
+				<div class="modal-header cat-header"> <!--  -->
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">면접후기 수정</h4>
 				</div>
@@ -180,7 +180,7 @@ function deleteReview(entIndex,questionNum){
 	
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-infofault" id="update-btn">제출</button>
+					<button type="submit" class="btn cat-header" id="update-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>

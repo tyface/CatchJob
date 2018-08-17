@@ -14,7 +14,7 @@ public class Interview {
 	private String intrvwFlag; // 면접내용 상태(1:사용,2:삭제,3:대기) TODO
 	private String intrvwResult; // 면접결과(1:합격,2:불합격,3:대기중,4:합격했으나 취업하지않음)
 	private String intrvwExperience; // 면접경험(1:부정적,2:보통,3:긍정적)
-	private int presentationDate; // 발표기시(ex:21일 후)
+	private String presentationDate; // 발표기시(ex:21일 후)
 	private String regDate; // 작성일
 
 	public int getMberIndex() {
@@ -105,11 +105,11 @@ public class Interview {
 		this.intrvwExperience = intrvwExperience;
 	}
 
-	public int getPresentationDate() {
+	public String getPresentationDate() {
 		return presentationDate;
 	}
 
-	public void setPresentationDate(int presentationDate) {
+	public void setPresentationDate(String presentationDate) {
 		this.presentationDate = presentationDate;
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.CatchJob.model.Interview;
 import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
+import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
 import com.CatchJob.service.ReviewService;
 import com.google.gson.Gson;
@@ -32,6 +33,9 @@ public class ProfileController {
 	private InterviewService itvwService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private FollowService followService;
+	
 	
 	@RequestMapping(value = "/reviews")
 	public String reviewsView(Model model, HttpSession session) {
@@ -142,4 +146,20 @@ public class ProfileController {
 		itvwService.deleteInterview(data);
 		return "redirect:interviews";
 	}
+	
+
+	@RequestMapping(value = "/follows")
+	public String followView (Model model, HttpSession session) {
+//		System.out.println("gg");
+		System.out.println("컨트롤러: 팔로우 :"+entService.getFollowsEntList((int)session.getAttribute("mberIndex")));
+		model.addAttribute("followView", entService.getFollowsEntList((int)session.getAttribute("mberIndex")));
+		return "profile-follows";
+	}
+	
+	@RequestMapping(value = "/recent")
+	public String recentView () {
+		
+		return "profile-recent";
+	}
+	
 }

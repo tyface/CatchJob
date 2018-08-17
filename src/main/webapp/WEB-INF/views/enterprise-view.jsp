@@ -16,16 +16,19 @@
 
 
 <script>
+var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
-//$(document).ready(function(){
+//$(document).ready(function(){	
 var status = "logout";
 $(function(){
+	
+
 	//alert(${mberIndex});
 	if('${mberIndex}'==''){
-		alert(status);
+		//alert(status);
 	}else{
 		status = "login";
-		alert(status);
+		//alert(status);
 	}
 
 	//alert("status: "+status);
@@ -46,45 +49,64 @@ $(function(){
 	entInf();
 	chart();
 	
-	$("#write-btn").on("click", function(){
-		alert("기업리뷰를 성공적으로 작성하였습니다^^");
-		$("#writeForm").submit();
-		$("#myModal").modal("hide");
-		window.location.reload();
-	})
-			
+// 	$("#itvw-write-btn").on("submit", function(){
+				
+// 		alert("면접후기를 성공적으로 작성하였습니다^^*");
+// 		$("#writeForm").submit();
+// 		$("#myModal").modal("hide");
+// 		window.location.reload();
+		
+		
+// 	});
+		
+	
+	/* 팔로잉 된 기업이면 꽉찬하트 , 아니면 빈하트(default..)*/
+	if(following == 1){
+		$("#follow").toggleClass("fa-heart-o");
+		$("#follow").toggleClass("fa-heart");
+	}
    //Handle starring for glyphicon and font awesome
     $(".follow-btn").click(function (e) {
-      e.preventDefault();// 기본적인 submit 행동을 취소합니다
-      
       var $this = $(this).find("i");
       var fa = $this.hasClass("fa");
-      var msg ="";
 
 	  if(status == "logout" & $this.hasClass("fa-heart-o")){
-	// 	  if($this.hasClass("fa-heart-o")){
-			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 페이지로 이동하시겠습니까?") != 0 ){
-				 /* 로그인 페이지로 이동 */    	
-				 alert("로그인 모달 띄우기 ");
+			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
+				 /* 로그인 모달 띄우기 */    	
 				 $("#myModalLogin").modal("show");
 	    	  }
-	// 	  }
 	  }else{/* 로그인 상태임 */
 			  if($this.hasClass("fa-heart-o")){
-		    	  alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
-		    	  $this.toggleClass("fa-heart-o");
-		    	  $this.toggleClass("fa-heart");
-			  
+				  /* 팔로잉 기업 추가  */
+				  $.ajax({
+				  		url:"${pageContext.request.contextPath}/enterprise/regFollow",				  		
+				  		data:{entIndex : entIndex},
+				  		type: "post",
+				  		dataType:"json",
+				  		success: function(result){
+				  			/* 성공 */
+				    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
+				    	    $this.toggleClass("fa-heart-o");
+				    	    $this.toggleClass("fa-heart");
+				  		}	  		
+				  })
 			  }else{
 				  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
-					  alert("팔로잉이 해제되었습니다.");
-					  $this.toggleClass("fa-heart");
-					  $this.toggleClass("fa-heart-o");
+					  /* 팔로잉 기업 해지  */
+					  $.ajax({
+					  		url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
+					  		data:{entIndex : entIndex},
+					  		type: "post",
+					  		dataType:"json",
+					  		success: function(result){
+					  			/* 성공 */
+					  			 alert("팔로잉이 해제되었습니다.");
+								 $this.toggleClass("fa-heart");
+								 $this.toggleClass("fa-heart-o");
+					  		}					  		
+					  })					 
 				  }
-				  else{
-				  }
-			  }
-		  
+			  }		  
 	  }
       
 });
@@ -123,7 +145,7 @@ $(function(){
 // 	 		var point = $(this).closest().closest().prev().children().text();
 // 	 		alert(point)
 			var point = $(this).parent().parent().prev().children().children("div").text();
-			alert(point);
+// 			alert(point);
 // 	 		var point = $(".starScore").text();
 // 	 		point = point.substr(0,1);
 			var statusCount = $(this).next().val();
@@ -132,7 +154,8 @@ $(function(){
 				return false; 
 			}else{
 				//alert("등록!"+point)
-				var contents = $("#contents"+statusCount).val();
+				var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
+				
 				var questionNum = statusCount;
 				var entIndex = $("#entIndex").val();
 				  $.ajax({
@@ -150,7 +173,8 @@ $(function(){
 							alert("등록되었습니다.");
 							//getReviewList(questionNum);
 						}else{
-							alert("등록 실패하였습니다.");
+							alert("등록 실패하였습니다. 이미 등록하셨습니다.");
+// 							if(confirm("이미 등록하셨습니다. 수정하시겠습니"))
 						}	
 						getReviewList(questionNum);
 					}				
@@ -446,18 +470,18 @@ function addComma(num) {
 <!--     </section> -->
 <!--   </div> -->
 
-<div class="container module-main">
-	
-		
+<div class="container module-main">		
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
 	
 
-<!-- 	<p class="follow follow-btn follow"> -->
+
+<!-- 		<a href="#" class="follow follow-btn follow"> -->
+<!-- 			<i class="fa fa-heart-o follow"></i>123 -->
+<!-- 		</a> -->
 		<a href="#" class="follow follow-btn follow">
-			<i class="fa fa-heart-o follow"></i><!-- 123 -->
+			<i class="fa fa-heart-o follow" id="follow"></i><!-- 123 -->
 		</a>
-<!-- 		<a>팔로우</a>		 -->
-<!-- 	</p> -->
+
 
 	<div class="f-right">
 		<button type="button" class="btn btn-info" id="text-btn">기업리뷰작성</button>
@@ -784,9 +808,9 @@ function addComma(num) {
 						<div class="panel panel-default">
 							<div class="panel-body">
 
-								<div class="chart">
-									<canvas id="areaChart" style="height: 00px"></canvas>
-								</div>
+<!-- 								<div class="chart"> -->
+<%-- 									<canvas id="areaChart" style="height: 00px"></canvas> --%>
+<!-- 								</div> -->
 
 								<div class="box box-danger">
 									<div class="box-header with-border">
@@ -1079,167 +1103,174 @@ function addComma(num) {
 		</div>
 	</div>
 </div>
+<button type="button" class="btn btn-default move-top" >
+		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>TOP
+</button>
 
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
-	<div class="modal-dialog">
-
+<!-- 	<div class="modal-dialog"> -->
+	<div class= " modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<form action="writeInterview" id="writeForm" method="post">
 				<input type="hidden" name="entIndex" value="${entInfo.ENT_IDX}">
-				<div class="modal-header">
+				<div class="modal-header cat-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">면접후기 작성</h4>
 				</div>
 				<div class="modal-body ">
-
-					<!-- 기업명  -->
-					<!-- 			<div class="form-group">
-					<label>기업명</label> <select class="form-control">
-						<option>삼성전자</option>
-						<option></option>
-						<option></option>
-						<option></option>
-					</select>
-				</div> -->
-
-					<div class="form-group">
-						<label>기업명</label> <input type="text" class="form-control"
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>기업명</label>
+						</div>
+						<div class="col-xs-9">
+						<input type="text" class="form-control "
 							value="${entInfo.ENT_NM}" readonly="readonly">
+						</div>
 					</div>
 					<!-- 면접경험 radio...........intrvwExperience-->
-					<div class="form-group">
-						<label>면접 경험 </label>
-						<div class="radio">
-							<label> <input type="radio" name="intrvwExperience"
-								id="optionsRadios1" value="1" checked>부정적
-							</label>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label >면접 경험 </label>
 						</div>
-						<div class="radio">
-							<label> <input type="radio" name="intrvwExperience"
-								id="optionsRadios2" value="2">보통
-							</label>
-						</div>
-						<div class="radio">
-							<label> <input type="radio" name="intrvwExperience"
-								id="optionsRadios3" value="3">긍정적
-							</label>
+						<div class="col-xs-9">
+							<div class="radio">
+								<label> <input type="radio" name="intrvwExperience"
+									id="optionsRadios1" value="1" checked>부정적
+								</label>
+							</div>
+							<div class="radio">
+								<label> <input type="radio" name="intrvwExperience"
+									id="optionsRadios2" value="2">보통
+								</label>
+							</div>
+							<div class="radio">
+								<label> <input type="radio" name="intrvwExperience"
+									id="optionsRadios3" value="3">긍정적
+								</label>
+							</div>
 						</div>
 					</div>
 
+
 					<!--면접후기// 면접에서 채용까지의 과정 요약 -->
-					<div class="form-group">
-						<label>면접에서 채용까지의 과정 요약</label>
-						<textarea class="form-control" rows="3" name="intrvwReview"
-							placeholder="Enter ..."></textarea>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label class="">면접에서 채용까지의 과정 요약</label>
+						</div>
+						<div class="col-xs-9">
+							<textarea class="form-control" rows="3" name="intrvwReview"
+								placeholder="Enter ..."></textarea>
+						</div>
 					</div>
 					<!-- 면접질문 입력하기 -->
-					<div class="form-group">
-						<label>면접질문 입력하기</label>
-						<textarea class="form-control" rows="3" name="intrvwQuestion"
-							placeholder="Enter ..."></textarea>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>면접질문 입력하기</label>
+						</div>
+						<div class="col-xs-9">
+							<textarea class="form-control" rows="3" name="intrvwQuestion"
+								placeholder="Enter ..."></textarea>
+						</div>
 					</div>
 					<!-- 면접에 대한 답변 -->
-					<div class="form-group">
-						<label>작성한 면접질문에 대한 답변을 입력하세요.</label>
-						<textarea class="form-control" rows="3" name="intrvwAnswer"
-							placeholder="Enter ..."></textarea>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>작성한 면접질문에 대한 답변을 입력하세요.</label>
+						</div>
+						<div class="col-xs-9">
+							<textarea class="form-control" rows="3" name="intrvwAnswer"
+								placeholder="Enter ..."></textarea>
+						</div>
 					</div>
 
 					<!-- 면접난이도 -->
-					<div class="form-group">
-						<label>면접난이도</label> <select class="form-control"
-							name="intrvwDifficulty">
-							<option value="1">매우 쉬움</option>
-							<option value="2">쉬움</option>
-							<option value="3">보통</option>
-							<option value="4">어려움</option>
-							<option value="5">매우 어려움</option>
-						</select>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>면접난이도</label> 
+						</div>
+						<div class="col-xs-9">
+							<select class="form-control"
+								name="intrvwDifficulty">
+								<option value="1">매우 쉬움</option>
+								<option value="2">쉬움</option>
+								<option value="3">보통</option>
+								<option value="4">어려움</option>
+								<option value="5">매우 어려움</option>
+							</select>
+						</div>
 					</div>
 					<!-- 면접결과 -->
-					<div class="form-group">
-						<label>이 기업에 합격하셨나요?</label> <select class="form-control"
-							name="intrvwResult">
-							<option value="1">합격</option>
-							<option value="2">불합격</option>
-							<option value="3">대기중</option>
-							<option value="4">합격했으나 취업하지 않음</option>
-
-						</select>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>이 기업에 합격하셨나요?</label> 
+						</div>
+						<div class="col-xs-9">
+							<select class="form-control"
+								name="intrvwResult">
+								<option value="1">합격</option>
+								<option value="2">불합격</option>
+								<option value="3">대기중</option>
+								<option value="4">합격했으나 취업하지 않음</option>
+							</select>
+						</div>
 					</div>
 					<!-- 면접경로 -->
-					<div class="form-group">
-						<label>면접경로</label> <select class="form-control"
-							name="intrvwRoute">
-							<option value="1">공채</option>
-							<option value="2">온라인지원</option>
-							<option value="3">직원추천</option>
-							<option value="4">헤드헌터</option>
-							<option value="5">학교 취업지원센터</option>
-							<option value="6">기타</option>
-						</select>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>면접경로</label> 
+						</div>
+						<div class="col-xs-9">
+							<select class="form-control"
+								name="intrvwRoute">
+								<option value="1">공채</option>
+								<option value="2">온라인지원</option>
+								<option value="3">직원추천</option>
+								<option value="4">헤드헌터</option>
+								<option value="5">학교 취업지원센터</option>
+								<option value="6">기타</option>
+							</select>
+						</div>
 					</div>
 
 					<!--면접일자 -->
-					<div class="form-group">
-						<label>면접일자</label>
-						<!-- <div class="row">
-								<div class="col-sm-3">
-									<select class="form-control" name="intrvwRoute">
-										<option value="1">2018</option>
-										<option value="2">2017</option>
-										<option value="3">2016</option>					
-									</select>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>면접일자</label>					
+						</div>
+						<div class="col-xs-9">
+							<div class="input-group date">
+								<div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
 								</div>
-								<div class="col-sm-1">년
-								</div>
-								<div class="col-sm-3">
-									<select class="form-control" name="intrvwRoute">
-										<option value="1">01</option>
-										<option value="2">02</option>
-										<option value="3">03</option>
-										<option value="4">04</option>
-										<option value="5">05</option>
-										<option value="6">06</option>
-										<option value="6">07</option>
-										<option value="6">08</option>
-										<option value="6">09</option>
-										<option value="6">10</option>
-										<option value="6">11</option>
-										<option value="6">12</option>
-									</select>
-								</div>
-								<div class="col-sm-1">월
-								</div>
-							</div> -->
-						<div class="input-group date">
-							<div class="input-group-addon">
-								<i class="fa fa-calendar"></i>
+								<input type="text" class="form-control pull-right"
+									name="intrvwDate" id="datepicker" placeholder="YYYYMM">
 							</div>
-							<input type="text" class="form-control pull-right"
-								name="intrvwDate" id="datepicker" placeholder="YYYYMM">
 						</div>
 					</div>
 					<!-- 면접일자/발표시기  -->
-					<div class="form-group">
-						<label>발표시기</label>
-						<div class="row">
-							<div class="col-sm-11">
-								<input type="text" class="form-control" name="presentationDate"
-									placeholder="면접 결과 발표까지 걸린 시간 ">
-							</div>
-							<div class="col-sm-1">
-								<p>일</p>
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>발표시기</label>
+						</div>
+						<div class="col-xs-9">
+							<div class="row">
+								<div class="col-sm-11">
+									<input type="text" class="form-control" name="presentationDate"
+										placeholder="면접 결과 발표까지 걸린 시간 " >
+								</div>
+								<div class="col-sm-1">
+									<p>일</p>
+								</div>
 							</div>
 						</div>
 					</div>
 
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-infofault" >제출</button>
+					<button type="submit" class="btn cat-header" id="itvw-write-btn" >제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>
