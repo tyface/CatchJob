@@ -111,7 +111,7 @@ public class MemberController {
 	 /*수정, 탈퇴 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(Member member) {
-		if (memberService.modify(member)) {
+		if (memberService.updateMember(member)) {
 			// 회원수정 성공
 			return null;
 		} else {

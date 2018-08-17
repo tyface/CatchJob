@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 		FROM ADMIN_TB WHERE ADMIN_IDX=#{adminIndex}
 	</select>
-	<select id="selectListAdmin" resultMap="adminMap">
+	<select id="selectListAdmin" resultMap="adminMap" parameterType="map"> 
 		SELECT * FROM (
 			SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.ADMIN_IDX, m.ADMIN_ID, m.ADMIN_PW, m.ADMIN_LV, m.REG_DT, m.LAST_DT
 			FROM (
@@ -29,7 +29,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) 
 		FROM ADMIN_TB
 	</select>
-
+	<select id="selectListAdminByKeyword" resultMap="adminMap" parameterType="map">
+		SELECT * FROM (
+			SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.ADMIN_IDX, m.ADMIN_ID, m.ADMIN_PW, m.ADMIN_LV, m.REG_DT, m.LAST_DT
+			FROM (
+				SELECT ADMIN_IDX, ADMIN_ID, ADMIN_PW, ADMIN_LV, REG_DT, LAST_DT 
+				FROM ADMIN_TB,  (select @ROWNUM := 0) a 
+			ORDER BY ADMIN_IDX) m) n
+		WHERE rnum BETWEEN #{firstRow} AND #{endRow} and ADMIN_ID like CONCAT('%',#{keyword},'%');	
+	</select>
 	<resultMap type="admin" id="adminMap">
 		<result property="adminIndex" column="ADMIN_IDX" />
 		<result property="adminId" column="ADMIN_ID" />

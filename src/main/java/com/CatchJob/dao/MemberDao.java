@@ -32,5 +32,7 @@ public interface MemberDao {
 	public int selectCount();
 	
 	public List<Member> selectListMember(Map<String, String> mapData);
+	//검색
+	public List<Member> selectListMemberByKeyword(Map<String, String> map);
 	
 }

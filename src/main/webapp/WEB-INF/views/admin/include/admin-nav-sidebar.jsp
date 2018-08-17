@@ -151,7 +151,7 @@ $(document).ready(function () {
               <i class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a></a>
 				<ul class="collapse list-unstyled" id="pageSubmenu3">
 				    <li>
-				        <a href="#">산업군 관리</a>
+				        <a href="mngInduty">산업군 관리</a>
 				    </li>
 				</ul>
             </li>
@@ -176,9 +176,6 @@ $(document).ready(function () {
 				    </li>
 				     <li>
 				        <a href="${pageContext.request.contextPath}/admin/mngQnA">QnA 관리</a>
-				    </li>
-				     <li>
-				        <a href="${pageContext.request.contextPath}/admin/mngPopUp">팝업 관리</a>
 				    </li>
 				</ul>
             </li>
