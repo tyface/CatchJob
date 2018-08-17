@@ -10,9 +10,6 @@
 <link href="https://fonts.googleapis.com/css?family=Frijole|Nanum+Pen+Script" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 
 <script type="text/javascript">
 //<![CDATA[

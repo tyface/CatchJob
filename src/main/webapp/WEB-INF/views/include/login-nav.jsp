@@ -132,8 +132,6 @@ $(function() {
 						</button>
 					</div>
 
-
-
         </div>
         <div class="modal-footer">
           <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
@@ -197,25 +195,22 @@ $(function() {
 										value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
 								</div>
 							</div>
-							<div class="form-group">
-							 <p>- OR -</p>
-							<button id="btnLoginFacebook" class="btn btn-success btn-block">
-								<i class="fa fa-facebook"></i> Sign in using Facebook
-							</button>
-							<button id="btnLoginGoogle" class="btn btn-success btn-block">
-								<i class="fa fa-google-plus"></i> Sign in using Google+
-							</button>
-						</div>
-
 						</form>
 
+						<div class="form-group row">
+							<br><center><p>- OR -</p></center><br>
+							<button class="btn col-xs-12 facebookBtn" >
+									<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> Sign in with facebook
+							</button>
+							<button class="btn col-xs-12 googleBtn" >
+									<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> Sign in with Google &nbsp;&nbsp;
+							</button>
+						</div>
 
 					</div>
 
 					<div class="modal-footer">
 						 <a href="#myModalLogin" data-toggle="modal" id="signUpHide">I already have a membership</a>
-
-
 					</div>
 				</div>
 
@@ -235,15 +230,6 @@ $(function() {
 		</div>
 
 		<div class="f-right nav-btn-1">
-
-<!-- 			<div class="dropdown col-xs-6"> -->
-<!-- 				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span -->
-<!-- 					class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span></a> -->
-<!-- 				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel"> -->
-<!-- 					<li><a href="#">기업리뷰 작성</a></li> -->
-<!-- 					<li><a href="#">면접후기 작성</a></li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
 
 			<div class="dropdown col-xs-6 f-right" >
 
