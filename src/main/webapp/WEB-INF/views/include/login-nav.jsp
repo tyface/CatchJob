@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 $(function() {
+
+	$(".googleBtn").on("click",function() {
+		location.href="${pageContext.request.contextPath}/googleLogin";
+	});
+	$(".facebookBtn").on("click",function() {
+		location.href="${pageContext.request.contextPath}/facebookLogin";
+	});
+
 	$(".myBtnLogin").click(function() {
 		$("#myModalLogin").modal("show");
 	});
