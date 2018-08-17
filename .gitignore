@@ -100,3 +100,4 @@ hs_err_pid*
 *.MF
 rebel.xml
 classdia.ucls
+src/main/webapp/WEB-INF/config/my.properties
