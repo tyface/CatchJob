@@ -22,7 +22,6 @@ public interface MemberService {
 	public Member getMemberById(String mberId);
 	
 	public Member getOauthId(String mberId,String oauthId);
-	
-	public Map<String, Object> getMessageList(int pageNumber, int numOfMsgPage);
 
+	public Map<String, Object> getMessageList(Map<String, Object> data);
 }

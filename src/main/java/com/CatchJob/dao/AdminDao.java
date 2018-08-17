@@ -22,4 +22,7 @@ public interface AdminDao {
 	//페이징 처리
 	public int selectCount();
 	public List<Admin> selectListAdmin(Map<String, String> map);
+	
+	public List<Admin> selectListAdminByKeyword(Map<String, String> map);
+	
 }
