@@ -60,8 +60,8 @@
 								    	<label for="copyRight">하단 카피라이트</label>
 								    </div>
 								    <div class="col-sm-8">
-								    <textarea class="form-control z-depth-1" id="copyRight" rows="5" 
-								     placeholder="Copyright ©Spring MVC Board All rights reserved. version 1.0"></textarea>
+								    <textarea class="form-control z-depth-1" id="copyRight" rows="5">Copyright ©Spring MVC Board All rights reserved. version 1.0
+								   	 </textarea>
 								     </div>
 							     </div>
 							     <div class="col-sm-2" style="margin-bottom:10px">

@@ -14,26 +14,31 @@
 	.page-header{
 		text-align: center; 
 		font-weight: bold;
+		margin-bottom: 50px;
 	}
 	#quantity{
 		width: 90px; 
-		height: 25px";
+		height: 25px;
+	}
+	
+	#keyword{
+		height:28px;
+	}
+	#pagenation{
+		text-align:center;
 	}
 </style>
 <script>
-
 	function newPage() {	
-		var url="mngMber?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val();		
+		var url="mngMber?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+"&keyword="+$("#keyword").val();		
 		window.location=url;
 	}
-	
-	
 </script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%> 
 		<div class="col-sm-9 main">
-			<h1 class="page-header" style="margin-bottom: 50px">[ 회원 그룹 관리 ]</h1><br>
+			<h1 class="page-header">[ 회원 그룹 관리 ]</h1><br>
 				<div class="col-md-offset-1">
 						<div class="col-md-6">
 							<div class="row">
@@ -41,16 +46,16 @@
 									<label for="quantity">
 									<input type="number" min="5" max="15" step="5" id="quantity" value="${viewData.msgPerPage}" 
 									 onclick="newPage()">
-								
-								
 									&nbsp; entries</label></div> 	
 
-								<form action="search" class="form-inline pull-right">
+								<form action="mngMber" class="form-inline pull-right">
 									<div class="input-group">
-										<input type="text" name="keyword" class="form-control"
-											size="20" style="height: 28px">
+										<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
+											size="20">
+										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
+										<input type="hidden" name="page" value="${viewData.currentPage}">
 										<div class="input-group-btn">
-											<button type="button" class="btn">
+											<button type="submit" class="btn">
 												<span class="glyphicon glyphicon-search"></span>
 											</button>
 										</div>
@@ -64,35 +69,39 @@
 										<th>구분</th>
 									</tr>
 								<c:forEach var="members" items="${viewData.boardList}">
-									 <tr>	
+									 <tr>
 										<td>${members.mberIndex}</td>
-										<td><a href="mngMber?num=${members.mberIndex}&page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}
+										<td><a href="mngMber?num=${members.mberIndex}&page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}
 										">${members.mberId}</a></td>
-										<td>${members.mberType}</td> 
+										<td>
+											<c:set var="name" value="${members.mberType}"/>
+												<c:if test="${name.equals('1')}">일반 회원</c:if>
+												<c:if test="${name.equals('2')}">기업인증 회원</c:if>										
+										</td> 
 									</tr> 
 								</c:forEach>   						
 							</table>							  
-					<div class="pagination" id="pagination">
+						<div id="pagenation">
 							<ul class="pagination pagination-sm">
 								<c:if test="${viewData.startPage != 1}">	
-									<li class="page-item"><a class="page-link"  aria-label="Previous" value="${pageNum}"
-									 	href="mngMber?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}">
+									<li class="page-item"><a class="page-link"  aria-label="Previous" 
+									 	href="mngMber?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
 									<span aria-hidden='true'>&laquo;</span></a></li>
 								</c:if>
 								<c:forEach var="pageNum" begin="${viewData.startPage}" end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
 									<c:choose>
 										<c:when test="${pageNum == viewData.currentPage}">
-											<li class="page-item active" > <a class="page-link" value="${pageNum}"						
-											href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}">${pageNum}<span class="sr-only">(current)</span></a>
+											<li class="page-item active" > <a class="page-link" 					
+											href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}<span class="sr-only">(current)</span></a>
 										</c:when>
 										<c:otherwise>
-											<li class="page-item"> <a class="page-link" href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}" value="${pageNum}"
+											<li class="page-item"> <a class="page-link" href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}"
 											>${pageNum}</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
 								<c:if test="${viewData.endPage < viewData.pageTotalCount}">
-									<li class="page-item"><a class="page-link" href="mngMber?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}" value="${pageNum}">
+									<li class="page-item"><a class="page-link" href="mngMber?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
 									<span aria-hidden='true'>&raquo;</span></a></li>
 								</c:if>
 							</ul> 
@@ -105,7 +114,7 @@
 									<label for="mberId" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="mberId"
-											placeholder="아이디" value="${member.mberId}">
+											placeholder="아이디" value="${member.mberId}" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
@@ -115,13 +124,25 @@
 											placeholder="비밀번호" value="${member.mberPw}">
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="mberType" class="col-sm-4 control-label">구분</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" name="mberType"
-											placeholder="구분" value="${member.mberType}">
+								<div class="form-group" style="text-align: right">
+									<label for="mberType" class="control-label"
+										style="margin-right: 15px">구분</label>
+									<div class="col-sm-8 pull-right">
+										<select class="form-control" style="color:gray" id="mberType" name="mberType">
+											<option value="" selected disabled hidden>
+											<c:set var="name" value="${member.mberType}" />
+												<c:choose>
+													<c:when test="${name.equals('1')}">일반 회원</c:when>
+													<c:when test="${name.equals('2')}">기업인증 회원</c:when>
+													<c:otherwise>회원 구분</c:otherwise>
+												</c:choose>
+											</option>
+											<option value="1">일반 회원</option>
+											<option value="2">기업인증 회원</option>
+										</select>
 									</div>
 								</div>
+								
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">
@@ -191,7 +212,7 @@
 											placeholder="기업인증 코드">
 									</div>
 								</div> -->
-							
+							<br>
 								<div class="form-group">
 									<div class="col-sm-offset-8 col-sm-6">
 										<input type="submit" class="btn btn-info" value="수정하기">
