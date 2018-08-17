@@ -20,6 +20,19 @@ article {
   border: none;
 
 } */
+
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url("../fonts/Roboto-Medium.ttf") format('truetype');
+}
+
+
+/* 마우스 커서 올릴때 마우스 바뀜*/
+.cursorOn{
+  cursor:pointer;
+}
+
+
 .abcRioButtonLightBlue{
   height:36px;
   width:50% !important;
@@ -43,11 +56,8 @@ article {
 .nav-btn-1 {
   width:200px;
   margin-top: 15px;
-
-}
-.nav-btn-1 a {
-   text-decoration:none;
-     color: #9d9d9d;
+  text-decoration:none;
+  color: #9d9d9d;
 }
 
 /* 세로줄  TODO미사용 */
@@ -90,6 +100,40 @@ article {
   text-decoration: none;
   margin-right: 2px;
 }
+
+.facebookBtn{
+  margin: 4px;
+  background-color: #3b5998;
+  font-family: Roboto-Medium;
+  font-size: 14px;
+  color:#ffffff;
+  line-height: 22px;
+  height: 40px;
+  box-shadow: 1px 1px 4px gray;
+}
+.facebookBtn img{
+  height: 18px;
+  width: 18px;
+  margin-right: 24px;
+  margin-bottom: 3px;
+}
+.googleBtn{
+  margin: 4px;
+  background-color: #ffffff;
+  font-family: Roboto-Medium;
+  font-size: 14px;
+  color:#000000;
+  line-height: 22px;
+  height: 40px;
+  box-shadow: 1px 1px 4px gray;
+}
+.googleBtn img{
+  height: 18px;
+  width: 18px;
+  margin-right: 24px;
+  margin-bottom: 3px;
+}
+
 
 /* 제목부분 */
  .jumbotron {

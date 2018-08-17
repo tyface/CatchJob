@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 $(function() {
-	$("#myBtnLogin").click(function() {
+	$(".myBtnLogin").click(function() {
 		$("#myModalLogin").modal("show");
 	});
 
@@ -39,7 +39,7 @@ $(function() {
 	});
 
 
-	$("#myBtnSignUp").click(function(){
+	$(".myBtnSignUp").click(function(){
 			$("#myModalSignUp").modal("show");
 	});
 
@@ -87,8 +87,8 @@ $(function() {
     <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
   </div>
   <div class="f-right nav-btn-1">
-    <div class="col-xs-6"><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
-    <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
+    <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div>
+    <div class="col-xs-6 cursorOn myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</div>
   </div>
 </nav>
 
@@ -119,11 +119,14 @@ $(function() {
               <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
 
-					<div class="form-group">
+					<div class="form-group row">
 						<br><center><p>- OR -</p></center><br>
-						<div id="facebook_id_login" style="text-align:center"><a href="${pageContext.request.contextPath}/facebookLogin">페이스북</a></div>
-						<%-- <button type="button" name="button" onclick="googleLogin()">test</button> --%>
-						<div id="google_id_login" style="text-align:center"><a href="${pageContext.request.contextPath}/googleLogin">구글로그인</a></div>
+						<button class="btn col-xs-12 facebookBtn" >
+								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> Sign in with facebook
+						</button>
+						<button class="btn col-xs-12 googleBtn" >
+								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> Sign in with Google &nbsp;&nbsp;
+						</button>
 					</div>
 
 
@@ -225,8 +228,7 @@ $(function() {
 	<nav class="navbar navbar-inverse">
 
 		<div class="f-left">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH
-				JOB</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH	JOB</a>
 		</div>
 
 		<div class="f-right nav-btn-1">
@@ -242,8 +244,7 @@ $(function() {
 
 			<div class="dropdown col-xs-6 f-right" >
 
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-					class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 					<li class="dropdown-header">활동내역</li>
 					<li><a href="${pageContext.request.contextPath}/profile/reviews">기업리뷰 작성</a></li>
