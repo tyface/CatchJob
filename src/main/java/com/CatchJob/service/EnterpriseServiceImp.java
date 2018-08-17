@@ -75,9 +75,21 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entList;
 	}
 	
+	@Override
+	public List<Enterprise> getRecentsEntList(int memberIndex) {
+		
+		List<Enterprise> entList = entDao.selectListEntRecent(memberIndex);
+
+		for (Enterprise ent : entList) {
+			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
+		}
+		return entList;
+	}
+	
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
 	}
+
 
 
 

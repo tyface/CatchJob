@@ -29,6 +29,8 @@ public interface EnterpriseService {
 	
 	//팔로잉 기업 보기
 	public List<Enterprise> getFollowsEntList(int memberIndex);
+	//팔로잉 기업 보기
+	public List<Enterprise> getRecentsEntList(int memberIndex);
 
 	
 	

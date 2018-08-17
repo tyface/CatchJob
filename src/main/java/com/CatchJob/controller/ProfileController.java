@@ -157,8 +157,8 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/recent")
-	public String recentView () {
-		
+	public String recentView (Model model, HttpSession session) {
+		System.out.println("컨트롤러:최신본거:"+entService.getRecentsEntList((int)session.getAttribute("mberIndex")));
 		return "profile-recent";
 	}
 	
