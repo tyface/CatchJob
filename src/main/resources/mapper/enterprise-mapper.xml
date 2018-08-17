@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
-		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%','#{keyword}','%')
+		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%')
 		GROUP BY 	ent.ENT_IDX
 		ORDER BY 	LENGTH(ent.ENT_NM),ent.ENT_NM
 	</select>

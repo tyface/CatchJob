@@ -57,14 +57,7 @@ public class EnterpriseController {
 		                            
 		Gson gson = new GsonBuilder().create();
 		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
-//			System.out.println(gson.toJson(entService.getEntList(data), type));
-//		JSONArray js = JSONArray.formObject(entService.getEntList(data));
-//		model.addAttribute("entList1",gson.toJson(entService.getEntList(data)));
-//		System.out.println(myCustomArray);
 		model.addAttribute("entList1",myCustomArray);
-		model.addAttribute("entList", entService.getEntList(data));
-//		model.addAttribute("countList", entService.getEntList(data));
-//		model.addAttribute("entList1", entService.getEntList(data));
 		// 기업 리스트 출력
 		return "enterprise-list";
 	}

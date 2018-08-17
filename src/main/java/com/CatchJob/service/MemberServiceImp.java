@@ -60,7 +60,7 @@ public class MemberServiceImp implements MemberService {
 		}
 	}
 	
-	public boolean updateMember(Member member) {
+	public boolean modify(Member member) {
 		int rowCount = memberDao.updateMember(member);
 		if (rowCount > 0) {
 			return true;

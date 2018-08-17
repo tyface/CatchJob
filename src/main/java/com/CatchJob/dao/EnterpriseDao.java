@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.Interview;
-import com.CatchJob.model.Review;
 
 @Repository
 public interface EnterpriseDao {
