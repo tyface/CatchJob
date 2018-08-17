@@ -75,7 +75,7 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public boolean updateMember(Member member) {
+	public boolean modify(Member member) {
 		// 회원 수정
 		int rowCount = memberDao.updateMember(member);
 		if (rowCount > 0) {
@@ -84,7 +84,17 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 	}
-
+	
+	@Override
+	public boolean socialJoin(Member member) {
+		int result = memberDao.updateOauthId(member);
+		if (result > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@Override
 	public Member getMember(int mberIndex) {
 		return memberDao.selectOne(mberIndex);
@@ -155,6 +165,7 @@ public class MemberServiceImp implements MemberService {
 		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+
 
 	
 	

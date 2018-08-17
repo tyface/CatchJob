@@ -15,7 +15,9 @@ public interface MemberService {
 
 	public boolean join(Member member);
 
-	public boolean updateMember(Member member);
+	public boolean modify(Member member);
+	
+	public boolean socialJoin(Member member);
 	
 	public Member getMemberById(String mberId);
 	
