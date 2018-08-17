@@ -128,7 +128,7 @@ public class MemberController {
 
 	// 구글 Callback호출 메소드
 	@RequestMapping(value = "/googleSignInCallback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback(Model model, @RequestParam String code, HttpSession session) throws IOException {
+	public String googleCallback(@RequestParam String code, HttpSession session) throws IOException {
 		
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code , googleOAuth2Parameters.getRedirectUri(),
@@ -166,54 +166,46 @@ public class MemberController {
 		/* 구글code 발행 */
 		OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
 	    String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, oAuth2Parameters);
+	    System.out.println("URL : " + url);
 		return "redirect:"+url;
 	}
 	
 	@RequestMapping(value = "/oAuth2Callback", method = { RequestMethod.GET, RequestMethod.POST })
-    public String facebookSignInCallback(@RequestParam String code) throws Exception {
+    public String facebookSignInCallback(@RequestParam String code, HttpSession session) throws Exception {
  
-        try {
-             String redirectUri = oAuth2Parameters.getRedirectUri();
-            System.out.println("Redirect URI : " + redirectUri);
-            System.out.println("Code : " + code);
+        String redirectUri = oAuth2Parameters.getRedirectUri();
  
-            OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
-            AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, redirectUri, null);
-            String accessToken = accessGrant.getAccessToken();
-            System.out.println("AccessToken: " + accessToken);
-            Long expireTime = accessGrant.getExpireTime();
+        OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
+        AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, redirectUri, null);
+        String accessToken = accessGrant.getAccessToken();
+        Long expireTime = accessGrant.getExpireTime();
+    
         
+        if (expireTime != null && expireTime < System.currentTimeMillis()) {
+            accessToken = accessGrant.getRefreshToken();
+            System.out.printf("accessToken is expired. refresh token = {}", accessToken);
+        };
             
-            if (expireTime != null && expireTime < System.currentTimeMillis()) {
-                accessToken = accessGrant.getRefreshToken();
-                System.out.printf("accessToken is expired. refresh token = {}", accessToken);
-            };
+        Connection<Facebook> connection = connectionFactory.createConnection(accessGrant);
+        Facebook facebook = connection == null ? new FacebookTemplate(accessToken) : connection.getApi();
             
+    	String [] fields = { "id", "email",  "name"};
+        User userProfile = facebook.fetchObject("me", User.class, fields);
         
-            Connection<Facebook> connection = connectionFactory.createConnection(accessGrant);
-            Facebook facebook = connection == null ? new FacebookTemplate(accessToken) : connection.getApi();
-            UserOperations userOperations = facebook.userOperations();
-            
-            try
- 
-            {            
-                String [] fields = { "id", "email",  "name"};
-                User userProfile = facebook.fetchObject("me", User.class, fields);
-                System.out.println("유저이메일 : " + userProfile.getEmail());
-                System.out.println("유저 id : " + userProfile.getId());
-                System.out.println("유저 name : " + userProfile.getName());
-                
-            } catch (MissingAuthorizationException e) {
-                e.printStackTrace();
-            }
- 
-        
-        } catch (Exception e) {
- 
-            e.printStackTrace();
- 
-        }
-        return "redirect:http://localhost:8090/catchjob/";
+        Member member = new Member();
+		member.setMberId(userProfile.getEmail());
+		member.setOauthId(userProfile.getId());
+		
+		if(MemberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
+			System.out.println(1);
+			session.setAttribute("mberIndex", member.getMberIndex());
+		}else {
+			System.out.println(2);
+			MemberService.join(member);
+		}
+		
+  
+        return "redirect:http://localhost:8090/catchjob";
  
     }
 	
