@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
-
-$(document).ready(function() {
-	$("#myBtnLogin").click(function() {
+$(function() {
+	$(".myBtnLogin").click(function() {
 		$("#myModalLogin").modal("show");
 	});
 
@@ -39,63 +37,48 @@ $(document).ready(function() {
 	$('.modal').on('hidden.bs.modal', function (e) {
 			$(this).find('form')[0].reset()
 	});
-});
 
 
+	$(".myBtnSignUp").click(function(){
+			$("#myModalSignUp").modal("show");
+	});
 
-$(document).ready(function(){
-    $("#myBtnSignUp").click(function(){
-        $("#myModalSignUp").modal("show");
-    });
+		$("#signUpHide").click(function() {
+			$("#myModalSignUp").modal("hide");
+		});
 
-			$("#signUpHide").click(function() {
-				$("#myModalSignUp").modal("hide");
-			});
+		$("#signUpForm").on("submit", function() {
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/join",
+				data : {
+					"signUpId" : $("#signUpId").val(),
+					"signUpPw" : $("#signUpPw").val(),
+					"signUpPwCheck" : $("#signUpPwCheck").val()
 
-			$("#signUpForm").on("submit", function() {
-				$.ajax({
-					type : "post",
-					url : "${pageContext.request.contextPath}/join",
-					data : {
-						"signUpId" : $("#signUpId").val(),
-						"signUpPw" : $("#signUpPw").val(),
-						"signUpPwCheck" : $("#signUpPwCheck").val()
-
-					},
-					dataType : "json",
-					success : function(data) {
-						if (data.result) {
-							// 회원가입 성공
-							alert("해당 이메일로 인증 메일이 발송되었습니다");
-							$("#myModalSignUp").modal("hide");
-							window.location.reload();
-						} else {
-							//비밀번호가 다릅니다.
-							$("#signUpFail").removeClass('hidden');
-						}
-					},
-					error : function() {
-						//이미 가입된 이메일입니다
+				},
+				dataType : "json",
+				success : function(data) {
+					if (data.result) {
+						// 회원가입 성공
+						alert("해당 이메일로 인증 메일이 발송되었습니다");
+						$("#myModalSignUp").modal("hide");
+						window.location.reload();
+					} else {
+						//비밀번호가 다릅니다.
 						$("#signUpFail").removeClass('hidden');
 					}
-				});
-				return false;
+				},
+				error : function() {
+					//이미 가입된 이메일입니다
+					$("#signUpFail").removeClass('hidden');
+				}
 			});
-
-			/*    페이스북
-			 $.ajaxSetup({ cache: true });
-			 $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
-			 FB.init({
-			 appId: '{2015281072116483}',
-			 version: 'v3.1'
-			 });
-			 $('#loginbutton,#feedbutton').removeAttr('disabled');
-			 FB.getLoginStatus(updateStatusCallback);
-			 });
-			 */
-
+			return false;
 		});
-	</script>
+});
+
+</script>
 
 <c:if test="${mberIndex == null}">
 
@@ -104,8 +87,8 @@ $(document).ready(function(){
     <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
   </div>
   <div class="f-right nav-btn-1">
-    <div class="col-xs-6"><a href="#" id="myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
-    <div class="col-xs-6"><a href="#" id="myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</a></div>
+    <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div>
+    <div class="col-xs-6 cursorOn myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</div>
   </div>
 </nav>
 
@@ -136,18 +119,13 @@ $(document).ready(function(){
               <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
 
-					<div class="form-group">
+					<div class="form-group row">
 						<br><center><p>- OR -</p></center><br>
-						<button  id="btnLoginFacebook" class="btn btn-success btn-block">
-							<span class="glyphicon glyphicon-off"></span> Login in with <b>Facebook</b>
+						<button class="btn col-xs-12 facebookBtn" >
+								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> Sign in with facebook
 						</button>
-						<button  id="signinButton"
-							class="g-signin"
-							data-callback="signinCallback"
-							data-clientid="179069955047-28grth32od8hr7j9uiis6b8qrbgovb72.apps.googleusercontent.com"
-							data-cookiepolicy="single_host_origin"
-							data-requestvisibleactions="http://schemas.google.com/AddActivity"
-							data-scope="https://www.googleapis.com/auth/plus.login">
+						<button class="btn col-xs-12 googleBtn" >
+								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> Sign in with Google &nbsp;&nbsp;
 						</button>
 					</div>
 
@@ -162,10 +140,6 @@ $(document).ready(function(){
     </div>
   </div>
 
-
-	
-
-	<div class="container">
 		<!-- Modal -->
 		<div class="modal fade" id="myModalSignUp" role="dialog">
 			<div class="modal-dialog">
@@ -254,8 +228,7 @@ $(document).ready(function(){
 	<nav class="navbar navbar-inverse">
 
 		<div class="f-left">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH
-				JOB</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH	JOB</a>
 		</div>
 
 		<div class="f-right nav-btn-1">
@@ -271,8 +244,7 @@ $(document).ready(function(){
 
 			<div class="dropdown col-xs-6 f-right" >
 
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-					class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 					<li class="dropdown-header">활동내역</li>
 					<li><a href="${pageContext.request.contextPath}/profile/reviews">기업리뷰 작성</a></li>
@@ -291,48 +263,3 @@ $(document).ready(function(){
 	</nav>
 
 </c:if>
-<script type="text/javascript">
-    (function() {
-     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-     po.src = 'https://apis.google.com/js/client:plusone.js';
-     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-   })();
-
-     function signinCallback(authResult) {
-
-      if (authResult['access_token']) {
-        console.log(authResult['access_token']);
-        googleAuthToken = authResult['access_token'];
-        gapi.auth.setToken(authResult); // 반환된 토큰을 저장합니다.
-        getEmail();
-        // 승인 성공
-        // 사용자가 승인되었으므로 로그인 버튼 숨김. 예:
-      } else if (authResult['error']) {
-        alert('오류 발생: ' + authResult['error'])
-        // 오류가 발생했습니다.
-        // 가능한 오류 코드:
-        //   "access_denied" - 사용자가 앱에 대한 액세스 거부
-        //   "immediate_failed" - 사용자가 자동으로 로그인할 수 없음
-        // console.log('오류 발생: ' + authResult['error']);
-      }
-    }
-
-    function getEmail(){ // userinfo 메소드를 사용할 수 있도록 oauth2 라이브러리를 로드합니다.
-      gapi.client.load('oauth2', 'v2', function() {
-        var request = gapi.client.oauth2.userinfo.get();
-        request.execute(getEmailCallback);
-      });
-    }
-    function getEmailCallback(obj){
-      var el = document.getElementById('email');
-      var email = '';
-      for (var field in obj) {
-        console.log(obj[field]);
-      }//for문으로 값이 뭐가 나오는지 일일이 확인
-      email = 'Email: ' + obj['email'];
-      // el.innerHTML = email;
-      // toggleElement('email');
-    }
-
-
-</script>

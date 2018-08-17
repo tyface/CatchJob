@@ -22,6 +22,43 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<beans:property name="suffix" value=".jsp" />
 	</bean>	
 	
+	<context:property-placeholder location="/WEB-INF/config/*.properties" />
+	
+	<!-- google Class Bean설정 추가 -->
+	<!-- 클라이언트ID와 보안비밀 세팅 -->
+	<bean id="googleConnectionFactory"  class="org.springframework.social.google.connect.GoogleConnectionFactory">
+	  <constructor-arg value="${google.client_id}" />
+	  <constructor-arg value="${google.client_secret}" />
+	</bean>
+	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+	  <property name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login " />
+	  <property name="redirectUri" value="http://localhost:8090/catchjob/googleSignInCallback" />
+	</bean>
 
+<!-- 	<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">  -->
+<!-- 		<property name="connectionFactories">  -->
+<!-- 			<bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory"> -->
+<!-- 				<constructor-arg value="${facebook.client_id}" />  -->
+<!-- 				<constructor-arg value="${facebook.client_secret}" />  -->
+<!-- 			</bean>  -->
+<!-- 		</property> -->
+<!-- 	</bean>  -->
+	
+<!-- 	<bean id="inMemoryConnectionRepository" class="org.springframework.social.connect.mem.InMemoryConnectionRepository">  -->
+<!-- 		<constructor-arg ref="connectionFactoryLocator" />  -->
+<!-- 	</bean> -->
+	
+ 	<bean id="connectionFactory"
+        class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+        <constructor-arg value="${facebook.client_id}" />
+        <constructor-arg value="${facebook.client_secret}" />
+    </bean>
+ 
+    <bean id="oAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope" value="email" />
+        <property name="redirectUri" value="https://localhost:443/catchjob/oAuth2Callback" />
+    </bean>
 
 </beans>

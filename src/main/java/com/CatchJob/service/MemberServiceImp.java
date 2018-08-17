@@ -12,9 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.CatchJob.dao.MemberDao;
 import com.CatchJob.model.Member;
-import com.sun.javafx.css.CssError.StringParsingError;
-
-import jdk.nashorn.internal.parser.Parser;
 
 @Service
 public class MemberServiceImp implements MemberService {
@@ -96,6 +93,14 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public Member getMemberById(String mberId) {
 		return memberDao.selectById(mberId);				
+	}
+	
+	@Override
+	public Member getOauthId(String mberId ,String oauthId) {
+		Map<String, String> mapData = new HashMap<String, String>();
+		mapData.put("mberId", mberId);
+		mapData.put("oauthId", oauthId);
+		return memberDao.selectOauthId(mapData);				
 	}
 	
 	/* 페이징 처리 */

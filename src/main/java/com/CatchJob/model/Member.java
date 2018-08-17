@@ -9,6 +9,7 @@ public class Member {
 	private String mberFlag; // 계정상태(1:등록,2:탈퇴)
 	private String regDate; // 회원가입일
 	private String lastDate; // 마지막방문일
+	private String oauthId; // api인증 아이디
 
 	public int getMberIndex() {
 		return mberIndex;
@@ -66,10 +67,18 @@ public class Member {
 		this.lastDate = lastDate;
 	}
 
+	public String getOauthId() {
+		return oauthId;
+	}
+
+	public void setOauthId(String oauthId) {
+		this.oauthId = oauthId;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [mberIndex=" + mberIndex + ", mberId=" + mberId + ", mberPw=" + mberPw + ", mberType=" + mberType
-				+ ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate=" + lastDate + "]";
+				+ ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate=" + lastDate + ", oauthId=" + oauthId
+				+ "]";
 	}
-
 }
