@@ -101,7 +101,7 @@ public class AdminController {
 		member.setRegDate(regDate);
 		member.setLastDate(lastDate);
 		
-		boolean result = memberService.updateMember(member);
+		boolean result = memberService.modify(member);
 
 		if(result) {
 			System.out.println("1");
