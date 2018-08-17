@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.CatchJob.dao.FollowDao">
+
+
+	<insert id="insertFollows" parameterType="map">
+		INSERT INTO FOLLOWING_TB (MBER_IDX,ENT_IDX)
+		VALUES (#{MBER_IDX},#{ENT_IDX})
+	</insert>
+	<delete id="deleteFollows" parameterType="map">
+		DELETE FROM FOLLOWING_TB
+		WHERE MBER_IDX=#{MBER_IDX} AND ENT_IDX=#{ENT_IDX}
+	</delete>
+	<select id="selectFollowsByMember" parameterType="int" resultType="map">
+		SELECT * 
+		FROM FOLLOWING_TB
+		WHERE MBER_IDX = #{MBER_IDX}
+	</select>
+	
+<!-- 	<select id="selectFollowsByMember" parameterType="int" resultType="map"> -->
+<!-- 		SELECT count(*) as COUNT -->
+<!-- 		FROM FOLLOWING_TB -->
+<!-- 		WHERE MBER_IDX = #{MBER_IDX} -->
+<!-- 	</select> -->
+<!-- 	<select id="selectListEntByMember" parameterType="int" resultType="map">
+		SELECT fol.MBER_IDX, ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
+					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
+		FROM  		FOLLOWING_TB fol
+		LEFT JOIN	ENTERPRISE_TB ent 
+		ON 			fol.ENT_IDX=ent.ENT_IDX
+		
+		LEFT JOIN 	REVIEW_TB revw 
+		ON 			ent.ENT_IDX = revw.ENT_IDX
+		LEFT JOIN 	INTERVIEW_TB intvw 
+		ON 			ent.ENT_IDX = intvw.ENT_IDX
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		LEFT JOIN 	LEGAL_DONG_TB ld 
+		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
+		AND 			ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
+		AND 			ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
+		WHERE 	   	fol.MBER_IDX=#{MBER_IDX}
+		GROUP BY 	ent.ENT_IDX
+	</select> -->
+	
+	<select id="confirmFollowEnt" parameterType="map" resultType="int">
+		SELECT count(*) AS COUNT
+		FROM FOLLOWING_TB
+		WHERE MBER_IDX=#{MBER_IDX} AND ENT_IDX=#{ENT_IDX}
+	</select>
+
+
+	
+</mapper>
