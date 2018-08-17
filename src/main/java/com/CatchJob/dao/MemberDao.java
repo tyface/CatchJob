@@ -22,10 +22,13 @@ public interface MemberDao {
 	// 회원 아이디 찾기
 	public Member selectById(String mberId);
 	
+	//api 인증 아이디 찾기
+	public Member selectOauthId(Map<String, String> mapData);
+	
 	//페이징 처리
 	public int selectCount();
 	
-	public List<Member> selectListMember(Map<String, String> map);
+	public List<Member> selectListMember(Map<String, String> mapData);
 	//검색
 	public List<Member> selectListMemberByKeyword(Map<String, String> map);
 	

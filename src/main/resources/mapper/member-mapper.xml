@@ -4,9 +4,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.MemberDao">
 	<insert id="insertMember" parameterType="member">
-		INSERT INTO MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT)
+		INSERT INTO MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT, OAUTH_ID)
 		VALUES
-		(#{mberId},#{mberPw},'1','1',#{regDate},#{lastDate})
+		(#{mberId},#{mberPw},'1','1',sysdate(),sysdate(),#{oauthId})
 	</insert>
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER_TB SET
@@ -28,6 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="selectById" parameterType="String" resultMap="memberMap">
 		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}
+	</select>
+	<select id="selectOauthId" parameterType="String" resultMap="memberMap">
+		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId} and OAUTH_ID = #{oauthId}
 	</select>
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(*)
@@ -51,5 +54,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="mberFlag" column="USE_FL" />
 		<result property="regDate" column="REG_DT" />
 		<result property="lastDate" column="LAST_DT" />
+		<result property="oauthId" column="OAUTH_ID" />
 	</resultMap>
 </mapper>

@@ -19,6 +19,7 @@ public interface MemberService {
 	
 	public Member getMemberById(String mberId);
 	
-	public Map<String, Object> getMessageList(Map<String, Object> data);
+	public Member getOauthId(String mberId,String oauthId);
 
+	public Map<String, Object> getMessageList(Map<String, Object> data);
 }

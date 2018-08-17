@@ -10,7 +10,8 @@ article {
   margin-bottom: 30px;
   text-align: center;
 }
-#signinButton{
+
+/* #signinButton{
 
   background-image: url('../img/btn_google_signin_light_normal_web@2x.png');
   background-size: 244px 50px;
@@ -18,8 +19,25 @@ article {
   width: 244px;
   border: none;
 
+} */
+
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url("../fonts/Roboto-Medium.ttf") format('truetype');
 }
 
+
+/* 마우스 커서 올릴때 마우스 바뀜*/
+.cursorOn{
+  cursor:pointer;
+}
+
+
+.abcRioButtonLightBlue{
+  height:36px;
+  width:50% !important;
+  text-align: center;
+}
 .navbar {
   margin: 0;
   padding: 0;
@@ -38,11 +56,8 @@ article {
 .nav-btn-1 {
   width:200px;
   margin-top: 15px;
-
-}
-.nav-btn-1 a {
-   text-decoration:none;
-     color: #9d9d9d;
+  text-decoration:none;
+  color: #9d9d9d;
 }
 
 /* 세로줄  TODO미사용 */
@@ -85,6 +100,40 @@ article {
   text-decoration: none;
   margin-right: 2px;
 }
+
+.facebookBtn{
+  margin: 4px;
+  background-color: #3b5998;
+  font-family: Roboto-Medium;
+  font-size: 14px;
+  color:#ffffff;
+  line-height: 22px;
+  height: 40px;
+  box-shadow: 1px 1px 4px gray;
+}
+.facebookBtn img{
+  height: 18px;
+  width: 18px;
+  margin-right: 24px;
+  margin-bottom: 3px;
+}
+.googleBtn{
+  margin: 4px;
+  background-color: #ffffff;
+  font-family: Roboto-Medium;
+  font-size: 14px;
+  color:#000000;
+  line-height: 22px;
+  height: 40px;
+  box-shadow: 1px 1px 4px gray;
+}
+.googleBtn img{
+  height: 18px;
+  width: 18px;
+  margin-right: 24px;
+  margin-bottom: 3px;
+}
+
 
 /* 제목부분 */
  .jumbotron {
@@ -192,13 +241,26 @@ article {
     bottom: 40px;
     z-index: 999;
 }
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .move-top {
+    right: 3%;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .move-top {
+    right: 10%;
+  }
+}
+
 
 /* End 기업리스트 페이지  */
 
-/* 기업상세보기 페이지  */ 
+/* 기업상세보기 페이지  */
 
 #section1, #section2, #section3, #section41, #section42  {
-   	color: black; 
+   	color: black;
    	background-color: #ffffff;
 	margin-left: 0px;
 }
@@ -220,23 +282,23 @@ article {
 }
 .module{
     box-sizing: border-box;
-    margin: 0 0 16px 0; 
+    margin: 0 0 16px 0;
     padding: 20px;
     background-color: white;
     border-radius: 2px;
     -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
-    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
 }
 
 .module-main{
     box-sizing: border-box;
    background-color: white; color: #fff; height: 220px;
-   
+
     padding: 20px;
     background-color: white;
     border-radius: 2px;
     -webkit-box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
-    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);	
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
 }
  #title{
  	color:#2196F3;
@@ -245,19 +307,19 @@ article {
 
 /* view 좌측 side bar */
 .padding-zero{
-	padding: 0px;	
+	padding: 0px;
 }
 
 .progress-bar{
 	background-color: #EAEAEA
 }
 .intrvwlv1 .bar1,.intrvwlv2 .bar1,.intrvwlv3 .bar1,.intrvwlv4 .bar1,.intrvwlv5 .bar1{
-	/* 첫번째 칸*/	
-	background-color: #1DDB16	
+	/* 첫번째 칸*/
+	background-color: #1DDB16
 }
 .intrvwlv2 .bar2,.intrvwlv3 .bar2,.intrvwlv4 .bar2,.intrvwlv5 .bar2{
 	/*두번째 칸*/
-	background-color: #ABF200	
+	background-color: #ABF200
 }
 .intrvwlv3 .bar3,.intrvwlv4 .bar3,.intrvwlv5 .bar3{
 	/*세번째 칸*/
@@ -287,12 +349,12 @@ article {
 .intrvwlv5 .intrvwDifficulty{
 	color: #FF0000
 }
-/* 기업상세보기 페이지  END */ 
+/* 기업상세보기 페이지  END */
 
 /**/
 .non-line{
 	text-decoration: none;
 	background-color: lime;
 	color: black;
-	
+
 }

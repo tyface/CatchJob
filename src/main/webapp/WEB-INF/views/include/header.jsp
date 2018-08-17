@@ -19,8 +19,27 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/hello.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/public.js"></script>
 
+<script type="text/javascript">
+
+	// 페이스북 리다이렉트 프래그먼트 포함 오류 해결용(임시)
+	if (window.location.hash && window.location.hash == '#_=_') {
+		if (window.history && history.pushState) {
+				window.history.pushState("", document.title, window.location.pathname);
+		} else {
+				// Prevent scrolling by storing the page's current scroll offset
+				var scroll = {
+						top: document.body.scrollTop,
+						left: document.body.scrollLeft
+				};
+				window.location.hash = '';
+				// Restore the scroll offset, should be flicker free
+				document.body.scrollTop = scroll.top;
+				document.body.scrollLeft = scroll.left;
+		}
+	}
+</script>
 
 
 </head>
@@ -29,7 +48,8 @@
 <body class="skin-blue sidebar-mini">
 	<div class="container-fluid">
 	  <header class="main-header">
-	    <jsp:include page="login-nav.jsp" flush="true"/>
+			<%@ include file="login-nav.jsp" %>
+	    <%-- <jsp:include page="login-nav.jsp" flush="true"/> --%>
 	  </header>
 
 		<div id="content-wrap">

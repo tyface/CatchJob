@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                        http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<context:property-placeholder location="/WEB-INF/config/*.properties" /> 
 
  	<!-- mariaDB--> 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver"/>
-		<property name="url" value="jdbc:mariadb://mydb.cl5rwvs2v45j.ap-northeast-2.rds.amazonaws.com:3306/catchjob_db"/>
-		<property name="username" value="master"/>
-		<property name="password" value="wnsdl345#$%"/>
+		<property name="url" value="${mariadb.url}"/>
+		<property name="username" value="${mariadb.username}"/>
+		<property name="password" value="${mariadb.password}"/>
 		
 		<!-- 4개의 설정은 동일하게 설정하는 것이 예외 케이스를 줄일 수 있음 --> 
 		<property name="initialSize" value="20"/> 

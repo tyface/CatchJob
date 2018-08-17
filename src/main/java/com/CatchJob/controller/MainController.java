@@ -31,6 +31,8 @@ public class MainController {
 	public String search(String keyword) {
 		return "forward:enterprise/search";
 	}
+	
+	
 //	@RequestMapping(value = "/interviews")
 //	public String profile() {
 //		return "forward:profile/interviews";
