@@ -15,6 +15,9 @@ public interface MemberDao {
 
 	// 회원 수정
 	public int updateMember(Member member);
+	
+	// 기존회원 소셜API연동 가입
+	public int updateOauthId(Member member);
 
 	// 회원 찾기
 	public Member selectOne(int mberIndex);

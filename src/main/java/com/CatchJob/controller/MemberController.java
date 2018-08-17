@@ -40,7 +40,7 @@ import com.CatchJob.service.MemberService;
 public class MemberController {
 
 	@Autowired
-	private MemberService MemberService;
+	private MemberService memberService;
 	@Autowired
 	private GoogleConnectionFactory googleConnectionFactory;
 	@Autowired
@@ -54,10 +54,10 @@ public class MemberController {
 	/* 로그인 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpSession session, HttpServletResponse resp, String mberId, String mberPw) {
-		boolean result = MemberService.login(mberId, mberPw);
+		boolean result = memberService.login(mberId, mberPw);
 		String data = "";
 		if (result) {
-			Member member = MemberService.getMemberById(mberId);
+			Member member = memberService.getMemberById(mberId);
 			session.setAttribute("mberIndex", member.getMberIndex());
 	
 			data = "{\"result\" : true}";
@@ -84,7 +84,7 @@ public class MemberController {
 		member.setMberPw(signUpPw);
 
 	
-		if (MemberService.join(member)) {
+		if (memberService.join(member)) {
 			// 회원가입 성공
 			//"가입 시 사용한 이메일로 인증해 주세요"
 			data = "{\"result\" : true}";
@@ -111,7 +111,7 @@ public class MemberController {
 	 /*수정, 탈퇴 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(Member member) {
-		if (MemberService.updateMember(member)) {
+		if (memberService.modify(member)) {
 			// 회원수정 성공
 			return null;
 		} else {
@@ -153,10 +153,12 @@ public class MemberController {
 		member.setMberId(person.getAccountEmail());
 		member.setOauthId(person.getId());
 		
-		if(MemberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
+		if(memberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
 			session.setAttribute("mberIndex", member.getMberIndex());
-		}else {
-			MemberService.join(member);
+		}else if(memberService.getMemberById(member.getMberId()) != null){
+			memberService.socialJoin(member);
+		}else{
+			memberService.join(member);
 		}
 		
 		return "redirect:/";
@@ -198,14 +200,13 @@ public class MemberController {
 		member.setMberId(userProfile.getEmail());
 		member.setOauthId(userProfile.getId());
 		
-		if(MemberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
-			System.out.println(1);
+		if(memberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
 			session.setAttribute("mberIndex", member.getMberIndex());
-		}else {
-			System.out.println(2);
-			MemberService.join(member);
+		}else if(memberService.getMemberById(member.getMberId()) != null){
+			memberService.socialJoin(member);
+		}else{
+			memberService.join(member);
 		}
-		
 		
         return "redirect:http://localhost:8090/catchjob/";
     }
