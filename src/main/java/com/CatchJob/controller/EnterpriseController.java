@@ -107,7 +107,7 @@ public class EnterpriseController {
 		//System.out.println(reviewMap);
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(mapData));
-		System.out.println("★★★★★:"+entService.getEntInfo(mapData));
+//		System.out.println("★★★★★:"+entService.getEntInfo(mapData));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
 		model.addAttribute("interview", itvwService.selectListByEntIdx(entIndex));
 		model.addAttribute("interviewJson", new Gson().toJson(itvwService.selectListByEntIdx(entIndex)));
@@ -162,7 +162,7 @@ public class EnterpriseController {
 	@ResponseBody
 	@RequestMapping(value = "/writeReview")
 	public boolean writeReview(HttpSession session, Review review) throws IOException {
-		System.out.println("writeReview-컨트롤러");
+		System.out.println("writeReview-컨트롤러1"+review);
 		
 		//Review review = new Review();
 		//review.setContents(req.getParameter("contents"));
@@ -173,11 +173,8 @@ public class EnterpriseController {
 		review.setReviewFlag("1");
 		//req.getParameter("contents");
 		//req.getParameter("evaluationScore");
-		//System.out.println(req.getParameter("questionNum"));
-		//System.out.println(req.getParameter("evaluationScore"));
 
-		//System.out.println("review: "+review);
-//		System.out.println("review:"+review);
+		System.out.println("writeReview-컨트롤러2"+review);
 		boolean result = reviewService.insertReview(review);
 		
 		if(result) {
@@ -189,16 +186,24 @@ public class EnterpriseController {
 		}				
 	}
 	
+	//@ResponseBody
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview, HttpSession session) {
-		System.out.println("123"+interview);
+		System.out.println("123456"+interview);
 		interview.setMberIndex((int) (session.getAttribute("mberIndex")));
 		interview.setIntrvwFlag("1");
-		// boolean result = entService.insertInterview(interview);
+//		// boolean result = entService.insertInterview(interview);
 		itvwService.insertInterview(interview);
-		
+//		if(result) {
+//			System.out.println("컨트롤러: 리뷰 등록 성공"+result);
+//			return true;
+//		}else {
+//			System.out.println("컨트롤러: 리뷰 등록 실패"+result);
+//			return false;			
+//		}	
 		return "redirect:view?entIndex="+interview.getEntIndex();
 	}
+	
 
 
 }

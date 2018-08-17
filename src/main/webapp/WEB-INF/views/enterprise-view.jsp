@@ -22,6 +22,7 @@ var entIndex = ${entInfo.ENT_IDX};
 var status = "logout";
 $(function(){
 	
+
 	//alert(${mberIndex});
 	if('${mberIndex}'==''){
 		//alert(status);
@@ -48,12 +49,15 @@ $(function(){
 	entInf();
 	chart();
 	
-	$("#write-btn").on("click", function(){
-		alert("기업리뷰를 성공적으로 작성하였습니다^^");
-		$("#writeForm").submit();
-		$("#myModal").modal("hide");
-		window.location.reload();
-	})
+// 	$("#itvw-write-btn").on("submit", function(){
+				
+// 		alert("면접후기를 성공적으로 작성하였습니다^^*");
+// 		$("#writeForm").submit();
+// 		$("#myModal").modal("hide");
+// 		window.location.reload();
+		
+		
+// 	});
 		
 	
 	/* 팔로잉 된 기업이면 꽉찬하트 , 아니면 빈하트(default..)*/
@@ -150,7 +154,8 @@ $(function(){
 				return false; 
 			}else{
 				//alert("등록!"+point)
-				var contents = $("#contents"+statusCount).val();
+				var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
+				
 				var questionNum = statusCount;
 				var entIndex = $("#entIndex").val();
 				  $.ajax({
@@ -465,9 +470,7 @@ function addComma(num) {
 <!--     </section> -->
 <!--   </div> -->
 
-<div class="container module-main">
-	
-		
+<div class="container module-main">		
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
 	
 
@@ -1267,7 +1270,7 @@ function addComma(num) {
 
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn cat-header" >제출</button>
+					<button type="submit" class="btn cat-header" id="itvw-write-btn" >제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>

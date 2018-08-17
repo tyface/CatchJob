@@ -4,8 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.RecodeDao">
 	<insert id="insertViewRecode" parameterType="map">
-		INSERT INTO VIEW_RECORD_TB(VIEW_IDX,ENT_IDX,BROWSER,CONN_IP,VISIT_DT)
-		VALUES(0, #{ENT_IDX}, #{BROWSER}, #{CONN_IP}, sysdate())
+		INSERT INTO VIEW_RECORD_TB(VIEW_IDX,ENT_IDX,MBER_IDX,BROWSER,CONN_IP,VISIT_DT)
+		VALUES(0, #{ENT_IDX},#{MBER_IDX}, #{BROWSER}, #{CONN_IP}, sysdate())
 	</insert>
 	<select id="selectListPopularSearches" parameterType="int" resultType="map">
 		SELECT tmp.ENT_IDX,ent.ENT_NM from (

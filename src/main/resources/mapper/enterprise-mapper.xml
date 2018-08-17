@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
 		LEFT JOIN 	FOLLOWING_TB fol
-		ON 			fol.ENT_IDX=ent.ENT_IDX AND fol.MBER_IDX=<include refid="memberId"/>
+		ON 			fol.ENT_IDX=ent.ENT_IDX AND fol.MBER_IDX=#{MBER_IDX}
 		
 		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%') 
 		GROUP BY 	ent.ENT_IDX
@@ -137,17 +137,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="interviewCount" column="INTVW_CNT" />
 	</resultMap>
 	
-	<sql id="memberId">
-		<choose>
-			<when test="MBER_IDX != null">
-				#{MBER_IDX}
-			</when>
-			<otherwise>
-				'0'
-			</otherwise>
+<!-- 	<sql id="memberId"> -->
+<!-- 		<choose> -->
+<!-- 			<when test="MBER_IDX != null"> -->
+<!-- 				#{MBER_IDX} -->
+<!-- 			</when> -->
+<!-- 			<otherwise> -->
+<!-- 				'0' -->
+<!-- 			</otherwise> -->
 		
-		</choose>		
-	</sql>
+<!-- 		</choose>		 -->
+<!-- 	</sql> -->
 
 
 	
