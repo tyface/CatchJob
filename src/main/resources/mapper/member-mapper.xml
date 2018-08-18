@@ -4,60 +4,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.MemberDao">
 	<insert id="insertMember" parameterType="member">
-		INSERT INTO MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT, OAUTH_ID)
+		INSERT INTO
+		MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT,
+		OAUTH_ID)
 		VALUES
 		(#{mberId},#{mberPw},'1','1',sysdate(),sysdate(),#{oauthId})
 	</insert>
-	
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER_TB SET
-		MBER_ID=#{mberId},MBER_PW=#{mberPw},MBER_TYPE=#{mberType},USE_FL=#{mberFlag},LAST_DT=sysdate() 
+		MBER_IDX=#{mberIndex},
+		MBER_ID=#{mberId},MBER_PW=#{mberPw},MBER_TYPE=#{mberType},USE_FL=#{mberFlag},LAST_DT=#{lastDate}
 		WHERE MBER_IDX=#{mberIndex}
 	</update>
-	
 	<update id="updateOauthId" parameterType="member">
 		UPDATE MEMBER_TB SET
 		OAUTH_ID = #{oauthId}, LAST_DT=sysdate()
 		WHERE MBER_ID=#{mberId}
 	</update>
-	
 	<select id="selectOne" parameterType="int" resultMap="memberMap">
 		SELECT *
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
-	
-	<select id="selectListMember" parameterType="map" resultMap="memberMap">
+	<select id="selectListMember" parameterType="map"
+		resultMap="memberMap">
 		SELECT * FROM (
-			SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.MBER_IDX, m.MBER_ID, m.MBER_PW, m.MBER_TYPE, m.USE_FL, m.REG_DT, m.LAST_DT
-			FROM (
-				SELECT MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT 
-				FROM MEMBER_TB,  (select @ROWNUM := 0) a
-			ORDER BY MBER_IDX) m) n
-		WHERE rnum BETWEEN #{firstRow} AND #{endRow};
-	</select>
-	
-	<select id="selectById" parameterType="String" resultMap="memberMap">
-		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}
-	</select>
-	
-	<select id="selectOauthId" parameterType="String" resultMap="memberMap">
-		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId} and OAUTH_ID = #{oauthId}
-	</select>
-	
-	<select id="selectCount" resultType="int">
-		SELECT COUNT(*)
-		FROM MEMBER_TB
-	</select>
-	<select id="selectListMemberByKeyword" parameterType="map" resultMap="memberMap">
-		SELECT * FROM (
-			SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.MBER_IDX, m.MBER_ID, m.MBER_PW, m.MBER_TYPE, m.USE_FL, m.REG_DT, m.LAST_DT
-			FROM (
-				SELECT MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT 
-				FROM MEMBER_TB,  (select @ROWNUM := 0) a
-			ORDER BY MBER_IDX) m) n
-		WHERE rnum BETWEEN #{firstRow} AND #{endRow} and MBER_ID like CONCAT('%',#{keyword},'%');
+		SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.MBER_IDX, m.MBER_ID, m.MBER_PW,
+		m.MBER_TYPE, m.USE_FL, m.REG_DT, m.LAST_DT
+		FROM (
+		SELECT MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
+		FROM MEMBER_TB, (select @ROWNUM := 0) a
+		ORDER BY MBER_IDX) m) n
+		WHERE rnum BETWEEN #{firstRow} AND #{endRow} AND
+		MBER_ID like CONCAT('%',#{keyword},'%');
 	</select>
 
+	<select id="selectById" parameterType="String"
+		resultMap="memberMap">
+		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}
+	</select>
+	<select id="selectOauthId" parameterType="String"
+		resultMap="memberMap">
+		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId} and
+		OAUTH_ID = #{oauthId}
+	</select>
+	<select id="selectCount" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM MEMBER_TB
+		WHERE MBER_ID like CONCAT('%',#{keyword},'%');
+	</select>
 	<resultMap type="member" id="memberMap">
 		<result property="mberIndex" column="MBER_IDX" />
 		<result property="mberId" column="MBER_ID" />
