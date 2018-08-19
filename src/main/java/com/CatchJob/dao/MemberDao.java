@@ -29,10 +29,8 @@ public interface MemberDao {
 	public Member selectOauthId(Map<String, String> mapData);
 	
 	//페이징 처리
-	public int selectCount();
+	public int selectCount(String keyword);
 	
 	public List<Member> selectListMember(Map<String, String> mapData);
-	//검색
-	public List<Member> selectListMemberByKeyword(Map<String, String> map);
 	
 }

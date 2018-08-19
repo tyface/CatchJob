@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <c:set var="quantity" var='${quantity}' /> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,6 +18,9 @@
 	#quantity{
 		width: 90px; 
 		height: 25px;
+		border-radius:4px;
+		border-line: 1px solid #ccc;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 	}
 	
 	#keyword{
@@ -27,6 +29,21 @@
 	#pagenation{
 		text-align:center;
 	}
+	#selectOneBox{
+		margin-top:15px;
+	}
+	#btnForm{
+		padding:20px;
+	}
+	table {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+    table th, table td {
+        overflow: hidden;
+    }
+	
 </style>
 <script>
 	function newPage() {	
@@ -50,10 +67,10 @@
 
 								<form action="mngMber" class="form-inline pull-right">
 									<div class="input-group">
-										<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
-											size="20">
-										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
 										<input type="hidden" name="page" value="${viewData.currentPage}">
+										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">										
+										<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
+											size="20">							
 										<div class="input-group-btn">
 											<button type="submit" class="btn">
 												<span class="glyphicon glyphicon-search"></span>
@@ -62,12 +79,15 @@
 									</div>
 								</form>
 							</div>
-							<table class="table table-striped table-hover" id="pagenated">
+							<table class="table table-striped table-hover">
+								<thead>
 									<tr>
 										<th>NO</th>
 										<th>아이디</th>
 										<th>구분</th>
 									</tr>
+								</thead>		
+								<tbody>
 								<c:forEach var="members" items="${viewData.boardList}">
 									 <tr>
 										<td>${members.mberIndex}</td>
@@ -79,7 +99,8 @@
 												<c:if test="${name.equals('2')}">기업인증 회원</c:if>										
 										</td> 
 									</tr> 
-								</c:forEach>   						
+								</c:forEach>   
+								</tbody>						
 							</table>							  
 						<div id="pagenation">
 							<ul class="pagination pagination-sm">
@@ -108,7 +129,7 @@
 						</div>	
 						</div>
 
-						<div class="col-md-5">
+						<div class="col-md-5" id="selectOneBox">
 							<form class="form-horizontal" action="modifyMber" method="post">
 								<div class="form-group">
 									<label for="mberId" class="col-sm-4 control-label">아이디</label>
@@ -124,7 +145,7 @@
 											placeholder="비밀번호" value="${member.mberPw}">
 									</div>
 								</div>
-								<div class="form-group" style="text-align: right">
+								<div class="form-group" style="text-align:right">
 									<label for="mberType" class="control-label"
 										style="margin-right: 15px">구분</label>
 									<div class="col-sm-8 pull-right">
@@ -146,15 +167,14 @@
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" name="regDate"
+										<input type="text" class="form-control" name="regDate" id="regDate"
 											placeholder="가입날짜" value="${member.regDate}">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="lastDate" class="col-sm-4 control-label">최근
-										방문날짜</label>
+									<label for="lastDate" class="col-sm-4 control-label">최근 방문날짜</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" name="lastDate"
+										<input type="text" class="form-control" name="lastDate" id="lastDate"
 											placeholder="최근 방문날짜" value="${member.lastDate}">
 									</div>
 								</div>
@@ -212,12 +232,10 @@
 											placeholder="기업인증 코드">
 									</div>
 								</div> -->
-							<br>
-								<div class="form-group">
-									<div class="col-sm-offset-8 col-sm-6">
+							
+								<div class="form-group pull-right" id="btnForm">							
 										<input type="submit" class="btn btn-info" value="수정하기">
-										<input type="reset" class="btn btn-warning" value="초기화">	
-									</div>
+										<input type="reset" class="btn btn-warning" value="초기화">								
 								</div>
 							</form>
 						</div>

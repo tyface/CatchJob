@@ -18,7 +18,29 @@
   height: 400px;
  
 }
- 
+
+a[data-toggle="collapse"] {
+	position: relative;
+	height: 50px;
+}
+
+
+@media ( max-width : 768px) {
+	#sidebar {
+		margin-left: -250px;
+	}
+	#sidebar.active {
+		margin-left: 0;
+	}
+}
+
+a, a:hover, a:focus {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+}
+
+
   .form-signin-heading,
 	.checkbox {
 	  margin-bottom: 30px;
@@ -35,7 +57,6 @@
 	  padding: 10px;
 	  
 	  }
-
 
 	input[type="text"] {
 	  margin-bottom: -1px;
@@ -63,9 +84,13 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<div class="navbar-brand" ><a href="/catchjob/admin" style="color:white">
-		&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-th-list" >&nbsp;</span>Admin Page</a></div>
- 		</div>
+ 		<div class="navbar-brand">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="sidebarCollapse"  href="/catchjob/admin"> <span
+			class="glyphicon glyphicon-th-list">&nbsp;</span>Admin Page
+		</a>
+		</div>
+	
+	</div>
 	</div>
 	</nav>	
 	

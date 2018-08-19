@@ -18,11 +18,6 @@ public class AdminServiceImp implements AdminService {
 	AdminDao adminDao;
 
 	@Override
-	public List<Admin> getListAdmins(Map<String, String> map) {
-		return adminDao.selectListAdmin(map);
-	}
-
-	@Override
 	public Admin getAdmin(int adminIndex) {
 		return adminDao.selectOne(adminIndex);
 	}
@@ -47,53 +42,61 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	@Override
-	public boolean updateAdmin(Admin admin) {
-		// Admin 수정
-		int rowCount = adminDao.updateOne(admin);
-		if (rowCount > 0) {
-			return true;
-		} else {
+	public boolean modify(Admin admin) {
+		try{
+			int rowCount = adminDao.updateOne(admin);
+			if (rowCount > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}catch(Exception e) {
+			System.out.println(e);
 			return false;
 		}
+		
 	}	
 	
 	/* 페이징 처리 */
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
-		totalCount  = adminDao.selectCount(); 		
-		int firstRow = 0;
-		int endRow =0;
-		int numOfMsgPage = (int) data.get("numOfMsgPage");
-		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
-		int pageNumber = (int) data.get("pageNumber");
-		
-		if(pageNumber > pageTotalCount) {
-			pageNumber = pageTotalCount;
-		}
-			
-		firstRow = (pageNumber-1)*numOfMsgPage +1;
-		endRow = pageNumber*numOfMsgPage;
-		
 		Map<String, String> map = new HashMap<>();
-		map.put("firstRow", String.valueOf(firstRow));
-		map.put("endRow",  String.valueOf(endRow));
-		
-		viewData.put("currentPage", pageNumber);
-		viewData.put("pageTotalCount", pageTotalCount);
-		viewData.put("startPage", getStartPage(pageNumber));
-		viewData.put("endPage", getEndPage(pageNumber));
-		viewData.put("msgPerPage", numOfMsgPage);
 		
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
 			String keyword = (String) data.get("keyword");
 			map.put("keyword", keyword);		
-			viewData.put("boardList", adminDao.selectListAdminByKeyword(map));
-			viewData.put("keyword", keyword);			
+			viewData.put("keyword", keyword);
+			totalCount  = adminDao.selectCount(keyword); 
 		} else {
-			viewData.put("boardList", adminDao.selectListAdmin(map));
+			map.put("keyword", "");
+			totalCount  = adminDao.selectCount(""); 
+		}		
+		
+		int firstRow = 0;     
+		int endRow =0;
+		int numOfMsgPage = (int) data.get("numOfMsgPage");
+		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
+		int pageNumber = (int) data.get("pageNumber");
+	
+		if(pageNumber > pageTotalCount) {
+			pageNumber = pageTotalCount;
 		}
+		
+		firstRow = (pageNumber-1)*numOfMsgPage +1;  
+		endRow = pageNumber*numOfMsgPage;  
+
+		map.put("firstRow", String.valueOf(firstRow));
+		map.put("endRow",  String.valueOf(endRow));
+		
+		viewData.put("currentPage", pageNumber);	
+		viewData.put("pageTotalCount", pageTotalCount);
+		viewData.put("startPage", getStartPage(pageNumber));
+		viewData.put("endPage", getEndPage(pageNumber));
+		viewData.put("msgPerPage", numOfMsgPage);
+		
+		viewData.put("boardList", adminDao.selectListAdmin(map));
 		return viewData;
 	}
 	

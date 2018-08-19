@@ -17,6 +17,9 @@
 	#quantity{
 		width: 90px; 
 		height: 25px;
+		border-radius:4px;
+		border-line: 1px solid #ccc;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 	}	
 	
 	#keyword{
@@ -25,6 +28,20 @@
 	#pagenation{
 		text-align:center;
 	}
+	#selectOneBox{
+		margin-top:15px;
+	}
+	#btnForm{
+		padding:20px;
+	}
+	table {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+    table th, table td {
+        overflow: hidden;
+    }
 </style>
 <script>
 	function newPage() {	
@@ -48,10 +65,10 @@
 
 								<form action="mngAdmin" class="form-inline pull-right">
 									<div class="input-group">
+										<input type="hidden" name="page" value="${viewData.currentPage}">
+										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
 										<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
 											size="20">
-										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
-										<input type="hidden" name="page" value="${viewData.currentPage}">
 										<div class="input-group-btn">
 											<button type="submit" class="btn">
 												<span class="glyphicon glyphicon-search"></span>
@@ -72,7 +89,7 @@
 									<c:forEach var="admins" items="${viewData.boardList}">
 										 <tr>	
 										<td>${admins.adminIndex}</td>
-										<td><a href="mngAdmin?num=${admins.adminIndex}&page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}									
+										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&num=${admins.adminIndex}									
 										">${admins.adminId}</a></td>
 										<td>
 											<c:set var="name" value="${admins.adminLv}"/>
@@ -113,7 +130,7 @@
 							</div>	
 						</div>
 
-						<div class="col-md-5">
+						<div class="col-md-5" id="selectOneBox">
 							<form class="form-horizontal" method="post" action="modifyAdmin">
 								<div class="form-group">
 									<label for="adminId" class="col-sm-4 control-label">아이디</label>
@@ -131,11 +148,10 @@
 								</div>
 
 								<div class="form-group" style="text-align: right">
-									<label for="adminLv" class="control-label"
-										style="margin-right: 15px">권한</label>
+									<label for="adminLv" class="control-label" style="margin-right: 15px">권한</label>
 									<div class="col-sm-8 pull-right">
-										<select class="form-control" style="color:gray" id="selectBox" name="adminLv">
-											<option value="" selected disabled hidden>level${admin.adminLv}</option>
+										<select class="form-control" style="color:gray" name="adminLv" id="adminLv">
+											<option value="${admin.adminLv}" selected disabled hidden>level${admin.adminLv}</option>
 											<option value="1">level1</option>								
 											<option value="2">level2</option>
 											<option value="3">level3</option>
@@ -157,7 +173,6 @@
 											placeholder="최근 방문날짜" value="${admin.lastDate}">
 									</div>
 								</div>
-								<br>
 								<!-- </div>
 								<div class="form-group">
 									<div class="col-sm-4 control-label" style="font-weight: bold">사용
@@ -175,11 +190,9 @@
 										</label>
 									</div>
 								</div>-->							
-								<div class="form-group">
-									<div class="col-sm-offset-8 col-sm-6">
+								<div class="form-group pull-right" id="btnForm">							
 										<input type="submit" class="btn btn-info" value="수정하기">
-										<input type="reset" class="btn btn-warning" value="초기화">
-									</div>
+										<input type="reset" class="btn btn-warning" value="초기화">								
 								</div>
 							</form>
 						</div>
