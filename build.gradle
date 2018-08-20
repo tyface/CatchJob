@@ -304,6 +304,12 @@ compile 		group: 'org.springframework.social',	name: 'spring-social-google', 	ve
 compile 		group: 'org.springframework.social', 	name: 'spring-social-facebook', version: '2.0.3.RELEASE'
 compile 		group: 'org.apache.httpcomponents', 	name: 'httpclient', 			version: '4.5.5'
 
+//이메일 인증
+compile 		group: 'org.springframework', 			name: 'spring-context-support', version: springVersion
+compile			group: 'javax.mail', 					name: 'javax.mail-api',			version: '1.5.6'
+compile 		group: 'com.sun.mail', 					name: 'javax.mail', 			version: '1.5.6'
+
+
 
 }
 

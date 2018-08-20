@@ -14,31 +14,31 @@
 <script type="text/javascript">
 //<![CDATA[
 
-$(function() {
-
-    var availableCity = ["서울","부산","대구","광주","울산"];
-
-    $("#city").autocomplete({
-
-        source: availableCity,
-
-        select: function(event, ui) {
-
-            console.log(ui.item);
-
-        },
-
-        focus: function(event, ui) {
-
-            return false;
-
-            //event.preventDefault();
-
-        }
-
-    });
-
-});
+// $(function() {
+//
+//     var availableCity = ["서울","부산","대구","광주","울산"];
+//
+//     $("#city").autocomplete({
+//
+//         source: availableCity,
+//
+//         select: function(event, ui) {
+//
+//             console.log(ui.item);
+//
+//         },
+//
+//         focus: function(event, ui) {
+//
+//             return false;
+//
+//             //event.preventDefault();
+//
+//         }
+//
+//     });
+//
+// });
 
 //]]>
 	$(function(){

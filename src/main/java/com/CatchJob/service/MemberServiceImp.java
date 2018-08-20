@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +58,7 @@ public class MemberServiceImp implements MemberService {
 		}
 	}
 	
+	@Override
 	public boolean modify(Member member) {
 		try{
 			int rowCount = memberDao.updateMember(member);
@@ -73,6 +73,18 @@ public class MemberServiceImp implements MemberService {
 		}
 	}
 
+	@Override
+	public boolean visitUpdate(int memberIndex) {
+		int rowCount = memberDao.updateLastDate(memberIndex);
+		
+		if (rowCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
 	public boolean deleteMember(Member member) {
 		// 회원탈퇴
 		member.setMberFlag("2");
@@ -105,11 +117,11 @@ public class MemberServiceImp implements MemberService {
 	}
 	
 	@Override
-	public Member getOauthId(String mberId ,String oauthId) {
+	public Member getMemberByOauthId(String mberId ,String oauthId) {
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("mberId", mberId);
 		mapData.put("oauthId", oauthId);
-		return memberDao.selectOauthId(mapData);				
+		return memberDao.selectByOauthId(mapData);				
 	}
 	
 	/* 페이징 처리 */
@@ -172,6 +184,7 @@ public class MemberServiceImp implements MemberService {
 		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+
 
 
 	

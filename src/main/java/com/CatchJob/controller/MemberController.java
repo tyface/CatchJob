@@ -2,13 +2,15 @@ package com.CatchJob.controller;
 
 
 import java.io.IOException;
-import java.net.URI;
+import java.io.UnsupportedEncodingException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
@@ -28,12 +30,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.CatchJob.model.Member;
+import com.CatchJob.service.MailHandler;
 import com.CatchJob.service.MemberService;
+import com.CatchJob.service.TempKey;
 
 @Controller
 @RequestMapping
@@ -51,6 +52,9 @@ public class MemberController {
 	@Autowired
 	private OAuth2Parameters oAuth2Parameters;
 	    
+	@Autowired
+    private JavaMailSender mailSender;
+	
 	/* 로그인 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpSession session, HttpServletResponse resp, String mberId, String mberPw) {
@@ -58,6 +62,7 @@ public class MemberController {
 		String data = "";
 		if (result) {
 			Member member = memberService.getMemberById(mberId);
+			memberService.visitUpdate(member.getMberIndex());
 			session.setAttribute("mberIndex", member.getMberIndex());
 	
 			data = "{\"result\" : true}";
@@ -77,16 +82,37 @@ public class MemberController {
 		//"잘못된 형식의 이메일 주소입니다".					유효성 검사
 		//"비밀번호는 00자리 이상 입력해 주세요					유효성 검사2
 		String data = "";
+		String key = new TempKey().getKey(20,false);
 		
 
 		Member member = new Member();
 		member.setMberId(signUpId);
 		member.setMberPw(signUpPw);
-
-	
+		member.setOauthId(key);
+		member.setMberFlag("2");
+		
 		if (memberService.join(member)) {
 			// 회원가입 성공
 			//"가입 시 사용한 이메일로 인증해 주세요"
+				System.out.println("이메일 인증 시작");
+			try {
+				MailHandler mailHandler = new MailHandler(mailSender);
+				
+	        	mailHandler.setSubject("catch job 인증 이메일 입니다.");
+				mailHandler.setText(new StringBuffer().append("<h1>메일인증</h1>").
+				append("<a href='http://localhost:8090/catchjob/verify?memberId=").
+				append(member.getMberId()).
+				append("&oauthKey=").append(key).
+				append("' target='_blank'>이메일 인증 확인</a>").toString());
+				mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
+		        mailHandler.setTo(member.getMberId());
+		        mailHandler.send();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	       
 			data = "{\"result\" : true}";
 		} 
 		
@@ -149,18 +175,25 @@ public class MemberController {
 		Person person = plusOperations.getGoogleProfile();
 		
 
-		Member member = new Member();
-		member.setMberId(person.getAccountEmail());
-		member.setOauthId(person.getId());
+		Member member = memberService.getMemberById(person.getAccountEmail());
 		
-		if(memberService.getMemberById(member.getMberId()) == null) {
+		if(member == null) {
+			member = new Member();
+			member.setMberId(person.getAccountEmail());
+			member.setOauthId(person.getId());
+			member.setMberFlag("1");
 			memberService.join(member);
-		}else if(memberService.getOauthId(member.getMberId(), member.getOauthId()) == null){
+		}else if(member.getOauthId() == null || member.getOauthId().equals("")){
+			member.setOauthId(person.getId());
 			memberService.socialJoin(member);
+		}else if(!member.getOauthId().equals(person.getId())) {
+			System.out.println("예외발생!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
+			System.out.println("이메일이 같은대 소셜 아이디가 다를경우 발생");	
+			System.out.println("현실적으로 일어날일 없음");	
+			System.out.println("예외발생!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
 		}
-		
+		memberService.visitUpdate(member.getMberIndex());
 		session.setAttribute("mberIndex", member.getMberIndex());
-		
 		return "redirect:/";
 	}
 	
@@ -196,19 +229,69 @@ public class MemberController {
     	String [] fields = { "id", "email",  "name"};
         User userProfile = facebook.fetchObject("me", User.class, fields);
         
-        Member member = new Member();
-		member.setMberId(userProfile.getEmail());
-		member.setOauthId(userProfile.getId());
+		Member member = memberService.getMemberById(userProfile.getEmail());
 		
-		if(memberService.getOauthId(member.getMberId(), member.getOauthId()) != null) {
-			session.setAttribute("mberIndex", member.getMberIndex());
-		}else if(memberService.getMemberById(member.getMberId()) != null){
-			memberService.socialJoin(member);
-		}else{
+		if(member == null) {
+			member = new Member();
+			member.setMberId(userProfile.getEmail());
+			member.setOauthId(userProfile.getId());
+			member.setMberFlag("1");
 			memberService.join(member);
+		}else if(member.getOauthId() == null || member.getOauthId().equals("")){
+			member.setOauthId(userProfile.getId());
+			memberService.socialJoin(member);
+		}else if(!member.getOauthId().equals(userProfile.getId())) {
+			System.out.println("예외발생!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
+			System.out.println("이메일이 같은대 소셜 아이디가 다를경우 발생");	
+			System.out.println("현실적으로 일어날일 없음");	
+			System.out.println("예외발생!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
 		}
+		
+		memberService.visitUpdate(member.getMberIndex());
+		session.setAttribute("mberIndex", member.getMberIndex());
 		
         return "redirect:http://localhost:8090/catchjob/";
     }
 	
+//    //이메일 인증 코드 검증
+//    @RequestMapping(value = "/sendMail", method = RequestMethod.GET)
+//    public String sendMail(Member user,Model model,RedirectAttributes rttr) throws Exception { 
+//        
+//        System.out.println("이메일 인증 시작");
+//        MailHandler mailHandler = new MailHandler(mailSender);
+//        String key = new TempKey().getKey(20,false);
+//        
+//        mailHandler.setSubject("catch job 인증 이메일 입니다.");
+//        mailHandler.setText(new StringBuffer().append("<h1>메일인증</h1>").
+//	    append("<a href='http://localhost:8090/catchjob/verify?userEmail=").
+//		append(user.getMberId()).
+//		append("&memberAuthKey=").append(key).
+//		append("' target='_blank'>이메일 인증 확인</a>").toString());
+//        mailHandler.setFrom("test@gmail.com", "catchjob");
+//        mailHandler.setTo("zxuz34@gmail.com");
+//        mailHandler.send();
+//        
+//        return "test";
+//    }
+	
+    @RequestMapping(value = "/verify", method = RequestMethod.GET)
+    public String signSuccess(String memberId, String oauthKey, HttpSession session) { 
+        
+    	System.out.println("이메일 인증 처리완료?");
+    	System.out.println(memberId+"//"+oauthKey);
+    	
+    	Member member = memberService.getMemberByOauthId(memberId, oauthKey);
+    	
+    	if(member != null) {
+    		member.setMberFlag("1");
+    		member.setOauthId("");
+    		memberService.modify(member);
+    		memberService.visitUpdate(member.getMberIndex());
+    		
+    		session.setAttribute("mberIndex", member.getMberIndex());
+    	}
+    	
+        return "redirect:/";
+    }
+    
 }

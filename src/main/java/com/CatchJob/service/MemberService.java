@@ -21,9 +21,11 @@ public interface MemberService {
 	
 	public boolean socialJoin(Member member);
 	
+	public boolean visitUpdate(int memberIndex);
+	
 	public Member getMemberById(String mberId);
 	
-	public Member getOauthId(String mberId,String oauthId);
+	public Member getMemberByOauthId(String mberId,String oauthId);
 
 	public Map<String, Object> getMessageList(Map<String, Object> data);
 	
