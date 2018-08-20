@@ -17,9 +17,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM REVIEW_TB
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
 	</delete>
-
-
-	
 	<!-- 질문가져오기 -->
 	<select id="question" parameterType="int"  resultType="map">
 		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG
@@ -30,9 +27,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY qes.QESTN_NO
 		ORDER BY qes.QESTN_NO;	
 	</select>
-	
-	
-	
 	<select id="reviewList" parameterType="int" resultMap="reviewMap">		
 		SELECT * 
 		FROM REVIEW_QESTN_TB q
@@ -72,6 +66,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY r.REVW_IDX desc
 	</select>
 	 -->
+	<select id="selectCount" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM REVIEW_TB
+	</select>
+	<select id="selectReviewList" resultMap="reviewMap" parameterType="map">
+		SELECT * FROM (	
+			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM, m.MBER_IDX, m.MBER_ID, e.ENT_NM, r.ENT_IDX, r.QESTN_NO, r.CONTENTS
+			from
+			REVIEW_TB r 
+			INNER join MEMBER_TB m 
+			on r.MBER_IDX = m.MBER_IDX
+			INNER join ENTERPRISE_TB e
+			on r.ENT_IDX = e.ENT_IDX, 
+			(select @ROWNUM := 0) a 
+			) p
+		WHERE RNUM BETWEEN #{firstRow} AND #{endRow}
+		AND ENT_IDX LIKE CONCAT('%',#{entIndexKeyword},'%')  
+		AND ENT_NM LIKE CONCAT('%',#{entNameKeyword},'%') AND QESTN_NO LIKE CONCAT('%',#{questionNumKeyword},'%');
+		
+		
+	</select>
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>
 		<result property="question" column="QUESTION"/>

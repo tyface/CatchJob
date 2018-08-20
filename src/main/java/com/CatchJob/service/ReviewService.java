@@ -35,4 +35,13 @@ public interface ReviewService {
 	public Review review(Map<String, String> data);
 /*	//질문별로 리뷰 보기
 	public List<Review> reviewListByQNum(Map<String, String> data);*/
+	/* 페이징 처리 */
+	public int calPageTotalCount(int totalCount, int numOfMsgPage);
+
+	public int getStartPage(int pageNum);
+
+	public int getEndPage(int pageNum);
+
+	public Map<String, Object> getMessageList(Map<String, Object> data);
+
 }
