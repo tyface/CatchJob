@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.CatchJob.model.Admin;
 import com.CatchJob.model.Review;
 
 @Repository
@@ -43,4 +44,10 @@ public interface ReviewDao {
 	
 	/*//질문별로 리뷰 보기
 	public List<Review> reviewListByQNum(Map<String, String> data);*/
+	
+	//페이징 처리
+	public int selectCount();
+
+	public List<Review> selectReviewList(Map<String, String> map);
+	
 }

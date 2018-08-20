@@ -161,9 +161,9 @@ public class MemberServiceImp implements MemberService {
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
-		viewData.put("msgPerPage", numOfMsgPage);
-		
+		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", memberDao.selectListMember(map));
+		
 		return viewData;
 	}
 

@@ -34,7 +34,6 @@
 		margin-top:20px;	
         table-layout: fixed;
         word-wrap: break-word;
-      
     }
 
     table th, table td {
@@ -55,15 +54,21 @@
 	}
 	
 	function searchFunction(){
-		if($("#reviewSelect option:selected").text()=='작성자'){
-			alert("뜨라라라라라1111");
-		} else if($("#reviewSelect option:selected").text()=='기업명'){
-			alert("뜨라라라라라122222111");
+		  $("#hiddenElement").attr("name", "keywordOption");
+		  
+		if($("#reviewSelect option:selected").text()=='기업명'){
+			alert("기업명");	   
+		     $("#hiddenElement").attr("value", "entNameKeyword");
+		
 		} else if($("#reviewSelect option:selected").text()=='기업코드'){
-			alert("뜨라라라라라3333333");
+			alert("기업코드");
+			 $("#hiddenElement").attr("value", "entIndexKeyword");
+		      
 		} else if($("#reviewSelect option:selected").text()=='질문 식별번호'){
-			alert("뜨라라라라라3333333");
+			alert("식별번호");
+			 $("#hiddenElement").attr("value", "questionNumKeyword");
 		}	
+		$("#hiddenElement").appendChild($("#searchForm"));	
 	}
 	
 </script>
@@ -84,16 +89,16 @@
 			
 				<div class="col-sm-2">
 					<select id="reviewSelect">
-						<option>작성자</option>
 						<option>기업명</option>
 						<option>기업코드</option>
 						<option>질문 식별번호</option>
 					</select>
 				</div>
-				<form action="mngReview" class="form-inline col-sm-3">
+				<form action="mngReview" class="form-inline col-sm-3" id="searchForm">
 					<div class="input-group">
 						<input type="hidden" name="page" value="${viewData.currentPage}">
 						<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
+						<input type="hidden" id="hiddenElement"/>
 						<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
 						style="height: 28px" size="20">
 						<div class="input-group-btn">
@@ -116,17 +121,18 @@
 						</tr>
 					</thead>
 					<tbody>
-					<%-- <c:forEach var="reviews" items="${viewData.boardList}">
+					<<c:forEach var="reviews" items="${viewData.boardList}">
 						<tr>
 							<td>${reviews.mberIndex}</td>
-							<td>${reviews.mberId}</td>
+							<td>${reviews.mberId}</td> 
 							<td>${reviews.entName}</td>
 							<td>${reviews.entIndex}</td>
 							<td>${reviews.questionNum}</td>
-							<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&num=${reviews.contents}									
+							<td><a href="mngReview?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}
+							&mberIndex=${reviews.mberIndex}&entIndex=${reviews.entIndex}&questionNum=${reviews.questionNum}				
 							"><input class="btn btn-info btn-sm" type="button" value="내용보기"></a></td>							
 						</tr>
-					</c:forEach> --%>
+					</c:forEach>
 					</tbody>
 				</table>
 				<div id="pagenation">
