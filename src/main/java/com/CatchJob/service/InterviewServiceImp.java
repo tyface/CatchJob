@@ -164,7 +164,7 @@ public class InterviewServiceImp implements InterviewService{
 				}
 			}catch(NullPointerException e) {
 				System.out.println("널값임..");
-				interviewList.get(i).setIntrvwRoute("0");
+				//interviewList.get(i).setIntrvwRoute("0");
 			}
 		}
 		/* 면접  경험*/		
@@ -185,11 +185,11 @@ public class InterviewServiceImp implements InterviewService{
 				}
 			}catch(NullPointerException e) {
 				System.out.println("널값임..");
-				interviewList.get(i).setIntrvwExperience("0");
+				//interviewList.get(i).setIntrvwExperience("0");
 			}
 		}
 		
-		
+		System.out.println("인터뷰 서비스: "+interviewList);
 		return interviewList;
 	}
 	@Override

@@ -18,22 +18,44 @@ public class FollowServiceImp implements FollowService{
 	/* 팔로우 기업 등록하기 */
 	@Override
 	public boolean regFollowEnt(Map<String, String> mapData) {
+//		System.out.println("팔로우 서비스 : "+ mapData.get("MBER_IDX"));
+//		System.out.println("팔로우 서비스 : "+   Integer.parseInt(mapData.get("MBER_IDX"))  );
 		//session.getAttribute("mberIndex").toString()
 		//(int) (session.getAttribute("mberIndex"))
 		try {
+			int confirm = Integer.parseInt(mapData.get("MBER_IDX"));
+			//System.out.println(confirm);
+			if(getCount(confirm)) {
+				followDao.insertFollows(mapData);	
+				return true;
+			}else {
+				return false;				
+			}
 
-//			if(getCount(  )) {
-//				followDao.insertFollows(mapData);	
-//				return true;
-//			}else {
-//				return false;				
-//			}
-			followDao.insertFollows(mapData);	
-			return true;
+//			followDao.insertFollows(mapData);	
+//			return true;
 		}catch(Exception e) {
 			System.out.println(e);
 			return false;
 		}
+	}
+	/* 팔로우 기업 회원당 최대 10개 (Constants.Follow.LIMIT_NUMBER_OF_FOLLOW)*/ 
+	@Override
+	public boolean getCount(int memberIndex) {
+		int range = Constants.Follow.LIMIT_NUMBER_OF_FOLLOW;
+		int  count = followDao.selectFollowsCount(memberIndex);
+//		System.out.println("123123:  " + count);
+		
+		//System.out.println("범위: "+range);
+		//long count =  followDao.selectFollowsCount(memberIndex).get("COUNT");
+		
+		
+		if( count  <=  range ) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 	/* 팔로우 기업 해지 */
 	@Override
@@ -49,17 +71,6 @@ public class FollowServiceImp implements FollowService{
 	public List<Map<String, String>> getFollowsEnt(int memberIndex) {
 		//System.out.println("서비스: 팔로우 기업"+ memberIndex);
 		return followDao.selectFollowsByMember(memberIndex);
-	}
-	/* 팔로우 기업 회원당 최대 10개 (Constants.Follow.LIMIT_NUMBER_OF_FOLLOW)*/ 
-	@Override
-	public boolean getCount(int memberIndex) {
-		
-		if(followDao.selectFollowsCount(memberIndex).get("COUNT") <= Constants.Follow.LIMIT_NUMBER_OF_FOLLOW) {
-			return true;
-		}else {
-			return false;
-		}
-		
 	}
 	
 //	@Override

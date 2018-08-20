@@ -35,9 +35,13 @@ $(function(){
 		  		dataType:"json",
 		  		success: function(result){
 		  			/* 성공 */
-		    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
-		    	    $this.toggleClass("fa-heart-o");
-		    	    $this.toggleClass("fa-heart");
+		  			if(result){
+			    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
+			    	    $this.toggleClass("fa-heart-o");
+			    	    $this.toggleClass("fa-heart");				  				
+		  			}else{
+		  				alert("팔로잉 할 수 없습니다. 팔로잉 기업은 최대 10개 까지 가능합니다")
+		  			}
 		  		}	  		
 		  })
 	  }else{

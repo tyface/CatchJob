@@ -3,25 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="include/header.jsp" flush="true" />
 
-
-
-
-
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/bars-movie.css" >
 
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script> --%>
 
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 
 <style>
 input.error, textarea.error, select.error {
@@ -66,7 +57,6 @@ $(function(){
 	    	$(".starScore").text(value);
 	    }
 	});
-
 
 	
 	var viewDataJson = JSON.parse('${viewDataJson}');
@@ -472,128 +462,7 @@ function chartPersonnel(){
 
 	});
 }
-// function salary-graph(){//월별그래프-평균급여
-// 	var viewDataJson = JSON.parse('${viewDataJson}');
 
-//  	var month = new Array(); //월
-//  	var salary = new Array(); //연금정보
-//  	var totalPerson = new Array(); //총 인원
-//  	var newPerson = new Array();
-//  	var outPerson = new Array();
-
-
-// 	for(var i in viewDataJson){
-// 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
-// 		/* var result = addComma(num);
-// 		alert(result);
-// 		 */
-// 		month.push(viewDataJson[i]['PAY_YM']) ;
-// 		salary.push(num) ;
-// 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
-// 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-// 		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
-// 		//alert(test[i]['PAY_AMT']);
-// 	}	
-	
-
-
-// 	var ctx1 = document.getElementById("lineChart").getContext('2d');
-// 	var lineChart = new Chart(ctx1, {
-// 		type: 'bar',
-// 		data: {
-// 			labels: month,
-// 			datasets: [{
-// 					type: 'line',
-// 					label: '평균 급여',
-// 					borderColor: '#2196F3',
-// 					borderWidth: 3,
-// 					fill: false,
-// 					data: salary
-// 				}],
-
-// 				borderWidth: 1
-// 		},
-// 		 options: {
-// 		        elements: {
-// 		            line: {
-// 		                tension: 0, // disables bezier curves
-// 		            }
-// 		        },
-// 		        scales: {
-//                     yAxes: [{
-//                             ticks: {
-//                              //  max:3900000,
-//                                min:0
-//                             }
-//                         }]
-//                 }
-// 		    }
-
-// 	});
-// }
-// function personnel-graph(){//월별그래프-인원
-// 	var viewDataJson = JSON.parse('${viewDataJson}');
-
-//  	var month = new Array(); //월
-//  	var salary = new Array(); //연금정보
-//  	var totalPerson = new Array(); //총 인원
-//  	var newPerson = new Array();
-//  	var outPerson = new Array();
-
-
-// 	for(var i in viewDataJson){
-// 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
-// 		/* var result = addComma(num);
-// 		alert(result);
-// 		 */
-// 		month.push(viewDataJson[i]['PAY_YM']) ;
-// 		salary.push(num) ;
-// 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
-// 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-// 		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
-// 		//alert(test[i]['PAY_AMT']);
-// 	}
-	
-	
-	
-// 	// comboBarLineChart	
-// 	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
-// 	var comboBarLineChart = new Chart(ctx2, {
-// 		type: 'bar',
-// 		data: {
-// 			labels: month,
-// 			datasets: [{
-// 					type: 'line',
-// 					label: '총 인원',
-// 					borderColor: '#484c4f',
-// 					borderWidth: 3,
-// 					fill: false,
-// 					data: totalPerson,
-// 				}, {
-// 					type: 'bar',
-// 					label: '입사자',
-// 					backgroundColor: '#059BFF',
-// 					data: newPerson,
-// 					borderColor: 'white',
-// 					borderWidth: 0
-// 				}, {
-// 					type: 'bar',
-// 					label: '퇴사자',
-// 					backgroundColor: '#FF6B8A',
-// 					data: outPerson,
-// 				}],
-// 				borderWidth: 1
-// 		},
-// 		options: {
-// 	        elements: {
-// 	            line: {
-// 	                tension: 0, // disables bezier curves
-// 	            }
-// 	        }
-// 	    }
-
-// 	});
-// }
 function interviewPieChart(){
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
 
@@ -763,21 +632,10 @@ function jsonEscape(str)  {
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
 
 
-
-	<!-- 		<a href="#" class="follow follow-btn follow"> -->
-	<!-- 			<i class="fa fa-heart-o follow"></i>123 -->
-	<!-- 		</a> -->
 	<a href="#" class="follow follow-btn follow"> <i
 		class="fa fa-heart-o follow" id="follow"></i>
 	<!-- 123 -->
 	</a>
-
-
-	<!-- 	<div class="f-right"> -->
-	<!-- 		<button type="button" class="btn btn-info" id="text-btn">기업리뷰작성</button> -->
-	<!-- 		<button type="button" class="btn btn-info" id="myBtn2">면접후기</button> -->
-	<!-- 	</div> -->
-
 
 </div>
 <br>
@@ -790,28 +648,23 @@ function jsonEscape(str)  {
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
 				<!-- 				<li style="height: 30px"></li> -->
-				<li><a href="#section1"> <span
-						class="fa fa-building logo-small"></span> 기업정보
+				<li><a href="#section1"> 
+					<span class="fa fa-building logo-small"></span> 기업정보
 				</a></li>
-				<li><a href="#section2"> <span
-						class="fa fa-weixin logo-small"></span> 리뷰코멘트
+				<li><a href="#section2"> 
+					<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
 				</a></li>
 				<li><a href="#section3"> <span
 						class="fa fa-file-text logo-small"></span> 면접후기
 				</a></li>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <span
-						class="fa fa-line-chart logo-small"></span> 월별그래프 <span
-						class="caret"></span></a>
+				<li><a href="#section4"> <span
+						class="fa fa-line-chart logo-small"></span> 월별그래프
+				</a></li>				
 
-					<ul class="dropdown-menu">
-						<li><a href="#section41">월별그래프_평균급여</a></li>
-						<li><a href="#section42">월별그래프_인원</a></li>
-					</ul></li>
 			</ul>
 		</nav>
 
-		<div class="col-sm-11">
+		<div class="col-sm-11">		
 			<!-- 기업정보//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 
@@ -990,17 +843,19 @@ function jsonEscape(str)  {
 									onclick="getReviewList(${status.count})">
 									<!-- 456 -->
 									<h4 class="panel-title row">
-										<a data-toggle="collapse" data-parent="#accordion"
-											href="#collapse${status.count}"> <span class="col-sm-8">
-												${question.QUESTION} <span style="color: #6799FF">
-													(${question.COUNT}) </span>
-										</span> <span class="col-sm-4">${question.AVG} <c:forEach
-													begin="1" end="${question.AVG}" step="1">
+										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}"> 
+											<span class="col-sm-8">
+													${question.QUESTION} 
+												<span style="color: #6799FF">(${question.COUNT}) </span>
+											</span> 
+											<span class="col-sm-4">${question.AVG} 
+												<c:forEach begin="1" end="${question.AVG}" step="1">
 													<span class="stars-on"></span>
-												</c:forEach> <c:forEach begin="${question.AVG}" end="4" step="1">
+												</c:forEach> 
+												<c:forEach begin="${question.AVG}" end="4" step="1">
 													<span class="stars-off"></span>
 												</c:forEach>
-										</span>
+											</span>
 										</a>
 									</h4>
 								</div>
@@ -1082,18 +937,15 @@ function jsonEscape(str)  {
 												</select>
 
 												<output for="star-input">
-													<b class="starScore" name="1">0</b> 점
+													<b class="starScore" name="1">0</b> 
 												</output>
 											</div>
 
 											<div class="input-group input-group-sm">
-												<input type="text"
-													class="form-control contents${status.count}"
-													name="contents" id="contents${status.count}"
-													placeholder="기업리뷰를 추가로 입력해주세요"> <span
-													class="input-group-btn"> <input type="submit"
-													class="btn btn-flat btn-info review-btn" value="제출">
-												<!-- 123 --> <input type="hidden" class="statusCount"
+												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요"> 
+												<span class="input-group-btn"> 
+												<input type="submit" class="btn btn-flat btn-info review-btn" value="제출">
+												<input type="hidden" class="statusCount"
 													value="${status.count}">
 												</span>
 											</div>
@@ -1186,39 +1038,43 @@ function jsonEscape(str)  {
 							<div class="panel panel-default">
 								<div class="panel-heading font-gray">${interview.regDate}</div>
 								<div class="panel-body ">
-									<div class="col-sm-3">
-										<div>
+									<div class="col-xs-3">
+										<div class="row">
 											<p>
 												<b>면접난이도</b>
 											</p>
-											<div id="difficulty${status.index}">
-												<p class="intrvwDifficulty">${interview.intrvwDifficulty}</p>
-												<div class="progress" style="height: 10px">
-													<div class="progress-bar bar1" role="progressbar"
-														style="width: 20%;"></div>
-													<div class="progress-bar bar2" role="progressbar"
-														style="width: 20%;"></div>
-													<div class="progress-bar bar3" role="progressbar"
-														style="width: 20%;"></div>
-													<div class="progress-bar bar4" role="progressbar"
-														style="width: 20%;"></div>
-													<div class="progress-bar bar5 " role="progressbar"
-														style="width: 20%;"></div>
-												</div>
-											</div>
+										</div>
+										<div id="difficulty${status.index}" class="row">
+											<p class="intrvwDifficulty">${interview.intrvwDifficulty}</p>
+<!-- 												<div class="row" > -->
+											
+												<div class="col-xs-1 progress-bars bar1" ></div>
+												<div class="col-xs-1 progress-bars bar2" ></div>
+												<div class="col-xs-1 progress-bars bar3" ></div>
+												<div class="col-xs-1 progress-bars bar4" ></div>
+												<div class="col-xs-1 progress-bars bar5" ></div>
+<!-- 													<div class="" style="height: 10px"> -->
+<!-- 													<div class="progress-bar bar1" role="progressbar"	style="width: 20%;"></div> -->
+<!-- 													<div class="progress-bar bar2" role="progressbar"	style="width: 20%;"></div> -->
+<!-- 													<div class="progress-bar bar3" role="progressbar"	style="width: 20%;"></div> -->
+<!-- 													<div class="progress-bar bar4" role="progressbar"	style="width: 20%;"></div> -->
+<!-- 													<div class="progress-bar bar5" role="progressbar"	style="width: 20%;"></div> -->
+
+<!-- 												</div> -->
+											
+										</div>
 											<!-- background-color: #EAEAEA -->
 
-										</div>
 										<br>
 
-										<div>
+										<div class="row">
 											<p>
 												<b>면접일자</b>
 											</p>
 											<p>${interview.intrvwDate}</p>
 											<br>
 										</div>
-										<div>
+										<div class="row">
 											<p>
 												<b>면접경로</b>
 											</p>
@@ -1227,16 +1083,16 @@ function jsonEscape(str)  {
 										</div>
 
 									</div>
-									<div class="col-sm-9">
+									<div class="col-xs-9">
 										<table class="table">
 											<thead>
 												<tr>
-													<th colspan="4">"${interview.intrvwReview}"</th>
+													<th colspan="6">"${interview.intrvwReview}"</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td colspan="4">
+													<td colspan="6">
 														<p>
 															<b>면접질문</b>
 														</p>
@@ -1244,39 +1100,51 @@ function jsonEscape(str)  {
 													</td>
 												</tr>
 												<tr>
-													<td colspan="4">
+													<td colspan="6">
 														<p>
 															<b>질문에 대한 답변</b>
 														</p>
 														<p class="font-gray">${interview.intrvwAnswer}</p>
 													</td>
 												</tr>
-												<tr>
-													<td colspan="4">
-														<p>
-															<b>발표시기</b>
-														</p>
-														<p class="font-gray">${interview.presentationDate}일후</p>
-													</td>
-												</tr>
+<!-- 												<tr> -->
+<!-- 													<td colspan="6"> -->
+<!-- 														<p> -->
+<!-- 															<b>발표시기</b> -->
+<!-- 														</p> -->
+<%-- 														<p class="font-gray">${interview.presentationDate}일후</p> --%>
+<!-- 													</td> -->
+<!-- 												</tr> -->
 
 
 												<tr>
-													<th colspan="2" style="width: 50%">
-														<p class="well well-sm">
-															<span>면접결과</span> <span class="f-right"> <!-- 															 <span class="glyphicon glyphicon-thumbs-up"></span> -->
-																${interview.intrvwResult}
-															</span>
-														</p>
-													</th>
-													<th colspan="2" style="width: 50%">
-														<p class="well well-sm">
-															<span>면접경험</span> <span class="f-right"> <!-- 															<span class="glyphicon glyphicon-thumbs-up"></span> -->
-																${interview.intrvwExperience}
-															</span>
-														</p>
-													</th>
-
+													<c:if test="${interview.presentationDate != '' && interview.presentationDate != null  }">
+														<th colspan="2">
+															<p class="well well-sm">
+																<span>발표시기</span> <span class="f-right"> <!-- 															 <span class="glyphicon glyphicon-thumbs-up"></span> -->
+																	${interview.presentationDate}일후
+																</span>
+															</p>
+														</th>
+													</c:if>
+													<c:if test="${interview.intrvwResult != '' && interview.intrvwResult != null  }">
+														<th colspan="2" >
+															<p class="well well-sm">
+																<span>면접결과</span> <span class="f-right"> <!-- 															 <span class="glyphicon glyphicon-thumbs-up"></span> -->
+																	${interview.intrvwResult}
+																</span>
+															</p>
+														</th>
+													</c:if>
+													<c:if test="${interview.intrvwExperience != '' && interview.intrvwExperience != null  }">
+														<th colspan="2" >
+															<p class="well well-sm">
+																<span>면접경험</span> <span class="f-right"> <!-- 															<span class="glyphicon glyphicon-thumbs-up"></span> -->
+																	${interview.intrvwExperience}
+																</span>
+															</p>
+														</th>
+													</c:if>
 												</tr>
 
 											</tbody>
@@ -1336,7 +1204,7 @@ function jsonEscape(str)  {
 			</div>
 			<!-- 그래프 바뀔것0820 -->
 			<div class="module">
-				<div id="section41">
+				<div id="section4">
 					<h3 id="title">월별그래프</h3>
 					<p>Try to scroll this section and look at the navigation list
 						while scrolling!</p>

@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MBER_IDX = #{MBER_IDX}
 	</select>
 	<!-- 회원 한 명당 팔로잉 할 수 있는 기업 제한 하기 위해 필요함 ex)10개  -->
-	<select id="selectFollowsCount" parameterType="int" resultType="map">
+	<select id="selectFollowsCount" parameterType="int" resultType="int">
 		SELECT count(*) as COUNT
 		FROM FOLLOWING_TB
 		WHERE MBER_IDX = #{MBER_IDX}
