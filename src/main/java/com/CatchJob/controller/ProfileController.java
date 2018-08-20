@@ -50,7 +50,7 @@ public class ProfileController {
 	@RequestMapping(value = "/reviewForm")
 	public Review reviewsView( Model model,HttpSession session, String entIndex, String questionNum,HttpServletResponse resp) {
 		Map<String, String> data = new HashMap<String,String>();
-		int memberIndex = (int) (session.getAttribute("mberIndex"));
+		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
 		data.put("mberIndex", Integer.toString(memberIndex));
 		data.put("entIndex", entIndex);
 		data.put("questionNum", questionNum);
