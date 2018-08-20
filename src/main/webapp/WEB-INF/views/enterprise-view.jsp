@@ -4,7 +4,7 @@
 <jsp:include page="include/header.jsp" flush="true" />
 
 
- 
+
 
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
@@ -18,10 +18,10 @@
 <script>
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
-//$(document).ready(function(){	
+//$(document).ready(function(){
 var status = "logout";
 $(function(){
-	
+
 
 	//alert(${mberIndex});
 	if('${mberIndex}'==''){
@@ -35,31 +35,30 @@ $(function(){
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
-	    	     // alert(value);
-	    	      $(".starScore").text(value);	    	      
+	    	$(".starScore").text(value);
 	    }
 	});
-	
+
 	$("#text-btn").on("click", function(){
-		
+
 	})
-	
-	
-	//getReviewList();	
+
+
+	//getReviewList();
 	entInf();
 	chart();
-	
+
 // 	$("#itvw-write-btn").on("submit", function(){
-				
+
 // 		alert("면접후기를 성공적으로 작성하였습니다^^*");
 // 		$("#writeForm").submit();
 // 		$("#myModal").modal("hide");
 // 		window.location.reload();
-		
-		
+
+
 // 	});
-		
-	
+
+
 	/* 팔로잉 된 기업이면 꽉찬하트 , 아니면 빈하트(default..)*/
 	if(following == 1){
 		$("#follow").toggleClass("fa-heart-o");
@@ -72,14 +71,14 @@ $(function(){
 
 	  if(status == "logout" & $this.hasClass("fa-heart-o")){
 			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* 로그인 모달 띄우기 */    	
+				 /* 로그인 모달 띄우기 */
 				 $("#myModalLogin").modal("show");
 	    	  }
 	  }else{/* 로그인 상태임 */
 			  if($this.hasClass("fa-heart-o")){
 				  /* 팔로잉 기업 추가  */
 				  $.ajax({
-				  		url:"${pageContext.request.contextPath}/enterprise/regFollow",				  		
+				  		url:"${pageContext.request.contextPath}/enterprise/regFollow",
 				  		data:{entIndex : entIndex},
 				  		type: "post",
 				  		dataType:"json",
@@ -88,13 +87,13 @@ $(function(){
 				    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
 				    	    $this.toggleClass("fa-heart-o");
 				    	    $this.toggleClass("fa-heart");
-				  		}	  		
+				  		}
 				  })
 			  }else{
 				  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
 					  /* 팔로잉 기업 해지  */
 					  $.ajax({
-					  		url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
+					  		url:"${pageContext.request.contextPath}/enterprise/revFollow",
 					  		data:{entIndex : entIndex},
 					  		type: "post",
 					  		dataType:"json",
@@ -103,14 +102,14 @@ $(function(){
 					  			 alert("팔로잉이 해제되었습니다.");
 								 $this.toggleClass("fa-heart");
 								 $this.toggleClass("fa-heart-o");
-					  		}					  		
-					  })					 
+					  		}
+					  })
 				  }
-			  }		  
+			  }
 	  }
-      
+
 });
-  
+
   /* 모달----------------------------------------------------------------------  */
       $("#myBtn").click(function(){
           $("#myModal").modal();
@@ -119,29 +118,29 @@ $(function(){
           $("#myModal").modal();
       });
 
-	
-	 
+
+
 	 var interviewJson = JSON.parse('${interviewJson}');
-	 for(var i in interviewJson){	
+	 for(var i in interviewJson){
 		// alert(interviewJson[i]['intrvwDifficulty']);
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
-		
+
 		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
-			$("#difficulty"+i).addClass("intrvwlv5");	
+			$("#difficulty"+i).addClass("intrvwlv5");
 		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
-			$("#difficulty"+i).addClass("intrvwlv4");	
+			$("#difficulty"+i).addClass("intrvwlv4");
 		}else if(interviewJson[i]['intrvwDifficulty'] == '보통'){
-			$("#difficulty"+i).addClass("intrvwlv3");	
+			$("#difficulty"+i).addClass("intrvwlv3");
 		}else if(interviewJson[i]['intrvwDifficulty'] == '쉬움'){
-			$("#difficulty"+i).addClass("intrvwlv2");	
+			$("#difficulty"+i).addClass("intrvwlv2");
 		}else if(interviewJson[i]['intrvwDifficulty'] == '매우 쉬움'){
-			$("#difficulty"+i).addClass("intrvwlv1");	
-		}    
-	
+			$("#difficulty"+i).addClass("intrvwlv1");
+		}
+
 	 }
-	 	
-	 	
-	 	$(".review-btn").on("click",function(){<!-- 123 -->
+
+
+	 	$(".review-btn").on("click",function(){
 // 	 		var point = $(this).closest().closest().prev().children().text();
 // 	 		alert(point)
 			var point = $(this).parent().parent().prev().children().children("div").text();
@@ -151,13 +150,13 @@ $(function(){
 			var statusCount = $(this).next().val();
 			if(status =="logout"){
 				alert("로그인 후 이용 가능합니다");
-				return false; 
+				return false;
 			}else{
 				//alert("등록!"+point)
 				var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
-				
+
 				var questionNum = statusCount;
-				var entIndex = $("#entIndex").val();
+				var entIndex = $(".entIndex").val();
 				  $.ajax({
 					url:"${pageContext.request.contextPath}/enterprise/writeReview",
 					type:"post",
@@ -165,9 +164,9 @@ $(function(){
 						"evaluationScore" : point,
 						"questionNum" : questionNum,
 						"entIndex" : entIndex
-						
+
 					},
-					dataType: "json", 
+					dataType: "json",
 					success : function(result){
 						if(result){
 							alert("등록되었습니다.");
@@ -175,16 +174,16 @@ $(function(){
 						}else{
 							alert("등록 실패하였습니다. 이미 등록하셨습니다.");
 // 							if(confirm("이미 등록하셨습니다. 수정하시겠습니"))
-						}	
+						}
 						getReviewList(questionNum);
-					}				
+					}
 				});
-				 return false; 
-				
+				 return false;
+
 			}
-			
- 	});  
-			
+
+ 	});
+
 });
 
 function getReviewList(questionNum){/* 456 */
@@ -200,7 +199,7 @@ function getReviewList(questionNum){/* 456 */
 		success : function(data){
 
 			$(data).each(function(){
-				
+
 				if((this.questionNum)==questionNum){
 					var regDate = this.regDate;
 					var evaluationScore = this.evaluationScore;
@@ -209,8 +208,8 @@ function getReviewList(questionNum){/* 456 */
 					//td.text(contents+"ㅜㅜ..");
 					//td.appendTo(reviews);
 				}
-				
-				
+
+
 			});
 		},
 		error : function(request,status,error){
@@ -219,28 +218,28 @@ function getReviewList(questionNum){/* 456 */
 			alert("request :" + request + "\n"+
 					"status :" + status + "\n"+
 					"error :" + error);
-		}	
+		}
 	});
-	
+
 }
 
 function entInf(){
-	
+
 	 var payAmtAvg = $("#payAmtAvg").text();
-	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";  
+	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";
 	payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
 
-	 payAmtAvg = addComma(payAmtAvg); 
+	 payAmtAvg = addComma(payAmtAvg);
 
-	 $("#payAmtAvg").text(payAmtAvg); 
-	 
+	 $("#payAmtAvg").text(payAmtAvg);
+
 	 var dt = new Date();
 	 var currentYear = dt.getFullYear();
 	 var establishmentYear = $("#establishmentYear").text();
-	 establishmentYear = establishmentYear.substr(0,4); 
+	 establishmentYear = establishmentYear.substr(0,4);
 	 var currier = currentYear-establishmentYear;
 	 $("#establishmentYear").text(currier);
-	
+
 	 var personJson = JSON.parse('${personJson}');
 	 $("#newPerson").text(personJson['newPerson']);
 	 $("#outPerson").text(personJson['outPerson']);
@@ -303,10 +302,10 @@ function entInf(){
 			$("#indPer").css('width', '60%');
 			$("#toEntPer").css('width', '30%');
 		});
-		
-	
-		
-	
+
+
+
+
 }
 function chart(){
 	var viewDataJson = JSON.parse('${viewDataJson}');
@@ -316,9 +315,9 @@ function chart(){
  	var totalPerson = new Array(); //총 인원
  	var newPerson = new Array();
  	var outPerson = new Array();
- 	
 
-	for(var i in viewDataJson){	
+
+	for(var i in viewDataJson){
 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
 		/* var result = addComma(num);
 		alert(result);
@@ -327,11 +326,11 @@ function chart(){
 		salary.push(num) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
+		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
 		//alert(test[i]['PAY_AMT']);
-	} 
+	}
 
-	
+
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
 		type: 'bar',
@@ -344,8 +343,8 @@ function chart(){
 					borderWidth: 3,
 					fill: false,
 					data: salary
-				}], 
-				
+				}],
+
 				borderWidth: 1
 		},
 		 options: {
@@ -363,8 +362,8 @@ function chart(){
                         }]
                 }
 		    }
-		
-	});	 
+
+	});
 	// comboBarLineChart
 	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
 	var comboBarLineChart = new Chart(ctx2, {
@@ -390,7 +389,7 @@ function chart(){
 					label: '퇴사자',
 					backgroundColor: '#FF6B8A',
 					data: outPerson,
-				}], 
+				}],
 				borderWidth: 1
 		},
 		options: {
@@ -400,14 +399,14 @@ function chart(){
 	            }
 	        }
 	    }
-	
-	});		
+
+	});
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
-	 
+
 	 var chartData = new Array(0,0,0,0,0);
 
   	  for(var i in interviewPieChartJson){
- 		 
+
 	     if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '1'){
 	    	 chartData[0]=interviewPieChartJson[i]['count'];
 	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '2'){
@@ -419,8 +418,8 @@ function chart(){
 	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '5'){
 	    	 chartData[4]=interviewPieChartJson[i]['count'];
 	     }
-  	 }       
-	 
+  	 }
+
 	// pieChart
 	var ctx3 = document.getElementById("pieChart").getContext('2d');
 	var pieChart = new Chart(ctx3, {
@@ -434,7 +433,7 @@ function chart(){
 						'rgba(255, 187, 0, 1)',
 						'rgba(171,242,0, 1)',
 						'rgba(29,219,22, 1)',
-						
+
 					],
 					label: 'Dataset 1'
 				}],
@@ -449,30 +448,30 @@ function chart(){
 			options: {
 				responsive: true
 			}
-	 
+
 	});
-	
+
 }
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
    return num.toString().replace(regexp, ',');
-} 
+}
 
-</script> 
+</script>
 <!--   <aside class="main-sidebar">fdfdf -->
 <!--     <section class="sidebar">fdfdsfdf -->
 <!--     </section> -->
 <!--   </aside> -->
-  
+
 <!--   <div class="content-wrapper">fdsfdfdf -->
 <!--     <section class="content-header">fdfdf -->
 <!--     </section> -->
 <!--   </div> -->
 
-<div class="container module-main">		
+<div class="container module-main">
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
-	
+
 
 
 <!-- 		<a href="#" class="follow follow-btn follow"> -->
@@ -492,7 +491,7 @@ function addComma(num) {
 </div>
 <br>
 
-  
+
 <div class="container">
 	<div class="row">
 		<nav class="col-sm-1 padding-zero" id="myScrollspy">
@@ -500,11 +499,11 @@ function addComma(num) {
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
 <!-- 				<li style="height: 30px"></li> -->
-				<li><a href="#section1"> 
-					<span class="fa fa-building logo-small" ></span>					
+				<li><a href="#section1">
+					<span class="fa fa-building logo-small" ></span>
 						기업정보
 				</a></li>
-				<li><a href="#section2"> 
+				<li><a href="#section2">
 						<span class="fa fa-weixin logo-small" ></span>
 						리뷰코멘트
 				</a></li>
@@ -514,7 +513,7 @@ function addComma(num) {
 						면접후기
 				</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> 
+					data-toggle="dropdown" href="#">
 						<span class="fa fa-line-chart logo-small" ></span>
 						월별그래프 <span class="caret"></span></a>
 
@@ -701,18 +700,18 @@ function addComma(num) {
 							<div class="panel panel-default" >
 								<div class="panel-heading" onclick="getReviewList(${status.count})"><!-- 456 -->
 									<h4 class="panel-title row">
-										<a data-toggle="collapse" data-parent="#accordion"	href="#collapse${status.count}">
+										<a data-toggle="collapse" data-parent="#accordion"	href="#collapse${status.count}" onclick="$('.starScore').text(0)">
 											<span class="col-sm-8">
-												${question.QUESTION} 
-												<span style="color: #6799FF"> (${question.COUNT}) </span> 
+												${question.QUESTION}
+												<span style="color: #6799FF"> (${question.COUNT}) </span>
 											</span>
-											<span class="col-sm-4">${question.AVG} 
+											<span class="col-sm-4">${question.AVG}
 											   <c:forEach begin="1" end="${question.AVG}" step="1">
 								                  <span class="stars-on"></span>
-								               </c:forEach>								               
-								               <c:forEach begin="${question.AVG}" end="4" step="1">
-								                   <span class="stars-off"></span>
-								               </c:forEach>
+								         </c:forEach>
+					               <c:forEach begin="${question.AVG}" end="4" step="1">
+					                   <span class="stars-off"></span>
+					               </c:forEach>
 											</span>
 										</a>
 									</h4>
@@ -746,14 +745,14 @@ function addComma(num) {
 <!-- 															</td> -->
 <%-- 													</c:if> --%>
 <%-- 												</c:forEach> --%>
-												
+
 											</tbody>
 										</table>
 
-										<form id="reviewForm" class="reviewForm" name="reviewForm" >
-											<input type="hidden" name="questionNum" id="questionNum" value="${question.QESTN_NO}">
-											<input type="hidden" name="entIndex" id="entIndex" value="${entInfo.ENT_IDX}">
-	
+										<form class="reviewForm" name="reviewForm" >
+											<input type="hidden" name="questionNum" class="questionNum" value="${question.QESTN_NO}">
+											<input type="hidden" name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
+
 											<div>
 												<select class="stars">
 												    <option value="1">1</option>
@@ -762,17 +761,17 @@ function addComma(num) {
 												    <option value="4">4</option>
 												    <option value="5">5</option>
 												</select>
-	
+
 												<output for="star-input">
-													<b class="starScore">0</b> 점
+													<b class="starScore" name="1">0</b> 점
 												</output>
 											</div>
-	
+
 											<div class="input-group input-group-sm" >
-												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
+												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" >
 												<span class="input-group-btn">
 													<input type="submit" class="btn btn-flat btn-info review-btn"  value="제출"><!-- 123 -->
-													<input type="hidden" id="statusCount" value="${status.count}">
+													<input type="hidden" class="statusCount" value="${status.count}">
 												</span>
 											</div>
 										</form>
@@ -1069,7 +1068,7 @@ function addComma(num) {
 								at 11:59 PM</div>
 
 
-							<!-- 
+							<!--
 						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Bar Chart</h3>
@@ -1189,7 +1188,7 @@ function addComma(num) {
 					<!-- 면접난이도 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>면접난이도</label> 
+							<label>면접난이도</label>
 						</div>
 						<div class="col-xs-9">
 							<select class="form-control"
@@ -1205,7 +1204,7 @@ function addComma(num) {
 					<!-- 면접결과 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>이 기업에 합격하셨나요?</label> 
+							<label>이 기업에 합격하셨나요?</label>
 						</div>
 						<div class="col-xs-9">
 							<select class="form-control"
@@ -1220,7 +1219,7 @@ function addComma(num) {
 					<!-- 면접경로 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>면접경로</label> 
+							<label>면접경로</label>
 						</div>
 						<div class="col-xs-9">
 							<select class="form-control"
@@ -1238,7 +1237,7 @@ function addComma(num) {
 					<!--면접일자 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>면접일자</label>					
+							<label>면접일자</label>
 						</div>
 						<div class="col-xs-9">
 							<div class="input-group date">

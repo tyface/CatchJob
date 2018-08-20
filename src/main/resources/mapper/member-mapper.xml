@@ -6,12 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT, OAUTH_ID)
 		VALUES
-		(#{mberId},#{mberPw},'1','1',sysdate(),sysdate(),#{oauthId})
+		(#{mberId},#{mberPw},'1',#{mberFlag},sysdate(),sysdate(),#{oauthId})
 	</insert>
 	
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER_TB SET
-		MBER_ID=#{mberId},MBER_PW=#{mberPw},MBER_TYPE=#{mberType},USE_FL=#{mberFlag},LAST_DT=sysdate() 
+		MBER_ID=#{mberId},MBER_PW=#{mberPw},MBER_TYPE=#{mberType},USE_FL=#{mberFlag},LAST_DT=sysdate(), OAUTH_ID = #{oauthId}
 		WHERE MBER_IDX=#{mberIndex}
 	</update>
 	
@@ -19,6 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE MEMBER_TB SET
 		OAUTH_ID = #{oauthId}, LAST_DT=sysdate()
 		WHERE MBER_ID=#{mberId}
+	</update>
+	
+	<update id="updateLastDate" parameterType="int">
+		UPDATE MEMBER_TB SET
+		LAST_DT=sysdate()
+		WHERE MBER_IDX=#{mberIndex}
 	</update>
 	
 	<select id="selectOne" parameterType="int" resultMap="memberMap">
@@ -40,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}
 	</select>
 	
-	<select id="selectOauthId" parameterType="String" resultMap="memberMap">
+	<select id="selectByOauthId" parameterType="String" resultMap="memberMap">
 		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId} and OAUTH_ID = #{oauthId}
 	</select>
 	
@@ -63,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="mberId" column="MBER_ID" />
 		<result property="mberPw" column="MBER_PW" />
 		<result property="mberType" column="MBER_TYPE" />
+		<result property="entIndex" column="ENT_IDX" />
 		<result property="mberFlag" column="USE_FL" />
 		<result property="regDate" column="REG_DT" />
 		<result property="lastDate" column="LAST_DT" />

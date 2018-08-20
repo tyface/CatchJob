@@ -18,7 +18,9 @@ public interface MemberDao {
 	
 	// 기존회원 소셜API연동 가입
 	public int updateOauthId(Member member);
-
+	
+	public int updateLastDate(int mberIndex);
+	
 	// 회원 찾기
 	public Member selectOne(int mberIndex);
 
@@ -26,7 +28,7 @@ public interface MemberDao {
 	public Member selectById(String mberId);
 	
 	//api 인증 아이디 찾기
-	public Member selectOauthId(Map<String, String> mapData);
+	public Member selectByOauthId(Map<String, String> mapData);
 	
 	//페이징 처리
 	public int selectCount();
@@ -34,5 +36,6 @@ public interface MemberDao {
 	public List<Member> selectListMember(Map<String, String> mapData);
 	//검색
 	public List<Member> selectListMemberByKeyword(Map<String, String> map);
+	
 	
 }
