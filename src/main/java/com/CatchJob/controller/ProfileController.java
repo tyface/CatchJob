@@ -153,12 +153,16 @@ public class ProfileController {
 //		System.out.println("gg");
 		System.out.println("컨트롤러: 팔로우 :"+entService.getFollowsEntList((int)session.getAttribute("mberIndex")));
 		model.addAttribute("followView", entService.getFollowsEntList((int)session.getAttribute("mberIndex")));
+		
+		
 		return "profile-follows";
 	}
 	
 	@RequestMapping(value = "/recent")
 	public String recentView (Model model, HttpSession session) {
 		System.out.println("컨트롤러:최신본거:"+entService.getRecentsEntList((int)session.getAttribute("mberIndex")));
+		model.addAttribute("recentView", entService.getRecentsEntList((int)session.getAttribute("mberIndex")));
+		model.addAttribute("recentViewJson", new Gson().toJson(entService.getRecentsEntList((int)session.getAttribute("mberIndex"))));
 		return "profile-recent";
 	}
 	

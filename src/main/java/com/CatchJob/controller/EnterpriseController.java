@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.CatchJob.commons.Constants;
 import com.CatchJob.model.Interview;
 import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
@@ -74,8 +75,9 @@ public class EnterpriseController {
 	}
   
 	@RequestMapping(value = "/view")
-	public String entDetailsForm(int entIndex, HttpServletRequest req, Model model, HttpSession session)  {
+	public String entDetailsForm(int entIndex,@RequestParam(defaultValue = "1")int page, HttpServletRequest req, Model model, HttpSession session)  {
 		// 기업정보 표출될때마다 viewCount올리는 부분
+		System.out.println("뷰 컨트롤러 진입---");
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("ENT_IDX", Integer.toString(entIndex));
 		try {
@@ -100,15 +102,21 @@ public class EnterpriseController {
 		//System.out.println(reviewMap);
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(mapData));
-//		System.out.println("★★★★★:"+entService.getEntInfo(mapData));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
-		model.addAttribute("interview", itvwService.selectListByEntIdx(entIndex));
-		model.addAttribute("interviewJson", new Gson().toJson(itvwService.selectListByEntIdx(entIndex)));
 		model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(entIndex)));
-		//model.addAttribute("reviewList", reviewService.reviewList(entIndex));
-		//model.addAttribute("reviewListJson", new Gson().toJson(reviewService.reviewList(entIndex)));
-		//model.addAttribute("review", reviewService.reviewListByQNum(reviewMap));
 		model.addAttribute("question", reviewService.question(entIndex));
+		
+		//int currentPage = 1;
+		int currentPage= page;
+		Map<String, Integer> dataItvw = new HashMap<String, Integer>();
+		dataItvw.put("ENT_IDX", entIndex);
+		//dataItvw.put("NUM_OF_ITVW_PER_PAGE", entIndex);
+		dataItvw.put("PAGE_NUM", currentPage);
+		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
+		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
+//		System.out.println("페이징처리:"+itvwService.getInterviewList(dataItvw));
+//		System.out.println("페이지 데이터: "+itvwService.interviewPageData(currentPage, entIndex));
+		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
 		
 		return "enterprise-view";
 	}
@@ -116,40 +124,49 @@ public class EnterpriseController {
 	@ResponseBody
 	@RequestMapping(value = "/regFollow")
 	public boolean regFollow (String entIndex, HttpSession session) {
-//		System.out.println("컨트롤러 팔로잉이다:"+session.getAttribute("mberIndex"));
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));
 		mapData.put("ENT_IDX", entIndex );	
-		//test
-		//System.out.println(followService.confirmFollowEnt(mapData));
-		
+//		(int) (session.getAttribute("mberIndex"))
+//		mapData.put("ENT_IDX", entIndex );	
 		return followService.regFollowEnt(mapData);
 	}
 	@ResponseBody
 	@RequestMapping(value = "/revFollow")
 	public boolean revFollow (String entIndex, HttpSession session) {
-//		System.out.println("컨트롤러 팔로잉이다:"+session.getAttribute("mberIndex"));
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));
 		mapData.put("ENT_IDX", entIndex );
-		//test
-		//System.out.println(followService.confirmFollowEnt(mapData));
 		return followService.revFollowEnt(mapData);
 	}
 	
 	
+//	@ResponseBody
+//	@RequestMapping(value = "/reviewList/{entIndex}")
+//	public ResponseEntity<List<Review>> list(
+//			@PathVariable("entIndex") int entIndex){		
+//		ResponseEntity<List<Review>> entity = null;		
+//		try {
+//			List<Review> replyList = reviewService.reviewList(entIndex);
+//			entity = new ResponseEntity<List<Review>>(replyList,HttpStatus.OK);
+//		}catch(Exception e) {
+//			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//		return entity;
+//	}
 	@ResponseBody
-	@RequestMapping(value = "/reviewList/{entIndex}")
-	public ResponseEntity<List<Review>> list(
-			@PathVariable("entIndex") int entIndex){		
-		ResponseEntity<List<Review>> entity = null;		
-		try {
-			List<Review> replyList = reviewService.reviewList(entIndex);
-			entity = new ResponseEntity<List<Review>>(replyList,HttpStatus.OK);
-		}catch(Exception e) {
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return entity;
+	@RequestMapping(value = "/reviewList")
+	public List<Review> list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int page, Model model){		
+		System.out.println("컨트롤러 리뷰 entIndex: "+entIndex);
+		Map<String, Integer> dataRvw = new HashMap<String, Integer>();
+		int currentPage= page;		
+		dataRvw.put("PAGE_NUM", currentPage);
+		dataRvw.put("ENT_IDX", entIndex);		
+		dataRvw.put("QESTN_NO", questionNum);
+		System.out.println("리뷰: "+reviewService.getReviewList(dataRvw));
+		System.out.println("페이지 데이터: "+reviewService.reviewPageData(currentPage, entIndex, questionNum));
+		model.addAttribute("reviewPageData", reviewService.reviewPageData(currentPage, entIndex, questionNum));
+		return reviewService.getReviewList(dataRvw);
 	}
 	
 	@ResponseBody
@@ -177,6 +194,15 @@ public class EnterpriseController {
 			System.out.println("컨트롤러: 리뷰 등록 실패"+result);
 			return false;			
 		}				
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/itvwDuplicationCheck")
+	public boolean interviewDuplicationCheck(HttpSession session, String entIndex) {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));
+		data.put("ENT_IDX", entIndex );
+		return itvwService.interviewDuplicationCheck(data);
 	}
 	
 	//@ResponseBody

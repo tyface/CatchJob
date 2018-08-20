@@ -72,6 +72,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY r.REVW_IDX desc
 	</select>
 	 -->
+	 <!-- 리뷰코멘트 VIEW 페이지에서 페이징처리 -->
+	 <select id="selectReviewList" parameterType="map" resultMap="reviewMap">
+	 	SELECT SQL_CALC_FOUND_ROWS * 
+		FROM REVIEW_QESTN_TB q
+		LEFT JOIN REVIEW_TB r
+		ON r.QESTN_NO=q.QESTN_NO
+		WHERE r.ENT_IDX=#{ENT_IDX} AND r.QESTN_NO=#{QESTN_NO}
+		ORDER BY r.REG_DT desc
+		LIMIT #{NUM_OF_RVW_PER_PAGE}
+		OFFSET #{START_ROW}
+	 </select>
+	 <select id="selectReviewTotalRows" parameterType="map" resultType="int">
+		SELECT 	 count(*) AS TOTAL_ROWS 
+		FROM	 REVIEW_TB
+		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO}
+	</select>
+	
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>
 		<result property="question" column="QUESTION"/>
