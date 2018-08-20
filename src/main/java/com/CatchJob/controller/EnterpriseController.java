@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Interview;
+import com.CatchJob.model.Member;
 import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
@@ -56,7 +57,7 @@ public class EnterpriseController {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);		
 		try {
-			data.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));			
+			data.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));			
 		}catch(NullPointerException e) {
 			//System.out.println("로그인 안 한 상태임");
 		}		
@@ -77,7 +78,7 @@ public class EnterpriseController {
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("ENT_IDX", Integer.toString(entIndex));
 		try {
-			mapData.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));//0816인영추가					
+			mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가					
 		}catch (NullPointerException e) {
 			System.out.println("단지.. 로그인 안 되어 있을 뿐");
 		}
@@ -121,7 +122,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/regFollow")
 	public boolean regFollow (String entIndex, HttpSession session) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));
+		mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
 		mapData.put("ENT_IDX", entIndex );	
 //		(int) (session.getAttribute("mberIndex"))
 //		mapData.put("ENT_IDX", entIndex );	
@@ -131,7 +132,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/revFollow")
 	public boolean revFollow (String entIndex, HttpSession session) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));
+		mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
 		mapData.put("ENT_IDX", entIndex );
 		return followService.revFollowEnt(mapData);
 	}
@@ -174,7 +175,7 @@ public class EnterpriseController {
 		//review.setContents(req.getParameter("contents"));
 		//review.setEntIndex(Integer.parseInt((req.getParameter("entIndex"))));
 		//review.setEvaluationScore(Integer.parseInt(req.getParameter("evaluationScore")));
-		review.setMberIndex((int) (session.getAttribute("mberIndex")));
+		review.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
 		//review.setQuestionNum(Integer.parseInt(req.getParameter("questionNum")));
 		review.setReviewFlag("1");
 		//req.getParameter("contents");
@@ -196,7 +197,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/itvwDuplicationCheck")
 	public boolean interviewDuplicationCheck(HttpSession session, String entIndex) {
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("MBER_IDX",  (session.getAttribute("mberIndex").toString()));
+		data.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
 		data.put("ENT_IDX", entIndex );
 		return itvwService.interviewDuplicationCheck(data);
 	}
@@ -205,7 +206,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview, HttpSession session) {
 		System.out.println("123456"+interview);
-		interview.setMberIndex((int) (session.getAttribute("mberIndex")));
+		interview.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
 		interview.setIntrvwFlag("1");
 //		// boolean result = entService.insertInterview(interview);
 		itvwService.insertInterview(interview);
