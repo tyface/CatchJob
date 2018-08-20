@@ -60,5 +60,25 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="scope" value="email" />
         <property name="redirectUri" value="https://localhost:443/catchjob/oAuth2Callback" />
     </bean>
-
+	
+	<!-- 메일 보내기 (SEND) -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    	<property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="${google.mail_id}" />
+	    <property name="password" value="${google.mail_pw}" />
+	    
+        <!-- email 요청시는 SMTP -->
+		<property name="javaMailProperties">
+		   <props>
+		      <prop key="mail.transport.protocol">smtp</prop>
+		      <prop key="mail.smtp.auth">true</prop>
+		      <prop key="mail.smtp.starttls.enable">true</prop>
+		      <prop key="mail.debug">true</prop>
+		   </props>
+		</property>
+	</bean>
+	
+	
+	
 </beans>

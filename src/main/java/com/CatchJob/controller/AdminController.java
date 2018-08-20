@@ -3,8 +3,6 @@ package com.CatchJob.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Admin;
 import com.CatchJob.model.Member;
 import com.CatchJob.service.AdminService;
 import com.CatchJob.service.MemberService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 @Controller
 @RequestMapping("/admin")
@@ -58,15 +52,6 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 
-	/* 수정, 탈퇴 */
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(Admin admin) {
-		if (adminService.updateAdmin(admin)) {
-			return null;
-		} else {
-			return null;
-		}
-	}
 	/* 회원 그룹 관리 */
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 
@@ -104,32 +89,39 @@ public class AdminController {
 	
 	@RequestMapping(value="/modifyMber", method=RequestMethod.POST)
 	public String modifyMber(Model model, String mberId, String mberPw, String mberType, String regDate, String lastDate) { 
-	
-		
-		Member memberOne = memberService.getMemberById(mberId);
-		Member member = new Member();
-		member.setMberId(mberId);
-		member.setMberPw(mberPw);
-		if(mberType==null) {
-			member.setMberType(memberOne.getMberType());
-		} else {
-			member.setMberType(mberType);
-		}
-		member.setMberFlag(memberOne.getMberFlag());
-		member.setRegDate(regDate);
-		if(lastDate!=null) {
+		try {
+			Member memberOne = memberService.getMemberById(mberId);
+			Member member = new Member();
+			member.setMberIndex(memberOne.getMberIndex());
+			member.setMberId(mberId);
+			member.setMberPw(mberPw);
+			if(mberType==null) {
+				member.setMberType(memberOne.getMberType());
+			} else {
+				member.setMberType(mberType);
+			}
+			member.setMberFlag(memberOne.getMberFlag());
+			member.setRegDate(regDate);
 			member.setLastDate(lastDate);
+	/*		if(lastDate==null) {
+				Date date = new Date();
+				member.setLastDate(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date));
+			}*/
+			boolean result = memberService.modify(member);
+			if(result) {
+				model.addAttribute("url", "mngMber");
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("url", "mngMber");
+				model.addAttribute("msg", "수정 실패했습니다");
+			}
+			return "admin/include/result";
+		} catch(NullPointerException e) {
+			model.addAttribute("url", "mngAdmin");
+			model.addAttribute("msg", "수정 실패했습니다");
+			return "admin/include/result";
 		}
-		member.setMberIndex(memberOne.getMberIndex());
-		
-		boolean result = memberService.modify(member);
-
-		if(result) {
-			System.out.println("update 정상 작동");			
-		} else {
-			System.out.println("update 작동 불가");
-		}
-		return "forward:mngMber";									
+	
 	}
 	
 	/* 관리자 그룹 관리 */
@@ -169,41 +161,81 @@ public class AdminController {
 	
 	@RequestMapping(value="/modifyAdmin", method=RequestMethod.POST)
 	public String modifyAdmin(Model model, String adminId, String adminPw, String adminLv, String regDate, String lastDate) { 
-		Admin adminOne = adminService.getAdminById(adminId);	
-		Admin admin = new Admin();
-		admin.setAdminId(adminId);
-		admin.setAdminPw(adminPw);
-		admin.setAdminLv(adminLv);
-		if(adminLv==null) {
-			admin.setAdminLv(adminOne.getAdminLv());
-		} else {
-			admin.setAdminLv(adminLv);
-		}
-		admin.setRegDate(regDate);
-		if(lastDate!=null) {
+		try {
+			Admin adminOne = adminService.getAdminById(adminId);	
+			Admin admin = new Admin();
+			admin.setAdminId(adminId);
+			admin.setAdminPw(adminPw);		
+			if(adminLv==null) {
+				admin.setAdminLv(adminOne.getAdminLv());
+			} else {
+				admin.setAdminLv(adminLv);			
+			}
+			admin.setRegDate(regDate);
 			admin.setLastDate(lastDate);
-		}
-		admin.setAdminIndex(adminOne.getAdminIndex());
+			/*if(lastDate==null) {
+				Date date = new Date();
+				admin.setLastDate(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date));
+			}*/
+			admin.setAdminIndex(adminOne.getAdminIndex());	
+			boolean result = adminService.modify(admin);
+	
+			if(result) {
+				model.addAttribute("url", "mngAdmin");
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("url", "mngAdmin");
+				model.addAttribute("msg", "수정 실패했습니다");
+			}
+			return "admin/include/result";
 		
-		boolean result = adminService.updateAdmin(admin);
-		if(result) {
-			System.out.println("update 정상 작동");			
-		} else {
-			System.out.println("update 작동 불가");
+		} catch(NullPointerException e) {
+			model.addAttribute("url", "mngAdmin");
+			model.addAttribute("msg", "수정 실패했습니다");
+			return "admin/include/result";
 		}
-		return "forward:mngAdmin";	
 									
 	}
 	
 
 	@RequestMapping(value = "/mngReview")
-	public String mngReview() {
-		return "admin/company-review-mng";
+	public String mngReview(Model model, String page, String msgPerPage, String num, String keyword) {
+		int pageNumber = 0;	
+		if (page != null) {
+			pageNumber = Integer.parseInt(page);
+		} else {
+			 pageNumber = 1;	
+		}
+		
+		int numOfMsgPage = 0;
+		if (msgPerPage != null) {
+			numOfMsgPage = Integer.parseInt(msgPerPage);
+		} else {
+			numOfMsgPage = 10;	
+		}
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("pageNumber", pageNumber);
+		data.put("numOfMsgPage", numOfMsgPage);
+		
+		if(keyword!=null) {
+			data.put("keyword", keyword);
+		}
+		
+		if(num!=null) {
+			Admin admin = adminService.getAdmin(Integer.parseInt(num));
+			model.addAttribute("admin", admin);
+		}
+	
+		Map<String, Object> viewData = adminService.getMessageList(data);
+		model.addAttribute("viewData", viewData);
+	
+		return "admin/review-mng";
 	}
 
 	@RequestMapping(value = "/mngEnt")
 	public String mngEnt() {
-		return "admin/company-mng";
+		return "admin/enterprise-mng";
 	}
 
 	@RequestMapping(value = "/mngInduty")
@@ -222,9 +254,5 @@ public class AdminController {
 		return "admin/mng-QnA";
 	}
 
-	@RequestMapping(value = "/mngPopUp")
-	public String mngPopUp() {
-		return "admin/mng-popUp";
-	}
 
 }

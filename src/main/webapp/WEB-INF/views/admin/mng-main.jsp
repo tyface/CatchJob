@@ -14,8 +14,7 @@
 <body>
 	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%> 
 			
-			<div class="col-md-9 main">
-			
+			<div class="col-md-9 main">		
 				<h1 class="page-header" style="text-align: center; font-weight: bold;">[ 메인화면 관리 ]</h1><br/>
 				<div class="col-md-offset-1">	
 				<div class="row" style="margin: 20px">	
@@ -70,17 +69,12 @@
 								 <div class="col-sm-2" >
 									<button type="button" class="btn btn-warning">초기화</button>
 								</div>
-							</div>
-								
-						</form>
-				
-						
-	
-	
-					
+							</div>								
+						</form>				
 				</div> <!--<div class="col-md-offset-1"> end -->
 			</div> <!--<div class="col-md-9 main"> end -->
 		</div>	<!--<div class="row"> end -->
 	</div><!--<div class="container-fluid"> end -->
+
 </body>
 </html>
