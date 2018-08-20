@@ -16,6 +16,8 @@ public interface MemberService {
 	public boolean join(Member member);
 	
 	public boolean modify(Member member);
+	
+	public boolean passwordModify(Member member);
 
 	public boolean deleteMember(Member member);
 	

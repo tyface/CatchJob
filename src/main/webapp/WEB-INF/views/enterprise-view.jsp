@@ -79,11 +79,11 @@ $(function(){
 //         	alert("필수 항목을 확인해 주세요")
 //         }
 //     });
-   
+
    /* 면접후기 작성시 유효성 검사 */
-	$('#writeInterview').validate({		
+	$('#writeInterview').validate({
 		rules : {
-			
+
 			intrvwDifficulty:{
 				required : true
 			},
@@ -96,26 +96,26 @@ $(function(){
 			},
 			intrvwReview:{
 				required : true,
-				minlength : 10,	
+				minlength : 10,
 				maxlength : 500
 			},
 			intrvwQuestion:{
 				required : true,
-				minlength : 10,	
-				maxlength : 500				
+				minlength : 10,
+				maxlength : 500
 			},
 			intrvwAnswer:{
 				required : true,
-				minlength : 10,	
-				maxlength : 500				
+				minlength : 10,
+				maxlength : 500
 			},
 			presentationDate:{
-				digits: true				
+				digits: true
 			}
 		},
-		
+
 		messages : {
-			
+
 			intrvwDifficulty:{
 				required : "다른 항목을 선택해주세요"
 			},
@@ -127,29 +127,29 @@ $(function(){
 			},
 			intrvwReview:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다",	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"	
+				minlength : "최소 10글자이상이어야 합니다",
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			},
 			intrvwQuestion:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다"	,	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"				
+				minlength : "최소 10글자이상이어야 합니다"	,
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			},
 			intrvwAnswer:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다"	,	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"				
-			}			
+				minlength : "최소 10글자이상이어야 합니다"	,
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
+			}
 		},
 		submitHandler: function() {
-			//$('#writeInterview').submit();			
+			//$('#writeInterview').submit();
 			alert("Submitted!");
 		}
-		
-	});	
-	
 
-	
+	});
+
+
+
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
 	if(following == 1){
 		$("#follow").toggleClass("fa-heart-o");
@@ -196,27 +196,27 @@ $(function(){
 					  		}
 					  })
 				  }
-			  }		  
+			  }
 		  }
-	      
+
 	   });/* 기업 팔로잉 END */
-  
+
   /*  기업리뷰 작성 START */
       $("#myBtn").click(function(){
     	  if(status == "logout"){
 			  if(confirm("기업리뷰 작성는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* YES 로그인 모달 띄우기 */    	
+				 /* YES 로그인 모달 띄우기 */
 				 $("#myModalLogin").modal("show");
 	    	  }/* NO  */
 		  }else{/* 로그인 상태임 */
-    	  
-		      
+
+
 	    	  $.ajax({
-			  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",				  		
+			  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
 			  		data:{entIndex : entIndex},
 			  		type: "post",
 			  		dataType:"json",
-			  		success: function(result){	
+			  		success: function(result){
 			  			if(result){/* 중복 */
 			  				alert("이미 등록하셨습니다. 마이페이지의 기업리뷰 작성을 확인하세요")
 			  			}else{/* 중복X, 작성가능 */
@@ -226,21 +226,21 @@ $(function(){
 			  })
 		  }
       });
-  
+
       $("#myBtn2").click(function(){
-    	  
+
     	  if(status == "logout"){
 			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* YES 로그인 모달 띄우기 */    	
+				 /* YES 로그인 모달 띄우기 */
 				 $("#myModalLogin").modal("show");
 	    	  }/* NO  */
 		  }else{/* 로그인 상태임 */
 		    	  $.ajax({
-				  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",				  		
+				  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
 				  		data:{entIndex : entIndex},
 				  		type: "post",
 				  		dataType:"json",
-				  		success: function(result){	
+				  		success: function(result){
 				  			if(result){/* 중복 */
 				  				alert("이미 등록하셨습니다. 마이페이지의 기업리뷰 작성을 확인하세요")
 				  			}else{/* 중복X, 작성가능 */
@@ -250,13 +250,13 @@ $(function(){
 		  		  })
 		  	}
       });/*  기업리뷰 작성 END */
-	
-	 
+
+
 	 var interviewJson = JSON.parse('${interviewJson}');
 	 for(var i in interviewJson){
 		// alert(interviewJson[i]['intrvwDifficulty']);
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
-		
+
 		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
 			$("#difficulty"+i).addClass("intrvwlv5");
 		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
@@ -270,20 +270,20 @@ $(function(){
 		}
 
 	 }
-	 	
-	/* 기업리뷰  등록 START */ 	
+
+	/* 기업리뷰  등록 START */
  	$(".review-btn").on("click",function(){<!-- 123 -->
 
 		var point = $(this).parent().parent().prev().children().children("div").text();
 		var statusCount = $(this).next().val();
 		if(status == "logout"){
 			  if(confirm("리뷰 코멘트는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* YES 로그인 모달 띄우기 */    	
+				 /* YES 로그인 모달 띄우기 */
 				 $("#myModalLogin").modal("show");
 	    	  }/* NO  */
 		  }else{/* 로그인 상태임 */
 			var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
-			
+
 			var questionNum = statusCount;
 			var entIndex = $("#entIndex").val();
 			  $.ajax({
@@ -293,26 +293,26 @@ $(function(){
 					"evaluationScore" : point,
 					"questionNum" : questionNum,
 					"entIndex" : entIndex
-					
+
 				},
-				dataType: "json", 
+				dataType: "json",
 				success : function(result){
 					if(result){
 						alert("등록되었습니다.");
 						$(".starScore").val("0");
-			
+
 					}else{
 						alert("등록 실패하였습니다. 이미 등록하셨습니다.");
-					}	
+					}
 					getReviewList(questionNum);
-				}				
+				}
 			});
-			 return false; 
-			
+			 return false;
+
 		}
-			
- 	});/* 기업리뷰  등록 END */ 	  
-			
+
+ 	});/* 기업리뷰  등록 END */
+
 });/* FUNCTION END */
 
 function getReviewList(questionNum){/* 456 */
@@ -330,9 +330,9 @@ function getReviewList(questionNum){/* 456 */
 		success : function(data){
 
 			$(data).each(function(){
-					
+
 // 				if((this.questionNum)==questionNum){
-					
+
 					//alert("this.questionNum"+this.questionNum);
 					var regDate = this.regDate;
 					var evaluationScore = this.evaluationScore;
@@ -341,8 +341,8 @@ function getReviewList(questionNum){/* 456 */
 					//td.text(contents+"ㅜㅜ..");
 					//td.appendTo(reviews);
 // 				}
-				
-				
+
+
 			});
 		},
 		error : function(request,status,error){
@@ -459,7 +459,7 @@ function chart(){
 		salary.push(num) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
+		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
 		//alert(test[i]['PAY_AMT']);
 	}
 
@@ -835,13 +835,13 @@ function addComma(num) {
 									<h4 class="panel-title row">
 										<a data-toggle="collapse" data-parent="#accordion"	href="#collapse${status.count}">
 											<span class="col-sm-8">
-												${question.QUESTION} 
-												<span style="color: #6799FF"> (${question.COUNT}) </span> 
+												${question.QUESTION}
+												<span style="color: #6799FF"> (${question.COUNT}) </span>
 											</span>
-											<span class="col-sm-4">${question.AVG} 
+											<span class="col-sm-4">${question.AVG}
 											   <c:forEach begin="1" end="${question.AVG}" step="1">
 								                  <span class="stars-on"></span>
-								               </c:forEach>								               
+								               </c:forEach>
 								               <c:forEach begin="${question.AVG}" end="4" step="1">
 								                   <span class="stars-off"></span>
 								               </c:forEach>
@@ -878,19 +878,19 @@ function addComma(num) {
 <!-- 															</td> -->
 <%-- 													</c:if> --%>
 <%-- 												</c:forEach> --%>
-												
+
 											</tbody>
 										</table>
-										
+
 										<!-- 페이징처리-리뷰 코멘트 -->
 										<nav style="text-align: center">
 											<ul class="pagination">
-									
+
 <%-- 												<c:if test="${reviewPageData.startPage !=1 }"> --%>
 <%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=1#section3" class="underline">&laquo;</a></li> --%>
 <%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.startPage-1}#section3" class="underline">&lt;</a><li> --%>
 <%-- 												</c:if> --%>
-												
+
 												<c:forEach var="pageNum" begin="${reviewPageData.startPage}"
 													end="${reviewPageData.endPage < reviewPageData.pageTotalCount ? reviewPageData.endPage : reviewPageData.pageTotalCount}">
 													<c:choose>
@@ -902,7 +902,7 @@ function addComma(num) {
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
-					
+
 <%-- 												<c:if test="${reviewPageData.endPage < reviewPageData.pageTotalCount}"> --%>
 <%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.endPage+1}#section3" class="underline">&gt;</a></li> --%>
 <%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.pageTotalCount}#section3" class="underline">&raquo;</a></li> --%>
@@ -913,7 +913,7 @@ function addComma(num) {
 										<form class="reviewForm" name="reviewForm" >
 											<input type="hidden" name="questionNum" class="questionNum" value="${question.QESTN_NO}">
 											<input type="hidden" name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
-	
+
 											<div>
 												<select class="stars">
 												    <option value="1">1</option>
@@ -929,7 +929,7 @@ function addComma(num) {
 											</div>
 
 											<div class="input-group input-group-sm" >
-												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" > 
+												<input type="text" class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요" >
 												<span class="input-group-btn">
 													<input type="submit" class="btn btn-flat btn-info review-btn"  value="제출"><!-- 123 -->
 													<input type="hidden" class="statusCount" value="${status.count}">
@@ -1134,12 +1134,12 @@ function addComma(num) {
 					<!-- 면접 페이징 처리  -->
 					<nav style="text-align: center">
 						<ul class="pagination">
-				
+
 							<c:if test="${interviewPageData.startPage !=1 }">
 								<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=1#section3" class="underline">&laquo;</a></li>
 								<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${interviewPageData.startPage-1}#section3" class="underline">&lt;</a><li>
 							</c:if>
-							
+
 							<c:forEach var="pageNum" begin="${interviewPageData.startPage}"
 								end="${interviewPageData.endPage < interviewPageData.pageTotalCount ? interviewPageData.endPage : interviewPageData.pageTotalCount}">
 								<c:choose>
@@ -1305,7 +1305,7 @@ function addComma(num) {
 					<!-- 면접난이도 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>면접난이도</label> 
+							<label>면접난이도</label>
 						</div>
 						<div class="col-xs-9">
 							<select class="form-control"
@@ -1322,7 +1322,7 @@ function addComma(num) {
 					<!--면접일자 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>면접일자</label>					
+							<label>면접일자</label>
 						</div>
 						<div class="col-xs-9">
 <!-- 							<div class="input-group date"> -->
@@ -1338,7 +1338,7 @@ function addComma(num) {
 					<!-- 면접경로 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>면접경로</label> 
+							<label>면접경로</label>
 						</div>
 						<div class="col-xs-9">
 							<select class="form-control"
@@ -1386,7 +1386,7 @@ function addComma(num) {
 					<!-- 면접결과 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
-							<label>이 기업에 합격하셨나요?</label> 
+							<label>이 기업에 합격하셨나요?</label>
 						</div>
 						<div class="col-xs-9">
 							<select class="form-control"
@@ -1439,8 +1439,8 @@ function addComma(num) {
 							</div>
 						</div>
 					</div>
-					
-					
+
+
 
 				</div>
 				<div class="modal-footer">
