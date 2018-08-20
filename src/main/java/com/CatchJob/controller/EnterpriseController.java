@@ -163,10 +163,10 @@ public class EnterpriseController {
 		dataRvw.put("PAGE_NUM", currentPage);
 		dataRvw.put("ENT_IDX", entIndex);		
 		dataRvw.put("QESTN_NO", questionNum);
-		System.out.println("리뷰: "+reviewService.getReviewList(dataRvw));
+		System.out.println("리뷰: "+reviewService.getReviewsList(dataRvw));
 		System.out.println("페이지 데이터: "+reviewService.reviewPageData(currentPage, entIndex, questionNum));
 		model.addAttribute("reviewPageData", reviewService.reviewPageData(currentPage, entIndex, questionNum));
-		return reviewService.getReviewList(dataRvw);
+		return reviewService.getReviewsList(dataRvw);
 	}
 	
 	@ResponseBody

@@ -97,13 +97,13 @@ public class ReviewServiceImp implements ReviewService {
 
 	//리뷰코멘트 VIEW 페이지에서 페이징처리
 	@Override
-	public List<Review> getReviewList(Map<String, Integer> dataRvw) {
+	public List<Review> getReviewsList(Map<String, Integer> dataRvw) {
 		
 		int PAGE_NUM = dataRvw.get("PAGE_NUM");
 		int START_ROW = Constants.Review.NUM_OF_RVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
 		dataRvw.put("NUM_OF_RVW_PER_PAGE", Constants.Review.NUM_OF_RVW_PER_PAGE);
 		dataRvw.put("START_ROW", START_ROW);
-		return reviewDao.selectReviewList(dataRvw);
+		return reviewDao.selectReviewsList(dataRvw);
 	}
 	
 	@Override

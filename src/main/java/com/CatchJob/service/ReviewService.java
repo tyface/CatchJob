@@ -45,7 +45,7 @@ public interface ReviewService {
 	public Map<String, Object> getMessageList(Map<String, Object> data);
 
 //	리뷰코멘트 VIEW 페이지에서 페이징처리
-	public List<Review> getReviewList(Map<String, Integer> data);
+	public List<Review> getReviewsList(Map<String, Integer> data);
 	//Review page data
 	public Map<String, Object> reviewPageData (int currentPage, int entIndex, int questionNum );
 	// 페이징 처리할 때 필요한 total rows

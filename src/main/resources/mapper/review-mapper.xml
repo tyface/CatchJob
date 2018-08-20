@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	 -->
  <!-- 리뷰코멘트 VIEW 페이지에서 페이징처리 -->
-	 <select id="selectReviewList" parameterType="map" resultMap="reviewMap">
+	 <select id="selectReviewsList" parameterType="map" resultMap="reviewMap">
 	 	SELECT SQL_CALC_FOUND_ROWS * 
 		FROM REVIEW_QESTN_TB q
 		LEFT JOIN REVIEW_TB r
