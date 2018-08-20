@@ -135,8 +135,8 @@ public class MemberController {
 	}
 	
 	 /*패스워드 수정*/
-	@RequestMapping(value = "/pwModify", method = RequestMethod.POST)
-	public void pwModify(Model model,String password, String passwordCheck, HttpSession session, HttpServletResponse resp) {
+	@RequestMapping(value = "/passwordModify", method = RequestMethod.POST)
+	public void pwModify(String password, String passwordCheck, HttpSession session, HttpServletResponse resp) {
 		String data = "";
 		
 		if(password.equals(passwordCheck)) {
@@ -153,6 +153,63 @@ public class MemberController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/* 비밀번호 재설정 메일보내기 */
+	@RequestMapping(value = "/findPasswordMail")
+	public void findPassword(String email, HttpServletResponse resp) {
+		String data = "";
+		
+		try {
+			MailHandler mailHandler = new MailHandler(mailSender);
+			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
+			mailHandler.setText(new StringBuffer().append("<h1>비밀번호 재설정 하기</h1>").
+			append("<a href='http://localhost:8090/catchjob/member/passwordModifyView?memberId=").
+			append(email).
+			append("' target='_blank'>이메일 인증 확인</a>").toString());
+			mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
+			mailHandler.setTo(email);
+			mailHandler.send();
+			
+			data = "{\"result\" : true}";
+			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			data = "{\"result\" : false}";
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			data = "{\"result\" : false}";
+		} finally {
+			try {
+				resp.getWriter().print(data);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	/* 비밀번호 재설정 페이지 뷰 */
+	@RequestMapping(value = "/passwordModifyView")
+	public String passwordModifyView(Model model, String memberId) {
+		
+		System.out.println("진입" + memberId);
+		model.addAttribute("memberId", memberId);
+		return "password-modify";
+	}
+	
+	/*패스워드 재설정 */
+	@RequestMapping(value = "/passwordModify2", method = RequestMethod.POST)
+	public String pwModify2(String password, String memberId, HttpSession session, HttpServletResponse resp) {
+		System.out.println("최종");		
+		Member member = new Member();
+		System.out.println(memberId);
+		System.out.println(password);
+		member.setMberId(memberId);
+		member.setMberPw(password);
+		memberService.passwordModify(member);
+			
+		return "redirect:/";
 	}
 	
 	//google login

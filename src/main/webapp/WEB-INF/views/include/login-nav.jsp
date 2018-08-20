@@ -11,11 +11,11 @@ $(function() {
 	});
 
 	$(".myBtnLogin").click(function() {
-		$("#myModalLogin").modal("show");
+		$("#loginModal").modal("show");
 	});
 
 	$("#loginHide").click(function() {
-		$("#myModalLogin").modal("hide");
+		$("#loginModal").modal("hide");
 	});
 
 	$("#loginForm").on("submit", function() {
@@ -29,7 +29,7 @@ $(function() {
 				dataType : "json",
 				success : function(data) {
 					 if (data.result) {
-							$("#myModalLogin").modal("hide");
+							$("#loginModal").modal("hide");
 							window.location.reload();
 					 } else {
 						 swal("비밀번호를 다시 입력해 주세요", "", "error");
@@ -49,7 +49,7 @@ $(function() {
 		if(pw1==pw2){
 			$.ajax({
 				 type : "post",
-				 url : "${pageContext.request.contextPath}/member/pwModify",
+				 url : "${pageContext.request.contextPath}/member/passwordModify",
 				 data : {
 						"password" : pw1,
 						"passwordCheck" : pw2
@@ -75,6 +75,32 @@ $(function() {
 			return false;
 		}
 
+	});
+
+	$("#findPasswordForm").on("submit", function() {
+		var email = $("input[name=email]").val();
+			$.ajax({
+				 type : "get",
+				 url : "${pageContext.request.contextPath}/member/findPasswordMail",
+				 data : {
+						"email" : email
+				 },
+				 dataType : "json",
+				 success : function(data) {
+						if (data.result) {
+							swal("메일전송 완료!","입력하신 이메일로 비밀번호 재설정 링크를 보내드렷 습니다.", "success")
+							.then(() => {
+								$("#findPasswordModal").modal("hide");
+							});
+						} else {
+							swal("비밀번호 재설정에 실패하였습니다.","", "error")
+						}
+				 },
+				 error : function() {
+					 swal("비밀번호 재설정오류.","", "error")
+				 }
+			});
+			return false;
 	});
 
 	$("input[name=password], input[name=passwordCheck]" ).on("keyup",function(){
@@ -157,7 +183,7 @@ $(function() {
 </nav>
 
   <!-- 로그인 모달 -->
-  <div class="modal fade" id="myModalLogin" role="dialog">
+  <div class="modal fade" id="loginModal" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
@@ -196,7 +222,7 @@ $(function() {
         </div>
         <div class="modal-footer">
           <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
-          <p>Forgot <a href="#">Password</a></p>
+          <p>Forgot <a href="#findPasswordModal"  data-toggle="modal" onclick="$('#loginModal').modal('hide');">Password</a></p>
         </div>
       </div>
     </div>
@@ -216,25 +242,15 @@ $(function() {
 					</div>
 
 					<div class="modal-body" style="padding: 40px 50px;">
-
-
-
 						<form role="form" method="post" id="signUpForm">
 							<div class="form-group has-feedback">
-<!-- 								<label for="signUpId"> -->
-<!-- 								<span class="glyphicon glyphicon-user"></span> -->
-<!-- 								 Email Address -->
-<!-- 								 </label> -->
 								<input	type="email" class="form-control" id="signUpId"	placeholder="Email">
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
-<!-- 								<label for="signUpPw"><span -->
-<!-- 									class="glyphicon glyphicon-eye-open"></span> Password</label> -->
 								<!-- 비밀번호 -->
 								<input type="password" class="form-control" id="signUpPw" placeholder="Password">
 								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-<!-- 								<span style="line-height: 50%"><br></span> -->
 							</div>
 					        <div class="form-group has-feedback">
 								<!-- 비밀번호 확인  -->
@@ -269,13 +285,42 @@ $(function() {
 					</div>
 
 					<div class="modal-footer">
-						 <a href="#myModalLogin" data-toggle="modal" id="signUpHide">I already have a membership</a>
+						 <a href="#loginModal" data-toggle="modal" id="signUpHide">I already have a membership</a>
 					</div>
 				</div>
 
 			</div>
 		</div>
 
+		<%-- 비밀번호 찾기 모달 --%>
+		<div class="modal fade" id="findPasswordModal" role="dialog" >
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header" style="padding: 35px 50px;">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4>
+							<span class="glyphicon glyphicon-lock"></span> 비밀번호 찾기
+						</h4>
+					</div>
+					<div class="modal-body" style="padding: 40px 50px;">
+						<p>입력하신 메일로 비밀번호 변경하기 링크가 전송됩니다.</p><br>
+
+						<form role="form" method="post" id="findPasswordForm">
+							<div class="form-group has-feedback">
+								<input	type="email" class="form-control" name="email" placeholder="Email">
+								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							</div><br>
+							<button type="submit" class="btn btn-success btn-block">
+								<span class="glyphicon glyphicon-off"></span> 비밀번호 찾기
+							</button>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
 
 </c:if>
 
@@ -295,7 +340,7 @@ $(function() {
 				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 					<li class="dropdown-header">내 정보</li>
-					<li><a href="${pageContext.request.contextPath}/profile/reviews">기업회원 인증</a></li>
+					<li><a href="#entVerifyModal" data-toggle="modal">기업회원 인증</a></li>
 					<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
 					<li role="presentation" class="divider"></li>
 					<li class="dropdown-header">활동내역</li>
@@ -314,6 +359,7 @@ $(function() {
 
 	</nav>
 
+	<%-- 비밀번호 수정 모달 --%>
 	<div class="modal fade" id="pwModifyModal" role="dialog">
 		<div class="modal-dialog">
 
@@ -322,47 +368,66 @@ $(function() {
 				<div class="modal-header" style="padding: 35px 50px;">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4>
-						<span class="glyphicon glyphicon-lock"></span> 비밀번호 수정
+						<span class="glyphicon glyphicon-lock"></span> 비밀번호 수정하기
 					</h4>
 				</div>
 
 				<div class="modal-body" style="padding: 40px 50px;">
-
 					<form role="form" method="post" id="pwModifyForm">
 						<div class="form-group has-feedback">
 							<input	type="email" class="form-control" id="signUpId"	value="${member.mberId}" readonly>
 							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
+						<!-- 비밀번호 -->
 						<div class="form-group has-feedback">
-							<!-- 비밀번호 -->
 							<input type="password" class="form-control" name="password" placeholder="Password">
-							 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
-								<div class="form-group has-feedback">
-							<!-- 비밀번호 확인  -->
+						<!-- 비밀번호 확인  -->
+						<div class="form-group has-feedback">
 							<input type="password" class="form-control" name="passwordCheck"	placeholder="Retype password">
-							 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-							 <div id="checkMsg"></div>
+							<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+							<div id="checkMsg"></div>
 						</div>
 						<button type="submit" class="btn btn-success btn-block">
 							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
 						</button>
-						<%-- <!-- 회원가입 실패 시 보이는 창 -->
-						<div class="form-group has-error has-feedback hidden"	id="signUpFail">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span>
-								</span>
-								<input type="text" class="form-control" id="inputError"	aria-describedby="inputGroupSuccess1Status"	value="비밀번호가 유효하지 않습니다. 다시 시도하세요">
-							</div>
-						</div> --%>
 					</form>
-
 				</div>
 			</div>
 
 		</div>
 	</div>
 
+	<%-- 기업인증 --%>
+	<div class="modal fade" id="entVerifyModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header" style="padding: 35px 50px;">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4>
+						<span class="glyphicon glyphicon-lock"></span> 기업회원 인증하기
+					</h4>
+				</div>
+
+				<div class="modal-body" style="padding: 40px 50px;">
+					<form role="form" method="post" id="entVerifyForm">
+						<p>1) 기업회원 인증방법</p>
+						<div class="form-group has-feedback">
+							<input	type="email" class="form-control" id="test">
+							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+						</div>
+						<div class="form-group has-feedback">
+						<button type="submit" class="btn btn-success btn-block">
+							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
+						</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
 
 </c:if>
