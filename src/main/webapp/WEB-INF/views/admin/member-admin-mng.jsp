@@ -86,7 +86,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="admins" items="${viewData.boardList}">
+									 <c:forEach var="admins" items="${viewData.boardList}">
 										 <tr>	
 										<td>${admins.adminIndex}</td>
 										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&num=${admins.adminIndex}									

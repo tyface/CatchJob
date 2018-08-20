@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.CatchJob.model.Admin;
 import com.CatchJob.model.Member;
+import com.CatchJob.model.Review;
 import com.CatchJob.service.AdminService;
 import com.CatchJob.service.MemberService;
+import com.CatchJob.service.ReviewService;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,7 +25,9 @@ public class AdminController {
 	AdminService adminService;
 	@Autowired
 	MemberService memberService;
-
+	@Autowired
+	ReviewService reviewService;
+	
 	/* 로그인폼 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String loginForm() {
@@ -197,9 +201,18 @@ public class AdminController {
 									
 	}
 	
-
+	/* 리뷰 관리*/
 	@RequestMapping(value = "/mngReview")
-	public String mngReview(Model model, String page, String msgPerPage, String num, String keyword) {
+	public String mngReview(Model model, String page, String msgPerPage, String keyword, String mberIndex,
+		String entIndex, String questionNum, String entName, String keywordOption) {
+		
+		System.out.println("keyword : "+ keyword);
+		System.out.println("mberIndex : "+ mberIndex);
+		System.out.println("entIndex : "+ entIndex);
+		System.out.println("questionNum : "+ questionNum);
+		System.out.println("entName : "+ entName);
+		System.out.println("keywordOption: "+keywordOption);
+		
 		int pageNumber = 0;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
@@ -220,16 +233,20 @@ public class AdminController {
 		
 		if(keyword!=null) {
 			data.put("keyword", keyword);
+			data.put("keywordOption", keywordOption);
 		}
 		
-		if(num!=null) {
-			Admin admin = adminService.getAdmin(Integer.parseInt(num));
-			model.addAttribute("admin", admin);
-		}
-	
-		Map<String, Object> viewData = adminService.getMessageList(data);
+		//내용보기 클릭시 출력용
+/*			Map<String, String> reviewMap = new HashMap<String, String>();	
+			reviewMap.put("mberIndex", mberIndex);
+			reviewMap.put("entIndex", entIndex);
+			reviewMap.put("questionNum", questionNum);
+			Review review = reviewService.review(reviewMap);
+			model.addAttribute("review", review);*/
+		
+		Map<String, Object> viewData = reviewService.getMessageList(data);
 		model.addAttribute("viewData", viewData);
-	
+
 		return "admin/review-mng";
 	}
 

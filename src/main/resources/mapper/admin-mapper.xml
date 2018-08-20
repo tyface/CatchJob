@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				SELECT ADMIN_IDX, ADMIN_ID, ADMIN_PW, ADMIN_LV, REG_DT, LAST_DT 
 				FROM ADMIN_TB,  (select @ROWNUM := 0) a 
 			ORDER BY ADMIN_IDX) m) n
-		WHERE rnum BETWEEN #{firstRow} AND #{endRow} and ADMIN_ID like CONCAT('%',#{keyword},'%');	
+		WHERE RNUM BETWEEN #{firstRow} AND #{endRow} and ADMIN_ID like CONCAT('%',#{keyword},'%');	
 	</select>
 	<resultMap type="admin" id="adminMap">
 		<result property="adminIndex" column="ADMIN_IDX" />
