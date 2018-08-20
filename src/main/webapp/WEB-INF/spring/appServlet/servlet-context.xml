@@ -33,7 +33,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
 	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
 	  <property name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login " />
-	  <property name="redirectUri" value="http://localhost:8090/catchjob/googleSignInCallback" />
+	  <property name="redirectUri" value="http://localhost:8090/catchjob/member/googleSignInCallback" />
 	</bean>
 
 <!-- 	<bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">  -->
@@ -58,7 +58,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <bean id="oAuth2Parameters"
         class="org.springframework.social.oauth2.OAuth2Parameters">
         <property name="scope" value="email" />
-        <property name="redirectUri" value="https://localhost:443/catchjob/oAuth2Callback" />
+        <property name="redirectUri" value="https://localhost:443/catchjob/member/oAuth2Callback" />
     </bean>
 	
 	<!-- 메일 보내기 (SEND) -->

@@ -20,6 +20,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/public.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 

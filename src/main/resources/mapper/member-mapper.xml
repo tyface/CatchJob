@@ -26,6 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MBER_IDX=#{mberIndex}
 	</update>
 	
+	<update id="updateMemberPassword" parameterType="member">
+		UPDATE MEMBER_TB SET
+		MBER_PW = #{mberPw}
+		WHERE MBER_IDX=#{mberIndex}
+	</update>
+	
 	<select id="selectOne" parameterType="int" resultMap="memberMap">
 		SELECT *
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}

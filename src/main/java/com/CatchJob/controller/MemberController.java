@@ -37,7 +37,7 @@ import com.CatchJob.service.MemberService;
 import com.CatchJob.service.TempKey;
 
 @Controller
-@RequestMapping
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -63,7 +63,7 @@ public class MemberController {
 		if (result) {
 			Member member = memberService.getMemberById(mberId);
 			memberService.visitUpdate(member.getMberIndex());
-			session.setAttribute("mberIndex", member.getMberIndex());
+			session.setAttribute("member", member);
 	
 			data = "{\"result\" : true}";
 		} else {
@@ -91,7 +91,9 @@ public class MemberController {
 		member.setOauthId(key);
 		member.setMberFlag("2");
 		
-		if (memberService.join(member)) {
+		
+		if (memberService.getMemberById(signUpId) == null && signUpPw.equals(signUpPwCheck)) {
+			memberService.join(member);
 			// 회원가입 성공
 			//"가입 시 사용한 이메일로 인증해 주세요"
 				System.out.println("이메일 인증 시작");
@@ -114,12 +116,10 @@ public class MemberController {
 			}
 	       
 			data = "{\"result\" : true}";
-		} 
-		
-		if(!signUpPw.equals(signUpPwCheck)) {
-			data = "{\"result\" : false}";	
+		} else {
+			data = "{\"result\" : false}";
 		}
-			
+		
 		try {
 			resp.getWriter().print(data);
 		} catch (IOException e) {
@@ -130,18 +130,28 @@ public class MemberController {
 	/*  로그아웃  */
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("mberIndex");
+		session.removeAttribute("member");
 		return "redirect:/";
 	}
 	
-	 /*수정, 탈퇴 */
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(Member member) {
-		if (memberService.modify(member)) {
-			// 회원수정 성공
-			return null;
-		} else {
-			return null;
+	 /*패스워드 수정*/
+	@RequestMapping(value = "/pwModify", method = RequestMethod.POST)
+	public void pwModify(Model model,String password, String passwordCheck, HttpSession session, HttpServletResponse resp) {
+		String data = "";
+		
+		if(password.equals(passwordCheck)) {
+			Member member = (Member)session.getAttribute("member");
+			member.setMberPw(password);
+			memberService.passwordModify(member);
+			data = "{\"result\" : true}";	
+		}else {
+			data = "{\"result\" : false}";
+		}
+			
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -193,7 +203,7 @@ public class MemberController {
 			System.out.println("예외발생!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
 		}
 		memberService.visitUpdate(member.getMberIndex());
-		session.setAttribute("mberIndex", member.getMberIndex());
+		session.setAttribute("member", member);
 		return "redirect:/";
 	}
 	
@@ -248,7 +258,7 @@ public class MemberController {
 		}
 		
 		memberService.visitUpdate(member.getMberIndex());
-		session.setAttribute("mberIndex", member.getMberIndex());
+		session.setAttribute("member", member);
 		
         return "redirect:http://localhost:8090/catchjob/";
     }
@@ -288,7 +298,7 @@ public class MemberController {
     		memberService.modify(member);
     		memberService.visitUpdate(member.getMberIndex());
     		
-    		session.setAttribute("mberIndex", member.getMberIndex());
+    		session.setAttribute("member", member);
     	}
     	
         return "redirect:/";

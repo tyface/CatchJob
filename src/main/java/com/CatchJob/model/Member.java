@@ -6,7 +6,7 @@ public class Member {
 	private String mberId; // 아이디(email)
 	private String mberPw; // 비밀번호
 	private String mberType; // 회원구분(1:일반,2:기업인증)
-	private String entIndex; // 기업회원일 경우 해당기업 식별번호
+	private int entIndex; // 기업회원일 경우 해당기업 식별번호
 	private String mberFlag; // 계정상태(1:등록,2:탈퇴)
 	private String regDate; // 회원가입일
 	private String lastDate; // 마지막방문일
@@ -36,10 +36,10 @@ public class Member {
 	public void setMberType(String mberType) {
 		this.mberType = mberType;
 	}
-	public String getEntIndex() {
+	public int getEntIndex() {
 		return entIndex;
 	}
-	public void setEntIndex(String entIndex) {
+	public void setEntIndex(int entIndex) {
 		this.entIndex = entIndex;
 	}
 	public String getMberFlag() {
