@@ -44,10 +44,14 @@ public interface ReviewDao {
 	
 	/*//질문별로 리뷰 보기
 	public List<Review> reviewListByQNum(Map<String, String> data);*/
-	
 	//페이징 처리
 	public int selectCount();
 
 	public List<Review> selectReviewList(Map<String, String> map);
-	
+
+//	리뷰코멘트 VIEW 페이지에서 페이징처리
+	public List<Review> selectReviewsList(Map<String, Integer> data);
+	// 페이징 처리할 때 필요한 total rows
+	public int selectReviewTotalRows(Map<String, Integer> data);
+
 }

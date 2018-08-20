@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.FollowDao;
 
 @Service
@@ -18,13 +18,17 @@ public class FollowServiceImp implements FollowService{
 	/* 팔로우 기업 등록하기 */
 	@Override
 	public boolean regFollowEnt(Map<String, String> mapData) {
+		//session.getAttribute("mberIndex").toString()
+		//(int) (session.getAttribute("mberIndex"))
 		try {
-//			if((followDao.selectCount(mapData.get("memberIndex"))). < Constants.Follow.LIMIT_NUMBER_OF_FOLLOW ) {
-//				
+
+//			if(getCount(  )) {
+//				followDao.insertFollows(mapData);	
+//				return true;
 //			}else {
-//				
+//				return false;				
 //			}
-			followDao.insertFollows(mapData);
+			followDao.insertFollows(mapData);	
 			return true;
 		}catch(Exception e) {
 			System.out.println(e);
@@ -47,10 +51,16 @@ public class FollowServiceImp implements FollowService{
 		return followDao.selectFollowsByMember(memberIndex);
 	}
 	/* 팔로우 기업 회원당 최대 10개 (Constants.Follow.LIMIT_NUMBER_OF_FOLLOW)*/ 
-//	@Override
-//	public Map<String, String> getCount(int memberIndex) {
-//		return null;
-//	}
+	@Override
+	public boolean getCount(int memberIndex) {
+		
+		if(followDao.selectFollowsCount(memberIndex).get("COUNT") <= Constants.Follow.LIMIT_NUMBER_OF_FOLLOW) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 	
 //	@Override
 //	public List<Map<String, String>> getFollowsEntList(int memberIndex) {

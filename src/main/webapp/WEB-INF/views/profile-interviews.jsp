@@ -7,7 +7,7 @@
 	rel="stylesheet">
 <script>
 $(function(){
-	
+
 	//alert("INTRVW_EXPRNC:" + INTRVW_EXPRNC);
 /* 	$(".update").on("click",function(){
 		alert("선택된 기업요소: "+$(this).children().val());

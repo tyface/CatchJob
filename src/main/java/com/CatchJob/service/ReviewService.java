@@ -35,7 +35,7 @@ public interface ReviewService {
 	public Review review(Map<String, String> data);
 /*	//질문별로 리뷰 보기
 	public List<Review> reviewListByQNum(Map<String, String> data);*/
-	/* 페이징 처리 */
+/* 페이징 처리 */
 	public int calPageTotalCount(int totalCount, int numOfMsgPage);
 
 	public int getStartPage(int pageNum);
@@ -43,5 +43,13 @@ public interface ReviewService {
 	public int getEndPage(int pageNum);
 
 	public Map<String, Object> getMessageList(Map<String, Object> data);
+
+//	리뷰코멘트 VIEW 페이지에서 페이징처리
+	public List<Review> getReviewsList(Map<String, Integer> data);
+	//Review page data
+	public Map<String, Object> reviewPageData (int currentPage, int entIndex, int questionNum );
+	// 페이징 처리할 때 필요한 total rows
+	public int getReviewTotalRows(Map<String, Integer> data);
+
 
 }

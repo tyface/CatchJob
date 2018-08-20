@@ -39,13 +39,13 @@ $(function(){
 
 <article class="container  ">
 	<div class="contents-wrap ">
-
+		<h1>팔로잉 기업</h1>
 		<c:forEach begin="0" varStatus="status" end="9" var="follow" items="${followView}">
 			<div class="row ent-list">
 	
 				<div class="col-sm-8">
 					<div class="row">
-						<a href="enterprise/view?entIndex=${follow.entIndex}" class="p25">${follow.entName}</a>
+						<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${follow.entIndex}" class="p25">${follow.entName}</a>
 						<a href="#" class="follow follow-btn follow">
 							<i class="fa fa-heart follow" id="follow"></i><!-- 123 -->
 							<input type="hidden" value="${follow.entIndex}">							
@@ -72,11 +72,11 @@ $(function(){
 					<div class="row">
 						<div class="col-xs-6 text-center cell-1">
 							<strong>${follow.reviewCount}</strong>
-							<a href="${contextPath}/enterprise/view?entIndex=${follow.entIndex}#section2"><br>리뷰코멘트</a>
+							<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${follow.entIndex}#section2"><br>리뷰코멘트</a>
 						</div>
 						<div class="col-xs-6 text-center cell-2">
 							<strong>${follow.interviewCount}</strong>
-							<a href="${contextPath}/enterprise/view?entIndex=${follow.entIndex}#section3"><br>면접정보</a>
+							<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${follow.entIndex}#section3"><br>면접정보</a>
 						</div>
 					</div>
 				</div>

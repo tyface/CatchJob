@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 		ON 			ent.ENT_IDX = up.ENT_IDX -->
 <!-- 		LEFT JOIN 	LEGAL_DONG_TB ld  -->
 <!-- 		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD  -->
-<!-- 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD -->
+<!-- 		AND 		ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD --> 
 <!-- 		AND 		ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 ) -->
 <!-- 		WHERE 		ent.ENT_SBSCRB_ST = 1 AND  ent.ENT_NM LIKE  CONCAT('%',#{keyword},'%') -->
 <!-- 		GROUP BY 	ent.ENT_IDX -->
@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY PAY_YM
 	</select>
 	
-	<!-- 팔루우 기업 리스트 보기 -->
+	<!-- 팔루우 기업 리스트 보기 profile-follows.jsp -->
 	<select id="selectListEntByMember" parameterType="int" resultMap="entMap">
 		SELECT fol.MBER_IDX, ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
 					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
@@ -115,7 +115,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 	   	fol.MBER_IDX=#{MBER_IDX}
 		GROUP BY 	ent.ENT_IDX
 	</select>
-
+	<!-- 최근본 기업 보기  profile-recent.jsp-->
+	<select id="selectListEntRecent" parameterType="int" resultMap="entMap">
+		SELECT vie.VIEW_IDX,vie.VISIT_DT,fol.MBER_IDX  as FOLLOWING ,ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
+					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
+		FROM 		ENTERPRISE_TB ent
+		LEFT JOIN 	REVIEW_TB revw 
+		ON 			ent.ENT_IDX = revw.ENT_IDX
+		LEFT JOIN 	INTERVIEW_TB intvw 
+		ON 			ent.ENT_IDX = intvw.ENT_IDX
+		LEFT JOIN 	UPDATE_ENT_INFO_TB up
+		ON 			ent.ENT_IDX = up.ENT_IDX
+		LEFT JOIN 	LEGAL_DONG_TB ld 
+		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
+		AND 			ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
+		AND 			ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
+		LEFT JOIN	VIEW_RECORD_TB vie
+		ON				vie.ENT_IDX = ent.ENT_IDX
+		LEFT JOIN 	FOLLOWING_TB fol
+		ON 			fol.ENT_IDX=ent.ENT_IDX AND fol.MBER_IDX=#{MBER_IDX}
+		WHERE vie.MBER_IDX=#{MBER_IDX}
+		GROUP BY 	ent.ENT_IDX
+		ORDER BY 	vie.VISIT_DT desc
+	</select>
 	<resultMap type="enterprise" id="entMap">
 		<result property="following" column="FOLLOWING"/>
 		<result property="entIndex" column="ENT_IDX" />

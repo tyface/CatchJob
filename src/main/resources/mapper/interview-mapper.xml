@@ -26,11 +26,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON i.ENT_IDX = e.ENT_IDX
 		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex}
 	</select>
-	<select id="selectListByEntIdx" parameterType="int" resultMap="interviewMap">
-		SELECT *
-		FROM INTERVIEW_TB
-		WHERE ENT_IDX=#{entIndex}
-	</select>
 	<!-- 계정에서 인터뷰 정보 출력할때 필요.. -->
 	<select id="selectListByMemberIdx" parameterType="int" resultMap="interviewMap">
 		SELECT ent.ENT_IDX, ent.ENT_NM, itv.MBER_IDX, itv.INTRVW_DFFLY, itv.INTRVW_RESULT, itv.REG_DT
@@ -47,6 +42,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ENT_IDX=#{entIndex}
 		GROUP BY INTRVW_DFFLY
 		ORDER BY INTRVW_DFFLY 
+	</select>
+	
+	<!-- 면접후기 작성버튼 클릭시에 이미 작성했는지 검사 -->
+	<select id="interviewDuplicationCheck" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM INTERVIEW_TB
+		WHERE ENT_IDX=#{ENT_IDX} AND MBER_IDX=#{MBER_IDX}
+	</select>
+	
+	<!-- 면접후기  VIEW 페이지에서 페이징처리 -->
+	<select id="selectInterviewList" parameterType="map" resultMap="interviewMap">
+		SELECT SQL_CALC_FOUND_ROWS * 
+		FROM 						INTERVIEW_TB 
+		WHERE 						ENT_IDX=#{ENT_IDX} 
+		ORDER BY 					REG_DT desc 
+		LIMIT 						#{NUM_OF_ITVW_PER_PAGE} 
+		OFFSET						#{START_ROW}
+	</select>
+	<select id="selectInterviewTotalRows" parameterType="int" resultType="int">
+		SELECT 	 count(*) AS TOTAL_ROWS 
+		FROM	 INTERVIEW_TB
+		WHERE	 ENT_IDX=#{ENT_IDX}
 	</select>
 
 	<resultMap type="interview" id="interviewMap">

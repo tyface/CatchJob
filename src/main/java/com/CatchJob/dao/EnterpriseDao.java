@@ -28,6 +28,8 @@ public interface EnterpriseDao {
 	
 	//팔로잉 기업 보기
 	public List<Enterprise> selectListEntByMember(int memberIndex);
+	//최근 본 기업 보기 
+	public List<Enterprise> selectListEntRecent(int memberIndex);
 	
 	// public int insertEnt(Enterprise ent); TODO 기업정보를 따로 추가할경우가 아직 없음
 	// public int updateEnt(Enterprise ent); TODO 기업정보를 따로 수정할경우가 아직 없음

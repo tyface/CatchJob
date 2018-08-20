@@ -7,7 +7,7 @@ public interface FollowService {
 	public boolean regFollowEnt(Map<String, String> mapData);
 	public boolean revFollowEnt(Map<String, String> mapData);
 	public List<Map<String, String>> getFollowsEnt(int memberIndex); 
-//	public Map<String, String> getCount(int memberIndex);
+	public boolean getCount(int memberIndex);
 	
 	//팔로잉 기업 보기
 //	public List<Map<String, String>> getFollowsEntList(int memberIndex);
