@@ -69,7 +69,7 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/updateReview")
 	public String updateReview(Review review, HttpSession session) {
-		int memberIndex = (int) (session.getAttribute("mberIndex"));
+		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
 		review.setMberIndex(memberIndex);
 		reviewService.updateReview(review);
 //		System.out.println(review);		
@@ -83,10 +83,10 @@ public class ProfileController {
 		data.put("entIndex", req.getParameter("entIndex"));
 		data.put("questionNum", req.getParameter("questionNum"));
 		System.out.println("리뷰 지울 데이터: "+data);
-	//	reviewService.deleteReview(data);
-		//return "redirect:reviews";
+		boolean result = reviewService.deleteReview(data);
+
 		
-		return reviewService.deleteReview(data);
+		return result;
 	}
 	
 	
@@ -137,15 +137,19 @@ public class ProfileController {
 		itvwService.updateInterview(interview);
 		
 		return "redirect:interviews";
-	}         
+	}  
+	@ResponseBody	
 	@RequestMapping(value="/deleteInterview")
-	public String deleteInterview (HttpServletRequest req, HttpSession session) {
+	public boolean deleteInterview (HttpServletRequest req, HttpSession session, String entIndex) {
 		
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("mberIndex",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
-		data.put("entIndex", req.getParameter("entIndex"));
-		itvwService.deleteInterview(data);
-		return "redirect:interviews";
+//		data.put("entIndex", req.getParameter("entIndex"));
+		data.put("entIndex", entIndex);
+		
+		boolean result = itvwService.deleteInterview(data); 
+			System.out.println("프로파일 컨트롤러: "+ result);
+		return result;
 	}
 	
 

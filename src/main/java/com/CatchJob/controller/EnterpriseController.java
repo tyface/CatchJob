@@ -122,10 +122,11 @@ public class EnterpriseController {
 	@RequestMapping(value = "/regFollow")
 	public boolean regFollow (String entIndex, HttpSession session) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));		
 		mapData.put("ENT_IDX", entIndex );	
 //		(int) (session.getAttribute("mberIndex"))
 //		mapData.put("ENT_IDX", entIndex );	
+		System.out.println("좋아요 컨트롤러: "+mapData);
 		return followService.regFollowEnt(mapData);
 	}
 	@ResponseBody
