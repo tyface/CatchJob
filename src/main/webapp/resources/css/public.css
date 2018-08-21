@@ -30,6 +30,24 @@ article {
 	cursor: pointer;
 }
 
+.blue-font{
+	color: #337ab7;
+	cursor: pointer;
+	display: inline-block;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-o-transition: 0.3s;
+	-ms-transition: 0.3s;
+	transition: 0.3s;
+}
+.blue-font:hover{
+	-webkit-transform: scale(1.1,1.1);
+  -moz-transform: scale(1.1,1.1);
+  -o-transform: scale(1.1,1.1);
+  -ms-transform: scale(1.1,1.1);
+  transform: scale(1.1,1.1);
+}
+
 .abcRioButtonLightBlue {
 	height: 36px;
 	width: 50% !important;
@@ -81,7 +99,7 @@ article {
 }
 
 .p-1 {
-	
+
 }
 
 .stars-on::after {
@@ -422,12 +440,12 @@ margin: 1px;
 	background-color: #1ABC9C;
 	color:white;
 
-} 
+}
 
 .personnel-graph {
 	border-color: #1ABC9C;
 	background: white;
-	
+
 /* 	color: orange; */
 
 }

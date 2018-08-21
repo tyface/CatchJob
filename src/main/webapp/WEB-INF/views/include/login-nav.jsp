@@ -10,11 +10,11 @@ $(function() {
 		location.href="${pageContext.request.contextPath}/member/facebookLogin";
 	});
 
-	$(".myBtnLogin").click(function() {
+	$(".myBtnLogin").on("click",function() {
 		$("#loginModal").modal("show");
 	});
 
-	$("#loginHide").click(function() {
+	$("#loginHide").on("click",function() {
 		$("#loginModal").modal("hide");
 	});
 
@@ -32,11 +32,19 @@ $(function() {
 							$("#loginModal").modal("hide");
 							window.location.reload();
 					 } else {
-						 swal("비밀번호를 다시 입력해 주세요", "", "error");
+						 swal({
+						   title:"비밀번호를 다시 입력해 주세요",
+							 type:"warning",
+							 confirmButtonClass: "btn-warning"
+						 });
 					 }
 				},
 				error : function() {
-					swal("아이디를 다시 입력해 주세요", "", "error");
+					swal({
+						title:"아이디를 다시 입력해 주세요",
+						type:"warning",
+						confirmButtonClass: "btn-warning"
+					});
 				}
 		 });
 		 return false;
@@ -57,21 +65,35 @@ $(function() {
 				 dataType : "json",
 				 success : function(data) {
 						if (data.result) {
-							swal("비밀번호가 변경 되었습니다.","", "success")
-							.then(() => {
-  							$("#pwModifyModal").modal("hide");
+							swal({
+								title:"비밀번호가 변경 되었습니다.",
+								type:"success",
+								confirmButtonClass: "btn-success"
 							});
+  						$("#pwModifyModal").modal("hide");
 						} else {
-							swal("비밀번호 수정에 실패하였습니다.","", "error")
+							swal({
+	  						title:"비밀번호 수정에 실패하였습니다.",
+	  						type: "error",
+	  						confirmButtonClass: "btn-error"
+	  					})
 						}
 				 },
 				 error : function() {
-					 swal("비밀번호 수정오류.","", "error")
+					 swal({
+ 						title:"비밀번호 수정 오류",
+ 						type: "error",
+ 						confirmButtonClass: "btn-error"
+ 					})
 				 }
 			});
 			return false;
 		}else{
-			swal("동일한 비밀번호를 입력하세요.","", "error")
+			swal({
+				title:"동일한 비밀번호를 입력하세요.",
+				type: "warning",
+				confirmButtonClass: "btn-warning"
+			})
 			return false;
 		}
 
@@ -89,15 +111,23 @@ $(function() {
 				 success : function(data) {
 						if (data.result) {
 							swal("메일전송 완료!","입력하신 이메일로 비밀번호 재설정 링크를 보내드렷 습니다.", "success")
-							.then(() => {
-								$("#findPasswordModal").modal("hide");
-							});
+							// .then(() => {
+							// 	$("#findPasswordModal").modal("hide");
+							// });
 						} else {
-							swal("비밀번호 재설정에 실패하였습니다.","", "error")
+							swal({
+								title:"메일전송 실패",
+								type: "error",
+								confirmButtonClass: "btn-error"
+							})
 						}
 				 },
 				 error : function() {
-					 swal("비밀번호 재설정오류.","", "error")
+					 swal({
+						 title:"비밀번호 재설정에 실패하였습니다.",
+						 type: "warning",
+						 confirmButtonClass: "btn-warning"
+					 })
 				 }
 			});
 			return false;
@@ -165,9 +195,86 @@ $(function() {
 	});
 
 
-
 });
 
+function passwordModifyForm() {
+	$('#loginModal').modal('hide');
+	swal({
+		height:"1000px",
+		title: "비밀번호 재설정하기\n\r",
+		text: "입력하신 메일로 비밀번호 변경하기 \n\r링크가 전송됩니다.",
+		type: "input",
+		inputPlaceholder: "email",
+		showCancelButton: true,
+		closeOnConfirm: false,
+		showLoaderOnConfirm: true
+	}, function (inputValue) {
+		if (inputValue === "") {
+    	swal.showInputError("이메일을 입력해주세요");
+    	return false
+  	}
+
+		$.ajax({
+			 type : "get",
+			 url : "${pageContext.request.contextPath}/member/findPasswordMail",
+			 data : {
+					"email" : inputValue
+			 },
+			 dataType : "json",
+			 success : function(data) {
+					if (data.result) {
+						swal({
+							title:"이메일 전송 완료",
+							text:"입력하신 이메일로 비밀번호 재설정 링크를 보내드렷 습니다.",
+							type: "success",
+							confirmButtonClass: "btn-success"
+						})
+					} else {
+						swal({
+							title:"비밀번호 재설정에 실패하였습니다.",
+							type: "warning",
+							confirmButtonClass: "btn-warning"
+						})
+					}
+			 },
+			 error : function() {
+				 swal({
+					 title:"비밀번호 재설정에 실패하였습니다.",
+					 type: "warning",
+					 confirmButtonClass: "btn-warning"
+				 })
+			 }
+		});
+	});
+}
+// <div class="modal fade" id="findPasswordModal" role="dialog" >
+// 	<div class="modal-dialog">
+//
+// 		<!-- Modal content-->
+// 		<div class="modal-content">
+// 			<div class="modal-header" style="padding: 35px 50px;">
+// 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+// 				<h4>
+// 					<span class="glyphicon glyphicon-lock"></span> 비밀번호 재설정하기
+// 				</h4>
+// 			</div>
+// 			<div class="modal-body" style="padding: 40px 50px;">
+// 				<p>입력하신 메일로 비밀번호 변경하기 링크가 전송됩니다.</p><br>
+//
+// 				<form role="form" method="post" id="findPasswordForm">
+// 					<div class="form-group has-feedback">
+// 						<input	type="email" class="form-control" name="email" placeholder="Email">
+// 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+// 					</div><br>
+// 					<button type="submit" class="btn btn-success btn-block">
+// 						<span class="glyphicon glyphicon-off"></span> 비밀번호 재설정 메일 보내기
+// 					</button>
+// 				</form>
+// 			</div>
+// 		</div>
+//
+// 	</div>
+// </div>
 </script>
 
 <c:if test="${member.mberIndex == null}">
@@ -222,7 +329,7 @@ $(function() {
         </div>
         <div class="modal-footer">
           <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
-          <p>Forgot <a href="#findPasswordModal"  data-toggle="modal" onclick="$('#loginModal').modal('hide');">Password</a></p>
+          <p>Forgot <span class="blue-font" onclick="passwordModifyForm()">Password</span></p>
         </div>
       </div>
     </div>
@@ -293,7 +400,7 @@ $(function() {
 		</div>
 
 		<%-- 비밀번호 찾기 모달 --%>
-		<div class="modal fade" id="findPasswordModal" role="dialog" >
+		<%-- <div class="modal fade" id="findPasswordModal" role="dialog" >
 			<div class="modal-dialog">
 
 				<!-- Modal content-->
@@ -301,7 +408,7 @@ $(function() {
 					<div class="modal-header" style="padding: 35px 50px;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4>
-							<span class="glyphicon glyphicon-lock"></span> 비밀번호 찾기
+							<span class="glyphicon glyphicon-lock"></span> 비밀번호 재설정하기
 						</h4>
 					</div>
 					<div class="modal-body" style="padding: 40px 50px;">
@@ -313,14 +420,14 @@ $(function() {
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div><br>
 							<button type="submit" class="btn btn-success btn-block">
-								<span class="glyphicon glyphicon-off"></span> 비밀번호 찾기
+								<span class="glyphicon glyphicon-off"></span> 비밀번호 재설정 메일 보내기
 							</button>
 						</form>
 					</div>
 				</div>
 
 			</div>
-		</div>
+		</div> --%>
 
 </c:if>
 
@@ -414,14 +521,16 @@ $(function() {
 
 				<div class="modal-body" style="padding: 40px 50px;">
 					<form role="form" method="post" id="entVerifyForm">
-						<p>1) 기업회원 인증방법</p>
+						<h4>기업회원 인증방법</h4>
+						<p>1) 명함이나 재직증명서로 인증하기. 관리자이메일(catchjob33@gmail.com) </p>
+						<p>2) 회사 이메일로 인증하기</p>
 						<div class="form-group has-feedback">
-							<input	type="email" class="form-control" id="test">
-							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							<input	type="email" class="form-control" id="test" placeholder="회사 이메일로 인증하기">
+							<span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
 						</div>
 						<div class="form-group has-feedback">
 						<button type="submit" class="btn btn-success btn-block">
-							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
+							<span class="glyphicon glyphicon-off"></span> 인증 메일보내기
 						</button>
 					</form>
 				</div>
