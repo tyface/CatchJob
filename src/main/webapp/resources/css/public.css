@@ -398,13 +398,24 @@ margin: 1px;
 /*   } */
 /* } */
 
+/* 유효성검사 에러시에  */
+input.error, textarea.error, select.error {
+	/* 	border: 1px dashed red; */
+	border: 1px solid red;
+}
+
+label.error {
+	color: red;
+	font-weight: normal;
+}
 /* 기업상세보기 페이지  END */
 
 /**/
 .non-line {
-	text-decoration: none;
-	background-color: lime;
+	text-decoration: none !important;
+/* 	background-color: lime; */
 	color: black;
+	cursor: pointer;
 }
 
 .contents-wrap {
@@ -431,6 +442,5 @@ margin: 1px;
 /* 	color: orange; */
 
 }
-
 
 /* VIEW 페이지 그래프  END*/
