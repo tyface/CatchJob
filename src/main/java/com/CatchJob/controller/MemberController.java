@@ -1,7 +1,10 @@
 package com.CatchJob.controller;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import javax.mail.MessagingException;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
@@ -33,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CatchJob.model.Member;
 import com.CatchJob.service.MailHandler;
+import com.CatchJob.service.MailService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.TempKey;
 
@@ -42,6 +48,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MailService mailService;
+	
+	
 	@Autowired
 	private GoogleConnectionFactory googleConnectionFactory;
 	@Autowired
@@ -54,7 +64,10 @@ public class MemberController {
 	    
 	@Autowired
     private JavaMailSender mailSender;
-	
+	@Autowired 
+	private ResourceLoader resourceLoader;
+
+
 	/* 로그인 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpSession session, HttpServletResponse resp, String mberId, String mberPw) {
@@ -91,13 +104,13 @@ public class MemberController {
 		member.setOauthId(key);
 		member.setMberFlag("2");
 		
-		
-		if (memberService.getMemberById(signUpId) == null && signUpPw.equals(signUpPwCheck)) {
-			memberService.join(member);
-			// 회원가입 성공
-			//"가입 시 사용한 이메일로 인증해 주세요"
+		try {
+			if (memberService.getMemberById(signUpId) == null && signUpPw.equals(signUpPwCheck)) {
+				memberService.join(member);
+				// 회원가입 성공
+				//"가입 시 사용한 이메일로 인증해 주세요"
 				System.out.println("이메일 인증 시작");
-			try {
+			
 				MailHandler mailHandler = new MailHandler(mailSender);
 				
 	        	mailHandler.setSubject("catch job 인증 이메일 입니다.");
@@ -109,21 +122,21 @@ public class MemberController {
 				mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
 		        mailHandler.setTo(member.getMberId());
 		        mailHandler.send();
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
+				
+				data = "{\"result\" : true}";
+			} else {
+				data = "{\"result\" : false}";
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			data = "{\"result\" : false}";
+		} finally {
+			try {
+				resp.getWriter().print(data);
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	       
-			data = "{\"result\" : true}";
-		} else {
-			data = "{\"result\" : false}";
-		}
-		
-		try {
-			resp.getWriter().print(data);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -158,25 +171,24 @@ public class MemberController {
 	/* 비밀번호 재설정 메일보내기 */
 	@RequestMapping(value = "/findPasswordMail")
 	public void findPassword(String email, HttpServletResponse resp) {
-		String data = "";
-		
+		String data="";
 		try {
 			MailHandler mailHandler = new MailHandler(mailSender);
 			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
-			mailHandler.setText(new StringBuffer().append("<h1>비밀번호 재설정 하기</h1>").
-			append("<a href='http://localhost:8090/catchjob/member/passwordModifyView?memberId=").
-			append(email).
-			append("' target='_blank'>이메일 인증 확인</a>").toString());
+			mailHandler.setText(mailService.getMailTemplate(email));
+			
+			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource("resources/img/image-1.gif").getFile());
+			mailHandler.addInline("image-1", fsr);
+			fsr = new FileSystemResource(resourceLoader.getResource("resources/img/logo.png").getFile());
+			mailHandler.addInline("logo", fsr);
+			
 			mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
 			mailHandler.setTo(email);
 			mailHandler.send();
 			
 			data = "{\"result\" : true}";
 			
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			data = "{\"result\" : false}";
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			data = "{\"result\" : false}";
 		} finally {
@@ -192,8 +204,6 @@ public class MemberController {
 	/* 비밀번호 재설정 페이지 뷰 */
 	@RequestMapping(value = "/passwordModifyView")
 	public String passwordModifyView(Model model, String memberId) {
-		
-		System.out.println("진입" + memberId);
 		model.addAttribute("memberId", memberId);
 		return "password-modify";
 	}

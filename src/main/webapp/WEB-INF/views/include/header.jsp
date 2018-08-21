@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<!-- JSTL 의 core 기능을 사용하기 위한 설정 : if, forEach, set 사용
-	조건문 반복문 만드는거  -->
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,7 +24,7 @@
 
 
 <script type="text/javascript">
-
+	var contextPath = "${pageContext.request.contextPath}";
 	// 페이스북 리다이렉트 프래그먼트 포함 오류 해결용(임시)
 	if (window.location.hash && window.location.hash == '#_=_') {
 		if (window.history && history.pushState) {

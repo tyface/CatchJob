@@ -2,10 +2,10 @@ package com.CatchJob.service;
 
 import java.io.UnsupportedEncodingException;
 
-import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -39,14 +39,10 @@ public class MailHandler {
         messageHelper.setTo(email);
         //받는 사람 이메일 
     }
-    public void addInline(String contentId, DataSource dataSource) throws MessagingException {
-        messageHelper.addInline(contentId, dataSource);
+    public void addInline(String contentId, FileSystemResource res) throws MessagingException {
+        messageHelper.addInline(contentId, res);
     }
-    public void send() {
-        try {
-            mailSender.send(message);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void send() throws Exception{
+      mailSender.send(message);
     }
 }
