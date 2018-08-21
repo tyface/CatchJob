@@ -24,46 +24,114 @@ $(function(){
       var $this = $(this).find("i");	
       var fa = $this.hasClass("fa");
       var entIndex = $this.next().val();
-		
-	  /* 로그인 상태임 */
-	  if($this.hasClass("fa-heart-o")){
+      /* 로그인 상태임 */
+	    if($this.hasClass("fa-heart-o")){
 		  /* 팔로잉 기업 추가  */
-		  $.ajax({
-		  		url:"${pageContext.request.contextPath}/enterprise/regFollow",				  		
-		  		data:{entIndex : entIndex},
-		  		type: "post",
-		  		dataType:"json",
-		  		success: function(result){
+		    $.ajax({
+		  	  	  url:"${pageContext.request.contextPath}/enterprise/regFollow",
+		  		  data:{entIndex : entIndex},
+		  		  type: "post",
+		  		  dataType:"json",
+		  		  success: function(result){
 		  			/* 성공 */
-		  			if(result){
-			    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
-			    	    $this.toggleClass("fa-heart-o");
-			    	    $this.toggleClass("fa-heart");				  				
-		  			}else{
-		  				alert("팔로잉 할 수 없습니다. 팔로잉 기업은 최대 10개 까지 가능합니다")
-		  			}
-		  		}	  		
-		  })
-	  }else{
-		  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
-			  /* 팔로잉 기업 해지  */
-			  $.ajax({
-			  		url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
-			  		data:{entIndex : entIndex},
-			  		type: "post",
-			  		dataType:"json",
-			  		success: function(result){
-			  			/* 성공 */
-			  			 alert("팔로잉이 해제되었습니다.");
-						 $this.toggleClass("fa-heart");
-						 $this.toggleClass("fa-heart-o");
-			  		}					  		
-			  })					 
-		  }
-	  }		  
+		  			  if(result){
+		  				  
+		  				swal({
+		  				  title: "팔로잉되었습니다!",
+		  				  text: "팔로잉 기업은 [마이페이지 > 팔로잉 기업]에서 확인할 수 있습니다.",
+		  				  type: "success",
+		  			      confirmButtonClass: "btn-success",
+		  				
+		  				  //button: false 
+		  				});
+			    	      $this.toggleClass("fa-heart-o");
+			    	      $this.toggleClass("fa-heart");				  				
+		  			  }else{
+		  				  swal({
+			  				  title: "팔로잉 할 수 없습니다.",
+			  				  text: "팔로잉 기업은 최대 10개 까지 가능합니다",
+			  				  type: "error",
+			  				  confirmButtonClass: "btn-danger",
+			  				  //button: false 
+			  				  //dangerMode:true
+			  			  });
+		  			  }
+		  		  }	  		
+		    })
+	    }else{
+	    	swal({
+	    		  title: "팔로잉을 중단하시겠습니까?",
+	    		  //text: "Once deleted, you will not be able to recover this file!",
+	    		  type: "info",
+	    		  confirmButtonClass: "btn-info",
+	    		  showCancelButton: true,
+	    		  closeOnConfirm: false,
+	    		  //buttons: true,
+	    		  //dangerMode: true,
+	    		},
+	    		function(){
+	    			 $.ajax({
+				  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
+				  		  data:{entIndex : entIndex},
+				  		  type: "post",
+				  		  dataType:"json",
+				  		  success: function(result){
+				  			/* 성공 */
+				  				swal({
+				  				    title: "팔로잉이 해제되었습니다.",
+				  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
+				  				    type: "success",
+				  				    confirmButtonClass: "btn-success",
+				  				    //button: false 
+				  				    //dangerMode:true
+				  			    });
+							   $this.toggleClass("fa-heart");
+							   $this.toggleClass("fa-heart-o");
+				  		  }
+				    })	
+	    		})
+	    	
+	    }		  
+  	
+// 	  /* 로그인 상태임 */
+// 	  if($this.hasClass("fa-heart-o")){
+// 		  /* 팔로잉 기업 추가  */
+// 		  $.ajax({
+// 		  		url:"${pageContext.request.contextPath}/enterprise/regFollow",				  		
+// 		  		data:{entIndex : entIndex},
+// 		  		type: "post",
+// 		  		dataType:"json",
+// 		  		success: function(result){
+// 		  			/* 성공 */
+// 		  			if(result){
+// 			    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
+// 			    	    $this.toggleClass("fa-heart-o");
+// 			    	    $this.toggleClass("fa-heart");				  				
+// 		  			}else{
+// 		  				alert("팔로잉 할 수 없습니다. 팔로잉 기업은 최대 10개 까지 가능합니다")
+// 		  			}
+// 		  		}	  		
+// 		  	})
+// 	  }else{
+// 		  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
+// 			  /* 팔로잉 기업 해지  */
+// 			  $.ajax({
+// 			  		url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
+// 			  		data:{entIndex : entIndex},
+// 			  		type: "post",
+// 			  		dataType:"json",
+// 			  		success: function(result){
+// 			  			/* 성공 */
+// 			  			 alert("팔로잉이 해제되었습니다.");
+// 						 $this.toggleClass("fa-heart");
+// 						 $this.toggleClass("fa-heart-o");
+// 			  		}					  		
+// 			  })					 
+// 		  }
+// 	  }		  
 
       
-	});
+	 });
 	
 })
 

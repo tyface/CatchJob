@@ -14,17 +14,7 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 
-<style>
-input.error, textarea.error, select.error {
-	/* 	border: 1px dashed red; */
-	border: 1px solid red;
-}
 
-label.error {
-	color: red;
-	font-weight: normal;
-}
-</style>
 <script>
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
@@ -42,15 +32,11 @@ var outPerson = new Array();
 $(function(){
 
 
-	//alert(${mberIndex});
-	if('${mberIndex}'==''){
-		//alert(status);
+	if('${member}'==''){
 	}else{
 		status = "login";
-		//alert(status);
 	}
 
-	//alert("status: "+status);
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
@@ -62,20 +48,15 @@ $(function(){
 	var viewDataJson = JSON.parse('${viewDataJson}');
 	for(var i in viewDataJson){
 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
-		/* var result = addComma(num);
-		alert(result);
-		 */
 		month.push(viewDataJson[i]['PAY_YM']) ;
 		salary.push(num) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
 		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
-		//alert(test[i]['PAY_AMT']);
 	}
  	//chartSalary();
  	chartPersonnel();
 	$("#salary-btn").on("click", function(){
-		//alert("월급버튼 눌림!");
 		$("canvas#comboBarLineChart").remove();
 // 		var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
 // 		ctx2.clear();
@@ -86,17 +67,14 @@ $(function(){
 		$("#salary-btn").attr('disabled', true);
 		$("#personnel-btn").toggleClass('personnel-graph');
 		$("#salary-btn").toggleClass('salary-graph');
-		//alert("월급버튼 눌림!");
 		//chartSalary();	
 	});
 	$("#personnel-btn").on("click", function(){
-		//alert("인원 눌림");
 		$("canvas#lineChart").remove();
 // 		var ctx1 = document.getElementById("lineChart").getContext('2d');
 // 		ctx1.clear();
 		$("div.chartreport").append('<canvas id="comboBarLineChart"></canvas>');
 		chartPersonnel();
-		//alert("인원 눌림");
 		//chartPersonnel();
 		$("#personnel-btn").attr('disabled', true);
 		$("#salary-btn").attr('disabled', false);
@@ -109,25 +87,9 @@ $(function(){
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
-// 	$("#itvw-write-btn").on("submit", function(){
-
-// 		alert("면접후기를 성공적으로 작성하였습니다^^*");
-// 		$("#writeInterview").submit();
-// 		$("#myModal").modal("hide");
-// 		window.location.reload();
-
-
-// 	});
-
-//    $.validator.setDefaults({
-//         onkeyup:false,
-//         onclick:false,
-//         onfocusout:false,
-//         showErrors: function(){
-//         	alert("필수 항목을 확인해 주세요")
-//         }
-//     });
-   
+	reviewValidation()//리뷰 유효성 검사 부분
+	
+  
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
 	if(following == 1){
 		$("#follow").toggleClass("fa-heart-o");
@@ -135,61 +97,168 @@ $(function(){
 	}
 /* 기업 팔로잉 START */
 	$(".follow-btn").click(function (e) {
-      var $this = $(this).find("i");
-      var fa = $this.hasClass("fa");
-
-	  if(status == "logout" & $this.hasClass("fa-heart-o")){
-			  if(confirm("기업 팔로우는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* 로그인 모달 띄우기 */
-				 $("#myModalLogin").modal("show");
-	    	  }
-	  }else{/* 로그인 상태임 */
-		  if($this.hasClass("fa-heart-o")){
+        var $this = $(this).find("i");
+        var fa = $this.hasClass("fa");
+      
+	    if(status == "logout" & $this.hasClass("fa-heart-o")){
+	    	
+	    	  swal({
+	        	  title: "로그인 하시겠습니까?",
+	        	  text: "기업 팔로우는 로그인 후에 이용 가능합니다.",
+	        	  type: "info",
+	        	  confirmButtonClass: "btn-info",
+	        	  showCancelButton: true,
+	        	 // buttons: true,
+	        	  //infoMode: true,
+	        	},
+	        	function(){
+	        		/* 로그인 모달 띄우기 */
+					$("#loginModal").modal("show");
+	        	})
+	        	
+// 	        	.then((willDelete) => {
+// 	        	  if (willDelete) {
+// 	        		  /* 로그인 모달 띄우기 */
+// 					   $("#loginModal").modal("show");
+// 	        	  } 
+// 	        });
+	        
+	    }else{/* 로그인 상태임 */
+		    if($this.hasClass("fa-heart-o")){
 			  /* 팔로잉 기업 추가  */
-			  $.ajax({
-			  		url:"${pageContext.request.contextPath}/enterprise/regFollow",
-			  		data:{entIndex : entIndex},
-			  		type: "post",
-			  		dataType:"json",
-			  		success: function(result){
+			    $.ajax({
+			  	  	  url:"${pageContext.request.contextPath}/enterprise/regFollow",
+			  		  data:{entIndex : entIndex},
+			  		  type: "post",
+			  		  dataType:"json",
+			  		  success: function(result){
 			  			/* 성공 */
-			  			if(result){
-				    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
-				    	    $this.toggleClass("fa-heart-o");
-				    	    $this.toggleClass("fa-heart");				  				
-			  			}else{
-			  				alert("팔로잉 할 수 없습니다. 팔로잉 기업은 최대 10개 까지 가능합니다")
-			  			}
-			  		}	  		
-			  })
-		  }else{
-			  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
-				  /* 팔로잉 기업 해지  */
-				  $.ajax({
-				  		url:"${pageContext.request.contextPath}/enterprise/revFollow",
-				  		data:{entIndex : entIndex},
-				  		type: "post",
-				  		dataType:"json",
-				  		success: function(result){
-				  			/* 성공 */
-				  			 alert("팔로잉이 해제되었습니다.");
-							 $this.toggleClass("fa-heart");
-							 $this.toggleClass("fa-heart-o");
-				  		}
-				  })
-			  }
-		  }		  
-	  }
+			  			  if(result){
+			  				  
+			  				swal({
+			  				  title: "팔로잉되었습니다!",
+			  				  text: "팔로잉 기업은 [마이페이지 > 팔로잉 기업]에서 확인할 수 있습니다.",
+			  				  type: "success",
+			  			      confirmButtonClass: "btn-success",
+			  				
+			  				  //button: false 
+			  				});
+				    	      $this.toggleClass("fa-heart-o");
+				    	      $this.toggleClass("fa-heart");				  				
+			  			  }else{
+			  				  swal({
+				  				  title: "팔로잉 할 수 없습니다.",
+				  				  text: "팔로잉 기업은 최대 10개 까지 가능합니다",
+				  				  type: "error",
+				  				  confirmButtonClass: "btn-danger",
+				  				  //button: false 
+				  				  //dangerMode:true
+				  			  });
+			  			  }
+			  		  }	  		
+			    })
+		    }else{
+		    	swal({
+		    		  title: "팔로잉을 중단하시겠습니까?",
+		    		  //text: "Once deleted, you will not be able to recover this file!",
+		    		  type: "info",
+		    		  confirmButtonClass: "btn-info",
+		    		  showCancelButton: true,
+		    		  closeOnConfirm: false,
+		    		  //buttons: true,
+		    		  //dangerMode: true,
+		    		},
+		    		function(){
+		    			 $.ajax({
+					  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
+					  		  data:{entIndex : entIndex},
+					  		  type: "post",
+					  		  dataType:"json",
+					  		  success: function(result){
+					  			/* 성공 */
+					  				swal({
+					  				    title: "팔로잉이 해제되었습니다.",
+					  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
+					  				    type: "success",
+					  				    confirmButtonClass: "btn-success",
+					  				    //button: false 
+					  				    //dangerMode:true
+					  			    });
+								   $this.toggleClass("fa-heart");
+								   $this.toggleClass("fa-heart-o");
+					  		  }
+					    })	
+		    		})
+		    		
+// 		    		.then((willDelete) => {
+		    		  
+		    			
+// 		    			if (willDelete) {
+// 		    				 $.ajax({
+// 						  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
+// 						  		  data:{entIndex : entIndex},
+// 						  		  type: "post",
+// 						  		  dataType:"json",
+// 						  		  success: function(result){
+// 						  			/* 성공 */
+// 						  				swal({
+// 						  				    title: "팔로잉이 해제되었습니다.",
+// 						  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
+// 						  				    icon: "success",
+// 						  				    
+// 						  				    button: false 
+// 						  				    //dangerMode:true
+// 						  			    });
+// 									   $this.toggleClass("fa-heart");
+// 									   $this.toggleClass("fa-heart-o");
+// 						  		  }
+// 						    })
+// 		    		    } 
+		    			
+		    			
+// 		    	});
+		    	
+		    	
+// 		    	if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
+// 				  /* 팔로잉 기업 해지  */
+// 				    $.ajax({
+// 				  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
+// 				  		  data:{entIndex : entIndex},
+// 				  		  type: "post",
+// 				  		  dataType:"json",
+// 				  		  success: function(result){
+// 				  			/* 성공 */
+// 							   $this.toggleClass("fa-heart");
+// 							   $this.toggleClass("fa-heart-o");
+// 				  		  }
+// 				    })
+// 			    }
+		    	
+		    	
+		    	
+		    }		  
+	    }
       
    });/* 기업 팔로잉 END */
   
  /* 기업리뷰 작성 START */
       $("#myBtn").click(function(){
     	  if(status == "logout"){
-			  if(confirm("기업리뷰 작성는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* YES 로그인 모달 띄우기 */    	
-				 $("#myModalLogin").modal("show");
-	    	  }/* NO  */
+			  
+    		  swal({
+	        	  title: "로그인 하시겠습니까?",
+	        	  text: "기업 팔로우는 로그인 후에 이용 가능합니다.",
+	        	  type: "info",
+	        	  showCancelButton: true,
+	        	  confirmButtonClass: "btn-info",
+	        	 // buttons: true,
+	        	  //infoMode: true,
+	        	},
+	        	function(){
+	        		/* 로그인 모달 띄우기 */
+					$("#loginModal").modal("show");
+	        	})
+    		  
 		  }else{/* 로그인 상태임 */
     	  
 		      
@@ -200,7 +269,15 @@ $(function(){
 			  		dataType:"json",
 			  		success: function(result){	
 			  			if(result){/* 중복 */
-			  				alert("이미 등록하셨습니다. 마이페이지의 기업리뷰 작성을 확인하세요")
+			  				swal({
+			  					title: "이미 등록하셨습니다.",
+			  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
+			  					type: "error",
+			  					confirmButtonClass:"btn-danger",
+			  					
+			  					
+			  				})
+			  				
 			  			}else{/* 중복X, 작성가능 */
 			  				$("#myModal").modal();
 			  			}
@@ -215,16 +292,16 @@ $(function(){
 
 		var point = $(this).parent().parent().prev().children().children("div").text();
 		var statusCount = $(this).next().val();
+		
 		if(status == "logout"){
 			  if(confirm("리뷰 코멘트는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
 				 /* YES 로그인 모달 띄우기 */    	
-				 $("#myModalLogin").modal("show");
+				 $("#loginModal").modal("show");
 	    	  }/* NO  */
 		  }else{/* 로그인 상태임 */
 			var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
 			
 			var questionNum = statusCount;
-			var entIndex = $("#entIndex").val();
 			  $.ajax({
 				url:"${pageContext.request.contextPath}/enterprise/writeReview",
 				type:"post",
@@ -237,11 +314,24 @@ $(function(){
 				dataType: "json", 
 				success : function(result){
 					if(result){
-						alert("등록되었습니다.");
 						$(".starScore").val("0");
+						swal({
+							title:"등록되었습니다!",
+							type:"success",
+							confirmButtonClass: "btn-success",
+						})
+						
+							
 			
 					}else{
-						alert("등록 실패하였습니다. 이미 등록하셨습니다.");
+						swal({ 
+							title: "등록 실패하였습니다.",
+							text:" 이미 등록하셨습니다.", 
+							type: "error",
+							confirmButtonClass:"btn-danger",
+							
+						})
+						
 					}	
 					getReviewList(questionNum);
 				}				
@@ -256,7 +346,6 @@ $(function(){
 
 function getReviewList(questionNum){/* 456 */
 	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
-	//alert(questionNum);
 	//var reviewListJson = JSON.parse('${reviewListJson}');
 	var reviews = $("#collapse"+questionNum+"  #reviews");
 	reviews.html("");
@@ -272,7 +361,6 @@ function getReviewList(questionNum){/* 456 */
 					
 // 				if((this.questionNum)==questionNum){
 					
-					//alert("this.questionNum"+this.questionNum);
 					var regDate = this.regDate;
 					var evaluationScore = this.evaluationScore;
 					var contents = this.contents;//우선 이것만 먼저먼저
@@ -315,16 +403,12 @@ function entInf(){
 	 var personJson = JSON.parse('${personJson}');
 	 $("#newPerson").text(personJson['newPerson']);
 	 $("#outPerson").text(personJson['outPerson']);
-//	 alert(personJson['newPerson']/$("#person").text())
 	 var newPersonPercent =parseFloat(( personJson['newPerson']/$("#person").text() )*100).toFixed(2);
 	 var outPersonPercent =parseFloat(( personJson['outPerson']/$("#person").text() )*100).toFixed(2);
 	 $("#newPersonPercent").text(newPersonPercent);
 	 $("#outPersonPercent").text(outPersonPercent);
-	// alert(newPersonPercent);
-	// alert(outPersonPercent);
 	$("#numOfEnt").text($("#person").text());
 	 $("#btnA").click(function() {
-			//alert("버튼A 눌림!");
 
 			$("#select").text("인원");
 			$("#numOfEnt").text($("#person").text());
@@ -340,7 +424,6 @@ function entInf(){
 		});
 
 		$("#btnB").click(function() {
-			//alert("버튼B 눌림!");
 			$("#select").text("업력");
 			$("#numOfEnt").text(currier);
 			$("#numOfInd").text("30");
@@ -352,7 +435,6 @@ function entInf(){
 		});
 
 		$("#btnC").click(function() {
-			//alert("버튼C 눌림!");
 			$("#select").text("입사");
 			$("#numOfEnt").text(personJson['newPerson']);
 			$("#numOfInd").text("60");
@@ -364,7 +446,6 @@ function entInf(){
 		});
 
 		$("#btnD").click(function() {
-			//alert("버튼D 눌림!");
 			$("#select").text("퇴사");
 			$("#numOfEnt").text(personJson['outPerson']);
 			$("#numOfInd").text("60");
@@ -520,7 +601,6 @@ function interviewDifficultyShape(){
 //	 var interviewJson = JSON.parse('${interviewJson}');
     var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
 	 for(var i in interviewJson){
-		// alert(interviewJson[i]['intrvwDifficulty']);
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
 		
 		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
@@ -537,10 +617,42 @@ function interviewDifficultyShape(){
 
 	 }
 }
-
+function reviewValidation(){
+	$('.reviewForm').validate({		
+		rules : {
+			
+			stars:{
+				required : true
+			},
+			contents:{
+				required : true,
+				minlength : 10,	
+				maxlength : 500
+			}			
+		},
+		
+		messages : {			
+			stars:{
+				required : "다른 항목을 선택해주세요"
+			},
+			contents:{
+// 				required : "필수로입력하세요",
+				minlength : "최소 10글자이상이어야 합니다",	
+				maxlength : "최대 500글자까지 입력할 수 있습니다"	
+			}
+		},
+	    submitHandler: function(form) {
+		    swal("등록되었습니다", "You clicked the button!", "success")
+		    .then(()=>{
+		    	form.submit();
+		    })
+	    }
+		
+	});	
+}
 function interviewValidation(){
 	 /* 면접후기 작성시 유효성 검사 */
-	$('#writeInterview').validate({		
+	$('#writeInterview').validate({	
 		rules : {
 			
 			intrvwDifficulty:{
@@ -601,10 +713,26 @@ function interviewValidation(){
 			}			
 		}
 // 		,
-// 		submitHandler: function() {
-// 			//$('#writeInterview').submit();			
-// 			alert("Submitted!");
-// 		}
+// 	    submitHandler: function(form) {
+// 		    swal("등록되었습니다", "You clicked the button!", "success")
+// 		    .then(()=>{
+// 		    	form.submit();
+// 		    })
+// 	    }
+		,
+		submitHandler: function(form) {
+			swal({
+				title:"등록", 
+				text: "You clicked the button!", 
+				type: "success",
+				confirmButtonClass: "btn-success",
+
+			},
+			function(){
+				form.submit();
+			})		
+			
+		}
 		
 	});	
 }
@@ -922,13 +1050,14 @@ function jsonEscape(str)  {
 											</ul>
 										</nav>
 
-										<form class="reviewForm" name="reviewForm">
+										<form class="reviewForm" name="reviewForm" >
 											<input type="hidden" name="questionNum" class="questionNum"
 												value="${question.QESTN_NO}"> <input type="hidden"
 												name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
 
 											<div>
-												<select class="stars">
+												<select class="stars" name="stars">
+													<option value="" >별점</option>
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -937,16 +1066,15 @@ function jsonEscape(str)  {
 												</select>
 
 												<output for="star-input">
-													<b class="starScore" name="1">0</b> 
+													<b class="starScore">0</b> 
 												</output>
 											</div>
 
 											<div class="input-group input-group-sm">
 												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요"> 
 												<span class="input-group-btn"> 
-												<input type="submit" class="btn btn-flat btn-info review-btn" value="제출">
-												<input type="hidden" class="statusCount"
-													value="${status.count}">
+													<input type="submit" class="btn btn-flat btn-info review-btn" value="제출">
+													<input type="hidden" class="statusCount" value="${status.count}">
 												</span>
 											</div>
 										</form>
@@ -1341,15 +1469,7 @@ function jsonEscape(str)  {
 							<label>면접일자</label>
 						</div>
 						<div class="col-xs-9">
-							<!-- 							<div class="input-group date"> -->
-							<!-- 								<div class="input-group-addon "> -->
-							<!-- 									<i class="fa fa-calendar"></i> -->
-							<!-- 								</div> -->
-							<!-- 								<input type="text" class="form-control pull-right" -->
-							<!-- 									name="intrvwDate" id="datepicker" placeholder="YYYYMM"> -->
-							<input type="text" class="form-control" name="intrvwDate"
-								id="datepicker" placeholder="ex) 201806">
-							<!-- 							</div> -->
+							<input type="text" class="form-control" name="intrvwDate" id="datepicker" placeholder="ex) 201806">
 						</div>
 					</div>
 					<!-- 면접경로 -->
@@ -1459,7 +1579,7 @@ function jsonEscape(str)  {
 
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn cat-header" id="itvw-write-btn">제출</button>
+					<button class="btn cat-header" id="itvw-write-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>
