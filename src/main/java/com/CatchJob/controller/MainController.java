@@ -32,9 +32,9 @@ public class MainController {
 		return "forward:enterprise/search";
 	}
 	
-	@RequestMapping(value = "/test")
-	public String test() {
-		return "test";
+	@RequestMapping(value = "/faq")
+	public String faq() {
+		return "faq";
 	}
 	
 //	@RequestMapping(value = "/interviews")

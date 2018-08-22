@@ -12,8 +12,6 @@ import com.CatchJob.model.Review;
 @Repository
 public interface ReviewDao {
 /*
-	
-
 	// 리뷰 수정
 	public int updateReview(Review review);
 
@@ -44,12 +42,17 @@ public interface ReviewDao {
 	
 	/*//질문별로 리뷰 보기
 	public List<Review> reviewListByQNum(Map<String, String> data);*/
-	//페이징 처리
-	public int selectCount();
+	
+	//관리자 페이지 페이징 처리+검색
+	public int selectCountByKeyword(Map<String, String> map);
 
 	public List<Review> selectReviewList(Map<String, String> map);
+	
+	public int updateReviewList(List<String> array);
 
 //	리뷰코멘트 VIEW 페이지에서 페이징처리
+	public int selectCount();
+	
 	public List<Review> selectReviewsList(Map<String, Integer> data);
 	// 페이징 처리할 때 필요한 total rows
 	public int selectReviewTotalRows(Map<String, Integer> data);
