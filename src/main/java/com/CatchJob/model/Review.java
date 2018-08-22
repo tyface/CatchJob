@@ -2,6 +2,7 @@ package com.CatchJob.model;
 
 /* 리뷰 */
 public class Review {
+	private int reviewIndex;
 	private String entName;
 	private String question;
 	private String mberId;
@@ -12,6 +13,14 @@ public class Review {
 	private String contents; // 리뷰 내용
 	private String reviewFlag; // 리뷰 상태(1:사용,2:삭제,3:대기) TODO
 	private String regDate; // 작성일
+
+	public int getReviewIndex() {
+		return reviewIndex;
+	}
+
+	public void setReviewIndex(int reviewIndex) {
+		this.reviewIndex = reviewIndex;
+	}
 
 	public String getMberId() {
 		return mberId;
@@ -95,9 +104,10 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [entName=" + entName + ", question=" + question + ", entIndex=" + entIndex + ", mberIndex="
-				+ mberIndex + ", questionNum=" + questionNum + ", evaluationScore=" + evaluationScore + ", contents="
-				+ contents + ", reviewFlag=" + reviewFlag + ", regDate=" + regDate + "]";
+		return "Review [reviewIndex=" + reviewIndex + ", entName=" + entName + ", question=" + question + ", mberId="
+				+ mberId + ", entIndex=" + entIndex + ", mberIndex=" + mberIndex + ", questionNum=" + questionNum
+				+ ", evaluationScore=" + evaluationScore + ", contents=" + contents + ", reviewFlag=" + reviewFlag
+				+ ", regDate=" + regDate + "]";
 	}
 
 }

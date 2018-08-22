@@ -5,27 +5,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+
+import com.CatchJob.dao.MemberDao;
 
 @Service
 public class MailServiceImp implements MailService{
 
 	@Autowired 
 	private ResourceLoader resourceLoader;
+	@Autowired
+	private MemberDao mamberDao;
 	
 	@Override
-	public String getMailTemplate(String email){
-		System.out.println("이메일 : " + email);
+	public String getMailTemplate(String email, String filePath){
         InputStream inputStream = null;
         String result = "";
         try {
         	String temp="";
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-            		resourceLoader.getResource("resources/mail-template.html").getInputStream()));
+            		resourceLoader.getResource(filePath).getInputStream()));
             
             while((temp=bufferedReader.readLine())!=null) {
             	result +=temp;
@@ -41,7 +42,9 @@ public class MailServiceImp implements MailService{
 				e.printStackTrace();
             }
         }
-        return result.replace("memberEmail", email);
+        result = result.replace("memberIdTemp", email);
+        result = result.replace("oauthId", mamberDao.selectById(email).getOauthId());
+        return result;
 	}
 
 //    public void regist(Member vo) throws Exception {

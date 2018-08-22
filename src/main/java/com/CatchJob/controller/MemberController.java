@@ -1,11 +1,7 @@
 package com.CatchJob.controller;
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +32,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.CatchJob.commons.Constants;
 import com.CatchJob.model.Member;
 import com.CatchJob.service.MailHandler;
 import com.CatchJob.service.MailService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.TempKey;
+import com.CatchJob.service.UniversalDomainService;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 @Controller
 @RequestMapping("/member")
@@ -48,6 +47,8 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private UniversalDomainService domainService;
 	@Autowired
 	private MailService mailService;
 	
@@ -122,7 +123,7 @@ public class MemberController {
 				mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
 		        mailHandler.setTo(member.getMberId());
 		        mailHandler.send();
-				
+		        
 				data = "{\"result\" : true}";
 			} else {
 				data = "{\"result\" : false}";
@@ -168,14 +169,26 @@ public class MemberController {
 		}
 	}
 	
-	/* 비밀번호 재설정 메일보내기 */
-	@RequestMapping(value = "/findPasswordMail")
-	public void findPassword(String email, HttpServletResponse resp) {
+	/* 정회원 인증 하기 TODO*/ 
+	@RequestMapping(value = "/verifyRegularMember")
+	public void verifyRegularMember(HttpSession session, HttpServletResponse resp) {
 		String data="";
-		try {
-			MailHandler mailHandler = new MailHandler(mailSender);
-			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
-			mailHandler.setText(mailService.getMailTemplate(email));
+		String domain;
+		Member member = (Member)session.getAttribute("member");
+		
+		String email = member.getMberId();
+		
+        int index= email.indexOf("@"); 
+	    domain = email.substring(index+1);
+		
+	    System.out.println("도메인:" + domain);
+		
+	    try {
+			if(domainService.findUniDomain(domain) == null) {
+				MailHandler mailHandler = new MailHandler(mailSender);
+			
+			mailHandler.setSubject("CatchJob 정회원인증 메일 입니다.");
+//			mailHandler.setText(mailService.getMailTemplate(email));
 			
 			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource("resources/img/image-1.gif").getFile());
 			mailHandler.addInline("image-1", fsr);
@@ -183,6 +196,63 @@ public class MemberController {
 			mailHandler.addInline("logo", fsr);
 			
 			mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
+			mailHandler.setTo(email);
+			mailHandler.send();
+			data = "{\"result\" : true}";
+			
+			}else {
+				data = "{\"result\" : false}";
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    
+//		try {
+//			
+//			MailHandler mailHandler = new MailHandler(mailSender);
+//			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
+//			mailHandler.setText(mailService.getMailTemplate(email));
+//			
+//			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource("resources/img/image-1.gif").getFile());
+//			mailHandler.addInline("image-1", fsr);
+//			fsr = new FileSystemResource(resourceLoader.getResource("resources/img/logo.png").getFile());
+//			mailHandler.addInline("logo", fsr);
+//			
+//			mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
+//			mailHandler.setTo(email);
+//			mailHandler.send();
+//			
+//			data = "{\"result\" : true}";
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			data = "{\"result\" : false}";
+//		} finally {
+//			try {
+//				resp.getWriter().print(data);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+		
+	}
+	
+	/* 비밀번호 재설정 메일보내기 */
+	@RequestMapping(value = "/findPasswordMail")
+	public void findPassword(String email, HttpServletResponse resp) {
+		String data="";
+		try {
+			MailHandler mailHandler = new MailHandler(mailSender);
+			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
+			mailHandler.setText(mailService.getMailTemplate(email,Constants.File.PW_RESET));
+			
+			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
+			mailHandler.addInline("image-1", fsr);
+			fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_LOGO_1).getFile());
+			mailHandler.addInline("logo", fsr);
+			
+			mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
 			mailHandler.setTo(email);
 			mailHandler.send();
 			
@@ -203,22 +273,29 @@ public class MemberController {
 	
 	/* 비밀번호 재설정 페이지 뷰 */
 	@RequestMapping(value = "/passwordModifyView")
-	public String passwordModifyView(Model model, String memberId) {
+	public String passwordModifyView(Model model, String memberId, String oauthId) {
 		model.addAttribute("memberId", memberId);
+		model.addAttribute("oauthId", oauthId);
 		return "password-modify";
 	}
 	
 	/*패스워드 재설정 */
 	@RequestMapping(value = "/passwordModify2", method = RequestMethod.POST)
-	public String pwModify2(String password, String memberId, HttpSession session, HttpServletResponse resp) {
+	public String pwModify2(String password, String memberId, String oauthId, HttpSession session, HttpServletResponse resp) {
 		System.out.println("최종");		
 		Member member = new Member();
 		System.out.println(memberId);
 		System.out.println(password);
+		System.out.println(oauthId);
 		member.setMberId(memberId);
 		member.setMberPw(password);
-		memberService.passwordModify(member);
-			
+		member.setMberPw(oauthId);
+		
+		
+		if(memberService.getMemberByOauthId(memberId, oauthId) != null) {
+			memberService.passwordModify(member);
+		}else {
+		}
 		return "redirect:/";
 	}
 	
@@ -361,7 +438,6 @@ public class MemberController {
     	
     	if(member != null) {
     		member.setMberFlag("1");
-    		member.setOauthId("");
     		memberService.modify(member);
     		memberService.visitUpdate(member.getMberIndex());
     		

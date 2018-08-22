@@ -2,5 +2,5 @@ package com.CatchJob.service;
 
 public interface MailService {
 	
-	public String getMailTemplate(String email);
+	public String getMailTemplate(String email,String filePath);
 }

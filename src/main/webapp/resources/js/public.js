@@ -53,25 +53,25 @@ function passwordModifyForm() {
 /* 정회원 인증 창 */
 function entVerifyForm() {
 	swal({
-		title: "정회원 인증방법",
+		title: "정회원 인증방법\n\r",
 		text: "1) 명함이나 재직증명서로 인증하기　　\n\r"
           + "관리자 이메일 : catchjob33@gmail.com\n\r\n"
           + "2) 회사 이메일로 인증하기　　　　　　",
 		type: "input",
 		inputPlaceholder: "email",
 		showCancelButton: true,
-		closeOnConfirm: false,
-		showLoaderOnConfirm: true
+		showLoaderOnConfirm: true,
+		closeOnConfirm: false
 	}, function (inputValue) {
-
+		if (inputValue === false) return false;
 		if (inputValue === "") {
     	swal.showInputError("이메일을 입력해주세요");
-    	return false
+			return false
   	}
 
 		$.ajax({
 			 type : "get",
-			 url : contextPath+"/member/findPasswordMail",
+			 url : contextPath+"/member/verifyRegularMember",
 			 data : {
 					"email" : inputValue
 			 },
@@ -100,5 +100,7 @@ function entVerifyForm() {
 				 })
 			 }
 		})
+
+
 	})
 }
