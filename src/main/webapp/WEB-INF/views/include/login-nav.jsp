@@ -21,7 +21,7 @@ $(function() {
 	$("#loginForm").on("submit", function() {
 		 $.ajax({
 				type : "post",
-				url : "${pageContext.request.contextPath}/member/login",
+				url : contextPath+"/member/login",
 				data : {
 					 "mberId" : $("#loginId").val(),
 					 "mberPw" : $("#loginPw").val()
@@ -57,7 +57,7 @@ $(function() {
 		if(pw1==pw2){
 			$.ajax({
 				 type : "post",
-				 url : "${pageContext.request.contextPath}/member/passwordModify",
+				 url : contextPath+"/member/passwordModify",
 				 data : {
 						"password" : pw1,
 						"passwordCheck" : pw2
@@ -99,40 +99,6 @@ $(function() {
 
 	});
 
-	$("#findPasswordForm").on("submit", function() {
-		var email = $("input[name=email]").val();
-			$.ajax({
-				 type : "get",
-				 url : "${pageContext.request.contextPath}/member/findPasswordMail",
-				 data : {
-						"email" : email
-				 },
-				 dataType : "json",
-				 success : function(data) {
-						if (data.result) {
-							swal("메일전송 완료!","입력하신 이메일로 비밀번호 재설정 링크를 보내드렷 습니다.", "success")
-							// .then(() => {
-							// 	$("#findPasswordModal").modal("hide");
-							// });
-						} else {
-							swal({
-								title:"메일전송 실패",
-								type: "error",
-								confirmButtonClass: "btn-error"
-							})
-						}
-				 },
-				 error : function() {
-					 swal({
-						 title:"비밀번호 재설정에 실패하였습니다.",
-						 type: "warning",
-						 confirmButtonClass: "btn-warning"
-					 })
-				 }
-			});
-			return false;
-	});
-
 	$("input[name=password], input[name=passwordCheck]" ).on("keyup",function(){
 		var pw1 = $("input[name=password]").val();
 		var pw2 = $("input[name=passwordCheck]").val();
@@ -146,10 +112,6 @@ $(function() {
 			checkMsg.css({color:"black"});
 		}
 	});
-
-
-
-
 
 	//모달 초기화
 	$('.modal').on('hidden.bs.modal', function (e) {
@@ -167,7 +129,7 @@ $(function() {
 	$("#signUpForm").on("submit", function() {
 		$.ajax({
 			type : "post",
-			url : "${pageContext.request.contextPath}/member/join",
+			url : contextPath+"/member/join",
 			data : {
 				"signUpId" : $("#signUpId").val(),
 				"signUpPw" : $("#signUpPw").val(),
@@ -197,57 +159,8 @@ $(function() {
 
 });
 
-function passwordModifyForm() {
-	$('#loginModal').modal('hide');
-	swal({
-		height:"1000px",
-		title: "비밀번호 재설정하기\n\r",
-		text: "입력하신 메일로 비밀번호 변경하기 \n\r링크가 전송됩니다.",
-		type: "input",
-		inputPlaceholder: "email",
-		showCancelButton: true,
-		closeOnConfirm: false,
-		showLoaderOnConfirm: true
-	}, function (inputValue) {
-		if (inputValue === "") {
-    	swal.showInputError("이메일을 입력해주세요");
-    	return false
-  	}
-
-		$.ajax({
-			 type : "get",
-			 url : "${pageContext.request.contextPath}/member/findPasswordMail",
-			 data : {
-					"email" : inputValue
-			 },
-			 dataType : "json",
-			 success : function(data) {
-					if (data.result) {
-						swal({
-							title:"이메일 전송 완료",
-							text:"입력하신 이메일로 비밀번호 재설정 링크를 보내드렷 습니다.",
-							type: "success",
-							confirmButtonClass: "btn-success"
-						})
-					} else {
-						swal({
-							title:"비밀번호 재설정에 실패하였습니다.",
-							type: "warning",
-							confirmButtonClass: "btn-warning"
-						})
-					}
-			 },
-			 error : function() {
-				 swal({
-					 title:"비밀번호 재설정에 실패하였습니다.",
-					 type: "warning",
-					 confirmButtonClass: "btn-warning"
-				 })
-			 }
-		});
-	});
-}
-// <div class="modal fade" id="findPasswordModal" role="dialog" >
+// <%-- 기업인증 --%>
+// <div class="modal fade" id="entVerifyModal" role="dialog">
 // 	<div class="modal-dialog">
 //
 // 		<!-- Modal content-->
@@ -255,19 +168,22 @@ function passwordModifyForm() {
 // 			<div class="modal-header" style="padding: 35px 50px;">
 // 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 // 				<h4>
-// 					<span class="glyphicon glyphicon-lock"></span> 비밀번호 재설정하기
+// 					<span class="glyphicon glyphicon-lock"></span> 기업회원 인증하기
 // 				</h4>
 // 			</div>
-// 			<div class="modal-body" style="padding: 40px 50px;">
-// 				<p>입력하신 메일로 비밀번호 변경하기 링크가 전송됩니다.</p><br>
 //
-// 				<form role="form" method="post" id="findPasswordForm">
+// 			<div class="modal-body" style="padding: 40px 50px;">
+// 				<form role="form" method="post" id="entVerifyForm">
+// 					<h4>기업회원 인증방법</h4>
+// 					<p>1) 명함이나 재직증명서로 인증하기. 관리자이메일(catchjob33@gmail.com) </p>
+// 					<p>2) 회사 이메일로 인증하기</p>
 // 					<div class="form-group has-feedback">
-// 						<input	type="email" class="form-control" name="email" placeholder="Email">
-// 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-// 					</div><br>
+// 						<input	type="email" class="form-control" id="test" placeholder="회사 이메일로 인증하기">
+// 						<span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
+// 					</div>
+// 					<div class="form-group has-feedback">
 // 					<button type="submit" class="btn btn-success btn-block">
-// 						<span class="glyphicon glyphicon-off"></span> 비밀번호 재설정 메일 보내기
+// 						<span class="glyphicon glyphicon-off"></span> 인증 메일보내기
 // 					</button>
 // 				</form>
 // 			</div>
@@ -275,6 +191,7 @@ function passwordModifyForm() {
 //
 // 	</div>
 // </div>
+
 </script>
 
 <c:if test="${member.mberIndex == null}">
@@ -328,7 +245,7 @@ function passwordModifyForm() {
 
         </div>
         <div class="modal-footer">
-          <p>Not a member? <a href="#myModalSignUp" data-toggle="modal" id="loginHide">Sign Up</a></p>
+          <p>Not a member? <a href="#myModalSignUp" class="blue-font" data-toggle="modal" id="loginHide">Sign Up</a></p>
           <p>Forgot <span class="blue-font" onclick="passwordModifyForm()">Password</span></p>
         </div>
       </div>
@@ -447,7 +364,7 @@ function passwordModifyForm() {
 				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 					<li class="dropdown-header">내 정보</li>
-					<li><a href="#entVerifyModal" data-toggle="modal">기업회원 인증</a></li>
+					<li><a class="cursorOn" onclick="entVerifyForm()">기업회원 인증</a></li>
 					<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
 					<li role="presentation" class="divider"></li>
 					<li class="dropdown-header">활동내역</li>
@@ -506,37 +423,6 @@ function passwordModifyForm() {
 		</div>
 	</div>
 
-	<%-- 기업인증 --%>
-	<div class="modal fade" id="entVerifyModal" role="dialog">
-		<div class="modal-dialog">
 
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header" style="padding: 35px 50px;">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4>
-						<span class="glyphicon glyphicon-lock"></span> 기업회원 인증하기
-					</h4>
-				</div>
-
-				<div class="modal-body" style="padding: 40px 50px;">
-					<form role="form" method="post" id="entVerifyForm">
-						<h4>기업회원 인증방법</h4>
-						<p>1) 명함이나 재직증명서로 인증하기. 관리자이메일(catchjob33@gmail.com) </p>
-						<p>2) 회사 이메일로 인증하기</p>
-						<div class="form-group has-feedback">
-							<input	type="email" class="form-control" id="test" placeholder="회사 이메일로 인증하기">
-							<span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
-						</div>
-						<div class="form-group has-feedback">
-						<button type="submit" class="btn btn-success btn-block">
-							<span class="glyphicon glyphicon-off"></span> 인증 메일보내기
-						</button>
-					</form>
-				</div>
-			</div>
-
-		</div>
-	</div>
 
 </c:if>

@@ -31,6 +31,7 @@ article {
 }
 
 .blue-font{
+	text-decoration: none !important;
 	color: #337ab7;
 	cursor: pointer;
 	display: inline-block;
