@@ -28,6 +28,8 @@ public interface ReviewDao {
 	public int insertReview(Review review);
 	// 리뷰 수정
 	public int updateReview(Review review);
+	// 리뷰 수정
+	public Review selectReview(String reviewIndex);
 	//리뷰 삭제 
 	public int deleteReview(Map<String, String> data);
 	//질문출력
@@ -47,8 +49,8 @@ public interface ReviewDao {
 	public int selectCountByKeyword(Map<String, String> map);
 
 	public List<Review> selectReviewList(Map<String, String> map);
-	
-	public int updateReviewList(List<String> array);
+	//관리자 페이지 전체 수정
+	public int updateReviewByRevwIdx(Review review);
 
 //	리뷰코멘트 VIEW 페이지에서 페이징처리
 	public int selectCount();

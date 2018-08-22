@@ -45,7 +45,8 @@
 </style>
 <script>
 	function newPage() {	
-		var url="mngAdmin?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val();		
+		var url="mngAdmin?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()
+				+"&keyword="+$("#keyword").val();		
 		window.location=url;
 	}
 	

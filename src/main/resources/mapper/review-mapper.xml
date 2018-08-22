@@ -13,6 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET `CONTENTS`=#{contents}, EVALUATION=#{evaluationScore}
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
 	</update>
+	<select id="selectReview" parameterType="String" resultMap="reviewMap">
+		SELECT * FROM REVIEW_TB 
+		WHERE REVW_IDX=#{reviewIndex};
+	</select>
 	<delete id="deleteReview" parameterType="map">
 		DELETE FROM REVIEW_TB
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
@@ -87,26 +91,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*)
 		FROM REVIEW_TB
 	</select>
+	
+	<select id="selectCountByKeyword" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+			FROM REVIEW_TB r
+				INNER JOIN MEMBER_TB m 
+				ON r.MBER_IDX = m.MBER_IDX
+				INNER JOIN ENTERPRISE_TB e
+				ON r.ENT_IDX = e.ENT_IDX 
+				WHERE 1=1 
+			<if test="entIndexKeyword != null">
+				AND r.ENT_IDX = #{entIndexKeyword} 
+		    </if>
+		    <if test="entNameKeyword != null"> 
+		  	 	AND e.ENT_NM LIKE '%${entNameKeyword}%'
+		    </if>
+		    <if test="questionNumKeyword != null"> 
+		  	  	AND r.QESTN_NO = #{questionNumKeyword} 
+		    </if>
+	</select>
 	<select id="selectReviewList" resultMap="reviewMap" parameterType="map">
 		SELECT * FROM (	
-			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM, m.MBER_IDX, m.MBER_ID, e.ENT_NM, r.ENT_IDX, r.QESTN_NO, r.CONTENTS
-			from
-			REVIEW_TB r 
-			INNER join MEMBER_TB m 
-			on r.MBER_IDX = m.MBER_IDX
-			INNER join ENTERPRISE_TB e
-			on r.ENT_IDX = e.ENT_IDX, 
-			(select @ROWNUM := 0) a 
-			) p
-		WHERE RNUM BETWEEN #{firstRow} AND #{endRow}
-		AND ENT_IDX LIKE CONCAT('%',#{entIndexKeyword},'%')  
-		AND ENT_NM LIKE CONCAT('%',#{entNameKeyword},'%') AND QESTN_NO LIKE CONCAT('%',#{questionNumKeyword},'%');
-		
-		
+			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM, r.REVW_IDX, m.MBER_ID, e.ENT_NM, r.ENT_IDX, r.QESTN_NO, r.EVALUATION,
+			r.REVW_FL, r.CONTENTS, r.REG_DT
+			  FROM  REVIEW_TB r 
+					INNER JOIN MEMBER_TB m 
+					ON r.MBER_IDX = m.MBER_IDX
+					INNER JOIN ENTERPRISE_TB e
+					ON r.ENT_IDX = e.ENT_IDX, 
+					(SELECT @ROWNUM := 0) ROWNUM 
+					WHERE 1=1 
+					<if test="entIndexKeyword != null">
+				  	  AND r.ENT_IDX = #{entIndexKeyword} 
+				    </if>
+				    <if test="entNameKeyword != null"> 
+				  	  AND e.ENT_NM LIKE '%${entNameKeyword}%'
+				    </if>
+				    <if test="questionNumKeyword != null"> 
+				  	  AND r.QESTN_NO = #{questionNumKeyword} 
+				    </if>
+					) n
+		WHERE RNUM BETWEEN #{firstRow} AND #{endRow} 
 	</select>
+	<update id="updateReviewByRevwIdx" parameterType="review">
+		UPDATE REVIEW_TB
+		SET ENT_IDX=#{entIndex},MBER_IDX=${mberIndex},QESTN_NO=#{questionNum},EVALUATION=#{evaluationScore},
+		CONTENTS=#{contents},REVW_FL=#{reviewFlag},REG_DT=#{regDate} 
+		WHERE REVW_IDX=#{reviewIndex}
+	</update>
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>
 		<result property="question" column="QUESTION"/>
+		<result property="mberId" column="MBER_ID"/>
 		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
 		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
 		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->

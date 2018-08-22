@@ -1,15 +1,25 @@
 package com.CatchJob.controller;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CatchJob.model.Admin;
 import com.CatchJob.model.Member;
@@ -107,10 +117,7 @@ public class AdminController {
 			member.setMberFlag(memberOne.getMberFlag());
 			member.setRegDate(regDate);
 			member.setLastDate(lastDate);
-	/*		if(lastDate==null) {
-				Date date = new Date();
-				member.setLastDate(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date));
-			}*/
+
 			boolean result = memberService.modify(member);
 			if(result) {
 				model.addAttribute("url", "mngMber");
@@ -120,7 +127,7 @@ public class AdminController {
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
 			return "admin/include/result";
-		} catch(NullPointerException e) {
+		} catch(Exception e) {
 			model.addAttribute("url", "mngAdmin");
 			model.addAttribute("msg", "수정 실패했습니다");
 			return "admin/include/result";
@@ -177,10 +184,6 @@ public class AdminController {
 			}
 			admin.setRegDate(regDate);
 			admin.setLastDate(lastDate);
-			/*if(lastDate==null) {
-				Date date = new Date();
-				admin.setLastDate(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date));
-			}*/
 			admin.setAdminIndex(adminOne.getAdminIndex());	
 			boolean result = adminService.modify(admin);
 	
@@ -193,7 +196,7 @@ public class AdminController {
 			}
 			return "admin/include/result";
 		
-		} catch(NullPointerException e) {
+		} catch(Exception e) {
 			model.addAttribute("url", "mngAdmin");
 			model.addAttribute("msg", "수정 실패했습니다");
 			return "admin/include/result";
@@ -205,13 +208,6 @@ public class AdminController {
 	@RequestMapping(value = "/mngReview")
 	public String mngReview(Model model, String page, String msgPerPage, String keyword, String mberIndex,
 		String entIndex, String questionNum, String entName, String keywordOption) {
-		
-		System.out.println("keyword : "+ keyword);
-		System.out.println("mberIndex : "+ mberIndex);
-		System.out.println("entIndex : "+ entIndex);
-		System.out.println("questionNum : "+ questionNum);
-		System.out.println("entName : "+ entName);
-		System.out.println("keywordOption: "+keywordOption);
 		
 		int pageNumber = 0;	
 		if (page != null) {
@@ -231,24 +227,108 @@ public class AdminController {
 		data.put("pageNumber", pageNumber);
 		data.put("numOfMsgPage", numOfMsgPage);
 		
-		if(keyword!=null) {
+		if(keyword != null) {
 			data.put("keyword", keyword);
 			data.put("keywordOption", keywordOption);
 		}
-		
-		//내용보기 클릭시 출력용
-/*			Map<String, String> reviewMap = new HashMap<String, String>();	
-			reviewMap.put("mberIndex", mberIndex);
-			reviewMap.put("entIndex", entIndex);
-			reviewMap.put("questionNum", questionNum);
-			Review review = reviewService.review(reviewMap);
-			model.addAttribute("review", review);*/
-		
+	
 		Map<String, Object> viewData = reviewService.getMessageList(data);
 		model.addAttribute("viewData", viewData);
-
+		
 		return "admin/review-mng";
 	}
+
+	@RequestMapping(value="/modifyReviewFlag", method=RequestMethod.POST)
+	public void modifyReview(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
+		System.out.println(arrayParams);
+		boolean result=false;
+		for(int i=0; i<arrayParams.size(); i++) {
+			Review review = reviewService.selectReview(arrayParams.get(i));
+			review.setReviewFlag("1");
+			result = reviewService.modifyReview(review);
+		}
+
+		/*String params=arrayParams.toString().replaceAll(" ", "");
+		StringTokenizer st = new StringTokenizer(params.substring(1,params.length()-1),", ");
+		boolean result = false;
+
+		while(st.hasMoreTokens()) {
+			System.out.println(st.nextToken());
+			Review review = reviewService.selectReview(st.nextToken());
+			System.out.println("review" + review+"/n");
+			review.setReviewFlag("1");
+			result = reviewService.modifyReview(review);
+		}
+	*/
+		String data = "";
+		if (result) {
+			data = "{\"result\" : true}";
+		} else {
+			data = "{\"result\" : false}";
+		}
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/deleteReviewFlag", method=RequestMethod.POST)
+	public void deleteReview(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
+		System.out.println(arrayParams);
+		boolean result=false;
+		for(int i=0; i<arrayParams.size(); i++) {
+			Review review = reviewService.selectReview(arrayParams.get(i));
+			review.setReviewFlag("2");
+			result = reviewService.modifyReview(review);
+		}
+		
+		String data = "";
+		if (result) {
+			data = "{\"result\" : true}";
+		} else {
+			data = "{\"result\" : false}";
+		}
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="/modifyComment", method=RequestMethod.POST)
+	public String modifyComment(Model model, String reviewIndex, 
+			String entIndex, String mberId, String questionNum, String contents, String regDate, String evaluation) {
+			
+		try {
+			Review review = reviewService.selectReview(reviewIndex);
+			String qNum = questionNum.substring(0, 1);
+			review.setEntIndex(Integer.parseInt(entIndex));
+			review.setMberId(mberId);
+			review.setQuestionNum(Integer.parseInt(qNum));
+			review.setContents(contents);
+	/*		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = transFormat.parse(regDate);*/
+			review.setEvaluationScore(Integer.parseInt(evaluation));
+			boolean result = reviewService.modifyReview(review);
+					
+			if(result) {
+				model.addAttribute("url", "mngReview");
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("url", "mngReview");
+				model.addAttribute("msg", "수정 실패dsadsad했습니다");
+			}
+			return "admin/include/result";
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			model.addAttribute("url", "mngReview");
+			model.addAttribute("msg", "수정 실sssss패했습니다");
+			return "admin/include/result";
+		}
+	
+	}
+			
 
 	@RequestMapping(value = "/mngEnt")
 	public String mngEnt() {
@@ -266,9 +346,9 @@ public class AdminController {
 		return "admin/mng-main";
 	}
 
-	@RequestMapping(value = "/mngQnA")
+	@RequestMapping(value = "/mngFAQ")
 	public String mngQnA() {
-		return "admin/mng-QnA";
+		return "admin/mng-FAQ";
 	}
 
 

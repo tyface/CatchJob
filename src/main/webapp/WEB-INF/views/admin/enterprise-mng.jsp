@@ -54,18 +54,19 @@
 		<br>
 		<div class="col-md-offset-1">
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					<label for="quantity"> <input type="number" min="5"
 						max="15" step="5" id="quantity" value="${viewData.msgPerPage}"
 						onclick="newPage()">&nbsp; entries
 					</label>
 				</div>	
+
 				<div class="col-sm-2">
 					<select>
 						<option>기업명</option>
 						<option>기업코드</option>
 					</select>
-				</div>
+				</div>	
 				<form action="search" class="form-inline col-sm-3">
 					<div class="input-group">
 						<input type="text" name="keyword" class="form-control" size="30"
@@ -77,7 +78,7 @@
 						</div>
 					</div>
 				</form>
-				<button type="button" class="btn btn-primary btn-sm">추가하기</button>
+
 			</div>	
 				<table class="table table-striped table-hover">
 					<thead>
@@ -86,7 +87,7 @@
 							<th>작성자</th>
 							<th>기업명</th>
 							<th>기업코드</th>
-							<th>내용보기</th>
+							<th>상세보기</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -96,7 +97,7 @@
 								<td>tester</td>
 								<td>비트컴퍼니</td>
 								<td>COM000000001</td>
-								<td><input class="btn btn-info btn-sm" type="button" value="내용보기"></input></td>
+								<td><input class="btn btn-success btn-sm" type="button" value="상세보기"></input></td>
 							</tr>
 						</c:forEach>
 					</tbody>

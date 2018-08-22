@@ -28,12 +28,12 @@ public class MemberServiceImp implements MemberService {
 	public boolean login(String mberId, String mberPw) {
 		Member member = memberDao.selectById(mberId);
 		//탈퇴회원 경우 로그인 금지
-
+		if (member.getMberFlag().equals("2")) {
+			return false;
+		}
 		
 		if (member != null) {
-			if (member.getMberFlag().equals("2")) {
-				return false;
-			}else if(member.getMberPw().equals(mberPw)) {
+			if (member.getMberPw().equals(mberPw)) {
 				// 방문일 갱신
 				Date date = new Date();
 				member.setLastDate(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date));
@@ -50,7 +50,6 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean join(Member member) {
 		int rowCount = memberDao.insertMember(member);
-		
 		if (rowCount > 0) {
 			return true;
 		} else {
@@ -61,26 +60,19 @@ public class MemberServiceImp implements MemberService {
 	
 	@Override
 	public boolean modify(Member member) {
-		int rowCount = memberDao.updateMember(member);
-		
-		if (rowCount > 0) {		
-			return true;
-		} else {
+		try{
+			int rowCount = memberDao.updateMember(member);
+			if (rowCount > 0) {		
+				return true;
+			} else {
+				return false;
+			}
+		}catch(Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}
 
-	@Override
-	public boolean passwordModify(Member member) {
-		int rowCount = memberDao.updateMemberPassword(member);
-		
-		if (rowCount > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
 	@Override
 	public boolean visitUpdate(int memberIndex) {
 		int rowCount = memberDao.updateLastDate(memberIndex);
@@ -97,7 +89,6 @@ public class MemberServiceImp implements MemberService {
 		// 회원탈퇴
 		member.setMberFlag("2");
 		int rowCount = memberDao.updateMember(member);
-		
 		if (rowCount > 0) {
 			return true;
 		} else {
@@ -108,7 +99,6 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean socialJoin(Member member) {
 		int result = memberDao.updateOauthId(member);
-		
 		if (result > 0) {
 			return true;
 		} else {
@@ -194,6 +184,13 @@ public class MemberServiceImp implements MemberService {
 		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+
+	@Override
+	public boolean passwordModify(Member member) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 	

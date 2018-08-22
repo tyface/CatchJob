@@ -14,7 +14,6 @@ import com.CatchJob.model.Review;
 
 @Service
 public class ReviewServiceImp implements ReviewService {
-	private static final int NUM_OF_NAVI_PAGE = 5;
 	@Autowired
 	private ReviewDao reviewDao;
 
@@ -56,6 +55,11 @@ public class ReviewServiceImp implements ReviewService {
 		}else {			
 			return false;
 		}
+	}
+	
+	public Review selectReview(String reviewIndex) {
+		Review review = reviewDao.selectReview(reviewIndex);
+		return review;
 	}
 	//리뷰 삭제	
 	@Override
@@ -117,7 +121,7 @@ public class ReviewServiceImp implements ReviewService {
 		reviewPageData.put("pageTotalCount", getReviewTotalRows(data));
 		reviewPageData.put("startPage", getReviewStartPage(currentPage));
 		reviewPageData.put("endPage", getReviewEndPage(currentPage));
-		reviewPageData.put("msgPerPage", Constants.Review.NUM_OF_RVW_PER_PAGE);//??이거 맞는지 모르겠음
+		reviewPageData.put("msgPerPage", Constants.Review.NUM_OF_RVW_PER_PAGE);
 		return reviewPageData;
 	}
 	// 페이징 처리할 때 필요한 total rows
@@ -141,16 +145,12 @@ public class ReviewServiceImp implements ReviewService {
 	}
 
 
-
-
-
-	/* 페이징 처리 */
+	/* 관리자 페이징 처리 */
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
 		Map<String, String> map = new HashMap<>();
-		
-		
+				
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
 			String keywordOption = (String) data.get("keywordOption");
@@ -158,32 +158,22 @@ public class ReviewServiceImp implements ReviewService {
 			if(keywordOption.equals("entNameKeyword")) {
 				String entNameKeyword = (String) data.get("keyword");
 				map.put("entNameKeyword", entNameKeyword);
-				map.put("entIndexKeyword", "");
-				map.put("questionNumKeyword", "");
-				viewData.put("keyword", entNameKeyword);		
-				
+				viewData.put("keyword", entNameKeyword);
+				viewData.put("keywordOption", "entNameKeyword");			
 			}else if(keywordOption.equals("entIndexKeyword")) {
 				String entIndexKeyword = (String) data.get("keyword");
 				map.put("entIndexKeyword", entIndexKeyword);
-				map.put("entNameKeyword", "");
-				map.put("questionNumKeyword", "");
-				viewData.put("keyword", entIndexKeyword);			
-				
+				viewData.put("keyword", entIndexKeyword);
+				viewData.put("keywordOption", "entIndexKeyword");
 			} else if(keywordOption.equals("questionNumKeyword")){
 				String questionNumKeyword = (String) data.get("keyword");
 				map.put("questionNumKeyword", questionNumKeyword);
-				map.put("entIndexKeyword", "");
-				map.put("entNameKeyword", "");
-				viewData.put("keyword", questionNumKeyword);			
+				viewData.put("keyword", questionNumKeyword);
+				viewData.put("keywordOption", "questionNumKeyword");
 			}				
-		} else {
-			map.put("questionNumKeyword", "");
-			map.put("entIndexKeyword", "");
-			map.put("entNameKeyword", "");
-			viewData.put("keyword", "");			
 		}		
-		
-		totalCount  = reviewDao.selectCount(); 
+			
+		totalCount  = reviewDao.selectCountByKeyword(map); 		
 		
 		int firstRow = 0;     
 		int endRow =0;
@@ -200,22 +190,15 @@ public class ReviewServiceImp implements ReviewService {
 
 		map.put("firstRow", String.valueOf(firstRow));
 		map.put("endRow",  String.valueOf(endRow));
-		map.put("entIndex", (String)data.get("entIndex"));
-		
-		System.out.println("entIndex :"+(String)data.get("entIndex"));
-		System.out.println("firstRow :"+firstRow);
-		System.out.println("endRow :"+endRow);
-		
+
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
-		viewData.put("msgPerPage", numOfMsgPage);
-		
+		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", reviewDao.selectReviewList(map));
 		
 		System.out.println(reviewDao.selectReviewList(map));
-		
 		
 		return viewData;
 	}
@@ -229,15 +212,22 @@ public class ReviewServiceImp implements ReviewService {
 	}
 
 	public int getStartPage(int pageNum) {
-		int startPage = ((pageNum - 1) / NUM_OF_NAVI_PAGE) * NUM_OF_NAVI_PAGE + 1;
+		int startPage = ((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) * Constants.Admin.NUM_OF_NAVI_PAGE + 1;
 		return startPage;
 	}
 
 	public int getEndPage(int pageNum) {
-		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
+		int endPage = (((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) + 1) * Constants.Admin.NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
-
-
+	@Override
+	public boolean modifyReview(Review review) {
+		int result = reviewDao.updateReviewByRevwIdx(review);
+		if(result > 0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
 
 }
