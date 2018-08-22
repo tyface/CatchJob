@@ -32,6 +32,10 @@ public class MainController {
 		return "forward:enterprise/search";
 	}
 	
+	@RequestMapping(value = "/faq")
+	public String faq() {
+		return "faq";
+	}
 	
 //	@RequestMapping(value = "/interviews")
 //	public String profile() {
