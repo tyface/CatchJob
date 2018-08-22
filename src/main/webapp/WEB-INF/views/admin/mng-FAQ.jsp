@@ -18,7 +18,7 @@
 	
 			<div class="col-md-9 main">
 				<h1 class="page-header"
-					style="text-align: center; font-weight: bold;">[ QnA 관리 ]</h1>
+					style="text-align: center; font-weight: bold;">[ FAQ 관리 ]</h1>
 				<br>
 				<div class="col-md-offset-1">
 					<div class="row" style="margin: 20px">
