@@ -19,6 +19,9 @@ public interface MemberDao {
 	// 기존회원 소셜API연동 가입
 	public int updateOauthId(Member member);
 	
+	// 기존회원 소셜API연동 가입
+	public int updateMemberType(Member member);
+		
 	// 최근방문일 수정
 	public int updateLastDate(int mberIndex);
 	
