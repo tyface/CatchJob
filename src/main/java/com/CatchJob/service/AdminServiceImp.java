@@ -7,13 +7,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.AdminDao;
 import com.CatchJob.model.Admin;
 
 @Service
 public class AdminServiceImp implements AdminService {	
-	private static final int NUM_OF_NAVI_PAGE = 5;
-
 	@Autowired
 	AdminDao adminDao;
 
@@ -109,12 +108,12 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	public int getStartPage(int pageNum) {
-		int startPage = ((pageNum - 1) / NUM_OF_NAVI_PAGE) * NUM_OF_NAVI_PAGE + 1;
+		int startPage = ((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) * Constants.Admin.NUM_OF_NAVI_PAGE + 1;
 		return startPage;
 	}
 
 	public int getEndPage(int pageNum) {
-		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
+		int endPage = (((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) + 1) * Constants.Admin.NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
 

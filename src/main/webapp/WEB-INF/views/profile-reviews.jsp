@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
+
 
 
 <script>
@@ -20,10 +24,11 @@ $(function(){
 	    	      
 	    }
 	});
-	 $("#update-btn").on("click",function(){
-		 $("#writeForm").submit(); 
-		 alert("수정되었습니다^^")
-	 });
+	reviewValidation();
+// 	 $("#update-btn").on("click",function(){
+// 		 $("#writeForm").submit(); 
+// 		 alert("수정되었습니다^^")
+// 	 });
 })
 function updateForm(num, questionNum){
 	//alert("수정!"+num+questionNum)
@@ -52,35 +57,115 @@ function updateForm(num, questionNum){
 	$("#myModal").modal();
 }
 function deleteReview(entIndex,questionNum){
-	//alert("삭제하시겠습니까?");
-	var msg ="삭제하시겠습니까?";
-	if(confirm(msg)!=0){
-		//Yes click
-		$.ajax({
-			url:"${pageContext.request.contextPath}/profile/deleteReview",
-			data: {"entIndex":entIndex,
-				"questionNum":questionNum},
-// 			data:"json",
-			type:"post",
-			success  : function(data){
-				//alert("삭제됨data:"+data);
-				if(data){
-					alert("삭제되었습니다.");
-					window.location.reload();
-				}else{
-					alert("삭제실패!");
+
+	swal({
+		  title: "삭제하시겠습니까?",
+		  text: "Once deleted, you will not be able to recover this file!",
+		  type: "info",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-info",
+		  confirmButtonText: "Yes, delete it!",
+		  closeOnConfirm: false,
+		  //showLoaderOnConfirm: true
+		},
+		function(){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/profile/deleteReview",
+				data: {"entIndex":entIndex,
+					"questionNum":questionNum},
+				type:"post",					
+				success: function(result){
+					if(result){
+						swal({
+							title:"Deleted!", 
+							text:"Your imaginary file has been deleted.", 
+							type:"success",
+							confirmButtonClass:"btn-success",
+							showCancelButton: false
+							}, 
+							function(){
+								location.reload();
+							})
+						
+					}else{
+						swal({
+							title: "Cancelled", 
+							text: "Your imaginary file is safe :",
+							type: "error",
+							confirmButtonClass:"btn-error"
+							}) 
+											
+					}
 				}
-			},
-			error : function(request,status,error){
-				alert("request :" + request + "\n"+
-						"status :" + status + "\n"+
-						"error :" + error);
-			}
+			})
+		});
+		
+		
+		
+// 		.then((willDelete) => {
+// 			if(willDelete){
+// 				$.ajax({
+// 					url:"${pageContext.request.contextPath}/profile/deleteReview",
+// 					data: {"entIndex":entIndex,
+// 						"questionNum":questionNum},
+// 					type:"post",					
+// 					success: function(result){
+// 						if(result){
+// 							swal("Deleted!", "Your imaginary file has been deleted.", "success").then(
+// 							   function(){ 
+// 							       location.reload();
+// 							   })						
+// 						}else{
+// 							swal("Cancelled", "Your imaginary file is safe :)", "error");						
+// 						}
+// 					}
+// 				})
+// 			}else{
+// 				swal("Cancelled", "취소누름)", "error");						
+// 			}
+				
+// 		});
+	
+}
+function reviewValidation(){
+	$('.writeForm').validate({		
+		rules : {
 			
-		})
-	}else{
-		//No click
-	}
+			stars:{
+				required : true
+			},
+			contents:{
+				required : true,
+				minlength : 10,	
+				maxlength : 500
+			}			
+		},
+		
+		messages : {			
+			stars:{
+				required : "다른 항목을 선택해주세요"
+			},
+			contents:{
+// 				required : "필수로입력하세요",
+				minlength : "최소 10글자이상이어야 합니다",	
+				maxlength : "최대 500글자까지 입력할 수 있습니다"	
+			}
+		}
+// 		,		
+// 		submitHandler: function(form) {
+// 			swal({
+// 				title:"Update", 
+// 				text: "You clicked the button!", 
+// 				type: "success",
+
+// 			},
+// 			function(){
+// 				form.submit();
+// 			})		
+			
+// 		}
+		
+	});	
 }
 </script>
 
@@ -98,7 +183,7 @@ function deleteReview(entIndex,questionNum){
 	        <th>질문내용</th>
 	        <th>작성일</th>  
 	        <th>
-	        	수정 / 삭제
+	        	수정 | 삭제
 	        </th>
 	      </tr>
 	    </thead>
@@ -159,6 +244,7 @@ function deleteReview(entIndex,questionNum){
 						<label>만족도</label>
 						<div>
 							<select class="stars" id="stars">
+								<option value="" >별점</option>
 							    <option value="1">1</option>
 							    <option value="2">2</option>
 							    <option value="3">3</option>
@@ -180,7 +266,7 @@ function deleteReview(entIndex,questionNum){
 	
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn cat-header" id="update-btn">제출</button>
+					<button class="btn cat-header" id="update-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>

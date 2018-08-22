@@ -42,7 +42,6 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean join(Member member) {
 		int rowCount = memberDao.insertMember(member);
-		
 		if (rowCount > 0) {
 			return true;
 		} else {
@@ -53,7 +52,7 @@ public class MemberServiceImp implements MemberService {
 	
 	@Override
 	public boolean modify(Member member) {
-		System.out.println("업뎃 ===========================================");
+		
 		int rowCount = memberDao.updateMember(member);
 		
 		if (rowCount > 0) {		
@@ -84,10 +83,9 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean visitUpdate(int memberIndex) {
-		System.out.println("비짓 ===========================================");
 		int rowCount = memberDao.updateLastDate(memberIndex);
 		
 		if (rowCount > 0) {
@@ -102,7 +100,6 @@ public class MemberServiceImp implements MemberService {
 		// 회원탈퇴
 		member.setMberFlag("2");
 		int rowCount = memberDao.updateMember(member);
-		
 		if (rowCount > 0) {
 			return true;
 		} else {
@@ -113,7 +110,6 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean socialJoin(Member member) {
 		int result = memberDao.updateOauthId(member);
-		
 		if (result > 0) {
 			return true;
 		} else {
@@ -199,6 +195,13 @@ public class MemberServiceImp implements MemberService {
 		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+
+	@Override
+	public boolean passwordModify(Member member) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 	

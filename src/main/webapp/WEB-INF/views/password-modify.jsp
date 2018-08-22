@@ -3,10 +3,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <title>비밀번호 재설정 하기</title>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sweetalert.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
 <%-- <style>
 .swal-overlay {
 			  background-color: rgb(86,98,112);
@@ -15,31 +19,47 @@
 </head>
 <body>
 	<script type="text/javascript">
-	swal({
-	  title: '재설정 비밀번호를 입력해 주세요',
-	  input: 'text',
-	  confirmButtonText: '재설정하기',
-	}).then(function(result) {
-		var memberId = '${memberId}';
-		var oauthId = '${oauthId}';
-		$.ajax({
-			type : "post",
-			url : "passwordModify2",
-			data : {
-        password : result.value,
-				memberId : memberId
-       },
-			success : function(data) {
-		      swal({
-		        type: 'success',
-		        html: '재설정된 비밀번호는 : <strong>' + result.value + '</strong> 입니다.'
-		      }).then(function() {
-             location.href="${pageContext.request.contextPath}";
-           });
-      }
-     });
-      return false;
-	})
+		swal({
+			title: '재설정 비밀번호를 \n\r입력해 주세요',
+			type: 'input'
+
+		},function(inputValue) {
+			var memberId = '${memberId}';
+			var oauthId = '${oauthId}';
+			$.ajax({
+				type : "post",
+				url : "passwordModify2",
+				data : {
+	        password : inputValue,
+					memberId : memberId,
+					oauthId : oauthId
+	      },
+				dataType : "json",
+				success : function(data) {
+						if(data.result){
+							swal({
+								title:"",
+								type: 'success',
+								text:'재설정된 비밀번호는 : ' + inputValue + ' 입니다.',
+				        confirmButtonClass: "btn-success"
+				      },function() {
+		             location.href="${pageContext.request.contextPath}";
+		          });
+						}else{
+							swal({
+								title:"",
+				        type: 'danger',
+				        text: '비밀번호 재설정 실패 메일을 다시 받아주세요.',
+								confirmButtonClass: "btn-danger"
+				      },function() {
+		             location.href="${pageContext.request.contextPath}";
+		          });
+						}
+	      }
+	     });
+	     return false;
+		})
 	</script>
+
 </body>
 </html>

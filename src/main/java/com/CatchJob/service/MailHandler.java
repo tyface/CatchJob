@@ -42,6 +42,7 @@ public class MailHandler {
     public void addInline(String contentId, FileSystemResource res) throws MessagingException {
         messageHelper.addInline(contentId, res);
     }
+    
     public void send() throws Exception{
       mailSender.send(message);
     }

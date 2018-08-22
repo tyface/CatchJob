@@ -28,15 +28,20 @@ $(function() {
 				},
 				dataType : "json",
 				success : function(data) {
-					 if (data.result) {
-							$("#loginModal").modal("hide");
+					 if (data.result == "CODE_01") {
 							window.location.reload();
-					 } else {
+					 }else if(data.result == "CODE_02"){
 						 swal({
 						   title:"비밀번호를 다시 입력해 주세요",
 							 type:"warning",
 							 confirmButtonClass: "btn-warning"
-						 });
+						 })
+					 }else if(data.result == "CODE_03"){
+						 swal({
+						   title:"사용자가 존재하지 않습니다.",
+							 type:"error",
+							 confirmButtonClass: "btn-danger"
+						 })
 					 }
 				},
 				error : function() {
@@ -54,7 +59,7 @@ $(function() {
 		var pw1 = $("input[name=password]").val();
 		var pw2 = $("input[name=passwordCheck]").val();
 
-		if(pw1==pw2){
+		if(pw1==pw2 && pw1 !=""){
 			$.ajax({
 				 type : "post",
 				 url : contextPath+"/member/passwordModify",
@@ -140,9 +145,14 @@ $(function() {
 			success : function(data) {
 				if (data.result) {
 					// 회원가입 성공
-					swal("해당 이메일로 인증 메일이 발송되었습니다.","", "success")
-					$("#myModalSignUp").modal("hide");
-					window.location.reload();
+					swal({
+						title:"해당 이메일로 인증 메일이 발송되었습니다.",
+						type: "success",
+						confirmButtonClass: "btn-success"
+					},function(){
+						$("#myModalSignUp").modal("hide");
+					})
+
 				} else {
 					//비밀번호가 다릅니다.
 					$("#signUpFail").removeClass('hidden');
@@ -364,7 +374,7 @@ $(function() {
 				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 					<li class="dropdown-header">내 정보</li>
-					<li><a class="cursorOn" onclick="entVerifyForm()">기업회원 인증</a></li>
+					<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
 					<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
 					<li role="presentation" class="divider"></li>
 					<li class="dropdown-header">활동내역</li>

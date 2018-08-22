@@ -12,6 +12,7 @@ public class Constants {
 	
 	public static class File{
 		public static final String PW_RESET = "resources/mail-template/password-reset-mail.html"; //비밀번호 재설정 메일 탬플릿
+		public static final String VERIFY_REGULAR = "resources/mail-template/verify-regular-member-mail.html"; //정회원 인증 메일 탬플릿
 		
 		public static final String IMG_SUCSSES = "resources/img/image-1.gif"; //비밀번호 재설정 메일 탬플릿
 		public static final String IMG_LOGO_1 = "resources/img/logo.png"; //비밀번호 재설정 메일 탬플릿

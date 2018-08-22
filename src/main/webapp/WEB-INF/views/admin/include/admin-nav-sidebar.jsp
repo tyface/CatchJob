@@ -111,7 +111,6 @@ $(document).ready(function () {
 			class="glyphicon glyphicon-th-list">&nbsp;</span>Admin Page
 		</a>
 	</div>
-
 </div>
 <div id="navbar" class="navbar-collapse collapse">
 	<ul class="nav navbar-nav navbar-right">
@@ -143,7 +142,7 @@ $(document).ready(function () {
 				<li><a href="#pageSubmenu2" data-toggle="collapse"
 					aria-expanded="false" class="dropdown-toggle"> <i
 						class="fa fa-building" aria-hidden="true"></i> COMPANY <i
-						class="fa fa-angle-down pull-right" aria-hidden="true"></i></a></a>
+						class="fa fa-angle-down pull-right" aria-hidden="true"></i></a>
 
 					<ul class="collapse list-unstyled" id="pageSubmenu2">
 						<li><a href="${pageContext.request.contextPath}/admin/mngEnt">기업
@@ -155,27 +154,27 @@ $(document).ready(function () {
 				<li><a href="#pageSubmenu3" data-toggle="collapse"
 					aria-expanded="false" class="dropdown-toggle"> <i
 						class="fa fa-list" aria-hidden="true"></i> CATEGORY <i
-						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a></a>
+						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a>
 					<ul class="collapse list-unstyled" id="pageSubmenu3">
 						<li><a href="mngInduty">산업군 관리</a></li>
 					</ul></li>
 				<li><a href="#pageSubmenu4" data-toggle="collapse"
 					aria-expanded="false" class="dropdown-toggle"> <i
 						class="fa fa-tachometer" aria-hidden="true"></i> DASHBOARD <i
-						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a></a>
+						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a>
 					<ul class="collapse list-unstyled" id="pageSubmenu4">
 						<li><a href="#">통계</a></li>
 					</ul></li>
-				<li><a href="#pageSubmenu5" data-toggle="collapse"
+				<%-- 	<li><a href="#pageSubmenu5" data-toggle="collapse"
 					aria-expanded="false" class="dropdown-toggle"> <i
 						class="fa fa-cogs" aria-hidden="true"></i> MANAGEMENT <i
-						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a></a>
+						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a>
 					<ul class="collapse list-unstyled" id="pageSubmenu5">
 						<li><a
 							href="${pageContext.request.contextPath}/admin/mngMain">메인화면
+								관리</a></li> 
+						<li><a href="${pageContext.request.contextPath}/admin/mngFAQ">FAQ
 								관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/admin/mngQnA">QnA
-								관리</a></li>
-					</ul></li>
+					</ul></li>--%>
 			</ul>
 			</nav>
