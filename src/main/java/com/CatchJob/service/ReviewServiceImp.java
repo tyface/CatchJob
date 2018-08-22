@@ -18,35 +18,44 @@ public class ReviewServiceImp implements ReviewService {
 	@Autowired
 	private ReviewDao reviewDao;
 
-	/*
-
-	@Override
-	public boolean updateReview(Review review) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteReview(int reviewIndex) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<Review> selectReviewList() {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
 	@Override
 	public boolean insertReview(Review review) {		
 		try {		
-			reviewDao.insertReview(review);
-			return true;
+			review.setReviewFlag("1");
+			
+			Map<String, String> data = new HashMap<String, String>();
+			data.put("ENT_IDX", Integer.toString(review.getEntIndex()));
+			data.put("MBER_IDX", Integer.toString(review.getMberIndex()));
+			data.put("QESTN_NO", Integer.toString(review.getQuestionNum()));
+			data.put("REVW_FL", "1");
+			
+			if(duplicationCheck(data)) {
+				//System.out.println("서비스:리뷰등록 중복X");
+				reviewDao.insertReview(review);
+				return true;
+			}else {
+				//System.out.println("서비스:리뷰등록 중복O");
+				return false;
+			}
+			
+			
 		}catch(Exception  e) {
 			e.printStackTrace();
 			return false;
 		}
 		
+	}
+	//리부 등록시, 중복검사
+	@Override
+	public boolean duplicationCheck(Map<String, String> data) {
+		//data.put("REVW_FL", "1");
+		int result = reviewDao.reviewDuplicationCheck(data);
+		//System.out.println("서비스:duplicationCheck:   "+result);
+		if (result > 0 ) {//글 등록할 수 없음
+			return false;
+		} else {//글 등록할 수 있음
+			return true;
+		}
 	}
 	@Override
 	public boolean updateReview(Review review) {
@@ -60,6 +69,7 @@ public class ReviewServiceImp implements ReviewService {
 	//리뷰 삭제	
 	@Override
 	public boolean deleteReview(Map<String, String> data) {
+		data.put("REVW_FL", "2");
 		int result = reviewDao.deleteReview(data);
 		if(result > 0) {
 			return true;
@@ -68,16 +78,16 @@ public class ReviewServiceImp implements ReviewService {
 		}
 	}
 	@Override
-	public List<Map<String, String>> question(int entIndex) {
-
-		return reviewDao.question(entIndex);
+	public List<Map<String, String>> question(Map<String, String> data) {
+		data.put("REVW_FL", "1");
+		return reviewDao.question(data);
 	}
 	
-	@Override
-	public List<Review> reviewList(int entIndex) {
-		List<Review> reviewList = reviewDao.reviewList(entIndex);
-		return reviewList;
-	}
+//	@Override
+//	public List<Review> reviewList(int entIndex) {
+//		List<Review> reviewList = reviewDao.reviewList(entIndex);
+//		return reviewList;
+//	}
 	/*//질문별로 리뷰 보기
 	@Override
 	public List<Review> reviewListByQNum(Map<String, String> data) {
@@ -86,19 +96,23 @@ public class ReviewServiceImp implements ReviewService {
 	}*/
 	//수정 삭제 페이지에 리뷰 띄우기		
 	@Override
-	public List<Review> reviewListByMember(int memberIndex) {
-		return reviewDao.reviewListByMember(memberIndex);
+	public List<Review> reviewListByMember(Map<String, String> map) {
+		map.put("REVW_FL", "1");
+		return reviewDao.reviewListByMember(map);
 	}
 	//수정 할 데이터 가져오기
 	@Override
 	public Review review(Map<String, String> data) {
-		return reviewDao.review(data);
+		data.put("REVW_FL", "1");
+//		System.out.println("서비스 리뷰 :"+data);
+//		System.out.println("보낼 데이터: "+reviewDao.selectOneReview(data));
+		return reviewDao.selectOneReview(data);
 	}
 
 	//리뷰코멘트 VIEW 페이지에서 페이징처리
 	@Override
 	public List<Review> getReviewsList(Map<String, Integer> dataRvw) {
-		
+		dataRvw.put("REVW_FL", 1);
 		int PAGE_NUM = dataRvw.get("PAGE_NUM");
 		int START_ROW = Constants.Review.NUM_OF_RVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
 		dataRvw.put("NUM_OF_RVW_PER_PAGE", Constants.Review.NUM_OF_RVW_PER_PAGE);
@@ -107,8 +121,8 @@ public class ReviewServiceImp implements ReviewService {
 	}
 	
 	@Override
-	public Map<String, Object> reviewPageData(int currentPage, int entIndex, int questionNum ) {
-		Map<String, Object> reviewPageData = new HashMap<String,Object>();
+	public Map<String, Integer> reviewPageData(int currentPage, int entIndex, int questionNum ) {
+		Map<String, Integer> reviewPageData = new HashMap<String,Integer>();
 		Map<String, Integer> data = new HashMap<String, Integer>();
 		data.put("QESTN_NO", questionNum);
 		data.put("ENT_IDX", entIndex);
@@ -123,6 +137,7 @@ public class ReviewServiceImp implements ReviewService {
 	// 페이징 처리할 때 필요한 total rows
 	@Override
 	public int getReviewTotalRows(Map<String, Integer> data) {
+		data.put("REVW_FL", 1);
 		int pageTotalCount = 0;
 		if (reviewDao.selectReviewTotalRows(data) != 0) {
 			pageTotalCount = (int) Math.ceil(((double) reviewDao.selectReviewTotalRows(data) / Constants.Review.NUM_OF_RVW_PER_PAGE));
@@ -202,9 +217,9 @@ public class ReviewServiceImp implements ReviewService {
 		map.put("endRow",  String.valueOf(endRow));
 		map.put("entIndex", (String)data.get("entIndex"));
 		
-		System.out.println("entIndex :"+(String)data.get("entIndex"));
-		System.out.println("firstRow :"+firstRow);
-		System.out.println("endRow :"+endRow);
+//		System.out.println("entIndex :"+(String)data.get("entIndex"));
+//		System.out.println("firstRow :"+firstRow);
+//		System.out.println("endRow :"+endRow);
 		
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
@@ -214,7 +229,7 @@ public class ReviewServiceImp implements ReviewService {
 		
 		viewData.put("boardList", reviewDao.selectReviewList(map));
 		
-		System.out.println(reviewDao.selectReviewList(map));
+//		System.out.println(reviewDao.selectReviewList(map));
 		
 		
 		return viewData;
@@ -237,6 +252,7 @@ public class ReviewServiceImp implements ReviewService {
 		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+	
 
 
 

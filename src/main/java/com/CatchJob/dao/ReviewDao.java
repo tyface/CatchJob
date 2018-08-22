@@ -31,7 +31,7 @@ public interface ReviewDao {
 	//리뷰 삭제 
 	public int deleteReview(Map<String, String> data);
 	//질문출력
-	public List<Map<String, String>> question(int entIndex);
+	public List<Map<String, String>> question(Map<String, String> data);
 	
 	//리뷰 보기	
 //	public List<Review> reviewList(int entIndex);
@@ -40,8 +40,8 @@ public interface ReviewDao {
 	//수정 할 데이터 가져오기
 	public Review selectOneReview(Map<String, String> data);
 	
-	/*//질문별로 리뷰 보기
-	public List<Review> reviewListByQNum(Map<String, String> data);*/
+	//질문별로 리뷰 보기
+//	public List<Review> reviewListByQNum(Map<String, String> data);
 	
 	//관리자 페이지 페이징 처리+검색
 	public int selectCountByKeyword(Map<String, String> map);
@@ -56,5 +56,6 @@ public interface ReviewDao {
 	public List<Review> selectReviewsList(Map<String, Integer> data);
 	// 페이징 처리할 때 필요한 total rows
 	public int selectReviewTotalRows(Map<String, Integer> data);
-
+	// 리뷰 작성시, 중복 검사
+	public int reviewDuplicationCheck(Map<String, String> data);
 }

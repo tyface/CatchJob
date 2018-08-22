@@ -13,48 +13,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET `CONTENTS`=#{contents}, EVALUATION=#{evaluationScore}
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
 	</update>
-	<delete id="deleteReview" parameterType="map">
-		DELETE FROM REVIEW_TB
-		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
-	</delete>
+	<!-- 리뷰 삭제상태로 만들기 -->
+	<update id="deleteReview" parameterType="map">
+		UPDATE REVIEW_TB
+		SET REVW_FL = #{REVW_FL}
+		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}	
+	</update>
+<!-- 	<delete id="deleteReview" parameterType="map"> -->
+<!-- 		DELETE FROM REVIEW_TB -->
+<!-- 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum} -->
+<!-- 	</delete> -->
 	<!-- 질문가져오기 -->
-	<select id="question" parameterType="int"  resultType="map">
+	<select id="question" parameterType="map"  resultType="map">
 		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG
 		FROM   REVIEW_QESTN_TB qes
 		LEFT OUTER JOIN REVIEW_TB rev
 		ON qes.QESTN_NO = rev.QESTN_NO
-		AND rev.ENT_IDX=#{entIndex}
+		AND rev.ENT_IDX=#{ENT_IDX} 
+		AND rev.REVW_FL=#{REVW_FL} 
 		GROUP BY qes.QESTN_NO
-		ORDER BY qes.QESTN_NO;	
+		ORDER BY qes.QESTN_NO	
 	</select>
-	<select id="reviewList" parameterType="int" resultMap="reviewMap">		
-		SELECT * 
-		FROM REVIEW_QESTN_TB q
-		LEFT JOIN REVIEW_TB r
-		ON r.QESTN_NO=q.QESTN_NO
-		WHERE r.ENT_IDX=#{entIndex}  
-		ORDER BY r.REG_DT desc
-	</select>
+	<!-- VIEW페이지에서 리뷰 리스트 가져오기.. 페이징 처리 전에 사용하던 것 -->
+<!-- 	<select id="reviewList" parameterType="int" resultMap="reviewMap">		 -->
+<!-- 		SELECT *  -->
+<!-- 		FROM REVIEW_QESTN_TB q -->
+<!-- 		LEFT JOIN REVIEW_TB r -->
+<!-- 		ON r.QESTN_NO=q.QESTN_NO -->
+<!-- 		WHERE r.ENT_IDX=#{entIndex}   -->
+<!-- 		ORDER BY r.REG_DT desc -->
+<!-- 	</select> -->
 	<!-- 수정/삭제페이지에서 뿌려줄 데이터  -->
-	<select id="reviewListByMember" parameterType="int" resultMap="reviewMap">
+	<select id="reviewListByMember" parameterType="map" resultMap="reviewMap">
 		SELECT  e.ENT_IDX,e.ENT_NM, q.QESTN_NO, q.QUESTION, r.REG_DT
 		FROM REVIEW_QESTN_TB q
 		LEFT JOIN REVIEW_TB r
 		ON r.QESTN_NO=q.QESTN_NO
 		LEFT JOIN ENTERPRISE_TB e		
 		ON r.ENT_IDX=e.ENT_IDX
-		WHERE r.MBER_IDX=#{mberIndex}
-		ORDER BY r.REG_DT desc
+		WHERE r.MBER_IDX=#{MBER_IDX} AND r.REVW_FL = #{REVW_FL}
+		ORDER BY r.REVW_IDX desc
 	</select>
 	<!-- 수정 할 데이터 가져오기 -->
-	<select id="review" parameterType="map" resultMap="reviewMap">
+	<select id="selectOneReview" parameterType="map" resultMap="reviewMap">
 		SELECT e.ENT_NM, q.QUESTION, r.*
 		FROM REVIEW_QESTN_TB q
 		LEFT JOIN REVIEW_TB r
 		ON r.QESTN_NO=q.QESTN_NO
 		LEFT JOIN ENTERPRISE_TB e		
 		ON r.ENT_IDX=e.ENT_IDX
-		WHERE r.MBER_IDX=#{mberIndex} AND e.ENT_IDX=#{entIndex} AND q.QESTN_NO=#{questionNum}	
+		WHERE r.MBER_IDX=#{mberIndex} AND e.ENT_IDX=#{entIndex} AND q.QESTN_NO=#{questionNum} AND r.REVW_FL = #{REVW_FL}	
 	</select> 
 	<!-- 
 	<select id="reviewListByQNum" parameterType="map" resultMap="reviewMap">
@@ -72,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW_QESTN_TB q
 		LEFT JOIN REVIEW_TB r
 		ON r.QESTN_NO=q.QESTN_NO
-		WHERE r.ENT_IDX=#{ENT_IDX} AND r.QESTN_NO=#{QESTN_NO}
+		WHERE r.ENT_IDX=#{ENT_IDX} AND r.QESTN_NO=#{QESTN_NO} AND r.REVW_FL = #{REVW_FL}
 		ORDER BY r.REG_DT desc
 		LIMIT #{NUM_OF_RVW_PER_PAGE}
 		OFFSET #{START_ROW}
@@ -80,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="selectReviewTotalRows" parameterType="map" resultType="int">
 		SELECT 	 count(*) AS TOTAL_ROWS 
 		FROM	 REVIEW_TB
-		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO}
+		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL = #{REVW_FL}
 	</select>
 
 	<select id="selectCount" resultType="int" parameterType="String">
@@ -103,6 +111,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND ENT_NM LIKE CONCAT('%',#{entNameKeyword},'%') AND QESTN_NO LIKE CONCAT('%',#{questionNumKeyword},'%');
 		
 		
+	</select>
+	<!-- 리뷰 작성시 중복 검사 -->
+	<select id="reviewDuplicationCheck" parameterType="map" resultType="int">
+		SELECT count(*) as COUNT
+		FROM REVIEW_TB
+		WHERE ENT_IDX=#{ENT_IDX} AND MBER_IDX=#{MBER_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL=#{REVW_FL}		
 	</select>
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>
