@@ -57,6 +57,7 @@ function appendEntList(entList,pageNum,pageViewCount){
 
     /* 별점 만들기 */
     var stars = "";
+
     for(var j = 0;j < 5;j++){
       if(j < entList[i].evaluationAvg){
         stars += "<span class=stars-on/>";
