@@ -30,8 +30,10 @@ var newPerson = new Array();
 var outPerson = new Array();
 
 $(function(){
-
-
+// 	alert("interviewJson: "+${interviewJson})
+//  	var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
+// 	alert("야호"+interviewJson[0].entIndex);
+	
 	if('${member}'==''){
 	}else{
 		status = "login";
@@ -149,8 +151,8 @@ $(function(){
 			  				  swal({
 				  				  title: "팔로잉 할 수 없습니다.",
 				  				  text: "팔로잉 기업은 최대 10개 까지 가능합니다",
-				  				  type: "error",
-				  				  confirmButtonClass: "btn-danger",
+				  				  type: "warning",
+				  				  confirmButtonClass: "btn-warning",
 				  				  //button: false 
 				  				  //dangerMode:true
 				  			  });
@@ -272,8 +274,8 @@ $(function(){
 			  				swal({
 			  					title: "이미 등록하셨습니다.",
 			  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
-			  					type: "error",
-			  					confirmButtonClass:"btn-danger",
+			  					type: "warning",
+			  					confirmButtonClass:"btn-warning",
 			  					
 			  					
 			  				})
@@ -327,8 +329,8 @@ $(function(){
 						swal({ 
 							title: "등록 실패하였습니다.",
 							text:" 이미 등록하셨습니다.", 
-							type: "error",
-							confirmButtonClass:"btn-danger",
+							type: "warning",
+							confirmButtonClass:"btn-warning",
 							
 						})
 						
@@ -356,21 +358,19 @@ function getReviewList(questionNum){/* 456 */
 		type:"post",
 		dataType:"json",
 		success : function(data){
-
-			$(data).each(function(){
-					
+			for(var i in data.reviewList){
+// 			$(reviewList).each(function(){				
+// 				alert(reviewList[i].contents)
 // 				if((this.questionNum)==questionNum){
-					
-					var regDate = this.regDate;
-					var evaluationScore = this.evaluationScore;
-					var contents = this.contents;//우선 이것만 먼저먼저
-					var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
-					//td.text(contents+"ㅜㅜ..");
-					//td.appendTo(reviews);
+
+				var regDate = data.reviewList[i].regDate;
+				var evaluationScore = data.reviewList[i].evaluationScore;
+				var contents = data.reviewList[i].contents;
+				var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
+				td.appendTo(reviews);
 // 				}
-				
-				
-			});
+			}				
+// 			});
 		},
 		error : function(request,status,error){
 			alert("요청 실패하였습니다.");
@@ -600,6 +600,7 @@ function interviewPieChart(){
 function interviewDifficultyShape(){
 //	 var interviewJson = JSON.parse('${interviewJson}');
     var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
+    
 	 for(var i in interviewJson){
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
 		
@@ -1028,7 +1029,6 @@ function jsonEscape(str)  {
 												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=1#section3" class="underline">&laquo;</a></li> --%>
 												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.startPage-1}#section3" class="underline">&lt;</a><li> --%>
 												<%-- 												</c:if> --%>
-
 												<c:forEach var="pageNum" begin="${reviewPageData.startPage}"
 													end="${reviewPageData.endPage < reviewPageData.pageTotalCount ? reviewPageData.endPage : reviewPageData.pageTotalCount}">
 													<c:choose>
@@ -1042,6 +1042,20 @@ function jsonEscape(str)  {
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
+												
+<%-- 												<c:forEach begin="${reviewPageData.startPage}" --%>
+<%-- 													end="${reviewPageData.endPage < reviewPageData.pageTotalCount ? reviewPageData.endPage : reviewPageData.pageTotalCount}"> --%>
+<%-- 													<c:choose> --%>
+<%-- 														<c:when test="${pageNum == reviewPageData.currentPage}"> --%>
+<%-- 															<li><a>${reviewPageData.pageTotalCount}0</a></li> --%>
+<%-- 														</c:when> --%>
+<%-- 														<c:otherwise> --%>
+<!-- 															<li><a -->
+<%-- 																href="${pageContext.request.contextPath}/enterprise/reviewList?entIndex=${entInfo.ENT_IDX}&page=${pageNum}#section2" --%>
+<%-- 																class="underline">${reviewPageData.pageTotalCount}</a></li> --%>
+<%-- 														</c:otherwise> --%>
+<%-- 													</c:choose> --%>
+<%-- 												</c:forEach> --%>
 
 												<%-- 												<c:if test="${reviewPageData.endPage < reviewPageData.pageTotalCount}"> --%>
 												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.endPage+1}#section3" class="underline">&gt;</a></li> --%>
@@ -1071,7 +1085,7 @@ function jsonEscape(str)  {
 											</div>
 
 											<div class="input-group input-group-sm">
-												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요"> 
+												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요."> 
 												<span class="input-group-btn"> 
 													<input type="submit" class="btn btn-flat btn-info review-btn" value="제출">
 													<input type="hidden" class="statusCount" value="${status.count}">
@@ -1496,7 +1510,7 @@ function jsonEscape(str)  {
 						</div>
 						<div class="col-xs-9">
 							<textarea class="form-control" rows="3" name="intrvwReview"
-								placeholder="Enter ..."></textarea>
+								placeholder="최대한 자세하게 작성해주세요. 최초 연락부터 인터뷰 횟수, 분위기, 면접관의 특징, 면접 팁 등"></textarea>
 						</div>
 					</div>
 					<!-- 면접질문 입력하기 -->
@@ -1506,7 +1520,7 @@ function jsonEscape(str)  {
 						</div>
 						<div class="col-xs-9">
 							<textarea class="form-control" rows="3" name="intrvwQuestion"
-								placeholder="Enter ..."></textarea>
+								placeholder="조별 주제, 개별 과제, 대면 질문 등 가장 어려웠던 질문을 정확하고 구체적으로 작성해 주세요."></textarea>
 						</div>
 					</div>
 					<!-- 면접에 대한 답변 -->
@@ -1516,7 +1530,7 @@ function jsonEscape(str)  {
 						</div>
 						<div class="col-xs-9">
 							<textarea class="form-control" rows="3" name="intrvwAnswer"
-								placeholder="Enter ..."></textarea>
+								placeholder="작성한 면접질문에 대한 답변을 입력하세요."></textarea>
 						</div>
 					</div>
 					<!-- 면접결과 -->

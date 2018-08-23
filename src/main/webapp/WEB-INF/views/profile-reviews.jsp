@@ -9,8 +9,6 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 
-
-
 <script>
 $(function(){
 	$('.stars').barrating({
@@ -169,43 +167,45 @@ function reviewValidation(){
 }
 </script>
 
+<jsp:include page="include/profile-article.jsp" flush="true" />
 
-<article class="container">
+<article class="container non-padding-top">
 	<div class="contents-wrap">
 	  <h2>리뷰 코멘트</h2>
 	  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
-	  <div class="table-responsive">          
-	  <table class="table">
+<!-- 	  <div class="table-responsive">           -->
+	  <table class="table table-hover text-center">
 	    <thead>
 	      <tr>
-<!-- 	        <th>#</th> -->
 	        <th>기업명</th>
 	        <th>질문내용</th>
 	        <th>작성일</th>  
 	        <th>
 	        	수정 | 삭제
 	        </th>
+	 
 	      </tr>
 	    </thead>
 	    <tbody>
 	    <c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
 		      <tr>
-<%-- 		        <td>${status.index}</td> --%>
-		        <td><a class="non-line" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</a></td>
+		        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</span></td>
 		        <td>${reviewList.question}</td>
 		        <td>${reviewList.regDate}</td>
 		        <td>
-		        	<a class="update non-line" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </a> |
-		        	<%-- <a class="delete" onclick="doDelete(${viewData.entIndex})">삭제</a> --%>
-		        	<a class="delete non-line" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </a>
-	<%-- 	        	<a class="delete" onclick="location.href='${pageContext.request.contextPath}/profile/deleteReview?entIndex=${reviewList.entIndex}&questionNum=${reviewList.questionNum}'">삭제</a> --%>
+		        	<span class="update blue-font" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </span> |
+		        	<span class="delete blue-font" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </span>
 		        </td>
-		      </tr>
+		      </tr>		      
 	      </c:forEach>
+	      
 	    </tbody>
 	  </table>
 	  </div>
-	</div>
+	  
+	  
+	  
+<!-- 	</div> -->
 </article>
 
 <!--  <button type="button" class="btn btn-info" id="myBtn">수정</button>
@@ -260,7 +260,7 @@ function reviewValidation(){
 					<!-- 리뷰 코멘트/ 내용 -->
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="2" name="contents" id="contents"></textarea> 
+						<textarea class="form-control" rows="2" name="contents" id="contents"  placeholder="기업리뷰를 추가로 입력해주세요."></textarea> 
 						<!-- <input type="text" class="form-control" id="contents" name="contents"	 > -->
 					</div>
 	

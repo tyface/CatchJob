@@ -42,7 +42,9 @@ public class ProfileController {
 	public String reviewsView(Model model, HttpSession session) {
 		//회원번호로 조회해서 리뷰 데이터 가져오기 
 		//System.out.println("진ㅇ입성공입니다 리뷰유리븁리"+session.getAttribute("mberIndex"));
-		model.addAttribute("reviewList", reviewService.reviewListByMember(((Member)session.getAttribute("member")).getMberIndex()));
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("MBER_IDX", Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		model.addAttribute("reviewList", reviewService.reviewListByMember(data));
 		//System.out.println(reviewService.reviewListByMember(((Member)session.getAttribute("member")).getMberIndex()));
 		return "profile-reviews";
 	}
@@ -50,6 +52,7 @@ public class ProfileController {
 	@RequestMapping(value = "/reviewForm")
 	public Review reviewsView( Model model,HttpSession session, String entIndex, String questionNum,HttpServletResponse resp) {
 		Map<String, String> data = new HashMap<String,String>();
+		
 		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
 		data.put("mberIndex", Integer.toString(memberIndex));
 		data.put("entIndex", entIndex);
@@ -63,7 +66,9 @@ public class ProfileController {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		System.out.println("컨트롤러 리뷰 폼 요청 - 받음 "+data);
 		Review review = reviewService.review(data);
+		System.out.println("review: "+review);
 		return review;		
 	}
 	
@@ -93,8 +98,9 @@ public class ProfileController {
 	/* 회원정보를 통해 작성한 인터뷰정보 가져오기....... */
 	@RequestMapping(value = "/interviews")
 	public String interviewView(Model model, HttpSession session) {
-	
-		model.addAttribute("viewData", itvwService.selectListByMemberIdx(((Member)session.getAttribute("member")).getMberIndex()));
+		Map<String, String> data = new HashMap<String,String>();
+		data.put("MBER_IDX", Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		model.addAttribute("viewData", itvwService.selectListByMemberIdx(data));
 		return "profile-interviews";
 	
 	}

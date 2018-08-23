@@ -24,7 +24,7 @@ public class Constants {
 		public static final int NUM_OF_NAVI_PAGE = 5;	  //view 페이지에서  화면에 표시할 nav 수
 	}
 	public static class Review{
-		public static final int NUM_OF_RVW_PER_PAGE = 2; //view 페이지에서 화면에 표시할 row 수
+		public static final int NUM_OF_RVW_PER_PAGE = 5; //view 페이지에서 화면에 표시할 row 수
 		public static final int NUM_OF_NAVI_PAGE = 2;	  //view 페이지에서  화면에 표시할 nav 수
 	}
 	public static class Admin{

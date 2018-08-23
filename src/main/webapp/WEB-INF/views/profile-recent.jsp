@@ -138,8 +138,8 @@ $(function(){
 
 </script>
 
-
-<article class="container">
+<jsp:include page="include/profile-article.jsp" flush="true" />
+<article class="container non-padding-top">
 	<div class="contents-wrap">
 	  
 	  <h1>최근 본 기업</h1>

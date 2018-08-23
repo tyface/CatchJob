@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
+import com.CatchJob.service.NaverBookService;
+import com.CatchJob.service.NaverNewsService;
 import com.CatchJob.service.RecordService;
 import com.CatchJob.service.ReviewService;
 import com.google.gson.Gson;
@@ -45,6 +49,32 @@ public class EnterpriseController {
 	@Autowired
 	private FollowService followService;
 	
+	@Autowired
+	NaverBookService naverBookService;
+	
+	@Autowired
+	NaverNewsService naverNewsService;
+	
+	@RequestMapping("/bookSearch")
+	public void bookSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+		System.out.println("컨트롤러 bookSearch");
+		try {
+			naverBookService.searchBooks(keyword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	@RequestMapping("/newsSearch")
+	public void newsSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+		System.out.println("컨트롤러 newsSearch");
+		try {
+			//model.addAttribute("bookList",naverBookService.searchBooks(keyword));
+			naverNewsService.searchNews(keyword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
 	public String entListForm() {
@@ -74,7 +104,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/view")
 	public String entDetailsForm(int entIndex,@RequestParam(defaultValue = "1")int page, HttpServletRequest req, Model model, HttpSession session)  {
 		// 기업정보 표출될때마다 viewCount올리는 부분
-		System.out.println("뷰 컨트롤러 진입---");
+		//System.out.println("뷰 컨트롤러 진입---");
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("ENT_IDX", Integer.toString(entIndex));
 		try {
@@ -100,8 +130,8 @@ public class EnterpriseController {
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(mapData));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
-		model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(entIndex)));
-		model.addAttribute("question", reviewService.question(entIndex));
+		model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
+		model.addAttribute("question", reviewService.question(mapData));
 		
 		//int currentPage = 1;
 		int currentPage= page;
@@ -111,8 +141,8 @@ public class EnterpriseController {
 		dataItvw.put("PAGE_NUM", currentPage);
 		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
 		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
-//		System.out.println("페이징처리:"+itvwService.getInterviewList(dataItvw));
-//		System.out.println("페이지 데이터: "+itvwService.interviewPageData(currentPage, entIndex));
+		//System.out.println("페이징처리:"+itvwService.getInterviewList(dataItvw));
+		//System.out.println("페이지 데이터: "+itvwService.interviewPageData(currentPage, entIndex));
 		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
 		
 		return "enterprise-view";
@@ -126,7 +156,7 @@ public class EnterpriseController {
 		mapData.put("ENT_IDX", entIndex );	
 //		(int) (session.getAttribute("mberIndex"))
 //		mapData.put("ENT_IDX", entIndex );	
-		System.out.println("좋아요 컨트롤러: "+mapData);
+		//System.out.println("좋아요 컨트롤러: "+mapData);
 		return followService.regFollowEnt(mapData);
 	}
 	@ResponseBody
@@ -152,25 +182,47 @@ public class EnterpriseController {
 //		}
 //		return entity;
 //	}
-	@ResponseBody
+//	@ResponseBody
 	@RequestMapping(value = "/reviewList")
-	public List<Review> list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int page, Model model){		
+	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int page, Model model, HttpServletResponse resp){
+		//req.setCharacterEncoding("utf-8");
+		resp.setCharacterEncoding("utf-8");
 		System.out.println("컨트롤러 리뷰 entIndex: "+entIndex);
 		Map<String, Integer> dataRvw = new HashMap<String, Integer>();
 		int currentPage= page;		
 		dataRvw.put("PAGE_NUM", currentPage);
 		dataRvw.put("ENT_IDX", entIndex);		
 		dataRvw.put("QESTN_NO", questionNum);
-		System.out.println("리뷰: "+reviewService.getReviewsList(dataRvw));
-		System.out.println("페이지 데이터: "+reviewService.reviewPageData(currentPage, entIndex, questionNum));
-		model.addAttribute("reviewPageData", reviewService.reviewPageData(currentPage, entIndex, questionNum));
-		return reviewService.getReviewsList(dataRvw);
+		
+		Map<String, Object> mapData = new HashMap<String, Object>();
+		List<Review> reviewList = reviewService.getReviewsList(dataRvw);
+		Map<String, Integer> reviewPageData = reviewService.reviewPageData(currentPage, entIndex, questionNum);
+		
+		mapData.put("reviewList", reviewList);
+		mapData.put("reviewPageData", reviewPageData);
+		//model.addAttribute("reviewList", new Gson().toJson(reviewList) );
+//		Gson gson = new GsonBuilder().create();
+//		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
+		try {
+//			resp.getWriter().println(new Gson().toJson(reviewList));
+//			resp.getWriter().println(new Gson().toJson(reviewPageData));
+			resp.getWriter().println(new Gson().toJson(mapData));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+//		System.out.println("리뷰: "+reviewList);
+//		System.out.println("페이지 데이터: "+reviewPageData);
+//		model.addAttribute("reviewPageData", reviewPageData);
+		
+		
+		 
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/writeReview")
 	public boolean writeReview(HttpSession session, Review review) throws IOException {
-		System.out.println("writeReview-컨트롤러1"+review);
+		//System.out.println("writeReview-컨트롤러1"+review);
 		
 		//Review review = new Review();
 		//review.setContents(req.getParameter("contents"));
@@ -178,18 +230,18 @@ public class EnterpriseController {
 		//review.setEvaluationScore(Integer.parseInt(req.getParameter("evaluationScore")));
 		review.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
 		//review.setQuestionNum(Integer.parseInt(req.getParameter("questionNum")));
-		review.setReviewFlag("1");
+//		review.setReviewFlag("1");
 		//req.getParameter("contents");
 		//req.getParameter("evaluationScore");
 
-		System.out.println("writeReview-컨트롤러2"+review);
+		//System.out.println("writeReview-컨트롤러2"+review);
 		boolean result = reviewService.insertReview(review);
 		
 		if(result) {
-			System.out.println("컨트롤러: 리뷰 등록 성공"+result);
+			//System.out.println("컨트롤러: 리뷰 등록 성공"+result);
 			return true;
 		}else {
-			System.out.println("컨트롤러: 리뷰 등록 실패"+result);
+			//System.out.println("컨트롤러: 리뷰 등록 실패"+result);
 			return false;			
 		}				
 	}
@@ -206,9 +258,9 @@ public class EnterpriseController {
 	//@ResponseBody
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview, HttpSession session) {
-		System.out.println("123456"+interview);
+		//System.out.println("123456"+interview);
 		interview.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
-		interview.setIntrvwFlag("1");
+//		interview.setIntrvwFlag("1");
 //		// boolean result = entService.insertInterview(interview);
 		itvwService.insertInterview(interview);
 //		if(result) {

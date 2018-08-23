@@ -102,8 +102,8 @@ $(function(){
 });
 
 </script>
-
-<article class="container  ">
+<jsp:include page="include/profile-article.jsp" flush="true" />
+<article class="container  non-padding-top">
 	<div class="contents-wrap ">
 		<h1>팔로잉 기업</h1>
 		<c:forEach begin="0" varStatus="status" end="9" var="follow" items="${followView}">

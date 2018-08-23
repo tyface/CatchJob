@@ -10,7 +10,9 @@ article {
 	margin-bottom: 30px;
 	text-align: center;
 }
-
+.non-padding-top{
+	padding-top: 0px;
+}
 /* #signinButton{
 
   background-image: url('../img/btn_google_signin_light_normal_web@2x.png');
@@ -245,7 +247,7 @@ article {
 
 .btnFollow {
 	color: #ffcc00;
-	font-size: 20px;
+	font-size: 25px;
 	padding: 0px;
 }
 
@@ -456,3 +458,10 @@ label.error {
 }
 
 /* VIEW 페이지 그래프  END*/
+
+
+/* 마이페이지  START*/
+.text-center td, .text-center th{
+	text-align: center;
+}
+/* 마이페이지 END */

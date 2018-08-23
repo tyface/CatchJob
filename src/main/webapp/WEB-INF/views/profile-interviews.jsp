@@ -219,14 +219,15 @@ function interviewValidation(){
 	});	
 }
 </script>
+<jsp:include page="include/profile-article.jsp" flush="true" />
 
-<article class="container">
+<article class="container non-padding-top">
 	<div class="contents-wrap">
 	
 	  <h2>면접후기</h2>
 	  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
 	  <div class="table-responsive">          
-	  <table class="table">
+	  <table class="table table-hover text-center">
 	    <thead>
 	      <tr>
 	<!--         <th>#</th> -->
@@ -242,15 +243,12 @@ function interviewValidation(){
 	    <tbody>
 	    <c:forEach  items="${viewData}" var="viewData" varStatus="status">
 		      <tr>
-	<%-- 	        <td>${status.index}</td> --%>
-		        <td><a class="non-line" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${viewData.entIndex}'">${viewData.entName}</a></td>
+		        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${viewData.entIndex}'">${viewData.entName}</span></td>
 		        <td>${viewData.intrvwResult}</td>
 		        <td>${viewData.regDate}</td>
-	<%-- 	        <td>${viewData.intrvwFlag}</td> --%>
 		        <td>
-		        	<a class="update non-line" onclick="doUpdate(${viewData.entIndex})">수정  </a> |
-		        	<a class="delete non-line" onclick="doDelete(${viewData.entIndex})">삭제</a>
-<%-- 		        	<a class="delete non-line" onclick="location.href='${pageContext.request.contextPath}/profile/deleteInterview?entIndex=${viewData.entIndex}'">삭제</a> --%>
+		        	<span class="update blue-font" onclick="doUpdate(${viewData.entIndex})">수정  </span> |
+		        	<span class="delete blue-font" onclick="doDelete(${viewData.entIndex})">삭제</span>
 		        </td>
 		      </tr>
 	      </c:forEach>
@@ -338,7 +336,8 @@ function interviewValidation(){
 							<label>면접에서 채용까지의 과정 요약</label>
 						</div>
 						<div class="col-xs-9">
-							<textarea class="form-control" rows="3" name="intrvwReview" id="intrvwReview"></textarea>
+							<textarea class="form-control" rows="3" name="intrvwReview" id="intrvwReview"
+							 placeholder="최대한 자세하게 작성해주세요. 최초 연락부터 인터뷰 횟수, 분위기, 면접관의 특징, 면접 팁 등"></textarea>
 						</div>
 					</div>
 					<!-- 면접질문 입력하기 -->
@@ -347,8 +346,8 @@ function interviewValidation(){
 							<label>면접질문 입력하기</label>
 						</div>
 						<div class="col-xs-9">
-							<textarea class="form-control" rows="3" name="intrvwQuestion" id="intrvwQuestion"
-								></textarea>
+							<textarea class="form-control" rows="3" name="intrvwQuestion" id="intrvwQuestion" 
+							placeholder="조별 주제, 개별 과제, 대면 질문 등 가장 어려웠던 질문을 정확하고 구체적으로 작성해 주세요."></textarea>
 						</div>
 					</div>
 					<!-- 면접에 대한 답변 -->
@@ -357,7 +356,8 @@ function interviewValidation(){
 							<label>작성한 면접질문에 대한 답변을 입력하세요.</label>
 						</div>
 						<div class="col-xs-9">
-							<textarea class="form-control" rows="3" name="intrvwAnswer" id="intrvwAnswer"></textarea>
+							<textarea class="form-control" rows="3" name="intrvwAnswer" id="intrvwAnswer"
+							 placeholder="작성한 면접질문에 대한 답변을 입력하세요."></textarea>
 						</div>
 					</div>
 
