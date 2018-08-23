@@ -196,13 +196,4 @@ public class MemberServiceImp implements MemberService {
 		return endPage;
 	}
 
-	@Override
-	public boolean passwordModify(Member member) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
-	
 }

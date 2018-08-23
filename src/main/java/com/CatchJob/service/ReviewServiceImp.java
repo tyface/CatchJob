@@ -117,10 +117,10 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public List<Review> getReviewsList(Map<String, Integer> dataRvw) {
 		dataRvw.put("REVW_FL", 1);
-		int PAGE_NUM = dataRvw.get("PAGE_NUM");
-		int START_ROW = Constants.Review.NUM_OF_RVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
+		int pageNum = dataRvw.get("PAGE_NUM");
+		int startRow = Constants.Review.NUM_OF_RVW_PER_PAGE * ( pageNum - 1 ) ;
 		dataRvw.put("NUM_OF_RVW_PER_PAGE", Constants.Review.NUM_OF_RVW_PER_PAGE);
-		dataRvw.put("START_ROW", START_ROW);
+		dataRvw.put("START_ROW", startRow);
 		return reviewDao.selectReviewsList(dataRvw);
 	}
 	

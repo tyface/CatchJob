@@ -26,7 +26,6 @@ import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
-import com.CatchJob.service.NaverBookService;
 import com.CatchJob.service.NaverNewsService;
 import com.CatchJob.service.RecordService;
 import com.CatchJob.service.ReviewService;
@@ -173,12 +172,12 @@ public class EnterpriseController {
 //	}
 //	@ResponseBody
 	@RequestMapping(value = "/reviewList")
-	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int page, Model model, HttpServletResponse resp){
+	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
 		//req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
 		System.out.println("컨트롤러 리뷰 entIndex: "+entIndex);
 		Map<String, Integer> dataRvw = new HashMap<String, Integer>();
-		int currentPage= page;		
+		int currentPage= pageNum;		
 		dataRvw.put("PAGE_NUM", currentPage);
 		dataRvw.put("ENT_IDX", entIndex);		
 		dataRvw.put("QESTN_NO", questionNum);
@@ -189,6 +188,7 @@ public class EnterpriseController {
 		
 		mapData.put("reviewList", reviewList);
 		mapData.put("reviewPageData", reviewPageData);
+		System.out.println(reviewPageData);
 		//model.addAttribute("reviewList", new Gson().toJson(reviewList) );
 //		Gson gson = new GsonBuilder().create();
 //		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
