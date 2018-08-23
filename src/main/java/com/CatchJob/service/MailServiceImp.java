@@ -43,7 +43,7 @@ public class MailServiceImp implements MailService{
             }
         }
         result = result.replace("memberIdTemp", email);
-        result = result.replace("oauthId", mamberDao.selectById(email).getOauthId());
+        result = result.replace("oauthIdTemp", mamberDao.selectById(email).getOauthId());
         return result;
 	}
 

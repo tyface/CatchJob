@@ -12,13 +12,13 @@
 	<!-- 부트스트랩 스타일시트 파일 링크 설정
 	contextpath는 절대 경로를 만들기 위해서 추가 -->
 
-<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sweetalert.css" rel="stylesheet">
-			<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css" rel="stylesheet">
+<link rel="stylesheet"href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sweetalert.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/public.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/public.js"></script>
 
 

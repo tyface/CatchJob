@@ -27,24 +27,16 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean login(String mberId, String mberPw) {
 		Member member = memberDao.selectById(mberId);
-		//탈퇴회원 경우 로그인 금지
-		if (member.getMberFlag().equals("2")) {
-			return false;
+		boolean result = false;
+
+		if (member == null || member.getMberFlag().equals("2")) {//탈퇴회원 경우 로그인 금지
+			result = false;
+		} else if(member.getMberPw().equals(mberPw)){
+			visitUpdate(member.getMberIndex()); //마지막 방문날짜 업데이트
+			result = true;
 		}
 		
-		if (member != null) {
-			if (member.getMberPw().equals(mberPw)) {
-				// 방문일 갱신
-				Date date = new Date();
-				member.setLastDate(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date));
-				memberDao.updateMember(member);
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+		return result;
 	}
 
 	@Override
@@ -60,15 +52,34 @@ public class MemberServiceImp implements MemberService {
 	
 	@Override
 	public boolean modify(Member member) {
-		try{
-			int rowCount = memberDao.updateMember(member);
-			if (rowCount > 0) {		
-				return true;
-			} else {
-				return false;
-			}
-		}catch(Exception e) {
-			System.out.println(e);
+		
+		int rowCount = memberDao.updateMember(member);
+		
+		if (rowCount > 0) {		
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean memberTypeModify(Member member) {
+		int rowCount = memberDao.updateMemberType(member);
+		
+		if (rowCount > 0) {		
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean passwordModify(Member member) {
+		int rowCount = memberDao.updateMemberPassword(member);
+		
+		if (rowCount > 0) {
+			return true;
+		} else {
 			return false;
 		}
 	}

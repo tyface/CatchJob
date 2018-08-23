@@ -3,7 +3,6 @@ package com.CatchJob.controller;
 
 import java.io.IOException;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,7 +38,6 @@ import com.CatchJob.service.MailService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.TempKey;
 import com.CatchJob.service.UniversalDomainService;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 @Controller
 @RequestMapping("/member")
@@ -72,17 +70,29 @@ public class MemberController {
 	/* 로그인 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpSession session, HttpServletResponse resp, String mberId, String mberPw) {
-		boolean result = memberService.login(mberId, mberPw);
 		String data = "";
-		if (result) {
-			Member member = memberService.getMemberById(mberId);
-			memberService.visitUpdate(member.getMberIndex());
-			session.setAttribute("member", member);
-	
-			data = "{\"result\" : true}";
-		} else {
-			data = "{\"result\" : false}";
+		Member member = memberService.getMemberById(mberId);
+		
+		System.out.println("진입==============================================================================");
+		if(member != null) {
+			System.out.println("logib==============================================================================");
+			boolean result = memberService.login(mberId, mberPw);
+			System.out.println("login end==============================================================================");
+			if (result) {
+				memberService.visitUpdate(member.getMberIndex());
+				session.setAttribute("member", member);
+		
+				data = "{\"result\" : \"CODE_01\"}"; //로그인 성공
+			} else {
+				System.out.println("else==============================================================================");
+				data = "{\"result\" : \"CODE_02\"}"; //비밀번호 불일치, 인증되지 않은 회원
+			}
+			
+		}else {
+			data = "{\"result\" : \"CODE_03\"}"; //사용자가 존재하지 않습니다.
 		}
+		
+		System.out.println("종료==============================================================================");
 		try {
 			resp.getWriter().print(data);
 		} catch (IOException e) {
@@ -116,11 +126,11 @@ public class MemberController {
 				
 	        	mailHandler.setSubject("catch job 인증 이메일 입니다.");
 				mailHandler.setText(new StringBuffer().append("<h1>메일인증</h1>").
-				append("<a href='http://localhost:8090/catchjob/verify?memberId=").
+				append("<a href='"+Constants.Config.HOST+"/member/verify?memberId=").
 				append(member.getMberId()).
 				append("&oauthKey=").append(key).
 				append("' target='_blank'>이메일 인증 확인</a>").toString());
-				mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
+				mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
 		        mailHandler.setTo(member.getMberId());
 		        mailHandler.send();
 		        
@@ -169,83 +179,90 @@ public class MemberController {
 		}
 	}
 	
-	/* 정회원 인증 하기 TODO*/ 
-	@RequestMapping(value = "/verifyRegularMember")
-	public void verifyRegularMember(HttpSession session, HttpServletResponse resp) {
+	/* 정회원 인증 메일 보내기*/ 
+	@RequestMapping(value = "/regularMemberMail")
+	public void regularMemberMail(String email, HttpSession session, HttpServletResponse resp) {
 		String data="";
 		String domain;
 		Member member = (Member)session.getAttribute("member");
 		
-		String email = member.getMberId();
+		String memberId = member.getMberId();
 		
         int index= email.indexOf("@"); 
 	    domain = email.substring(index+1);
 		
-	    System.out.println("도메인:" + domain);
-		
 	    try {
 			if(domainService.findUniDomain(domain) == null) {
+				FileSystemResource fsr;
 				MailHandler mailHandler = new MailHandler(mailSender);
-			
-			mailHandler.setSubject("CatchJob 정회원인증 메일 입니다.");
-//			mailHandler.setText(mailService.getMailTemplate(email));
-			
-			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource("resources/img/image-1.gif").getFile());
-			mailHandler.addInline("image-1", fsr);
-			fsr = new FileSystemResource(resourceLoader.getResource("resources/img/logo.png").getFile());
-			mailHandler.addInline("logo", fsr);
-			
-			mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
-			mailHandler.setTo(email);
-			mailHandler.send();
-			data = "{\"result\" : true}";
+				
+				mailHandler.setSubject("CatchJob 정회원인증 메일 입니다.");
+				mailHandler.setText(mailService.getMailTemplate(memberId, Constants.File.VERIFY_REGULAR));
+				
+				fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
+				mailHandler.addInline("image-1", fsr);
+				fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_LOGO_1).getFile());
+				mailHandler.addInline("logo", fsr);
+				
+				mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
+				mailHandler.setTo(email);
+				mailHandler.send();
+				data = "{\"result\" : \"CODE_01\"}"; //이메일 전송 완료
 			
 			}else {
-				data = "{\"result\" : false}";
+				data = "{\"result\" : \"CODE_02\"}"; //범용 이메일 일경우
 			}
-		
 		} catch (Exception e) {
+			data = "{\"result\" : \"CODE_03\"}"; //이메일 전송 실패
 			e.printStackTrace();
+		}finally {
+			try {
+				resp.getWriter().print(data);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-	    
-//		try {
-//			
-//			MailHandler mailHandler = new MailHandler(mailSender);
-//			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
-//			mailHandler.setText(mailService.getMailTemplate(email));
-//			
-//			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource("resources/img/image-1.gif").getFile());
-//			mailHandler.addInline("image-1", fsr);
-//			fsr = new FileSystemResource(resourceLoader.getResource("resources/img/logo.png").getFile());
-//			mailHandler.addInline("logo", fsr);
-//			
-//			mailHandler.setFrom("catchjob33@gmail.com", "catchjob");
-//			mailHandler.setTo(email);
-//			mailHandler.send();
-//			
-//			data = "{\"result\" : true}";
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			data = "{\"result\" : false}";
-//		} finally {
-//			try {
-//				resp.getWriter().print(data);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		
+	}
+	
+	/* 정회원 인증 하기*/ 
+	@RequestMapping(value = "/verifyRegularMember")
+	public String verifyRegularMember(String memberId, String oauthId, HttpSession session, HttpServletResponse resp) {
+		String data = "";
+	    try {
+	    	Member member = memberService.getMemberByOauthId(memberId, oauthId);
+	    	
+	    	if(member !=null) {
+	    		member.setMberType("2");
+	    		System.out.println(member);
+	    		memberService.memberTypeModify(member);
+	    		data = "{\"result\" : \"CODE_01\"}"; //정회원 업데이트 완료
+	    	}else {
+	    		data = "{\"result\" : \"CODE_02\"}"; //회원 ID 와 인증 ID 불일치
+	    	}
+	    	
+		} catch (Exception e) {
+			data = "{\"result\" : \"CODE_03\"}"; // TODO 알수업는 오류
+			e.printStackTrace();
+		}finally {
+			try {
+				resp.getWriter().print(data);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	    return "redirect:/";
 	}
 	
 	/* 비밀번호 재설정 메일보내기 */
 	@RequestMapping(value = "/findPasswordMail")
-	public void findPassword(String email, HttpServletResponse resp) {
+	public void findPasswordMail(String email, HttpServletResponse resp) {
 		String data="";
+		System.out.println();
+		
 		try {
 			MailHandler mailHandler = new MailHandler(mailSender);
 			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
-			mailHandler.setText(mailService.getMailTemplate(email,Constants.File.PW_RESET));
+			mailHandler.setText(mailService.getMailTemplate(email, Constants.File.PW_RESET));
 			
 			FileSystemResource fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
 			mailHandler.addInline("image-1", fsr);
@@ -279,24 +296,33 @@ public class MemberController {
 		return "password-modify";
 	}
 	
-	/*패스워드 재설정 */
+	/*패스워드 재설정2 */
 	@RequestMapping(value = "/passwordModify2", method = RequestMethod.POST)
-	public String pwModify2(String password, String memberId, String oauthId, HttpSession session, HttpServletResponse resp) {
-		System.out.println("최종");		
+	public void pwModify2(String password, String memberId, String oauthId, HttpSession session, HttpServletResponse resp) {
+		String data = "";
 		Member member = new Member();
 		System.out.println(memberId);
 		System.out.println(password);
 		System.out.println(oauthId);
 		member.setMberId(memberId);
 		member.setMberPw(password);
-		member.setMberPw(oauthId);
+		member.setOauthId(oauthId);
 		
 		
 		if(memberService.getMemberByOauthId(memberId, oauthId) != null) {
 			memberService.passwordModify(member);
+			data = "{\"result\" : true}";	
 		}else {
+			System.out.println("실패");
+			data = "{\"result\" : false}";
 		}
-		return "redirect:/";
+			
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	//google login
