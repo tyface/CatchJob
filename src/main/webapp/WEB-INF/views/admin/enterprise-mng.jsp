@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>	
 <title>Admin Page</title>
 <style>
 	select {
@@ -30,8 +32,7 @@
 	#pagenation{
 		text-align:center;
 	}
-	table{
-		margin-top:20px;	
+	table{	
         table-layout: fixed;
         word-wrap: break-word;
     }
@@ -45,7 +46,149 @@
 		border-line: 1px solid #ccc;
 		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 	}
+	
+	#chkDelete{		
+		margin-right:10px;
+	}
+	.glyphicon-ok{
+		color:green;
+	}
+	.glyphicon-remove{
+		color:darkRed;
+	}
+	.row.form-group{
+		padding:0;
+	}
 </style>
+<script>		
+	function newPage() {	
+		var url="mngEnt?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+
+			"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val();		
+		window.location=url;
+	}
+		//서치
+	function searchFunction(){
+		  $("#hiddenElement").attr("name", "keywordOption");	  
+		if($("#mngSelect option:selected").text()=='기업명'){
+		     $("#hiddenElement").attr("value", "entNameKeyword");
+		
+		} else if($("#mngSelect option:selected").text()=='기업코드'){
+			 $("#hiddenElement").attr("value", "entIndexKeyword");
+		      
+		} 
+		$("#hiddenElement").appendChild($("#searchForm"));	
+	}
+	
+		
+/* 	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	        results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	} */
+	
+$(function(){
+	
+/* 	alert(getParameterByName('keywordOption'));
+		키워드 변경  + mberFlag
+	if(getParameterByName('keywordOption')!=null){
+		if(getParameterByName('keywordOption')=='entIndexKeyword'){	
+			$("#mngSelect").val(getParameterByName('keywordOption'))
+		}else if(getParameterByName('keywordOption')=='entIndexKeyword'){		
+			$("#mngSelect").val(getParameterByName('keywordOption'))
+		}else if(getParameterByName('keywordOption')=='questionNumKeyword'){
+			$("#mngSelect").val(getParameterByName('keywordOption'))
+		}
+
+	} */	
+		//모달
+	 $('div.modal').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget);
+		  var modal = $(this)		  
+		  modal.find('.modal-body #entIndex').val(button.data('entindex'))
+		  modal.find('.modal-body #entName').val(button.data('entname'))
+		  modal.find('.modal-body #entBizRegNum').val(button.data('entbizregnum'))
+		  modal.find('.modal-body #industryCode').val(button.data('industrycode'))		  
+		  modal.find('.modal-body #entStyleType').val(button.data('entstyletype'))
+		  modal.find('.modal-body #entSubscriberFlag').val(button.data('entsubscriberflag'))
+		  modal.find('.modal-body #entFlag').val(button.data('entflag'))
+		  modal.find('.modal-body #entFoundationDate').val(button.data('entfoundationdate'))
+		  modal.find('.modal-body #industryName').val(button.data('industryname'))
+		  
+	});
+	 	//체크박스
+	  $("input[name='chk_all']").click(function () {
+	        var chk_listArr = $("input[name='chk_list']");
+	        for (var i=0; i < chk_listArr.length; i++) {
+	            chk_listArr[i].checked = this.checked;
+	        }
+	    });	    
+	  $("input[name='chk_list']").click(function () { //리스트 항목이 모두 선택되면 전체 선택 체크
+	        if ($("input[name='chk_list']:checked").length == 5) {
+	            $("input[name='chk_all']")[0].checked = true;
+	        } else {          //리스트 항목 선택 시 전체 선택 체크를 해제함
+	            $("input[name='chk_all']")[0].checked = false; 
+	        }
+	   });    
+	          
+});
+	//체크박스
+function chkModify(){
+    var valueArr = new Array();
+    var list = $("input[name='chk_list']");
+    for(var i = 0; i < list.length; i++){
+        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+            valueArr.push(list[i].value);
+        }          
+    }
+       $.ajax({        	
+		type : "post",
+		url : "${pageContext.request.contextPath}/admin/modifyEntFlag",
+		data : 		
+			{"valueArr" : valueArr},
+		dataType : "json",
+		 success : function(data) {
+			if (data.result) {
+				alert("기업표출 사용 상태로 변경되었습니다");
+				window.location.reload();
+			} else {
+				alert("기업표출 상태 변경에 실패했습니다");
+			}
+		},
+		error : function() {
+			alert("기업표출 변경에 실패했습니다");
+		} 
+	});  
+}
+
+function chkDelete(){
+    var valueArr = new Array();
+    var list = $("input[name='chk_list']");
+    for(var i = 0; i < list.length; i++){
+        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+            var chkedList = valueArr.push(list[i].value);
+        }
+    }
+    $.ajax({        	
+		type : "post",
+		url : "${pageContext.request.contextPath}/admin/deleteEntFlag",
+		data : 		
+			{"valueArr" : valueArr},
+		dataType : "json",
+		 success : function(data) {
+			if (data.result) {
+				alert("기업표출 삭제 상태로 변경되었습니다");
+				window.location.reload();
+			} else {
+				alert("기업표출 상태 변경에 실패했습니다");
+			}
+		},
+		error : function() {
+			alert("기업표출 상태 변경에 실패했습니다");
+		} 
+	});  
+}
+</script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%>
@@ -55,24 +198,32 @@
 		<div class="col-md-offset-1">
 			<div class="row">
 				<div class="col-sm-7">
-					<label for="quantity"> <input type="number" min="5"
+					<div class="btn-group" role="group">
+						 <button onclick="chkModify()" class="btn btn-default" id="chkModify">
+						 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>사용</button>
+	  					 <button onclick="chkDelete()" class="btn btn-default" id="chkDelete">
+	  					 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제</button>
+  					</div>	
+					<input type="number" min="5"
 						max="15" step="5" id="quantity" value="${viewData.msgPerPage}"
-						onclick="newPage()">&nbsp; entries
-					</label>
-				</div>	
+						onclick="newPage()">&nbsp; entries			
+				</div>			
 
 				<div class="col-sm-2">
-					<select>
+					<select id="mngSelect">
 						<option>기업명</option>
 						<option>기업코드</option>
 					</select>
 				</div>	
-				<form action="search" class="form-inline col-sm-3">
+				<form action="mngEnt" class="form-inline col-sm-3" id="searchForm">
 					<div class="input-group">
-						<input type="text" name="keyword" class="form-control" size="30"
-							style="height: 28px" placeholder="검색어를 입력해 주세요">
+						<input type="hidden" name="page" value="${viewData.currentPage}">
+						<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
+						<input type="hidden" id="hiddenElement"/>
+						<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
+						style="height:28px" size="20" placeholder="검색어를 입력해 주세요">
 						<div class="input-group-btn">
-							<button type="button" class="btn">
+							<button type="submit" class="btn" onclick="searchFunction()">
 								<span class="glyphicon glyphicon-search"></span>
 							</button>
 						</div>
@@ -83,31 +234,152 @@
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th>NO</th>
-							<th>작성자</th>
-							<th>기업명</th>
-							<th>기업코드</th>
-							<th>상세보기</th>
+							<th style="width:2%">
+  								 <input type="checkbox" id="chk_all" name="chk_all"/>
+                            </th>
+                            <th style="width:2%"><span class="glyphicon glyphicon-check"></span></th>
+							<th style="width:7%">기업코드</th>						
+							<th style="width:20%">기업명</th>
+							<th style="width:8%">세부사항</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach begin="1" end="5">
-							<tr>
-								<td>1</td>
-								<td>tester</td>
-								<td>비트컴퍼니</td>
-								<td>COM000000001</td>
-								<td><input class="btn btn-success btn-sm" type="button" value="상세보기"></input></td>
-							</tr>
-						</c:forEach>
+					<c:forEach var="enterprise" items="${viewData.boardList}">
+						<tr>
+							<td>
+								<input type="checkbox" id="chk_list" name="chk_list" value="${enterprise.entIndex}"/>
+	                        </td>
+	                        <c:if test="${enterprise.entFlag==1}"><td><span class="glyphicon glyphicon-ok"></span></td></c:if>
+							<c:if test="${enterprise.entFlag==2}"><td><span class="glyphicon glyphicon-remove"></span></td></c:if>
+							<td>${enterprise.entIndex}</td>
+							<td>${enterprise.entName}</td>
+							
+							<td>
+							<input class="btn btn-success btn-sm" type="button" data-entindex="${enterprise.entIndex}"
+							data-entname="${enterprise.entName}" data-entbizregnum="${enterprise.entBizRegNum}" 
+							data-industrycode="${enterprise.industryCode}" data-entstyletype="${enterprise.entStyleType}"
+							data-entsubscriberflag="${enterprise.entSubscriberFlag}" data-entflag="${enterprise.entFlag}" 
+							data-entfoundationdate="${enterprise.entFoundationDate}" data-industryname="${enterprise.industryName}" 
+							data-target="div.modal" value="상세보기" data-toggle="modal">
+							</td>
+						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
-				<div id="pagenation">
+			<!-- modal -->
+			<div class="modal fade" tabindex="-1" role="dialog"
+				aria-labelledby="modalLabel" id="entModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="modalLabel">세부사항</h4>
+						</div>
+						<form action="modifyEnt" method="post">
+							<div class="modal-body">
+								<!-- <input type="hidden" name="reviewIndex" id="reviewIndex"> -->
+								<div class="row form-group">
+									<div class="col-xs-3 form-group">
+										<label for="entIndex" class="control-label">기업코드</label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="entIndex" name="entIndex"
+											class="form-control">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="entName" class="control-label">기업명</label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="entName" name="entName"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3 form-group">
+										<label for="entBizRegNum" class="control-label">사업자
+											등록번호 </label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="entBizRegNum" name="entBizRegNum"
+											class="form-control">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="entStyleType" class="control-label">사업장
+											형태구분</label>
+									</div>
+									<div class="col-xs-9">
+										<select class="form-control" style="color: gray"
+											id="entStyleType" name="entStyleType">
+											<option>사업장 형태구분</option>
+											<option value="1">1. 법인</option>
+											<option value="2">2. 개인</option>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="entSubscriberFlag" class="control-label">사업장
+											가입상태</label>
+									</div>
+									<div class="col-xs-9">
+										<select class="form-control" style="color: gray"
+											id="entSubscriberFlag" name="entSubscriberFlag">
+											<option>사업장 가입상태</option>
+											<option value="1">1. 등록</option>
+											<option value="2">2. 탈퇴</option>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="industryCode" class="control-label">업종 코드</label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="industryCode" readOnly="readOnly"
+											name="industryCode" class="form-control" />
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="industryName" class="control-label">업종명</label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="industryName" readOnly="readOnly"
+											name="industryName" class="form-control" />
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="entFoundationDate" class="control-label">설립일</label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="entFoundationDate" readOnly="readOnly"
+											name="entFoundationDate" class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">수정하기</button>
+								<button type="reset" class="btn btn-warning">초기화</button>
+							</div>
+					</div>
+					</form>
+				</div>
+			</div>
+
+			<div id="pagenation">
 						<ul class="pagination pagination-sm">
 							<c:if test="${viewData.startPage != 1}">
 								<li class="page-item"><a class="page-link"
 									aria-label="Previous"
-									href="mngMber?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
+									href="mngEnt?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
 										<span aria-hidden='true'>&laquo;</span>
 								</a></li>
 							</c:if>
@@ -116,29 +388,26 @@
 								<c:choose>
 									<c:when test="${pageNum == viewData.currentPage}">
 										<li class="page-item active"><a class="page-link"
-											href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}<span
-												class="sr-only">(current)</span></a>
+											href="mngEnt?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"
+											>${pageNum}<span class="sr-only">(current)</span></a>
 									</c:when>
 									<c:otherwise>
-										<li class="page-item"><a class="page-link"
-											href="mngMber?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}</a>
+										<li class="page-item"><a class="page-link" 
+										href="mngEnt?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
+										${pageNum}</a>								
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<c:if test="${viewData.endPage < viewData.pageTotalCount}">
 								<li class="page-item"><a class="page-link"
-									href="mngMber?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
-										<span aria-hidden='true'>&raquo;</span>
+									href="mngEnt?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"><span aria-hidden='true'>&raquo;</span>
 								</a></li>
 							</c:if>
 						</ul>
 					</div>
-			
-		
-	</div>
-	<!--<div class="row"> end -->
-</div>
-<!--<div class="container-fluid"> end -->
-
+				</div>
+			</div>
+		</div><!--<div class="row"> end -->
+	</div><!--<div class="container-fluid"> end -->
 </body>
 </html>

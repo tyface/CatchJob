@@ -15,11 +15,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectById" parameterType="map" resultMap="adminMap">
 		SELECT * FROM ADMIN_TB WHERE ADMIN_ID=#{adminId}
 	</select>
-	<select id="selectCount" resultType="int" parameterType="String">
-		SELECT COUNT(*)
-		FROM ADMIN_TB
-		WHERE ADMIN_ID like CONCAT('%',#{keyword},'%')
-	</select>
 	<select id="selectListAdmin" resultMap="adminMap" parameterType="map">
 		SELECT * FROM (
 			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM, m.ADMIN_IDX, m.ADMIN_ID, m.ADMIN_PW, m.ADMIN_LV, m.REG_DT, m.LAST_DT
@@ -29,6 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						WHERE ADMIN_ID LIKE CONCAT('%',#{keyword},'%')
 				ORDER BY ADMIN_IDX) m) n
 			WHERE RNUM BETWEEN #{firstRow} AND #{endRow}	
+	</select>
+	<select id="selectCount" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM ADMIN_TB
+		WHERE ADMIN_ID LIKE CONCAT('%',#{keyword},'%')
 	</select>
 	<resultMap type="admin" id="adminMap">
 		<result property="adminIndex" column="ADMIN_IDX" />

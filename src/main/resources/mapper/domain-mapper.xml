@@ -3,23 +3,46 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.UniversalDomainDao">
-
+	<insert id="insertDomain" parameterType="UniversalDomain">
+		INSERT INTO UNIVERSAL_DOMAIN(DOMAIN_IDX,DOMAIN_ADDR,DOMAIN_NM) 
+		VALUES(#{domainIndex},#{domainAddress},#{domainName})
+	</insert>
+	<update id="updateDomain" parameterType="UniversalDomain">
+		UPDATE UNIVERSAL_DOMAIN SET
+		DOMAIN_ADDR=#{domainAddress},DOMAIN_NM=#{domainName} 
+		WHERE DOMAIN_IDX=#{domainIndex} 
+	</update>
+	<delete id="deleteDomain" parameterType="int">
+		DELETE FROM UNIVERSAL_DOMAIN 
+		WHERE DOMAIN_IDX=#{domainIndex} 
+	</delete>
 	<select id="selectListAll" resultMap="domainMap">
 		SELECT  * 
 		FROM    UNIVERSAL_DOMAIN
-	</select>
-	
+	</select>	
 	<select id="selectDomain" parameterType="String" resultMap="domainMap">
 		SELECT  * 
 		FROM    UNIVERSAL_DOMAIN 
 		WHERE   DOMAIN_ADDR = #{domain}
 	</select>
-	
+	<select id="selectListDomain" parameterType="map" resultMap="domainMap" >
+		SELECT * FROM (
+			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM, DOMAIN_IDX, DOMAIN_ADDR,DOMAIN_NM
+				FROM (
+					SELECT DOMAIN_IDX, DOMAIN_ADDR, DOMAIN_NM
+						FROM UNIVERSAL_DOMAIN, (SELECT @ROWNUM := 0) ROWNUM 
+						WHERE DOMAIN_IDX LIKE CONCAT('%',#{keyword},'%')
+				ORDER BY DOMAIN_IDX) m) n
+			WHERE RNUM BETWEEN #{firstRow} AND #{endRow}	
+	</select>
+	<select id="selectCount" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM UNIVERSAL_DOMAIN
+		WHERE DOMAIN_NM LIKE CONCAT('%',#{keyword},'%')
+	</select>
 	<resultMap type="UniversalDomain" id="domainMap">
-		<result property="domainIndex" column="DOMAIN_IDX"/>
+		<result property="domainIndex" column="DOMAIN_IDX" />
 		<result property="domainAddress" column="DOMAIN_ADDR" />
 		<result property="domainName" column="DOMAIN_NM" />
-	</resultMap>
-	
+	</resultMap>	
 </mapper>
-

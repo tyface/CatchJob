@@ -16,7 +16,7 @@ public interface ReviewService {
 	//리뷰 삭제
 	public boolean deleteReview(Map<String, String> data);
 	//질문출력
-	public List<Map<String, String>> question(Map<String, String> data);
+	List<Map<String, String>> question(Map<String, String> data);
 	
 	//리뷰 보기
 //	public List<Review> reviewList(int entIndex);
@@ -45,5 +45,7 @@ public interface ReviewService {
 	public int getReviewTotalRows(Map<String, Integer> data);
 	//리부 등록시, 중복검사
 	public boolean duplicationCheck(Map<String, String> data);
+	
+
 
 }
