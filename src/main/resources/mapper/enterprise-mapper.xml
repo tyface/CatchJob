@@ -138,8 +138,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY 	ent.ENT_IDX
 		ORDER BY 	vie.VISIT_DT desc
 	</select>
+	<!-- 관리자 페이지 -->
+	<select id="selectCountByKeyword" resultType="int" parameterType="map">
+		SELECT COUNT(*)
+			FROM ENTERPRISE_TB
+				WHERE 1=1 
+			<if test="entIndexKeyword != null">
+				AND ENT_IDX = #{entIndexKeyword} 
+		    </if>
+		    <if test="entNameKeyword != null"> 
+		  	 	AND ENT_NM LIKE '%${entNameKeyword}%'
+		    </if>
+	</select>
+	<select id="selectEntList" resultMap="entMap" parameterType="map">
+		SELECT * FROM (		
+			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM,ENT_IDX,ENT_NM,ENT_BIZR_NO,ENT_INDUTY_CD,ENT_INDUTY_NM,ENT_STLE_TYPE,ENT_SBSCRB_ST,ENT_FL,ENT_FOND_YMD 
+			  FROM ENTERPRISE_TB, 				
+				(SELECT @ROWNUM := 0) ROWNUM 
+					WHERE 1=1 
+					<if test="entIndexKeyword != null">
+				  	  AND ENT_IDX = #{entIndexKeyword} 
+				    </if>
+				    <if test="entNameKeyword != null"> 
+				  	  AND ENT_NM LIKE '%${entNameKeyword}%'
+				    </if>
+					) n
+		WHERE RNUM BETWEEN #{firstRow} AND #{endRow}
+	</select>	
+	<update id="updateEnt" parameterType="enterprise">
+		UPDATE ENTERPRISE_TB SET 
+		ENT_IDX=#{entIndex},ENT_NM=#{entName},ENT_BIZR_NO=#{entBizRegNum},ENT_INDUTY_CD=#{industryCode},ENT_INDUTY_NM=#{industryName},ENT_STLE_TYPE=#{entStyleType},ENT_SBSCRB_ST=#{entSubscriberFlag}, 
+		ENT_FL=#{entFlag},ENT_FOND_YMD=#{entFoundationDate} 
+		WHERE ENT_IDX=#{entIndex}
+	</update>
+	<select id="selectEnt" parameterType="int" resultMap="entMap">
+		SELECT * FROM ENTERPRISE_TB 
+		WHERE ENT_IDX=#{entIndex}
+	</select>
 	<resultMap type="enterprise" id="entMap">
-		<result property="following" column="FOLLOWING"/>
 		<result property="entIndex" column="ENT_IDX" />
 		<result property="entName" column="ENT_NM" />
 		<result property="entBizRegNum" column="ENT_BIZR_NO" />
@@ -147,7 +183,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="industryName" column="ENT_INDUTY_NM" />
 		<result property="entStyleType" column="ENT_STLE_TYPE" />
 		<result property="entSubscriberFlag" column="ENT_SBSCRB_ST" />
-		<result property="entFoundationDate" column="ENT_FOND_YMD" />
+		<result property="entFlag" column="ENT_FL" />
+		<result property="entFoundationDate" column="ENT_FOND_YMD" />		
+		<result property="following" column="FOLLOWING"/>						
 		<result property="bcityName" column="ADDR_BCITY_NM" />
 		<result property="signguName" column="ADDR_SIGNGU_NM" />
 		<result property="employeeCount" column="ENT_EMPLOYEE_CNT" />

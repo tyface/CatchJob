@@ -145,6 +145,79 @@ function appendEntList(entList,pageNum,pageViewCount){
   }
 }
 
+/*리뷰 리스트*/
+function getReviewList(questionNum, pageNum){/* 456 */
+	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
+	//var reviewListJson = JSON.parse('${reviewListJson}');
+
+	var reviews = $("#collapse"+questionNum+"  #reviews");
+
+
+	$.ajax({
+		url:contextPath+"/enterprise/reviewList",
+		data: {"entIndex" : entIndex,
+			"questionNum" : questionNum,
+			"pageNum" : pageNum
+		},
+		type:"post",
+		dataType:"json",
+		success : function(data){
+			reviews.empty()
+			for(var i in data.reviewList){
+
+				var regDate = data.reviewList[i].regDate;
+				var evaluationScore = data.reviewList[i].evaluationScore;
+				var contents = data.reviewList[i].contents;
+				var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
+				td.appendTo(reviews);
+			}
+
+			totalCnt = parseInt(data.reviewPageData.pageTotalCount);// 전체레코드수
+		 	startPage = parseInt(data.reviewPageData.startPage); // 시작페이지
+		 	endPage = parseInt(data.reviewPageData.endPage); // 끝페이지
+		 	currentPage = parseInt(data.reviewPageData.currentPage); // 현재페이지
+			msgPerPage = parseInt(data.reviewPageData.msgPerPage); // 한페이지 보여중 네비개수
+			prevPage = currentPage -1;
+			nextPage = currentPage + 1;
+			if(nextPage > totalCnt){
+				nextPage = totalCnt
+			}
+			if(prevPage < 1){
+				prevPage = 1
+			}
+			if(endPage > totalCnt){
+				endPage = totalCnt
+			}
+
+			var appendObject = $(".pagination")
+			appendObject.empty()
+
+			appendObject.append($("<li><a href='javascript:getReviewList("+questionNum+", "+1+");'class='underline'>&laquo;</a></li>"));
+			appendObject.append($("<li><a href='javascript:getReviewList("+questionNum+", "+ prevPage +");'class='underline'>&lt;</a></li>"));
+
+			for(var i = startPage;i <=endPage;i++){
+				if(i != currentPage){
+					appendObject.append($("<li><a href='javascript:getReviewList("+questionNum+", "+i+");'>"+i+"</a></li>"));
+				}else{
+					appendObject.append($("<li><a><strong>"+i+"</strong></a></li>"));
+				}
+			}
+
+			appendObject.append($("<li><a href='javascript:getReviewList("+questionNum+", "+nextPage+");'class='underline'>&gt;</a></li>"));
+			appendObject.append($("<li><a href='javascript:getReviewList("+questionNum+", "+ totalCnt +");'class='underline'>&raquo;</a></li>"));
+
+		},
+		error : function(request,status,error){
+			alert("요청 실패하였습니다.");
+			$("#modal-modify").hide("slow");
+			alert("request :" + request + "\n"+
+					"status :" + status + "\n"+
+					"error :" + error);
+		}
+	});
+
+}
+
 /* 맨위로 버튼*/
 $(function() {
    $(window).scroll(function() {

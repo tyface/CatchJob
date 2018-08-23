@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
+import com.CatchJob.model.News;
 import com.CatchJob.model.Review;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
+import com.CatchJob.service.SaraminService;
 import com.CatchJob.service.NaverNewsService;
 import com.CatchJob.service.RecordService;
 import com.CatchJob.service.ReviewService;
@@ -46,21 +49,32 @@ public class EnterpriseController {
 	private ReviewService reviewService;
 	@Autowired
 	private FollowService followService;
-	
-
+	@Autowired
+	SaraminService saraminService;
 	@Autowired
 	NaverNewsService naverNewsService;
 	
-
-	@RequestMapping("/newsSearch")
-	public void newsSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+	@RequestMapping("/saramin")
+	public void saramin(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
 		System.out.println("컨트롤러 newsSearch");
 		try {
-			//model.addAttribute("bookList",naverBookService.searchBooks(keyword));
-			naverNewsService.searchNews(keyword);
+			saraminService.searchSaramin(keyword);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
+	}
+
+	@RequestMapping("/newsSearch")
+	public String newsSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+		System.out.println("컨트롤러 newsSearch");
+		try {
+			//keyword = entService.getEntInfo(mapData).ENT_NM
+			List<News> newsList = naverNewsService.searchNews(keyword);	
+			model.addAttribute("newsList", newsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return "news";
 	}
 
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)

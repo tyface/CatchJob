@@ -10,6 +10,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
 
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
@@ -33,7 +34,7 @@ $(function(){
 // 	alert("interviewJson: "+${interviewJson})
 //  	var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
 // 	alert("야호"+interviewJson[0].entIndex);
-	
+
 	if('${member}'==''){
 	}else{
 		status = "login";
@@ -46,7 +47,7 @@ $(function(){
 	    }
 	});
 
-	
+
 	var viewDataJson = JSON.parse('${viewDataJson}');
 	for(var i in viewDataJson){
 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
@@ -54,7 +55,7 @@ $(function(){
 		salary.push(num) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ; 
+		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
 	}
  	//chartSalary();
  	chartPersonnel();
@@ -64,12 +65,10 @@ $(function(){
 // 		ctx2.clear();
 		$("div.chartreport").append('<canvas id="lineChart"></canvas>');
 		chartSalary();
-		
+
 		$("#personnel-btn").attr('disabled', false);
 		$("#salary-btn").attr('disabled', true);
-		$("#personnel-btn").toggleClass('personnel-graph');
-		$("#salary-btn").toggleClass('salary-graph');
-		//chartSalary();	
+		//chartSalary();
 	});
 	$("#personnel-btn").on("click", function(){
 		$("canvas#lineChart").remove();
@@ -80,18 +79,16 @@ $(function(){
 		//chartPersonnel();
 		$("#personnel-btn").attr('disabled', true);
 		$("#salary-btn").attr('disabled', false);
-		$("#personnel-btn").toggleClass('salary-graph');
-		$("#salary-btn").toggleClass('personnel-graph');
 	});
-	
+
 	//getReviewList();
 	entInf();
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	reviewValidation()//리뷰 유효성 검사 부분
-	
-  
+
+
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
 	if(following == 1){
 		$("#follow").toggleClass("fa-heart-o");
@@ -101,9 +98,9 @@ $(function(){
 	$(".follow-btn").click(function (e) {
         var $this = $(this).find("i");
         var fa = $this.hasClass("fa");
-      
+
 	    if(status == "logout" & $this.hasClass("fa-heart-o")){
-	    	
+
 	    	  swal({
 	        	  title: "로그인 하시겠습니까?",
 	        	  text: "기업 팔로우는 로그인 후에 이용 가능합니다.",
@@ -117,14 +114,14 @@ $(function(){
 	        		/* 로그인 모달 띄우기 */
 					$("#loginModal").modal("show");
 	        	})
-	        	
+
 // 	        	.then((willDelete) => {
 // 	        	  if (willDelete) {
 // 	        		  /* 로그인 모달 띄우기 */
 // 					   $("#loginModal").modal("show");
-// 	        	  } 
+// 	        	  }
 // 	        });
-	        
+
 	    }else{/* 로그인 상태임 */
 		    if($this.hasClass("fa-heart-o")){
 			  /* 팔로잉 기업 추가  */
@@ -136,28 +133,28 @@ $(function(){
 			  		  success: function(result){
 			  			/* 성공 */
 			  			  if(result){
-			  				  
+
 			  				swal({
 			  				  title: "팔로잉되었습니다!",
 			  				  text: "팔로잉 기업은 [마이페이지 > 팔로잉 기업]에서 확인할 수 있습니다.",
 			  				  type: "success",
 			  			      confirmButtonClass: "btn-success",
-			  				
-			  				  //button: false 
+
+			  				  //button: false
 			  				});
 				    	      $this.toggleClass("fa-heart-o");
-				    	      $this.toggleClass("fa-heart");				  				
+				    	      $this.toggleClass("fa-heart");
 			  			  }else{
 			  				  swal({
 				  				  title: "팔로잉 할 수 없습니다.",
 				  				  text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 				  				  type: "warning",
 				  				  confirmButtonClass: "btn-warning",
-				  				  //button: false 
+				  				  //button: false
 				  				  //dangerMode:true
 				  			  });
 			  			  }
-			  		  }	  		
+			  		  }
 			    })
 		    }else{
 		    	swal({
@@ -183,18 +180,18 @@ $(function(){
 					  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 					  				    type: "success",
 					  				    confirmButtonClass: "btn-success",
-					  				    //button: false 
+					  				    //button: false
 					  				    //dangerMode:true
 					  			    });
 								   $this.toggleClass("fa-heart");
 								   $this.toggleClass("fa-heart-o");
 					  		  }
-					    })	
+					    })
 		    		})
-		    		
+
 // 		    		.then((willDelete) => {
-		    		  
-		    			
+
+
 // 		    			if (willDelete) {
 // 		    				 $.ajax({
 // 						  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
@@ -207,20 +204,20 @@ $(function(){
 // 						  				    title: "팔로잉이 해제되었습니다.",
 // 						  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 // 						  				    icon: "success",
-// 						  				    
-// 						  				    button: false 
+//
+// 						  				    button: false
 // 						  				    //dangerMode:true
 // 						  			    });
 // 									   $this.toggleClass("fa-heart");
 // 									   $this.toggleClass("fa-heart-o");
 // 						  		  }
 // 						    })
-// 		    		    } 
-		    			
-		    			
+// 		    		    }
+
+
 // 		    	});
-		    	
-		    	
+
+
 // 		    	if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
 // 				  /* 팔로잉 기업 해지  */
 // 				    $.ajax({
@@ -235,18 +232,18 @@ $(function(){
 // 				  		  }
 // 				    })
 // 			    }
-		    	
-		    	
-		    	
-		    }		  
+
+
+
+		    }
 	    }
-      
+
    });/* 기업 팔로잉 END */
-  
+
  /* 기업리뷰 작성 START */
       $("#myBtn").click(function(){
     	  if(status == "logout"){
-			  
+
     		  swal({
 	        	  title: "로그인 하시겠습니까?",
 	        	  text: "기업 팔로우는 로그인 후에 이용 가능합니다.",
@@ -258,62 +255,65 @@ $(function(){
 	        	},
 	        	function(){
 	        		/* 로그인 모달 띄우기 */
-					$("#loginModal").modal("show");
+							$("#loginModal").modal("show");
 	        	})
-    		  
+
 		  }else{/* 로그인 상태임 */
-    	  
-		      
+
+
 	    	  $.ajax({
-			  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",				  		
+			  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
 			  		data:{entIndex : entIndex},
 			  		type: "post",
 			  		dataType:"json",
-			  		success: function(result){	
+			  		success: function(result){
 			  			if(result){/* 중복 */
 			  				swal({
 			  					title: "이미 등록하셨습니다.",
 			  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
 			  					type: "warning",
 			  					confirmButtonClass:"btn-warning",
-			  					
-			  					
 			  				})
-			  				
 			  			}else{/* 중복X, 작성가능 */
-			  				$("#myModal").modal();
+			  				$("#loginModal").modal("show");
 			  			}
 			  		}
 			  })
 		  }
       });/* 기업리뷰 작성 END */
-  
-	 	
-/* 기업리뷰  등록 START */ 	
- 	$(".review-btn").on("click",function(){<!-- 123 -->
+
+
+/* 기업리뷰  등록 START */
+ 	$(".review-btn").on("click",function(){
 
 		var point = $(this).parent().parent().prev().children().children("div").text();
 		var statusCount = $(this).next().val();
-		
-		if(status == "logout"){
-			  if(confirm("리뷰 코멘트는 로그인 후에 가능합니다. 로그인 하시겠습니까?") != 0 ){
-				 /* YES 로그인 모달 띄우기 */    	
-				 $("#loginModal").modal("show");
-	    	  }/* NO  */
+
+			if(status == "logout"){
+				swal({
+					title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
+				  text: "",
+				  type: "info",
+				  showCancelButton: true,
+				  confirmButtonClass: "btn-info"
+				},
+				function() {
+					$("#loginModal").modal("show");
+				})
+
 		  }else{/* 로그인 상태임 */
 			var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
-			
+			point = Number(point);
 			var questionNum = statusCount;
 			  $.ajax({
 				url:"${pageContext.request.contextPath}/enterprise/writeReview",
 				type:"post",
-				data:{ "contents" : contents,
-					"evaluationScore" : point,
-					"questionNum" : questionNum,
-					"entIndex" : entIndex
-					
+				data:{"contents" : contents,
+							"evaluationScore" : point,
+							"questionNum" : questionNum,
+							"entIndex" : entIndex
 				},
-				dataType: "json", 
+				dataType: "json",
 				success : function(result){
 					if(result){
 						$(".starScore").val("0");
@@ -322,66 +322,26 @@ $(function(){
 							type:"success",
 							confirmButtonClass: "btn-success",
 						})
-						
-							
-			
 					}else{
-						swal({ 
+						swal({
 							title: "등록 실패하였습니다.",
-							text:" 이미 등록하셨습니다.", 
+							text:" 이미 등록하셨습니다.",
 							type: "warning",
 							confirmButtonClass:"btn-warning",
-							
+
 						})
-						
-					}	
+
+					}
 					getReviewList(questionNum);
-				}				
+				}
 			});
-			 return false; 
-			
+			 return false;
+
 		}
-			
- 	});/* 기업리뷰  등록 END */ 	  
-			
+
+ 	});/* 기업리뷰  등록 END */
+
 });/* FUNCTION END */
-
-function getReviewList(questionNum){/* 456 */
-	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
-	//var reviewListJson = JSON.parse('${reviewListJson}');
-	var reviews = $("#collapse"+questionNum+"  #reviews");
-	reviews.html("");
-	$.ajax({
-		url:"${pageContext.request.contextPath}/enterprise/reviewList",
-		data: {"entIndex" : entIndex,
-			"questionNum" : questionNum},
-		type:"post",
-		dataType:"json",
-		success : function(data){
-			for(var i in data.reviewList){
-// 			$(reviewList).each(function(){				
-// 				alert(reviewList[i].contents)
-// 				if((this.questionNum)==questionNum){
-
-				var regDate = data.reviewList[i].regDate;
-				var evaluationScore = data.reviewList[i].evaluationScore;
-				var contents = data.reviewList[i].contents;
-				var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
-				td.appendTo(reviews);
-// 				}
-			}				
-// 			});
-		},
-		error : function(request,status,error){
-			alert("요청 실패하였습니다.");
-			$("#modal-modify").hide("slow");
-			alert("request :" + request + "\n"+
-					"status :" + status + "\n"+
-					"error :" + error);
-		}
-	});
-
-}
 
 function entInf(){
 
@@ -482,8 +442,8 @@ function chartSalary(){
 				borderWidth: 1
 		},
 		 options: {
-			 
-// 				events: ['click'] 
+
+// 				events: ['click']
 // 				,
 		        elements: {
 		            line: {
@@ -501,7 +461,7 @@ function chartSalary(){
 		    }
 
 	});
-	
+
 }
 /* 월별그래프-인원*/
 function chartPersonnel(){
@@ -600,10 +560,10 @@ function interviewPieChart(){
 function interviewDifficultyShape(){
 //	 var interviewJson = JSON.parse('${interviewJson}');
     var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
-    
+
 	 for(var i in interviewJson){
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
-		
+
 		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
 			$("#difficulty"+i).addClass("intrvwlv5");
 		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
@@ -619,27 +579,27 @@ function interviewDifficultyShape(){
 	 }
 }
 function reviewValidation(){
-	$('.reviewForm').validate({		
+	$('.reviewForm').validate({
 		rules : {
-			
+
 			stars:{
 				required : true
 			},
 			contents:{
 				required : true,
-				minlength : 10,	
+				minlength : 10,
 				maxlength : 500
-			}			
+			}
 		},
-		
-		messages : {			
+
+		messages : {
 			stars:{
 				required : "다른 항목을 선택해주세요"
 			},
 			contents:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다",	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"	
+				minlength : "최소 10글자이상이어야 합니다",
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			}
 		},
 	    submitHandler: function(form) {
@@ -648,14 +608,14 @@ function reviewValidation(){
 		    	form.submit();
 		    })
 	    }
-		
-	});	
+
+	});
 }
 function interviewValidation(){
 	 /* 면접후기 작성시 유효성 검사 */
-	$('#writeInterview').validate({	
+	$('#writeInterview').validate({
 		rules : {
-			
+
 			intrvwDifficulty:{
 				required : true
 			},
@@ -668,26 +628,26 @@ function interviewValidation(){
 			},
 			intrvwReview:{
 				required : true,
-				minlength : 10,	
+				minlength : 10,
 				maxlength : 500
 			},
 			intrvwQuestion:{
 				required : true,
-				minlength : 10,	
-				maxlength : 500				
+				minlength : 10,
+				maxlength : 500
 			},
 			intrvwAnswer:{
 				required : true,
-				minlength : 10,	
-				maxlength : 500				
+				minlength : 10,
+				maxlength : 500
 			},
 			presentationDate:{
-				digits: true				
+				digits: true
 			}
 		},
-		
+
 		messages : {
-			
+
 			intrvwDifficulty:{
 				required : "다른 항목을 선택해주세요"
 			},
@@ -699,19 +659,19 @@ function interviewValidation(){
 			},
 			intrvwReview:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다",	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"	
+				minlength : "최소 10글자이상이어야 합니다",
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			},
 			intrvwQuestion:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다"	,	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"				
+				minlength : "최소 10글자이상이어야 합니다"	,
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			},
 			intrvwAnswer:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다"	,	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"				
-			}			
+				minlength : "최소 10글자이상이어야 합니다"	,
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
+			}
 		}
 // 		,
 // 	    submitHandler: function(form) {
@@ -723,19 +683,19 @@ function interviewValidation(){
 		,
 		submitHandler: function(form) {
 			swal({
-				title:"등록", 
-				text: "You clicked the button!", 
+				title:"등록",
+				text: "You clicked the button!",
 				type: "success",
 				confirmButtonClass: "btn-success",
 
 			},
 			function(){
 				form.submit();
-			})		
-			
+			})
+
 		}
-		
-	});	
+
+	});
 }
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
@@ -777,10 +737,10 @@ function jsonEscape(str)  {
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
 				<!-- 				<li style="height: 30px"></li> -->
-				<li><a href="#section1"> 
+				<li><a href="#section1">
 					<span class="fa fa-building logo-small"></span> 기업정보
 				</a></li>
-				<li><a href="#section2"> 
+				<li><a href="#section2">
 					<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
 				</a></li>
 				<li><a href="#section3"> <span
@@ -788,12 +748,12 @@ function jsonEscape(str)  {
 				</a></li>
 				<li><a href="#section4"> <span
 						class="fa fa-line-chart logo-small"></span> 월별그래프
-				</a></li>				
+				</a></li>
 
 			</ul>
 		</nav>
 
-		<div class="col-sm-11">		
+		<div class="col-sm-11">
 			<!-- 기업정보//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 
@@ -972,15 +932,15 @@ function jsonEscape(str)  {
 									onclick="getReviewList(${status.count})">
 									<!-- 456 -->
 									<h4 class="panel-title row">
-										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}"> 
+										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}">
 											<span class="col-sm-8">
-													${question.QUESTION} 
+													${question.QUESTION}
 												<span style="color: #6799FF">(${question.COUNT}) </span>
-											</span> 
-											<span class="col-sm-4">${question.AVG} 
+											</span>
+											<span class="col-sm-4">${question.AVG}
 												<c:forEach begin="1" end="${question.AVG}" step="1">
 													<span class="stars-on"></span>
-												</c:forEach> 
+												</c:forEach>
 												<c:forEach begin="${question.AVG}" end="4" step="1">
 													<span class="stars-off"></span>
 												</c:forEach>
@@ -989,8 +949,7 @@ function jsonEscape(str)  {
 									</h4>
 								</div>
 
-								<div id="collapse${status.count}"
-									class="panel-collapse collapse">
+								<div id="collapse${status.count}"	class="panel-collapse collapse">
 									<!-- in -->
 									<div class="panel-body" style="color: black">
 										<table class="table">
@@ -1000,67 +959,12 @@ function jsonEscape(str)  {
 												</tr>
 											</thead>
 											<tbody id="reviews">
-												<%-- 												<c:forEach var="reviewList" items="${reviewList}" varStatus="index"> --%>
-
-												<%-- 													<c:if test="${reviewList.questionNum eq question.QESTN_NO}"> --%>
-
-												<!-- 														<tr id="reviews"> -->
-												<!-- 															<td> -->
-												<!-- 																<p> -->
-												<!-- 																	<small> -->
-												<!-- 																		<span class="glyphicon glyphicon-star"></span> -->
-												<%-- 																		${reviewList.evaluationScore}.0 <a style="color: #D5D5D5">&nbsp;|&nbsp;</a> --%>
-												<%-- 																		${reviewList.regDate} --%>
-												<!-- 																	</small> -->
-												<!-- 																</p>  -->
-												<%-- 																<span>${reviewList.contents}</span> --%>
-												<!-- 															</td> -->
-												<%-- 													</c:if> --%>
-												<%-- 												</c:forEach> --%>
-
 											</tbody>
 										</table>
 
 										<!-- 페이징처리-리뷰 코멘트 -->
 										<nav style="text-align: center">
 											<ul class="pagination">
-
-												<%-- 												<c:if test="${reviewPageData.startPage !=1 }"> --%>
-												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=1#section3" class="underline">&laquo;</a></li> --%>
-												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.startPage-1}#section3" class="underline">&lt;</a><li> --%>
-												<%-- 												</c:if> --%>
-												<c:forEach var="pageNum" begin="${reviewPageData.startPage}"
-													end="${reviewPageData.endPage < reviewPageData.pageTotalCount ? reviewPageData.endPage : reviewPageData.pageTotalCount}">
-													<c:choose>
-														<c:when test="${pageNum == reviewPageData.currentPage}">
-															<li><a>${pageNum}</a></li>
-														</c:when>
-														<c:otherwise>
-															<li><a
-																href="${pageContext.request.contextPath}/enterprise/reviewList?entIndex=${entInfo.ENT_IDX}&page=${pageNum}#section2"
-																class="underline">${pageNum}</a></li>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-												
-<%-- 												<c:forEach begin="${reviewPageData.startPage}" --%>
-<%-- 													end="${reviewPageData.endPage < reviewPageData.pageTotalCount ? reviewPageData.endPage : reviewPageData.pageTotalCount}"> --%>
-<%-- 													<c:choose> --%>
-<%-- 														<c:when test="${pageNum == reviewPageData.currentPage}"> --%>
-<%-- 															<li><a>${reviewPageData.pageTotalCount}0</a></li> --%>
-<%-- 														</c:when> --%>
-<%-- 														<c:otherwise> --%>
-<!-- 															<li><a -->
-<%-- 																href="${pageContext.request.contextPath}/enterprise/reviewList?entIndex=${entInfo.ENT_IDX}&page=${pageNum}#section2" --%>
-<%-- 																class="underline">${reviewPageData.pageTotalCount}</a></li> --%>
-<%-- 														</c:otherwise> --%>
-<%-- 													</c:choose> --%>
-<%-- 												</c:forEach> --%>
-
-												<%-- 												<c:if test="${reviewPageData.endPage < reviewPageData.pageTotalCount}"> --%>
-												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.endPage+1}#section3" class="underline">&gt;</a></li> --%>
-												<%-- 													<li><a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${reviewPageData.pageTotalCount}#section3" class="underline">&raquo;</a></li> --%>
-												<%-- 												</c:if> --%>
 											</ul>
 										</nav>
 
@@ -1080,14 +984,14 @@ function jsonEscape(str)  {
 												</select>
 
 												<output for="star-input">
-													<b class="starScore">0</b> 
+													<b class="starScore">0</b>
 												</output>
 											</div>
 
 											<div class="input-group input-group-sm">
-												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요."> 
-												<span class="input-group-btn"> 
-													<input type="submit" class="btn btn-flat btn-info review-btn" value="제출">
+												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요.">
+												<span class="input-group-btn">
+													<input type="button" class="btn btn-flat btn-info review-btn" value="제출">
 													<input type="hidden" class="statusCount" value="${status.count}">
 												</span>
 											</div>
@@ -1189,7 +1093,7 @@ function jsonEscape(str)  {
 										<div id="difficulty${status.index}" class="row">
 											<p class="intrvwDifficulty">${interview.intrvwDifficulty}</p>
 <!-- 												<div class="row" > -->
-											
+
 												<div class="col-xs-1 progress-bars bar1" ></div>
 												<div class="col-xs-1 progress-bars bar2" ></div>
 												<div class="col-xs-1 progress-bars bar3" ></div>
@@ -1203,7 +1107,7 @@ function jsonEscape(str)  {
 <!-- 													<div class="progress-bar bar5" role="progressbar"	style="width: 20%;"></div> -->
 
 <!-- 												</div> -->
-											
+
 										</div>
 											<!-- background-color: #EAEAEA -->
 
@@ -1364,7 +1268,7 @@ function jsonEscape(str)  {
 <%-- 								<canvas id="lineChart"></canvas> --%>
 								<canvas id="comboBarLineChart"></canvas>
 							</div>
-							
+
 							<div class="card-footer small text-muted">Updated yesterday
 								at 11:59 PM</div>
 
@@ -1439,8 +1343,8 @@ function jsonEscape(str)  {
 </button>
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<!-- 로그인 모당 -->
+<div class="modal fade" id="loginModal" role="dialog">
 	<!-- 	<div class="modal-dialog"> -->
 	<div class=" modal-dialog modal-lg">
 		<!-- Modal content-->

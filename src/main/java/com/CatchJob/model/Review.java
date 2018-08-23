@@ -13,95 +13,73 @@ public class Review {
 	private String contents; // 리뷰 내용
 	private String reviewFlag; // 리뷰 상태(1:사용,2:삭제,3:대기) TODO
 	private String regDate; // 작성일
-
 	public int getReviewIndex() {
 		return reviewIndex;
 	}
-
 	public void setReviewIndex(int reviewIndex) {
 		this.reviewIndex = reviewIndex;
 	}
-
-	public String getMberId() {
-		return mberId;
-	}
-
-	public void setMberId(String mberId) {
-		this.mberId = mberId;
-	}
-
 	public String getEntName() {
 		return entName;
 	}
-
 	public void setEntName(String entName) {
 		this.entName = entName;
 	}
-
-	public int getEntIndex() {
-		return entIndex;
-	}
-
-	public void setEntIndex(int entIndex) {
-		this.entIndex = entIndex;
-	}
-
-	public int getMberIndex() {
-		return mberIndex;
-	}
-
-	public void setMberIndex(int mberIndex) {
-		this.mberIndex = mberIndex;
-	}
-
-	public int getQuestionNum() {
-		return questionNum;
-	}
-
-	public void setQuestionNum(int questionNum) {
-		this.questionNum = questionNum;
-	}
-
-	public int getEvaluationScore() {
-		return evaluationScore;
-	}
-
-	public void setEvaluationScore(int evaluationScore) {
-		this.evaluationScore = evaluationScore;
-	}
-
-	public String getContents() {
-		return contents;
-	}
-
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
-
-	public String getReviewFlag() {
-		return reviewFlag;
-	}
-
-	public void setReviewFlag(String reviewFlag) {
-		this.reviewFlag = reviewFlag;
-	}
-
-	public String getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
-	}
-
 	public String getQuestion() {
 		return question;
 	}
-
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
+	public String getMberId() {
+		return mberId;
+	}
+	public void setMberId(String mberId) {
+		this.mberId = mberId;
+	}
+	public int getEntIndex() {
+		return entIndex;
+	}
+	public void setEntIndex(int entIndex) {
+		this.entIndex = entIndex;
+	}
+	public int getMberIndex() {
+		return mberIndex;
+	}
+	public void setMberIndex(int mberIndex) {
+		this.mberIndex = mberIndex;
+	}
+	public int getQuestionNum() {
+		return questionNum;
+	}
+	public void setQuestionNum(int questionNum) {
+		this.questionNum = questionNum;
+	}
+	public int getEvaluationScore() {
+		return evaluationScore;
+	}
+	public void setEvaluationScore(int evaluationScore) {
+		this.evaluationScore = evaluationScore;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	public String getReviewFlag() {
+		return reviewFlag;
+	}
+	public void setReviewFlag(String reviewFlag) {
+		this.reviewFlag = reviewFlag;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "Review [reviewIndex=" + reviewIndex + ", entName=" + entName + ", question=" + question + ", mberId="
@@ -110,4 +88,5 @@ public class Review {
 				+ ", regDate=" + regDate + "]";
 	}
 
+	
 }

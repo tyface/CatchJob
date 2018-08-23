@@ -9,13 +9,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.MemberDao;
 import com.CatchJob.model.Member;
 
 @Service
 public class MemberServiceImp implements MemberService {
-	private static final int NUM_OF_NAVI_PAGE = 5;	
-	
+		
 	@Autowired
 	private MemberDao memberDao;
 	
@@ -187,13 +187,15 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	public int getStartPage(int pageNum) {
-		int startPage = ((pageNum - 1) / NUM_OF_NAVI_PAGE) * NUM_OF_NAVI_PAGE + 1;
+		int startPage = ((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) * Constants.Admin.NUM_OF_NAVI_PAGE + 1;
 		return startPage;
 	}
 
 	public int getEndPage(int pageNum) {
-		int endPage = (((pageNum - 1) / NUM_OF_NAVI_PAGE) + 1) * NUM_OF_NAVI_PAGE;
+		int endPage = (((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) + 1) * Constants.Admin.NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
 
+
+	
 }

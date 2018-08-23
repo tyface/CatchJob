@@ -32,13 +32,19 @@ public interface EnterpriseService {
 	//팔로잉 기업 보기
 	public List<Enterprise> getRecentsEntList(int memberIndex);
 
+	//관리자 페이지
+	public Map<String, Object> getMessageList(Map<String, Object> data);
 	
+	public int calPageTotalCount(int totalCount, int numOfMsgPage);
 	
+	public int getStartPage(int pageNum);
 	
-	
-	
-	
+	public int getEndPage(int pageNum);
+	//기업 수정
+	public boolean modifyEnt(Enterprise ent);
+    //기업 하나 선택
+	public Enterprise selectEnt(int entIndex);
+}	
 	
 	
 
-}

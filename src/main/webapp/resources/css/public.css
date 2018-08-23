@@ -464,4 +464,7 @@ label.error {
 .text-center td, .text-center th{
 	text-align: center;
 }
+.text-left{
+	text-align: left;
+}
 /* 마이페이지 END */
