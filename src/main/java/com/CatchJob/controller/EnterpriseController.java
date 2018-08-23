@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -209,14 +208,9 @@ public class EnterpriseController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/writeReview")
-	public boolean writeReview(HttpSession session, Review review) throws IOException {
-		//System.out.println("writeReview-컨트롤러1"+review);
-		
-		//Review review = new Review();
-		//review.setContents(req.getParameter("contents"));
-		//review.setEntIndex(Integer.parseInt((req.getParameter("entIndex"))));
-		//review.setEvaluationScore(Integer.parseInt(req.getParameter("evaluationScore")));
+	@RequestMapping(value = "/writeReview", method = RequestMethod.POST)
+	public boolean writeReview(Review review, HttpSession session) throws IOException {
+		System.out.println(review);
 		review.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
 		//review.setQuestionNum(Integer.parseInt(req.getParameter("questionNum")));
 //		review.setReviewFlag("1");
