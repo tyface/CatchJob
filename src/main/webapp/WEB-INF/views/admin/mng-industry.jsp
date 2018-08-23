@@ -54,7 +54,6 @@
 	    	$("#ITBox").css("display","block");
 	    }
 	}
-	
 	function constructFunc() {	
 	    if ($("#construction").attr("checked",true)){
 	    	$("#constructionBox").css("display","block");
@@ -62,21 +61,17 @@
 	    	$("#constructionBox").css("display","none");
 	    }
 	}
-
 </script>
 <body>
 	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%> 
 		<div class="col-sm-9 main">
 			<h1 class="page-header">[ 산업군 분류 관리 ]</h1><br>
 				<div class="col-md-offset-1">
-						<div class="col-md-11">
-						
-							<div class="row">
-							
+					<div class="col-md-11">
+						<div class="row">			
 							<div class="col-md-4">
 								<div id="indutyBox">
-									<div id="indutyName">1차 산업군</div>
-									
+									<div id="indutyName">1차 산업군</div>						
 								  <div>
 						              <input type="radio" id="IT" name="lclass" onclick="ITFunc()"/>
 						              <label for="IT"> IT/웹/통신</label>
@@ -118,15 +113,11 @@
 						              <label for="it"> 제조/화학</label>
 						          </div>							 	
 								</div>
-									
-								
 								<div class="row" style="text-align:center">
 							 		<input type="button" class="btn btn-info" value="분류 추가">
 							 		<input type="button" class="btn btn-warning" value="선택 미사용">
 								</div>										
-						</div>			
-									
-												
+							</div>			
 						<div class="col-md-4">						 	
 							<div id="indutyBox">			
 								<div id="indutyName">2차 산업군</div>

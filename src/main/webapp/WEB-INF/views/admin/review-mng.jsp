@@ -5,8 +5,7 @@
 <html>
 <head>
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">			
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>			
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Admin Page</title>
 <style>
@@ -63,19 +62,19 @@
 <script>		
 	function newPage() {	
 		var url="mngReview?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+
-			"&keywordOption="+$("#reviewSelect option").val()+"&keyword="+$("#keyword").val();		
+			"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val();		
 		window.location=url;
 	}
 		//서치
 	function searchFunction(){
 		  $("#hiddenElement").attr("name", "keywordOption");	  
-		if($("#reviewSelect option:selected").text()=='기업명'){
+		if($("#mngSelect option:selected").text()=='기업명'){
 		     $("#hiddenElement").attr("value", "entNameKeyword");
 		
-		} else if($("#reviewSelect option:selected").text()=='기업코드'){
+		} else if($("#mngSelect option:selected").text()=='기업코드'){
 			 $("#hiddenElement").attr("value", "entIndexKeyword");
 		      
-		} else if($("#reviewSelect option:selected").text()=='질문 식별번호'){
+		} else if($("#mngSelect option:selected").text()=='질문 식별번호'){
 			 $("#hiddenElement").attr("value", "questionNumKeyword");
 		}	
 		$("#hiddenElement").appendChild($("#searchForm"));	
@@ -87,21 +86,20 @@
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
-	
+	 
 $(function(){
-	
-/* 	alert(getParameterByName('keywordOption'));
-		키워드 변경  + mberFlag
+	alert(getParameterByName('keywordOption'))
+		
 	if(getParameterByName('keywordOption')!=null){
 		if(getParameterByName('keywordOption')=='entIndexKeyword'){	
-			$("#reviewSelect").val(getParameterByName('keywordOption'))
+			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}else if(getParameterByName('keywordOption')=='entIndexKeyword'){		
-			$("#reviewSelect").val(getParameterByName('keywordOption'))
+			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}else if(getParameterByName('keywordOption')=='questionNumKeyword'){
-			$("#reviewSelect").val(getParameterByName('keywordOption'))
+			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}
 
-	} */
+	} 
 	
 		//모달
 	 $('div.modal').on('show.bs.modal', function (event) {
@@ -136,7 +134,7 @@ $(function(){
 	    });    
 	          
 });
-	//체크박스
+	//체크박스 사용
 function chkModify(){
     var valueArr = new Array();
     var list = $("input[name='chk_list']");
@@ -164,7 +162,7 @@ function chkModify(){
 			} 
 		});  
 }
-
+	//체크박스 삭제
 function chkDelete(){
     var valueArr = new Array();
     var list = $("input[name='chk_list']");
@@ -209,12 +207,11 @@ function chkDelete(){
 	  					 <button onclick="chkDelete()" class="btn btn-default" id="chkDelete">
 	  					 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제</button>
   					</div>	
-					<input type="number" min="5"
-						max="15" step="5" id="quantity" value="${viewData.msgPerPage}"
-						onclick="newPage()">&nbsp; entries			
+					<input type="number" min="5" max="15" step="5" id="quantity" 
+					value="${viewData.msgPerPage}" onclick="newPage()">&nbsp; entries			
 				</div>			
 				<div class="col-sm-2">
-					<select id="reviewSelect">
+					<select id="mngSelect">
 						<option value="entNameKeyword">기업명</option>
 						<option value="entIndexKeyword">기업코드</option>
 						<option value="questionNumKeyword">질문번호</option>
@@ -227,7 +224,7 @@ function chkDelete(){
 						<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
 						<input type="hidden" id="hiddenElement"/>
 						<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
-						style="height:28px" size="20">
+						style="height:28px" size="20" placeholder="검색어를 입력해 주세요">
 						<div class="input-group-btn">
 							<button type="submit" class="btn" onclick="searchFunction()">
 								<span class="glyphicon glyphicon-search"></span>
@@ -248,11 +245,11 @@ function chkDelete(){
 							<th style="width:10%">기업명</th>
 							<th style="width:6%">기업코드</th>
 							<th style="width:6%">질문번호</th>
-							<th style="width:8%">리뷰코멘트</th>
+							<th style="width:8%">세부사항</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="reviews" items="${viewData.boardList}" varStatus="status">
+					<c:forEach var="reviews" items="${viewData.boardList}">
 						<tr>
 							<td>
 								<input type="checkbox" id="chk_list" name="chk_list" value="${reviews.reviewIndex}"/>
@@ -269,8 +266,7 @@ function chkDelete(){
 								data-contents="${reviews.contents}" data-qnum="${reviews.questionNum}" 
 								data-evaluation="${reviews.evaluationScore}" data-toggle="modal" 
 								data-mberid="${reviews.mberId}" data-entindex="${reviews.entIndex}" 
-								data-regdate="${reviews.regDate}" data-target="div.modal" value="수정하기" 
-								>
+								data-regdate="${reviews.regDate}" data-target="div.modal" value="수정하기">
 							</td>							
 						</tr>
 					</c:forEach>
@@ -296,9 +292,9 @@ function chkDelete(){
 										<div class="col-xs-3">	
 											<input type="text" id="entIndex" name="entIndex" class="form-control">
 										</div> 
-										<div class="col-xs-2 col-xs-offset-1 form-group" style="text-align:right">
+										<div class="col-xs-2  form-group" style="text-align:right">
 											<label for="regDate" class="control-label">등록일 </label></div>
-										<div class="col-xs-4">	
+										<div class="col-xs-5">	
 											<input type="text" readOnly="readOnly" id="regDate" name="regDate" class="form-control">
 										</div> 
 		     				     		
@@ -308,9 +304,9 @@ function chkDelete(){
 											<label for="evaluation" class="control-label">리뷰 점수</label></div>
 										<div class="col-xs-3">
 											<input type="text" id="evaluation" name="evaluation" class="form-control"/></div>
-										<div class="col-xs-2 col-xs-offset-1 form-group" style="text-align:right">
+										<div class="col-xs-2 form-group" style="text-align:right">
 											<label for="mberId" class="control-label">작성자</label></div>
-										<div class="col-xs-4">
+										<div class="col-xs-5">
 											<input type="text" id="mberId" name="mberId" class="form-control"/></div>
 									</div>
 									<div class="form-group row">		
@@ -319,7 +315,7 @@ function chkDelete(){
 											
 										<div class="col-xs-5">	
 										<select class="form-control" style="color:gray" id="qnum" name="questionNum">
-											
+											<option>질문 내용</option>
 											<option value="1">1.승진 기회 및 가능성</option>
 											<option value="2">2.복지 및 급여</option>
 											<option value="3">3.업무와 삶의 균형</option>

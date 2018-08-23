@@ -1,4 +1,4 @@
-package com.CatchJob.service;
+/*package com.CatchJob.service;
 
 
 import java.io.BufferedReader;
@@ -82,3 +82,4 @@ public class NaverNewsService {
 	
 
 }
+*/
