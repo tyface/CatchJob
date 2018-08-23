@@ -49,22 +49,11 @@ public class EnterpriseController {
 	@Autowired
 	private FollowService followService;
 	
-	@Autowired
-	NaverBookService naverBookService;
-	
+
 	@Autowired
 	NaverNewsService naverNewsService;
 	
-	@RequestMapping("/bookSearch")
-	public void bookSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
-		System.out.println("컨트롤러 bookSearch");
-		try {
-			naverBookService.searchBooks(keyword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+
 	@RequestMapping("/newsSearch")
 	public void newsSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
 		System.out.println("컨트롤러 newsSearch");
