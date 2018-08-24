@@ -24,6 +24,7 @@ import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.News;
 import com.CatchJob.model.Review;
+import com.CatchJob.model.Saramin;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
@@ -55,13 +56,16 @@ public class EnterpriseController {
 	NaverNewsService naverNewsService;
 	
 	@RequestMapping("/saramin")
-	public void saramin(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+	public String saramin(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
 		System.out.println("컨트롤러 newsSearch");
 		try {
-			saraminService.searchSaramin(keyword);
+			List<Saramin> saraminList = saraminService.searchSaramin(keyword);
+			System.out.println("컨트롤러 사람인: "+saraminList);
+			model.addAttribute("saraminList", saraminList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "saramin"; 
 	}
 
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)

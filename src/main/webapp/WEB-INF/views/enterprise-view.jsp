@@ -1215,6 +1215,7 @@ function jsonEscape(str)  {
 
 					<div class="panel panel-default">
 						<div class="panel-body" >
+						
 						</div>
 					</div>
 				</div>
@@ -1226,10 +1227,10 @@ function jsonEscape(str)  {
 					<h3 id="title">뉴스</h3>
 
 					<div class="panel panel-default">
-						<div class="panel-body" >
+						<div class="panel-body">
 							<c:forEach items="${newsList}" var="newsList">
-								<div class="row">
-									<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span> 
+								<div class="row" ><!-- //news-interval -->
+									<span class="col-xs-8 f-left text-left blue-font news-interval" onclick="location.href='${newsList.link}'">${newsList.title}</span> 
 									<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>		
 								</div>
 							</c:forEach>

@@ -11,6 +11,7 @@ public class Saramin {
 	private String openQuantity;
 	private String experienceLevel;
 	private String requiredEducationLevel;
+	private String expirationTimestamp; //마감일
 
 	public String getHref() {
 		return href;
@@ -92,11 +93,22 @@ public class Saramin {
 		this.requiredEducationLevel = requiredEducationLevel;
 	}
 
+	public String getExpirationTimestamp() {
+		return expirationTimestamp;
+	}
+
+	public void setExpirationTimestamp(String expirationTimestamp) {
+		this.expirationTimestamp = expirationTimestamp;
+	}
+
 	@Override
 	public String toString() {
 		return "Saramin [href=" + href + ", name=" + name + ", title=" + title + ", location=" + location + ", jobType="
 				+ jobType + ", industry=" + industry + ", jobCategory=" + jobCategory + ", openQuantity=" + openQuantity
-				+ ", experienceLevel=" + experienceLevel + ", requiredEducationLevel=" + requiredEducationLevel + "]";
+				+ ", experienceLevel=" + experienceLevel + ", requiredEducationLevel=" + requiredEducationLevel
+				+ ", expirationTimestamp=" + expirationTimestamp + "]";
 	}
+
+	
 
 }
