@@ -80,27 +80,22 @@
 	}
 	
 		
-/* 	function getParameterByName(name) {
+	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	} */
+	} 
 	
 $(function(){
-	
-/* 	alert(getParameterByName('keywordOption'));
-		키워드 변경  + mberFlag
+
 	if(getParameterByName('keywordOption')!=null){
-		if(getParameterByName('keywordOption')=='entIndexKeyword'){	
+		if(getParameterByName('keywordOption')=='entNameKeyword'){	
 			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}else if(getParameterByName('keywordOption')=='entIndexKeyword'){		
 			$("#mngSelect").val(getParameterByName('keywordOption'))
-		}else if(getParameterByName('keywordOption')=='questionNumKeyword'){
-			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}
-
-	} */	
+	}	
 		//모달
 	 $('div.modal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget);
@@ -210,9 +205,9 @@ function chkDelete(){
 				</div>			
 
 				<div class="col-sm-2">
-					<select id="mngSelect">
-						<option>기업명</option>
-						<option>기업코드</option>
+					<select id="mngSelect" value="${viewData.keywordOption}">
+						<option value="entNameKeyword">기업명</option>
+						<option value="entIndexKeyword">기업코드</option>
 					</select>
 				</div>	
 				<form action="mngEnt" class="form-inline col-sm-3" id="searchForm">

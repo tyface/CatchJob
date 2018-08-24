@@ -59,16 +59,15 @@
 		//서치
 	function searchFunction(){
 		  $("#hiddenElement").attr("name", "keywordOption");	  
-		if($("#mngSelect option:selected").text()=='기업명'){
-		     $("#hiddenElement").attr("value", "entNameKeyword");
+		if($("#mngSelect option:selected").text()=='도메인명'){
+		     $("#hiddenElement").attr("value", "domainNameKeyword");//TODO
 		
-		} else if($("#mngSelect option:selected").text()=='기업코드'){
-			 $("#hiddenElement").attr("value", "entIndexKeyword");
+		} else if($("#mngSelect option:selected").text()=='도메인 주소'){
+			 $("#hiddenElement").attr("value", "domainAddressKeyword");//TODO
 		      
 		} 
 		$("#hiddenElement").appendChild($("#searchForm"));	
-	}
-		
+	}		
 	
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -77,15 +76,12 @@
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
 	 
-	
 $(function(){
 	if(getParameterByName('keywordOption')!=null){
-		if(getParameterByName('keywordOption')=='entIndexKeyword'){	
-			$("#mngSelect").val(getParameterByName('keywordOption'))
-		}else if(getParameterByName('keywordOption')=='entIndexKeyword'){		
-			$("#mngSelect").val(getParameterByName('keywordOption'))
-		}else if(getParameterByName('keywordOption')=='questionNumKeyword'){
-			$("#mngSelect").val(getParameterByName('keywordOption'))
+		if(getParameterByName('keywordOption')=='domainNameKeyword'){	
+			$("#mngSelect").val(getParameterByName('keywordOption'))//TODO
+		}else if(getParameterByName('keywordOption')=='domainAddressKeyword'){
+			$("#mngSelect").val(getParameterByName('keywordOption'))//TODO
 		}
 	}	 
 	
@@ -113,10 +109,10 @@ $(function(){
 						onclick="newPage()"> &nbsp; entries
 					</label>
 				</div>
-				<div class="col-sm-2">
-					<select id="mngSelect">
-						<option>도메인명</option>
-						<option>도메인 주소</option>
+			<%-- 	<div class="col-sm-2">
+					<select id="mngSelect" value="${viewData.keywordOption}">
+						<option value="domainNameKeyword">도메인명</option><!-- TODO -->
+						<option value="domainAddressKeyword">도메인 주소</option>
 					</select>
 				</div>
 				<form action="mngDomain" class="form-inline col-sm-3"
@@ -127,14 +123,14 @@ $(function(){
 							value="${viewData.msgPerPage}"> <input type="hidden"
 							id="hiddenElement" /> <input type="text" name="keyword"
 							class="form-control" id="keyword" value="${viewData.keyword}"
-							style="height: 28px" size="20" placeholder="검색어를 입력해 주세요">
+							style="height:28px" size="20" placeholder="검색어를 입력해 주세요">
 						<div class="input-group-btn">
 							<button type="submit" class="btn" onclick="searchFunction()">
 								<span class="glyphicon glyphicon-search"></span>
 							</button>
 						</div>
 					</div>
-				</form>
+				</form> --%>
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>

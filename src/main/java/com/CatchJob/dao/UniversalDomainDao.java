@@ -16,12 +16,12 @@ public interface UniversalDomainDao {
 
 	public int deleteDomain(int domainIndex);	
 	
-	public List<UniversalDomain> selectListAll();
-	
 	public UniversalDomain selectDomain(String domain);
 	
+	public List<UniversalDomain> selectListAll();
+	//관리자 페이지
 	public List<UniversalDomain> selectListDomain(Map<String, String> map);
 	 
-	public int selectCount(String keyword);
+	public int selectCount(Map<String, String> map);
 	
 }
