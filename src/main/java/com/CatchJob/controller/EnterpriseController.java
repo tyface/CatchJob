@@ -185,12 +185,12 @@ public class EnterpriseController {
 //	}
 //	@ResponseBody
 	@RequestMapping(value = "/reviewList")
-	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int page, Model model, HttpServletResponse resp){
+	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
 		//req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
 		System.out.println("컨트롤러 리뷰 entIndex: "+entIndex);
 		Map<String, Integer> dataRvw = new HashMap<String, Integer>();
-		int currentPage= page;		
+		int currentPage= pageNum;		
 		dataRvw.put("PAGE_NUM", currentPage);
 		dataRvw.put("ENT_IDX", entIndex);		
 		dataRvw.put("QESTN_NO", questionNum);
@@ -201,6 +201,7 @@ public class EnterpriseController {
 		
 		mapData.put("reviewList", reviewList);
 		mapData.put("reviewPageData", reviewPageData);
+		System.out.println(reviewPageData);
 		//model.addAttribute("reviewList", new Gson().toJson(reviewList) );
 //		Gson gson = new GsonBuilder().create();
 //		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
@@ -221,14 +222,9 @@ public class EnterpriseController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/writeReview")
-	public boolean writeReview(HttpSession session, Review review) throws IOException {
-		//System.out.println("writeReview-컨트롤러1"+review);
-		
-		//Review review = new Review();
-		//review.setContents(req.getParameter("contents"));
-		//review.setEntIndex(Integer.parseInt((req.getParameter("entIndex"))));
-		//review.setEvaluationScore(Integer.parseInt(req.getParameter("evaluationScore")));
+	@RequestMapping(value = "/writeReview", method = RequestMethod.POST)
+	public boolean writeReview(Review review, HttpSession session) throws IOException {
+		System.out.println(review);
 		review.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
 		//review.setQuestionNum(Integer.parseInt(req.getParameter("questionNum")));
 //		review.setReviewFlag("1");
