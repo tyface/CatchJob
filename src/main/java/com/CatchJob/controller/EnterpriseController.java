@@ -64,19 +64,6 @@ public class EnterpriseController {
 		}
 	}
 
-	@RequestMapping("/newsSearch")
-	public String newsSearch(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
-		System.out.println("컨트롤러 newsSearch");
-		try {
-			//keyword = entService.getEntInfo(mapData).ENT_NM
-			List<News> newsList = naverNewsService.searchNews(keyword);	
-			model.addAttribute("newsList", newsList);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		return "news";
-	}
-
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
 	public String entListForm() {
 		// 기업 리스트 출력화면
@@ -105,46 +92,40 @@ public class EnterpriseController {
 	@RequestMapping(value = "/view")
 	public String entDetailsForm(int entIndex,@RequestParam(defaultValue = "1")int page, HttpServletRequest req, Model model, HttpSession session)  {
 		// 기업정보 표출될때마다 viewCount올리는 부분
-		//System.out.println("뷰 컨트롤러 진입---");
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("ENT_IDX", Integer.toString(entIndex));
-		try {
-			mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가					
-		}catch (NullPointerException e) {
-			System.out.println("단지.. 로그인 안 되어 있을 뿐");
-		}
-		
+		mapData.put("BROWSER", req.getHeader("User-Agent"));
 		try {
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
+			mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가					
 		} catch (UnknownHostException e) {
 			System.out.println("errer");
-		} 
-		mapData.put("BROWSER", req.getHeader("User-Agent"));
+		} catch (NullPointerException e) {//비로그인 상태( session 없을 때 )에서 view 진입
+			System.out.println("단지.. 로그인 안 되어 있을 뿐");
+		}
 		recordService.regViewRecord(mapData);
-		// End
-
-		// 리뷰 표출될 때 필요한 정보 : 기업식별번호, 질문번호(1~5)
-//		Map<String, String> reviewMap = new HashMap<String, String>();
-//		reviewMap.put("entIndex", Integer.toString(entIndex));
-//		reviewMap.put("questionNum", "1");
-		//System.out.println(reviewMap);
+		//기업정보
+		System.out.println("기업이름ㅃ??"+ entService.getEntInfo(mapData).get("ENT_NM"));
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(mapData));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
 		model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
 		model.addAttribute("question", reviewService.question(mapData));
-		
-		//int currentPage = 1;
+		// 페이징 처리 - 인터뷰
 		int currentPage= page;
 		Map<String, Integer> dataItvw = new HashMap<String, Integer>();
 		dataItvw.put("ENT_IDX", entIndex);
-		//dataItvw.put("NUM_OF_ITVW_PER_PAGE", entIndex);
 		dataItvw.put("PAGE_NUM", currentPage);
 		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
 		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
-		//System.out.println("페이징처리:"+itvwService.getInterviewList(dataItvw));
-		//System.out.println("페이지 데이터: "+itvwService.interviewPageData(currentPage, entIndex));
 		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
+		//뉴스
+		try {
+			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
+			model.addAttribute("newsList", newsList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 		
 		return "enterprise-view";
 	}

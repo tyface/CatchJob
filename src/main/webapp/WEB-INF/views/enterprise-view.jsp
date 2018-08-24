@@ -707,15 +707,6 @@ function jsonEscape(str)  {
     return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
 }
 </script>
-<!--   <aside class="main-sidebar">fdfdf -->
-<!--     <section class="sidebar">fdfdsfdf -->
-<!--     </section> -->
-<!--   </aside> -->
-
-<!--   <div class="content-wrapper">fdsfdfdf -->
-<!--     <section class="content-header">fdfdf -->
-<!--     </section> -->
-<!--   </div> -->
 
 <div class="container module-main">
 	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
@@ -737,18 +728,36 @@ function jsonEscape(str)  {
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
 				<!-- 				<li style="height: 30px"></li> -->
-				<li><a href="#section1">
-					<span class="fa fa-building logo-small"></span> 기업정보
-				</a></li>
-				<li><a href="#section2">
-					<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
-				</a></li>
-				<li><a href="#section3"> <span
-						class="fa fa-file-text logo-small"></span> 면접후기
-				</a></li>
-				<li><a href="#section4"> <span
-						class="fa fa-line-chart logo-small"></span> 월별그래프
-				</a></li>
+				<li>
+					<a href="#section1">
+						<span class="fa fa-building logo-small"></span> 기업정보
+					</a>
+				</li>
+				<li>
+					<a href="#section2">
+						<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
+					</a>
+				</li>
+				<li>
+					<a href="#section3"> 
+						<span class="fa fa-file-text logo-small"></span> 면접후기
+					</a>
+				</li>
+				<li>
+					<a href="#section4"> 
+						<span class="fa fa-line-chart logo-small"></span> 월별그래프
+					</a>
+				</li>
+				<li>
+					<a href="#section5"> 
+						<span class="fa fa-group logo-small"></span> 채용정보
+					</a>
+				</li>
+				<li>
+					<a href="#section6"> 
+						<span class="fa fa-newspaper-o logo-small"></span> 뉴스
+					</a>
+				</li>
 
 			</ul>
 		</nav>
@@ -761,7 +770,7 @@ function jsonEscape(str)  {
 					<h3 id="title">기업정보</h3>
 
 					<div class="panel panel-default">
-						<div class="panel-body" style="color: black">
+						<div class="panel-body" >
 
 							<div class="row">
 								<div class="col-sm-6">
@@ -775,26 +784,24 @@ function jsonEscape(str)  {
 
 							</div>
 
-
-
-
 							<br>
 
 							<div class="row">
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block"
-										id="btnA">
-										<span style="float: left"><b>인원</b></span> <span
-											style="float: right"><b id="person">${entInfo.NPN_SBSCRBER_CNT }
-										</b>명</span>
+									<button type="button" class="btn btn-default btn-lg btn-block" id="btnA">
+										<span class="f-left"><b>인원</b></span> 
+										<span class="f-right">
+											<b id="person">${entInfo.NPN_SBSCRBER_CNT }</b>명
+										</span>
 									</button>
 								</div>
 								<div class="col-sm-6">
 									<button type="button" class="btn btn-default btn-lg btn-block"
 										id="btnB">
-										<span style="float: left"><b>업력</b></span> <span
-											style="float: right"><b id="establishmentYear">${entInfo.ENT_FOND_YMD}</b>
-											년</span>
+										<span class="f-left"><b>업력</b></span> 
+										<span class="f-right">
+											<b id="establishmentYear">${entInfo.ENT_FOND_YMD}</b>년
+										</span>
 									</button>
 								</div>
 							</div>
@@ -802,34 +809,25 @@ function jsonEscape(str)  {
 
 							<div class="row">
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block"
-										id="btnC">
-										<span style="float: left"><b>입사</b></span> <span
-											style="float: right"><b id="newPerson">${person.newPerson}
-												&nbsp;</b> &nbsp;명 &nbsp; &nbsp;<b id="newPersonPercent"></b>
-											&nbsp;%</span>
+									<button type="button" class="btn btn-default btn-lg btn-block" id="btnC">
+										<span class="f-left"><b>입사</b></span> 
+										<span  class="f-right">
+											<b id="newPerson">${person.newPerson}&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
+											<b id="newPersonPercent"></b>&nbsp;%
+										</span>
 									</button>
 								</div>
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block"
-										id="btnD">
-										<span style="float: left"><b>퇴사</b></span> <span
-											style="float: right"><b id="outPerson">${person.outPerson}
-												&nbsp;</b> &nbsp;명 &nbsp; &nbsp;<b id="outPersonPercent"></b>
-											&nbsp;%</span>
+									<button type="button" class="btn btn-default btn-lg btn-block" id="btnD">
+										<span style="float: left"><b>퇴사</b></span> 
+										<span style="float: right">
+											<b id="outPerson">${person.outPerson}&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
+											<b id="outPersonPercent"></b>&nbsp;%
+										</span>
 									</button>
 								</div>
 							</div>
 							<br> <br>
-
-
-
-
-
-
-
-
-
 
 							<div class="row">
 								<div class="col-md-2"></div>
@@ -921,8 +919,6 @@ function jsonEscape(str)  {
 			<div class="module">
 				<div id="section2">
 					<h3 id="title">리뷰코멘트</h3>
-					<!--456  -->
-					<!-- 					<button type="button" class="btn btn-infofault">리뷰코멘트 작성</button> -->
 					<div class="panel-group " id="accordion">
 
 						<c:forEach begin="0" end="5" varStatus="status"
@@ -930,7 +926,6 @@ function jsonEscape(str)  {
 							<div class="panel panel-default">
 								<div class="panel-heading"
 									onclick="getReviewList(${status.count})">
-									<!-- 456 -->
 									<h4 class="panel-title row">
 										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}">
 											<span class="col-sm-8">
@@ -1000,9 +995,6 @@ function jsonEscape(str)  {
 								</div>
 							</div>
 						</c:forEach>
-
-
-
 					</div>
 				</div>
 			</div>
@@ -1011,43 +1003,15 @@ function jsonEscape(str)  {
 			<div class="module">
 				<div id="section3">
 					<h3 id="title">면접후기</h3>
-					<button type="button" class="btn btn-info " id="myBtn">면접후기
-						작성</button>
-					<!--  <button type="button" class="btn btn-info btn-lg" id="myBtn">면접후기 작성</button> -->
-
-
-
-
-
-
-					<p>Try to scroll this section and look at the navigation list
-						while scrolling!가나다라</p>
-
+					<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
+					<p>Try to scroll this section and look at the navigation list while scrolling!가나다라</p>
 					<div class="panel-group" style="color: black">
-
 						<div class="panel panel-default">
 							<div class="panel-body">
-
-								<!-- 								<div class="chart"> -->
-								<%-- 									<canvas id="areaChart" style="height: 00px"></canvas> --%>
-								<!-- 								</div> -->
-
 								<div class="box box-danger">
 									<div class="box-header with-border">
 										<h3 class="box-title">면접 난이도</h3>
-
-										<!-- <div class="box-tools pull-right">
-											<button type="button" class="btn btn-box-tool"
-												data-widget="collapse">
-												<i class="fa fa-minus"></i>
-											</button>
-											<button type="button" class="btn btn-box-tool"
-												data-widget="remove">
-												<i class="fa fa-times"></i>
-											</button>
-										</div> -->
 									</div>
-
 
 									<div class="row">
 										<div class="col-sm-2"></div>
@@ -1063,8 +1027,6 @@ function jsonEscape(str)  {
 											<div class="card-footer small text-muted">Updated
 												yesterday at 11:59 PM</div>
 										</div>
-										<!-- end card-->
-
 										<div class="col-sm-2"></div>
 									</div>
 
@@ -1073,12 +1035,6 @@ function jsonEscape(str)  {
 
 							</div>
 						</div>
-
-
-
-
-
-
 						<!-- 면접후기1 -->
 						<c:forEach varStatus="status" var="interview" items="${interview}">
 							<div class="panel panel-default">
@@ -1092,24 +1048,13 @@ function jsonEscape(str)  {
 										</div>
 										<div id="difficulty${status.index}" class="row">
 											<p class="intrvwDifficulty">${interview.intrvwDifficulty}</p>
-<!-- 												<div class="row" > -->
-
 												<div class="col-xs-1 progress-bars bar1" ></div>
 												<div class="col-xs-1 progress-bars bar2" ></div>
 												<div class="col-xs-1 progress-bars bar3" ></div>
 												<div class="col-xs-1 progress-bars bar4" ></div>
 												<div class="col-xs-1 progress-bars bar5" ></div>
-<!-- 													<div class="" style="height: 10px"> -->
-<!-- 													<div class="progress-bar bar1" role="progressbar"	style="width: 20%;"></div> -->
-<!-- 													<div class="progress-bar bar2" role="progressbar"	style="width: 20%;"></div> -->
-<!-- 													<div class="progress-bar bar3" role="progressbar"	style="width: 20%;"></div> -->
-<!-- 													<div class="progress-bar bar4" role="progressbar"	style="width: 20%;"></div> -->
-<!-- 													<div class="progress-bar bar5" role="progressbar"	style="width: 20%;"></div> -->
-
-<!-- 												</div> -->
 
 										</div>
-											<!-- background-color: #EAEAEA -->
 
 										<br>
 
@@ -1153,16 +1098,6 @@ function jsonEscape(str)  {
 														<p class="font-gray">${interview.intrvwAnswer}</p>
 													</td>
 												</tr>
-<!-- 												<tr> -->
-<!-- 													<td colspan="6"> -->
-<!-- 														<p> -->
-<!-- 															<b>발표시기</b> -->
-<!-- 														</p> -->
-<%-- 														<p class="font-gray">${interview.presentationDate}일후</p> --%>
-<!-- 													</td> -->
-<!-- 												</tr> -->
-
-
 												<tr>
 													<c:if test="${interview.presentationDate != '' && interview.presentationDate != null  }">
 														<th colspan="2">
@@ -1200,9 +1135,6 @@ function jsonEscape(str)  {
 								</div>
 							</div>
 						</c:forEach>
-
-
-
 
 					</div>
 					<!-- 면접 페이징 처리  -->
@@ -1252,100 +1184,72 @@ function jsonEscape(str)  {
 			<div class="module">
 				<div id="section4">
 					<h3 id="title">월별그래프</h3>
-					<p>Try to scroll this section and look at the navigation list
-						while scrolling!</p>
-					<button class="btn salary-graph" id="personnel-btn" disabled="">인원</button>
-					<button class="btn personnel-graph" id="salary-btn">평균 급여</button>
-
+					<p>Try to scroll this section and look at the navigation list while scrolling!</p>
+					<div class="btn-group graph-btn" >
+							<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
+							<button class="btn btn-default " id="salary-btn">평균 급여</button>
+					</div>
 					<!-- 그래프 -->
-					<div class="panel panel-default">
+					<div class="panel panel-default ">
 						<div class="panel-body">
 							<div class="card-header">
 								<i class="fa fa-table"></i> Combo Bar Line Chart
 							</div>
 
 							<div class="card-body chartreport">
-<%-- 								<canvas id="lineChart"></canvas> --%>
 								<canvas id="comboBarLineChart"></canvas>
 							</div>
 
 							<div class="card-footer small text-muted">Updated yesterday
 								at 11:59 PM</div>
-
-
 						</div>
 
 					</div>
 				</div>
 			</div>
-			<!-- 그래프1//////////////////////////////////////////////////////////////////////////////// -->
-<!-- 			<div class="module"> -->
-<!-- 				<div id="section41"> -->
-<!-- 					<h3 id="title">월별그래프-평균급여</h3> -->
-<!-- 					<p>Try to scroll this section and look at the navigation list -->
-<!-- 						while scrolling!</p> -->
+			<!-- SECTION 5- 채용정보 -->
+			<div class="module">
 
-<!-- 					그래프 -->
-<!-- 					<div class="panel panel-default"> -->
-<!-- 						<div class="panel-body"> -->
+				<div id="section5">
+					<h3 id="title">채용정보</h3>
 
+					<div class="panel panel-default">
+						<div class="panel-body" >
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- SECTION 6- 뉴스 -->
+			<div class="module">
 
-<!-- 							<div class="card-header"> -->
-<!-- 								<i class="fa fa-table"></i> Combo Bar Line Chart -->
-<!-- 							</div> -->
+				<div id="section6">
+					<h3 id="title">뉴스</h3>
 
-<!-- 							<div class="card-body"> -->
-<%-- 								<canvas id="lineChart"></canvas> --%>
-<!-- 							</div> -->
-<!-- 							<div class="card-footer small text-muted">Updated yesterday -->
-<!-- 								at 11:59 PM</div> -->
-<!-- 						</div> -->
-
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			<!-- 그래프2//////////////////////////////////////////////////////////////////////////////// -->
-<!-- 			<div class="module"> -->
-<!-- 				<div id="section42"> -->
-<!-- 					<h3 id="title">월별그래프-인원</h3> -->
-<!-- 					<p>Try to scroll this section and look at the navigation list -->
-<!-- 						while scrolling!</p> -->
-
-<!-- 					그래프 -->
-
-
-<!-- 					<div class="panel panel-default"> -->
-<!-- 						<div class="panel-body"> -->
-
-
-
-<!-- 							<div class="card-header"> -->
-<!-- 								<i class="fa fa-table"></i> Combo Bar Line Chart -->
-<!-- 							</div> -->
-
-<!-- 							<div class="card-body"> -->
-<%-- 								<canvas id="comboBarLineChart"></canvas> --%>
-<!-- 							</div> -->
-<!-- 							<div class="card-footer small text-muted">Updated yesterday -->
-<!-- 								at 11:59 PM</div> -->
-
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-
-
+					<div class="panel panel-default">
+						<div class="panel-body" >
+							<c:forEach items="${newsList}" var="newsList">
+								<div class="row">
+									<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span> 
+									<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>		
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 </div>
+
+
+
 <button type="button" class="btn btn-default move-top">
 	<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>TOP
 </button>
 
-
-<!-- 로그인 모당 -->
+<!-- 면접후기 모달 -->
 <div class="modal fade" id="loginModal" role="dialog">
-	<!-- 	<div class="modal-dialog"> -->
 	<div class=" modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -1505,8 +1409,5 @@ function jsonEscape(str)  {
 
 	</div>
 </div>
-
-
-
 
 <jsp:include page="include/footer.jsp" flush="true" />

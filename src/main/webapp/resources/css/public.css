@@ -297,7 +297,7 @@ article {
 
 .logo-small {
 	/* 	color: #2196F3; */
-	font-size: 50px;
+	font-size: 30px;
 	color: lime;
 	/* width:50px; */
 	display: block;
@@ -403,6 +403,8 @@ margin: 1px;
 .modal-footer {
 	background-color: #EAEAEA;
 }
+
+
 /* .modal-write-form{ */
 /* 	width:90%; */
 /* } */
@@ -443,28 +445,24 @@ label.error {
 }
 
 /* VIEW 페이지 그래프  START*/
-.salary-graph {
+.graph-btn {
 	background-color: #1ABC9C;
 	color:white;
-
+	border-radius: 5px;
 }
 
-.personnel-graph {
-	border-color: #1ABC9C;
-	background: white;
-
-/* 	color: orange; */
-
-}
 
 /* VIEW 페이지 그래프  END*/
 
 
 /* 마이페이지  START*/
-.text-center td, .text-center th{
+.text-center td, .text-center th, .text-center{
 	text-align: center;
 }
 .text-left{
 	text-align: left;
+}
+.text-right{
+	text-align: right;
 }
 /* 마이페이지 END */
