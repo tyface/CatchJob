@@ -70,7 +70,7 @@
 										<input type="hidden" name="page" value="${viewData.currentPage}">
 										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">										
 										<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
-											size="20">							
+											size="20" placeholder="아이디를 입력해 주세요">							
 										<div class="input-group-btn">
 											<button type="submit" class="btn">
 												<span class="glyphicon glyphicon-search"></span>

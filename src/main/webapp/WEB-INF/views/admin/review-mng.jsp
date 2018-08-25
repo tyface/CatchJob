@@ -74,7 +74,7 @@
 		} else if($("#mngSelect option:selected").text()=='기업코드'){
 			 $("#hiddenElement").attr("value", "entIndexKeyword");
 		      
-		} else if($("#mngSelect option:selected").text()=='질문 식별번호'){
+		} else if($("#mngSelect option:selected").text()=='질문번호'){
 			 $("#hiddenElement").attr("value", "questionNumKeyword");
 		}	
 		$("#hiddenElement").appendChild($("#searchForm"));	
@@ -88,8 +88,6 @@
 	}
 	 
 $(function(){
-	alert(getParameterByName('keywordOption'))
-		
 	if(getParameterByName('keywordOption')!=null){
 		if(getParameterByName('keywordOption')=='entIndexKeyword'){	
 			$("#mngSelect").val(getParameterByName('keywordOption'))
@@ -211,7 +209,7 @@ function chkDelete(){
 					value="${viewData.msgPerPage}" onclick="newPage()">&nbsp; entries			
 				</div>			
 				<div class="col-sm-2">
-					<select id="mngSelect">
+					<select id="mngSelect" value="${viewData.keywordOption}">
 						<option value="entNameKeyword">기업명</option>
 						<option value="entIndexKeyword">기업코드</option>
 						<option value="questionNumKeyword">질문번호</option>

@@ -60,23 +60,35 @@ public class UniversalDomainServiceImp implements UniversalDomainService {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
 		Map<String, String> map = new HashMap<>();
-		
+				
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
-			String keyword = (String) data.get("keyword");
-			map.put("keyword", keyword);		
-			viewData.put("keyword", keyword);
-			totalCount = domainDao.selectCount(keyword); 
-		} else {
-			map.put("keyword", "");
-			totalCount = domainDao.selectCount(""); 
+			
+			String keywordOption = (String) data.get("keywordOption");		
+			if(keywordOption.equals("domainNameKeyword")) {
+				String domainNameKeyword = (String) data.get("keyword");
+				map.put("domainNameKeyword", domainNameKeyword);
+				viewData.put("keyword", domainNameKeyword);
+				viewData.put("keywordOption", "domainNameKeyword");	
+				System.out.println("domainAddressKeyword!!!!!!!!!!!!!!!!"+ domainNameKeyword);
+			}else if(keywordOption.equals("domainAddressKeyword")) {
+				String domainAddressKeyword = (String) data.get("keyword");
+				map.put("domainAddressKeyword", domainAddressKeyword);
+				viewData.put("keyword", domainAddressKeyword);
+				viewData.put("keywordOption", "domainAddressKeyword");
+				System.out.println("domainAddressKeyword!!!!!!!!!!!!!!!!"+ domainAddressKeyword);
+			} 				
 		}		
+			
+		totalCount  = domainDao.selectCount(map); 		
 		
 		int firstRow = 0;     
 		int endRow =0;
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
+		
+		System.out.println("ㅁ문제인 아이"+ totalCount);
 	
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
@@ -87,16 +99,24 @@ public class UniversalDomainServiceImp implements UniversalDomainService {
 
 		map.put("firstRow", String.valueOf(firstRow));
 		map.put("endRow",  String.valueOf(endRow));
-		
+
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
-		viewData.put("msgPerPage", numOfMsgPage);
-		
+		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", domainDao.selectListDomain(map));
+
 		
-		System.out.println(viewData.get("boardList"));
+		System.out.println(viewData.get("currentPage"));
+		System.out.println(viewData.get("pageTotalCount"));
+		System.out.println(viewData.get("startPage"));
+		System.out.println(viewData.get("endPage"));
+		System.out.println(viewData.get("msgPerPage"));
+		
+		
+		System.out.println(domainDao.selectListDomain(map));
+		
 		return viewData;
 	}
 	

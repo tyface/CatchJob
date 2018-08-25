@@ -77,19 +77,15 @@ public class AdminController {
 	/* 회원 그룹 관리 */
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 
-		int pageNumber = 0;	
+		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
-		} else {
-			 pageNumber = 1;	
 		}
 		
-		int numOfMsgPage = 0;
+		int numOfMsgPage = 10;
 		if (msgPerPage != null) {
 			numOfMsgPage = Integer.parseInt(msgPerPage);
-		} else {
-			numOfMsgPage = 10;	
-		}
+		} 
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("pageNumber", pageNumber);
@@ -146,19 +142,15 @@ public class AdminController {
 	/* 관리자 그룹 관리 */
 	@RequestMapping(value = "/mngAdmin")
 	public String mngAdmin(Model model, String page, String msgPerPage, String num, String keyword) {
-		int pageNumber = 0;	
+		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
-		} else {
-			 pageNumber = 1;	
 		}
 		
-		int numOfMsgPage = 0;
+		int numOfMsgPage = 10;
 		if (msgPerPage != null) {
 			numOfMsgPage = Integer.parseInt(msgPerPage);
-		} else {
-			numOfMsgPage = 10;	
-		}
+		} 
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("pageNumber", pageNumber);
@@ -216,19 +208,15 @@ public class AdminController {
 	@RequestMapping(value = "/mngReview")
 	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {
 		
-		int pageNumber = 0;	
+		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
-		} else {
-			 pageNumber = 1;	
 		}
 		
-		int numOfMsgPage = 0;
+		int numOfMsgPage = 10;
 		if (msgPerPage != null) {
 			numOfMsgPage = Integer.parseInt(msgPerPage);
-		} else {
-			numOfMsgPage = 10;	
-		}
+		} 
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("pageNumber", pageNumber);
@@ -324,24 +312,15 @@ public class AdminController {
 			//기업 관리 
 	@RequestMapping(value = "/mngEnt")
 	public String mngEnt(Model model, String page, String msgPerPage, String keyword, String keywordOption) {
-		/*
-		 * String entStyleType, String entName, String entBizRegNum, String
-		 * industryCode, String industryName, String entSubscriberFlag, String entFlag,
-		 * String entFoundationDate
-		 */
-		int pageNumber = 0;
+		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
-		} else {
-			pageNumber = 1;
 		}
-
-		int numOfMsgPage = 0;
+		
+		int numOfMsgPage = 10;
 		if (msgPerPage != null) {
 			numOfMsgPage = Integer.parseInt(msgPerPage);
-		} else {
-			numOfMsgPage = 10;
-		}
+		} 
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("pageNumber", pageNumber);
@@ -436,31 +415,36 @@ public class AdminController {
 	}
 	//도메인 관리
 	@RequestMapping("/mngDomain")
-	public String mngDomain(Model model, String page, String msgPerPage, String num, String keyword) { 
-		int pageNumber = 0;	
+	public String mngDomain(Model model, String page, String msgPerPage, String keyword, String keywordOption) { 
+		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
-		} else {
-			 pageNumber = 1;	
-		}
+		}	
 		
-		int numOfMsgPage = 0;
+		int numOfMsgPage = 10;
 		if (msgPerPage != null) {
 			numOfMsgPage = Integer.parseInt(msgPerPage);
-		} else {
-			numOfMsgPage = 10;	
-		}
+		} 
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("pageNumber", pageNumber);
 		data.put("numOfMsgPage", numOfMsgPage);
-		
-		if(keyword!=null) {
+
+		if (keyword != null) {
 			data.put("keyword", keyword);
-		}		
+			data.put("keywordOption", keywordOption);
+		}
+		System.out.println("**************");
+		System.out.println(pageNumber);
+		System.out.println(numOfMsgPage);
+		System.out.println(keyword);
+
+		System.out.println(keywordOption);
+		System.out.println("**************");
 		
 		Map<String, Object> viewData = domainService.getMessageList(data);
-		model.addAttribute("viewData", viewData);	
+		model.addAttribute("viewData", viewData);
+
 		return "admin/domain-mng";						
 	}
 	
