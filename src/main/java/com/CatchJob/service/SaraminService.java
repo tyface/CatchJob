@@ -77,16 +77,20 @@ public class SaraminService {
          NodeList nodeList1 = (NodeList) expr1.evaluate(doc, XPathConstants.NODESET);
          XPathExpression expr2 = xpath.compile("//job/expiration-timestamp");
          NodeList nodeList2 = (NodeList) expr2.evaluate(doc, XPathConstants.NODESET);
+         XPathExpression expr3 = xpath.compile("//job/url");
+         NodeList nodeList3 = (NodeList) expr3.evaluate(doc, XPathConstants.NODESET);
          
          for (int i = 0; i < nodeList.getLength(); i++) {
         	 Saramin saramin  = new Saramin();
              NodeList child = nodeList.item(i).getChildNodes();
              NodeList child1 = nodeList1.item(i).getChildNodes();
              NodeList child2 = nodeList2.item(i).getChildNodes();
+             NodeList child3 = nodeList3.item(i).getChildNodes();
              for (int j = 0; j < child.getLength(); j++) {
 //                 System.out.println(i+".---------------");
 //                 System.out.println("href:"+child.item(j).getAttributes().getNamedItem("href").getTextContent());
 //                 System.out.println("name:"+child.item(j).getTextContent());
+            	 
             	 long time = Integer.parseInt(child2.item(j).getTextContent());
             	 long unixTime = time * 1000;
                  
@@ -111,7 +115,7 @@ public class SaraminService {
 	     		 String dayOfWeek = expirationTimestamp.substring(0, 3);
                  switch(dayOfWeek) {
 	                 case "Mon": dayOfWeek = "월";	break;
-	                 case "Tus": dayOfWeek = "화";	break;
+	                 case "Tue": dayOfWeek = "화";	break;
 	                 case "Wed": dayOfWeek = "수";	break;
 	                 case "Thu": dayOfWeek = "목";	break;
 	                 case "Fri": dayOfWeek = "금";	break;
@@ -185,6 +189,8 @@ public class SaraminService {
                  saramin.setOpenQuantity(child1.item(5).getTextContent());
                  saramin.setExperienceLevel(child1.item(6).getTextContent());
                  saramin.setRequiredEducationLevel(child1.item(7).getTextContent());
+                 
+                 saramin.setUrl(child3.item(j).getTextContent());
 //	             for (int j1 = 0; j1 < child1.getLength(); j1++) {
 //	                 //Node node = child1.item(j1);
 //	                 System.out.println(child1.item(j1).getNodeName()+":"+child1.item(j1).getTextContent());

@@ -31,10 +31,7 @@ var newPerson = new Array();
 var outPerson = new Array();
 
 $(function(){
-// 	alert("interviewJson: "+${interviewJson})
-//  	var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
-// 	alert("야호"+interviewJson[0].entIndex);
-
+	
 	if('${member}'==''){
 	}else{
 		status = "login";
@@ -87,7 +84,7 @@ $(function(){
 	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	reviewValidation()//리뷰 유효성 검사 부분
-
+	saramin(); //#section5 사람인채용정보 
 
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
 	if(following == 1){
@@ -697,6 +694,48 @@ function interviewValidation(){
 
 	});
 }
+/* VIEW 페이지 채용정보  */
+function saramin(){
+	var saraminList = JSON.parse('${saraminList}');
+	if(saraminList == ""){
+		alert(333)
+		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
+		img.appendTo(saraminRow1);
+	}
+	for(var i in saraminList){
+		alert(3)
+		var url 					= saraminList[i].url
+		var name 					= saraminList[i].name
+		var expirationTimestamp 	= saraminList[i].expirationTimestamp
+		var title 					= saraminList[i].title
+		var experienceLevel			= saraminList[i].experienceLevel
+		var requiredEducationLevel	= saraminList[i].requiredEducationLevel
+		var location				= saraminList[i].location
+		var industry				= saraminList[i].industry
+		var href					= saraminList[i].href
+		
+		var trimLocation = location.substring(0,2);
+		var trimRequiredEducationLevel;
+		if(requiredEducationLevel != "학력무관"){
+			trimRequiredEducationLevel = requiredEducationLevel.substring(0,1)+"졸↑";
+		}else{
+			trimRequiredEducationLevel = requiredEducationLevel;
+		}
+		if(i<3){
+	 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+			data.appendTo(saraminRow1);
+		}else if(i<6){
+			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+			data.appendTo(saraminRow2);
+		}else if(i<9){
+			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+			data.appendTo(saraminRow3);
+		}else{
+			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");			data.appendTo(saraminRow4);
+		}
+	}
+}
+
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -767,7 +806,7 @@ function jsonEscape(str)  {
 			<div class="module">
 
 				<div id="section1">
-					<h3 id="title">기업정보</h3>
+					<h3  class="sectionTitle">기업정보</h3>
 
 					<div class="panel panel-default">
 						<div class="panel-body" >
@@ -918,7 +957,7 @@ function jsonEscape(str)  {
 
 			<div class="module">
 				<div id="section2">
-					<h3 id="title">리뷰코멘트</h3>
+					<h3 class="sectionTitle">리뷰코멘트</h3>
 					<div class="panel-group " id="accordion">
 
 						<c:forEach begin="0" end="5" varStatus="status"
@@ -1002,10 +1041,10 @@ function jsonEscape(str)  {
 			<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 				<div id="section3">
-					<h3 id="title">면접후기</h3>
+					<h3 class="sectionTitle">면접후기</h3>
 					<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
 					<p>Try to scroll this section and look at the navigation list while scrolling!가나다라</p>
-					<div class="panel-group" style="color: black">
+					<div class="panel-group "  style="color: black">
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<div class="box box-danger">
@@ -1183,7 +1222,7 @@ function jsonEscape(str)  {
 			<!-- 그래프 바뀔것0820 -->
 			<div class="module">
 				<div id="section4">
-					<h3 id="title">월별그래프</h3>
+					<h3 class="sectionTitle">월별그래프</h3>
 					<p>Try to scroll this section and look at the navigation list while scrolling!</p>
 					<div class="btn-group graph-btn" >
 							<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
@@ -1211,22 +1250,31 @@ function jsonEscape(str)  {
 			<div class="module">
 
 				<div id="section5">
-					<h3 id="title">채용정보</h3>
+					<h3  class="sectionTitle">채용정보</h3>
 
-					<div class="panel panel-default">
-						<div class="panel-body" >
-						
+<!-- 					<div class="panel panel-default"> -->
+<!-- 						<div class="panel-body" > -->
+						<div id="saramin-margin">
+							<div class="row" id="saraminRow1">	
+							</div>
+							<div class="row" id="saraminRow2">	
+							</div>
+							<div class="row" id="saraminRow3">	
+							</div>
+							<div class="row" id="saraminRow4">	
+							</div>
 						</div>
-					</div>
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 			<!-- SECTION 6- 뉴스 -->
 			<div class="module">
 
 				<div id="section6">
-					<h3 id="title">뉴스</h3>
+					<h3  class="sectionTitle" >뉴스</h3>
 
-					<div class="panel panel-default">
+					<div class="panel panel-default slideanim">
 						<div class="panel-body">
 							<c:forEach items="${newsList}" var="newsList">
 								<div class="row" ><!-- //news-interval -->
@@ -1343,7 +1391,7 @@ function jsonEscape(str)  {
 						</div>
 					</div>
 					<!-- 면접결과 -->
-					<div class="row form-group">
+					<div class="row form-group ">
 						<div class="col-xs-3">
 							<label>이 기업에 합격하셨나요?</label>
 						</div>
@@ -1375,7 +1423,7 @@ function jsonEscape(str)  {
 						</div>
 					</div>
 					<!-- 면접경험 radio...........intrvwExperience-->
-					<div class="row form-group">
+					<div class="row form-group ">
 						<div class="col-xs-3">
 							<label>면접 경험 </label>
 						</div>
@@ -1410,5 +1458,33 @@ function jsonEscape(str)  {
 
 	</div>
 </div>
+ <script>
+$(document).ready(function(){
+  $('body').scrollspy({target: ".navbar", offset: 50});   
+  
+  $("#myScrollspy a").on('click', function(event) {
+    if (this.hash !== "") {
+      event.preventDefault();
+      var hash = this.hash;
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+        window.location.hash = hash;
+      });
+    }  // End if
+  });
+  
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+});
+</script> 
 
 <jsp:include page="include/footer.jsp" flush="true" />

@@ -1,6 +1,7 @@
 package com.CatchJob.model;
 
 public class Saramin {
+	private String url;//
 	private String href;// 기업주소
 	private String name;// 기업이름
 	private String title;
@@ -11,7 +12,15 @@ public class Saramin {
 	private String openQuantity;
 	private String experienceLevel;
 	private String requiredEducationLevel;
-	private String expirationTimestamp; //마감일
+	private String expirationTimestamp; // 마감일
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getHref() {
 		return href;
@@ -103,10 +112,11 @@ public class Saramin {
 
 	@Override
 	public String toString() {
-		return "Saramin [href=" + href + ", name=" + name + ", title=" + title + ", location=" + location + ", jobType="
-				+ jobType + ", industry=" + industry + ", jobCategory=" + jobCategory + ", openQuantity=" + openQuantity
-				+ ", experienceLevel=" + experienceLevel + ", requiredEducationLevel=" + requiredEducationLevel
-				+ ", expirationTimestamp=" + expirationTimestamp + "]";
+		return "Saramin [url=" + url + ", href=" + href + ", name=" + name + ", title=" + title + ", location="
+				+ location + ", jobType=" + jobType + ", industry=" + industry + ", jobCategory=" + jobCategory
+				+ ", openQuantity=" + openQuantity + ", experienceLevel=" + experienceLevel
+				+ ", requiredEducationLevel=" + requiredEducationLevel + ", expirationTimestamp=" + expirationTimestamp
+				+ "]";
 	}
 
 	

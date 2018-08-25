@@ -61,7 +61,7 @@ public class EnterpriseController {
 		try {
 			List<Saramin> saraminList = saraminService.searchSaramin(keyword);
 			System.out.println("컨트롤러 사람인: "+saraminList);
-			model.addAttribute("saraminList", saraminList);
+			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,6 +127,9 @@ public class EnterpriseController {
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
 			model.addAttribute("newsList", newsList);
+			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
+			System.out.println("컨트롤러 사람인!!!!!!123123: "+saraminList);
+			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
