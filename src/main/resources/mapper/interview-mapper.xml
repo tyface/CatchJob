@@ -6,11 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 면접후기 작성하기 -->
 	<insert id="insertInterview" parameterType="interview" >
-		INSERT INTO INTERVIEW_TB (MBER_IDX,ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTERVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT) 
+		INSERT INTO INTERVIEW_TB (MBER_IDX,ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTRVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT) 
 		VALUES (#{mberIndex},#{entIndex},#{intrvwDifficulty},#{intrvwDate},#{intrvwRoute},#{intrvwReview},#{intrvwQuestion},#{intrvwAnswer},#{intrvwFlag},#{intrvwResult},#{intrvwExperience},#{presentationDate},sysdate())
 	</insert>
 	<!-- 면접후기 수정 -->
-	<update id="updateInterview" parameterType="interview" ><!-- ,INTERVW_FL=#{intrvwFlag} -->
+	<update id="updateInterview" parameterType="interview" ><!-- ,INTRVW_FL=#{intrvwFlag} -->
 		UPDATE INTERVIEW_TB
 		SET INTRVW_DFFLY=#{intrvwDifficulty},INTRVW_YM=#{intrvwDate},INTRVW_ROUTE=#{intrvwRoute},INTRVW_REVW=#{intrvwReview},INTRVW_QESTN=#{intrvwQuestion},INTRVW_ANSWER=#{intrvwAnswer},INTRVW_RESULT=#{intrvwResult},INTRVW_EXPRNC=#{intrvwExperience},PRESNATN_DT=#{presentationDate}
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=#{mberIndex}
@@ -18,16 +18,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 면접후기 삭제 상태로 -->
 	<update id="deleteInterview" parameterType="map">
 		UPDATE INTERVIEW_TB
-		SET INTERVW_FL=#{INTERVW_FL}
+		SET INTRVW_FL=#{INTRVW_FL}
 		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=#{mberIndex}
 	</update>
 	<!-- 계정에서 인터뷰 수정할 때 필요.../ -->
 	<select id="selectListByIndex" parameterType="map" resultMap="interviewMap">
-		SELECT e.ENT_NM, MBER_IDX,e.ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTERVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT
+		SELECT e.ENT_NM, MBER_IDX,e.ENT_IDX,INTRVW_DFFLY,INTRVW_YM,INTRVW_ROUTE,INTRVW_REVW,INTRVW_QESTN,INTRVW_ANSWER,INTRVW_FL,INTRVW_RESULT,INTRVW_EXPRNC,PRESNATN_DT,REG_DT
 		FROM INTERVIEW_TB i
 		LEFT JOIN ENTERPRISE_TB e
 		ON i.ENT_IDX = e.ENT_IDX
-		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex} AND i.INTERVW_FL=#{INTERVW_FL}
+		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex} AND i.INTRVW_FL=#{INTRVW_FL}
 	</select>
 	<!-- 계정에서 인터뷰 정보 출력할때 필요.. -->
 	<select id="selectListByMemberIdx" parameterType="map" resultMap="interviewMap">
@@ -35,14 +35,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM INTERVIEW_TB itv
 		LEFT JOIN ENTERPRISE_TB ent
 		ON itv.ENT_IDX = ent.ENT_IDX
-		WHERE itv.MBER_IDX=#{MBER_IDX}  AND INTERVW_FL=#{INTERVW_FL}
+		WHERE itv.MBER_IDX=#{MBER_IDX}  AND INTRVW_FL=#{INTRVW_FL}
 		ORDER BY itv.INTRVW_IDX desc
 	</select>
 	<!-- 면접후기 면접난이도 Pie Chart 그리기 -->
 	<select id="interviewPieChart" parameterType="map" resultType="map">
 		SELECT INTRVW_DFFLY, count(INTRVW_DFFLY) as count
 		FROM INTERVIEW_TB
-		WHERE ENT_IDX=#{ENT_IDX}  AND INTERVW_FL=#{INTERVW_FL}
+		WHERE ENT_IDX=#{ENT_IDX}  AND INTRVW_FL=#{INTRVW_FL}
 		GROUP BY INTRVW_DFFLY
 		ORDER BY INTRVW_DFFLY 
 	</select>
@@ -51,14 +51,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="interviewDuplicationCheck" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM INTERVIEW_TB
-		WHERE ENT_IDX=#{ENT_IDX} AND MBER_IDX=#{MBER_IDX} AND INTERVW_FL=#{INTERVW_FL}
+		WHERE ENT_IDX=#{ENT_IDX} AND MBER_IDX=#{MBER_IDX} AND INTRVW_FL=#{INTRVW_FL}
 	</select>
 	
 	<!-- 면접후기  VIEW 페이지에서 페이징처리 -->
 	<select id="selectInterviewList" parameterType="map" resultMap="interviewMap">
 		SELECT SQL_CALC_FOUND_ROWS * 
 		FROM 						INTERVIEW_TB 
-		WHERE 						ENT_IDX=#{ENT_IDX} AND INTERVW_FL=#{INTERVW_FL}
+		WHERE 						ENT_IDX=#{ENT_IDX} AND INTRVW_FL=#{INTRVW_FL}
 		ORDER BY 					INTRVW_IDX desc 
 		LIMIT 						#{NUM_OF_ITVW_PER_PAGE} 
 		OFFSET						#{START_ROW}
@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectInterviewTotalRows" parameterType="map" resultType="int">
 		SELECT 	 count(*) AS TOTAL_ROWS 
 		FROM	 INTERVIEW_TB
-		WHERE	 ENT_IDX=#{ENT_IDX} AND INTERVW_FL=#{INTERVW_FL}
+		WHERE	 ENT_IDX=#{ENT_IDX} AND INTRVW_FL=#{INTRVW_FL}
 	</select>
 
 	<resultMap type="interview" id="interviewMap">
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="intrvwReview" column="INTRVW_REVW" />
 		<result property="intrvwQuestion" column="INTRVW_QESTN" />
 		<result property="intrvwAnswer" column="INTRVW_ANSWER" />
-		<result property="intrvwFlag" column="INTERVW_FL" />
+		<result property="intrvwFlag" column="INTRVW_FL" />
 		<result property="intrvwResult" column="INTRVW_RESULT" />
 		<result property="intrvwExperience" column="INTRVW_EXPRNC" />
 		<result property="presentationDate" column="PRESNATN_DT" />

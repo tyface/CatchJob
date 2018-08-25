@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +27,9 @@ import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
 import com.CatchJob.service.NaverNewsService;
-import com.CatchJob.service.SaraminService;
 import com.CatchJob.service.RecordService;
 import com.CatchJob.service.ReviewService;
+import com.CatchJob.service.SaraminService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -81,7 +80,6 @@ public class EnterpriseController {
 		}		
 		//System.out.println("확인해보자!:"+entService.getEntList(data));
 		
-		                            
 		Gson gson = new GsonBuilder().create();
 		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
 		model.addAttribute("entList1",myCustomArray);
@@ -116,8 +114,10 @@ public class EnterpriseController {
 		Map<String, Integer> dataItvw = new HashMap<String, Integer>();
 		dataItvw.put("ENT_IDX", entIndex);
 		dataItvw.put("PAGE_NUM", currentPage);
-		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
-		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
+		
+		List<Interview> interviewList = itvwService.getInterviewList(dataItvw);
+		model.addAttribute("interview", interviewList);
+		model.addAttribute("interviewJson", new Gson().toJson(interviewList));
 		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
 		//뉴스
 		try {
@@ -136,9 +136,6 @@ public class EnterpriseController {
 		Map<String, String> mapData = new HashMap<String, String>();
 		mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));		
 		mapData.put("ENT_IDX", entIndex );	
-//		(int) (session.getAttribute("mberIndex"))
-//		mapData.put("ENT_IDX", entIndex );	
-		//System.out.println("좋아요 컨트롤러: "+mapData);
 		return followService.regFollowEnt(mapData);
 	}
 	@ResponseBody
@@ -200,6 +197,31 @@ public class EnterpriseController {
 		
 		
 		 
+	}
+	
+	@RequestMapping(value = "/getInterviewList")
+	public void getInterList(int entIndex, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
+		resp.setCharacterEncoding("utf-8");
+		Map<String, Integer> dataMap = new HashMap<String, Integer>();
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		Gson gson = new GsonBuilder().create();
+		
+		int currentPage= pageNum;		
+		
+		dataMap.put("ENT_IDX", entIndex);
+		dataMap.put("PAGE_NUM", currentPage);
+		
+		List<Interview> interviewList = itvwService.getInterviewList(dataMap);
+		
+		resultMap.put("interviewList", gson.toJsonTree(interviewList).getAsJsonArray());
+		resultMap.put("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
+		
+		try {
+			resp.getWriter().println(new Gson().toJson(resultMap));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@ResponseBody

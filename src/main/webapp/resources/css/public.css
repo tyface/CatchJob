@@ -32,6 +32,11 @@ article {
 	cursor: pointer;
 }
 
+.fa-heart, .fa-heart-o {
+	color: red;
+	font-size: 20px !important;
+	margin-bottom: 10px;
+}
 .blue-font{
 	text-decoration: none !important;
 	color: #337ab7;
@@ -99,10 +104,6 @@ article {
 	border-left: 1px solid #eaeaea;
 	border-right: 1px solid #eaeaea;
 	line-height: 24px;
-}
-
-.p-1 {
-
 }
 
 .stars-on::after {
@@ -246,8 +247,7 @@ article {
 }
 
 .btnFollow {
-	color: #ffcc00;
-	font-size: 25px;
+	color: red;
 	padding: 0px;
 }
 

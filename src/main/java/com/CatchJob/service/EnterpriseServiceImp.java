@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.Review;
 
 
 
