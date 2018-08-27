@@ -71,18 +71,18 @@ public class EnterpriseController {
 
 	@RequestMapping(value = "/search")
 	public String getEntList(String keyword, Model model, HttpSession session) {
+		System.out.println("진입!!!!=================");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);		
 		try {
 			data.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));			
 		}catch(NullPointerException e) {
-			//System.out.println("로그인 안 한 상태임");
 		}		
-		//System.out.println("확인해보자!:"+entService.getEntList(data));
 		
 		Gson gson = new GsonBuilder().create();
-		JsonArray myCustomArray = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
-		model.addAttribute("entList1",myCustomArray);
+		JsonArray jsonEntList = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
+		model.addAttribute("entList", jsonEntList);
+		System.out.println(jsonEntList);
 		// 기업 리스트 출력
 		return "enterprise-list";
 	}

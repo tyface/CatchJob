@@ -4,9 +4,11 @@
 function appendEntList(entList,pageNum,pageViewCount){
   var appendObject;
   var firstNum = pageNum * pageViewCount;
-  var lastNum = firstNum + 9 ;
-
-  if(firstNum >= entList.length || lastNum >= entList.length){
+  var lastNum = firstNum + 9;
+  if(lastNum > entList.length){
+    lastNum = entList.length;
+  }
+  if(firstNum >= entList.length){
     return;
   }
 
@@ -333,8 +335,23 @@ function getContextPath() {
 	return location.href.substring( hostIndex, location.href.indexOf("/", hostIndex + 1) );
 }
 
-
+/* 팔로우 기능*/
 function followAction(entIndex,e){
+  //로그인 체크
+  if(member == "null"){
+    swal({
+      title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
+      text: "",
+      type: "info",
+      showCancelButton: true,
+      confirmButtonClass: "btn-info"
+    },
+    function() {
+      $("#loginModal").modal("show");
+    });
+    return false;
+  }
+
   var $this = $(e).children("i");
   var fa = $this.hasClass("fa");
   var requestURL;

@@ -10,7 +10,7 @@
 <script>
 var pageViewCount = 10;
 var pageNum = 0;
-var entList = JSON.parse('${entList1}');
+var entList = JSON.parse('${entList}');
 
 $(function() {
 	appendEntList(entList, pageNum, pageViewCount);

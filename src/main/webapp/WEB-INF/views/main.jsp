@@ -64,7 +64,7 @@
 				<h1 class="frijole-font" id="h1-main">CATct!! <br>JOB.</h1>
 
 				<!-- 			검색바 -->
-				<form action="enterprise/search" class="form-inline row" id="main-search-form">
+				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
 						<div class="col-xs-11">
 							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required autocomplete=off>
 						</div>
