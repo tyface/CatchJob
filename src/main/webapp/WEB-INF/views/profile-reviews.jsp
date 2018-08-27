@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script> --%>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script> --%>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script> --%>
 
 <script>
 $(function(){
@@ -97,32 +97,6 @@ function deleteReview(entIndex,questionNum){
 				}
 			})
 		});
-		
-		
-		
-// 		.then((willDelete) => {
-// 			if(willDelete){
-// 				$.ajax({
-// 					url:"${pageContext.request.contextPath}/profile/deleteReview",
-// 					data: {"entIndex":entIndex,
-// 						"questionNum":questionNum},
-// 					type:"post",					
-// 					success: function(result){
-// 						if(result){
-// 							swal("Deleted!", "Your imaginary file has been deleted.", "success").then(
-// 							   function(){ 
-// 							       location.reload();
-// 							   })						
-// 						}else{
-// 							swal("Cancelled", "Your imaginary file is safe :)", "error");						
-// 						}
-// 					}
-// 				})
-// 			}else{
-// 				swal("Cancelled", "취소누름)", "error");						
-// 			}
-				
-// 		});
 	
 }
 function reviewValidation(){
@@ -149,19 +123,6 @@ function reviewValidation(){
 				maxlength : "최대 500글자까지 입력할 수 있습니다"	
 			}
 		}
-// 		,		
-// 		submitHandler: function(form) {
-// 			swal({
-// 				title:"Update", 
-// 				text: "You clicked the button!", 
-// 				type: "success",
-
-// 			},
-// 			function(){
-// 				form.submit();
-// 			})		
-			
-// 		}
 		
 	});	
 }

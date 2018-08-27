@@ -92,43 +92,6 @@ $(function(){
 	    		})
 	    	
 	    }		  
-  	
-// 	  /* 로그인 상태임 */
-// 	  if($this.hasClass("fa-heart-o")){
-// 		  /* 팔로잉 기업 추가  */
-// 		  $.ajax({
-// 		  		url:"${pageContext.request.contextPath}/enterprise/regFollow",				  		
-// 		  		data:{entIndex : entIndex},
-// 		  		type: "post",
-// 		  		dataType:"json",
-// 		  		success: function(result){
-// 		  			/* 성공 */
-// 		  			if(result){
-// 			    	    alert("팔로잉 하였습니다. 팔로잉한 회사는 [마이페이지 > 팔로잉]에서 확인할 수 있습니다.");
-// 			    	    $this.toggleClass("fa-heart-o");
-// 			    	    $this.toggleClass("fa-heart");				  				
-// 		  			}else{
-// 		  				alert("팔로잉 할 수 없습니다. 팔로잉 기업은 최대 10개 까지 가능합니다")
-// 		  			}
-// 		  		}	  		
-// 		  	})
-// 	  }else{
-// 		  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
-// 			  /* 팔로잉 기업 해지  */
-// 			  $.ajax({
-// 			  		url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
-// 			  		data:{entIndex : entIndex},
-// 			  		type: "post",
-// 			  		dataType:"json",
-// 			  		success: function(result){
-// 			  			/* 성공 */
-// 			  			 alert("팔로잉이 해제되었습니다.");
-// 						 $this.toggleClass("fa-heart");
-// 						 $this.toggleClass("fa-heart-o");
-// 			  		}					  		
-// 			  })					 
-// 		  }
-// 	  }		  
 
       
 	 });
@@ -186,6 +149,26 @@ $(function(){
 	
 			</div>
 		</c:forEach>
+		<!-- 페이지 네비 -->
+<!-- 		<a href="myMember?command=hello&page=1" class="underline">[처음]</a> -->
+<%-- 		<a href="myMember?command=hello&page=${recentViewPageData.startPage-1}" class="underline">[이전]</a> --%>
+			
+		<c:forEach var="pageNum" begin="${recentViewPageData.startPage}"
+			end="${recentViewPageData.endPage < recentViewPageData.pageTotalCount ? recentViewPageData.endPage : viewData.pageTotalCount}">
+			<c:choose>
+				<c:when test="${pageNum == recentViewPageData.currentPage}">
+					<b>[${pageNum}]</b>
+				</c:when>
+				<c:otherwise>
+					<a href="${pageContext.request.contextPath}/profile/recent?page=${pageNum}" class="underline">[${pageNum}]</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>			
+			
+<%-- 		<a href="myMember?command=hello&page=${recentViewPageData.endPage+1}" class="underline">[다음]</a> --%>
+<%-- 		<a href="myMember?command=hello&page=${recentViewPageData.pageTotalCount}" class="underline">[마지막]</a> --%>
+		
+		
 	</div>
 </article>
 

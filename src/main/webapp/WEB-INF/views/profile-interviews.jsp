@@ -4,7 +4,7 @@
 <jsp:include page="include/header.jsp" flush="true" />
 <link href="${pageContext.request.contextPath}/resources/css/enterprise.css" rel="stylesheet">
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script> --%>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 

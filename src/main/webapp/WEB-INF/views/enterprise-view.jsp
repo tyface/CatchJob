@@ -15,7 +15,7 @@
 
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script> --%>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 
@@ -52,7 +52,6 @@
 
 </style>
 <script>
-
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
 
@@ -124,8 +123,8 @@ $(function(){
 
 
 	entInf();
-       reviewbarChart();//리뷰  바 차트
-       getInterviewList(1);
+    reviewbarChart();//리뷰  바 차트
+    getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
@@ -231,52 +230,6 @@ $(function(){
 					  		  }
 					    })
 		    		})
-
-// 		    		.then((willDelete) => {
-
-
-// 		    			if (willDelete) {
-// 		    				 $.ajax({
-// 						  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
-// 						  		  data:{entIndex : entIndex},
-// 						  		  type: "post",
-// 						  		  dataType:"json",
-// 						  		  success: function(result){
-// 						  			/* 성공 */
-// 						  				swal({
-// 						  				    title: "팔로잉이 해제되었습니다.",
-// 						  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
-// 						  				    icon: "success",
-//
-// 						  				    button: false
-// 						  				    //dangerMode:true
-// 						  			    });
-// 									   $this.toggleClass("fa-heart");
-// 									   $this.toggleClass("fa-heart-o");
-// 						  		  }
-// 						    })
-// 		    		    }
-
-
-// 		    	});
-
-
-// 		    	if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
-// 				  /* 팔로잉 기업 해지  */
-// 				    $.ajax({
-// 				  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
-// 				  		  data:{entIndex : entIndex},
-// 				  		  type: "post",
-// 				  		  dataType:"json",
-// 				  		  success: function(result){
-// 				  			/* 성공 */
-// 							   $this.toggleClass("fa-heart");
-// 							   $this.toggleClass("fa-heart-o");
-// 				  		  }
-// 				    })
-// 			    }
-
-
 
 		    }
 	    }
@@ -534,7 +487,7 @@ function chartPersonnel(){
 					type: 'line',
 					label: '총 인원',
 					borderColor: '#484c4f',
-					borderWidth: 3,
+					borderWidth: 1,
 					fill: false,
 					data: totalPerson,
 					
@@ -545,21 +498,28 @@ function chartPersonnel(){
 				}, {
 					type: 'bar',
 					label: '입사자',
-					backgroundColor: '#059BFF',
+					backgroundColor: '#8bacf8',
+// 					backgroundColor: '#059BFF',
 					data: newPerson,
 					borderColor: 'white',
 					borderWidth: 0,
-					datalabels: {				
-						color:  '#059BFF',
+					datalabels: {			
+						
+						
+						color:  '#8bacf8',
+// 						color:  '#059BFF',
 					}
 				
 				}, {
 					type: 'bar',
 					label: '퇴사자',
-					backgroundColor: '#FF6B8A',
+// 					backgroundColor: '#FF6B8A',
+					backgroundColor: '#bad0ff',
+					
 					data: outPerson,
 					datalabels: {				
-						color:  '#FF6B8A',
+//						color:  '#FF6B8A',
+						color:  '#bad0ff',
 					}
 				
 				}],
@@ -593,6 +553,7 @@ function chartPersonnel(){
 
 	});
 }
+
 function reviewbarChart(){
 	
 	var reviewValuesByItem = JSON.parse('${reviewValuesByItem}');
@@ -893,15 +854,12 @@ function interviewValidation(){
 /* VIEW 페이지 채용정보  */
 function saramin(){
 	
-	//alert(1)
 	var saraminList = JSON.parse('${saraminList}');
-	if(saraminList == ""){
-		//alert(333)
-		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
-		img.appendTo(saraminRow1);
-	}
+// 	if(saraminList == ""){
+// 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
+// 		img.appendTo(saraminRow1);
+// 	}
 	for(var i in saraminList){
-		//alert(3)
 		var url 					= saraminList[i].url
 		var name 					= saraminList[i].name
 		var expirationTimestamp 	= saraminList[i].expirationTimestamp
@@ -913,24 +871,33 @@ function saramin(){
 		var href					= saraminList[i].href
 		
 		var trimLocation = location.substring(0,2);
-		var trimRequiredEducationLevel;
+		var trimRequiredEducationLevel;		
 		if(requiredEducationLevel != "학력무관"){
 			trimRequiredEducationLevel = requiredEducationLevel.substring(0,1)+"졸↑";
 		}else{
 			trimRequiredEducationLevel = requiredEducationLevel;
 		}
-		if(i<3){
-	 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
-			data.appendTo(saraminRow1);
-		}else if(i<6){
-			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
-			data.appendTo(saraminRow2);
-		}else if(i<9){
-			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
-			data.appendTo(saraminRow3);
-		}else{
-			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");			data.appendTo(saraminRow4);
-		}
+// 		var row = $("<div class='row'><div class='col-sm-4'>안녕안녕</div></div>");
+// 		row.appendTo(saramin-margin);
+			
+		
+// 		if(i<3){
+// 	 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow1);
+// 		}else if(i<6){
+// 			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow2);
+// 		}else if(i<9){
+// 			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow3);
+// 		}else{
+// 		if(i % 3 == 0){
+			
+// 		}
+// 		var row = $("<div class='row'></div>")
+			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");			
+			data.appendTo(saraminRow4);
+// 		}
 	}
 }
 
@@ -1347,18 +1314,18 @@ function jsonEscape(str)  {
 
 <!-- 					<div class="panel panel-default"> -->
 <!-- 						<div class="panel-body" > -->
-						<div id="saramin-margin">							
-							<div class="row" id="saraminRow1">	
-							</div>
-							<div class="row" id="saraminRow2">	
-							</div>
-							<div class="row" id="saraminRow3">	
-							</div>
+					<div id="saramin-margin">							
+<!-- 							<div class="row" id="saraminRow1">	 -->
+<!-- 							</div> -->
+<!-- 							<div class="row" id="saraminRow2">	 -->
+<!-- 							</div> -->
+<!-- 							<div class="row" id="saraminRow3">	 -->
+<!-- 							</div> -->
 							<div class="row" id="saraminRow4">	
 							</div>
-						</div>
 <!-- 						</div> -->
-<!-- 					</div> -->
+<!-- 						</div> -->
+					</div>
 				</div>
 			</div>
 			<!-- SECTION 6- 뉴스 -->

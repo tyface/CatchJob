@@ -44,7 +44,7 @@ public class FollowServiceImp implements FollowService{
 		//long count =  followDao.selectFollowsCount(memberIndex).get("COUNT");
 		
 		
-		if( count  <=  range ) {
+		if( count  <  range ) {
 			return true;
 		}else {
 			return false;
