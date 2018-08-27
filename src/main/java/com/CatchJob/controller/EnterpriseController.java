@@ -23,6 +23,7 @@ import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.News;
 import com.CatchJob.model.Review;
+import com.CatchJob.model.Saramin;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
@@ -54,13 +55,21 @@ public class EnterpriseController {
 	NaverNewsService naverNewsService;
 	
 	@RequestMapping("/saramin")
-	public void saramin(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+	public String saramin(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
 		System.out.println("컨트롤러 newsSearch");
 		try {
-			saraminService.searchSaramin(keyword);
+			List<Saramin> saraminList = saraminService.searchSaramin(keyword);
+			System.out.println("컨트롤러 사람인: "+saraminList);
+			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "saramin"; 
+	}
+	@RequestMapping("/news")
+	public String news(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+		
+		return "news"; 
 	}
 
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
@@ -103,7 +112,7 @@ public class EnterpriseController {
 		}
 		recordService.regViewRecord(mapData);
 		//기업정보
-		System.out.println("기업이름ㅃ??"+ entService.getEntInfo(mapData).get("ENT_NM"));
+		//System.out.println("기업이름ㅃ??"+ entService.getEntInfo(mapData).get("ENT_NM"));
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(mapData));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
@@ -114,18 +123,24 @@ public class EnterpriseController {
 		Map<String, Integer> dataItvw = new HashMap<String, Integer>();
 		dataItvw.put("ENT_IDX", entIndex);
 		dataItvw.put("PAGE_NUM", currentPage);
-		
-		List<Interview> interviewList = itvwService.getInterviewList(dataItvw);
-		model.addAttribute("interview", interviewList);
-		model.addAttribute("interviewJson", new Gson().toJson(interviewList));
+		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
+		//System.out.println("면점 :  "+itvwService.getInterviewList(dataItvw));
+		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
 		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
 		//뉴스
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
 			model.addAttribute("newsList", newsList);
+			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
+			System.out.println("컨트롤러 사람인!!!!!!123123: "+saraminList);
+			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+		//리뷰코멘트 총 만족도
+		System.out.println("항목별 만족도 : "+reviewService.valuesByItem(mapData));
+		model.addAttribute("reviewTotalData", reviewService.gettotalSatisfaction(mapData));
+		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewService.valuesByItem(mapData)));
 		
 		return "enterprise-view";
 	}
