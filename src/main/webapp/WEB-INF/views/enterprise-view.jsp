@@ -7,7 +7,12 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/bars-movie.css" >
 
+<%-- <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script> --%>
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/chartjs-plugin-datalabels.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
+
+
 
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
@@ -15,8 +20,40 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 
+<style>
+.box {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #d2d6de;
+	margin-bottom: 20px;
+	width: 100%;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
+}
 
+.box.box-primary {
+	border-top-color: #3c8dbc
+}
+
+.box.box-info {
+	border-top-color: #00c0ef
+}
+
+.box.box-danger {
+	border-top-color: #dd4b39
+}
+
+.box.box-warning {
+	border-top-color: #f39c12
+}
+
+.box.box-success {
+	border-top-color: #00a65a
+}
+
+</style>
 <script>
+
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
 
@@ -26,11 +63,18 @@ var status = "logout";
 
 var month = new Array(); //월
 var salary = new Array(); //연금정보
+var viewSalary = new Array();
 var totalPerson = new Array(); //총 인원
 var newPerson = new Array();
 var outPerson = new Array();
 
 $(function(){
+// 	if(${interview} ==""){
+// 		alert(333)
+// 		//interviewNull
+// 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
+// 		interviewNullMent.appendTo(interviewNull);
+// 	}
 	
 	if('${member}'==''){
 	}else{
@@ -50,6 +94,7 @@ $(function(){
 		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
 		month.push(viewDataJson[i]['PAY_YM']) ;
 		salary.push(num) ;
+		viewSalary.push(num/10000) ;
 		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
 		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
 		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
@@ -80,6 +125,7 @@ $(function(){
 
 	//getReviewList();
 	entInf();
+	reviewbarChart();//리뷰  바 차트
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
@@ -440,11 +486,26 @@ function chartSalary(){
 		},
 		 options: {
 
+			 
+			 plugins: {//chartjs-plugin
+					datalabels: {
+						enabled: false,
+						color: 'black',
+						display: function(context) {
+							return context.dataset.data[context.dataIndex];
+						},
+						font: {
+							weight: 'bold'
+						},
+
+ 						formatter: Math.round
+					}
+				},
 // 				events: ['click']
 // 				,
 		        elements: {
 		            line: {
-		                tension: 0, // disables bezier curves
+		              //  tension: 0, // disables bezier curves
 		            }
 		        },
 		        scales: {
@@ -460,6 +521,7 @@ function chartSalary(){
 	});
 
 }
+
 /* 월별그래프-인원*/
 function chartPersonnel(){
 	// comboBarLineChart
@@ -475,32 +537,156 @@ function chartPersonnel(){
 					borderWidth: 3,
 					fill: false,
 					data: totalPerson,
+					
+					datalabels: {				
+						color:  '#484c4f',
+					}
+					
 				}, {
 					type: 'bar',
 					label: '입사자',
 					backgroundColor: '#059BFF',
 					data: newPerson,
 					borderColor: 'white',
-					borderWidth: 0
+					borderWidth: 0,
+					datalabels: {				
+						color:  '#059BFF',
+					}
+				
 				}, {
 					type: 'bar',
 					label: '퇴사자',
 					backgroundColor: '#FF6B8A',
 					data: outPerson,
+					datalabels: {				
+						color:  '#FF6B8A',
+					}
+				
 				}],
 				borderWidth: 1
 		},
 		options: {
+			
+			plugins: {
+				datalabels: {
+					align: 'end',
+					anchor: 'end',				
+					
+					display: function(context) {
+						return context.dataset.data[context.dataIndex] > 0;
+					},
+					font: {
+						weight: 'bold'
+					},
+// 					formatter: Math.round
+				}
+			},
+			
+			
+		
 	        elements: {
 	            line: {
-	                tension: 0, // disables bezier curves
+	                //tension: 0, // disables bezier curves
 	            }
 	        }
 	    }
 
 	});
 }
+function reviewbarChart(){
+	
+	var reviewValuesByItem = JSON.parse('${reviewValuesByItem}');
+	var chartData = new Array(0,0,0,0,0);
 
+	  for(var i in reviewValuesByItem){
+		  chartData[i]= reviewValuesByItem[i].COUNT;
+	 }
+//	alert("chartData: "+chartData)
+	var ctx4 = document.getElementById("reviewbarChart").getContext('2d');
+	//ctx4.height = 100;
+	var comboBarLineChart = new Chart(ctx4, {
+		type: 'bar',
+		data: {
+			labels: ['매우 불만족','불만족','보통','만족','매우 만족'],
+			datasets: [{
+					type: 'bar',
+// 					label: '퇴사자',
+					backgroundColor: '#FFBB00',
+					data: chartData,
+					datalabels: {				
+						color:  '#FFBB00',
+					},
+					
+				
+				}],
+				borderWidth: 1
+		},
+		options: {
+			
+			layout:{
+				padding:{
+					top:20,
+				}
+			},
+			legend: {
+		        display: false
+		    },
+			
+			responsive: true,
+			maintainAspectRatio: false,
+			
+			plugins: {
+				datalabels: {
+					align: 'end',
+					anchor: 'end',				
+					
+					display: function(context) {
+						return context.dataset.data[context.dataIndex] > 0;
+					},
+					font: {
+						weight: 'bold'
+					},
+// 					formatter: Math.round
+				}
+			},
+			scales: {
+// 				gridLines: [{
+//                     display: false,
+// 				}],
+			
+				xAxes: [{
+					
+					barPercentage: 0.75,//차트 width 폭 줄이기
+                    display: true,
+                    offset: true,
+                    
+					gridLines: {
+						display: false,
+		            }
+				}],
+				yAxes: [{
+					
+					display: false,
+                    ticks: {
+                    	display: false,
+						beginAtZero: true,
+					},
+					gridLines: {
+						display: false,
+		            }
+				}]
+			},
+					
+	        elements: {
+	            line: {
+	                //tension: 0, // disables bezier curves
+	            }
+	        }
+	    }
+
+	});
+
+}
 function interviewPieChart(){
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
 
@@ -527,6 +713,9 @@ function interviewPieChart(){
 		type: 'pie',
 		data: {
 				datasets: [{
+					
+// 					fillColor : "#ffff00",
+// 				    strokeColor : "#ffff00",
 					data: chartData,
 					backgroundColor: [
 						'rgba(255,0,0,1)',
@@ -536,7 +725,8 @@ function interviewPieChart(){
 						'rgba(29,219,22, 1)',
 
 					],
-					label: 'Dataset 1'
+				
+// 					label: 'Dataset 1'
 				}],
 				labels: [
 					"매우어려움",
@@ -547,7 +737,11 @@ function interviewPieChart(){
 				]
 			},
 			options: {
-				responsive: true
+				responsive: true,
+				legend: {
+			        display: true,
+			        position: 'right'
+			    },
 			}
 
 	});
@@ -694,16 +888,20 @@ function interviewValidation(){
 
 	});
 }
+
+
 /* VIEW 페이지 채용정보  */
 function saramin(){
+	
+	//alert(1)
 	var saraminList = JSON.parse('${saraminList}');
 	if(saraminList == ""){
-		alert(333)
+		//alert(333)
 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
 		img.appendTo(saraminRow1);
 	}
 	for(var i in saraminList){
-		alert(3)
+		//alert(3)
 		var url 					= saraminList[i].url
 		var name 					= saraminList[i].name
 		var expirationTimestamp 	= saraminList[i].expirationTimestamp
@@ -960,6 +1158,36 @@ function jsonEscape(str)  {
 					<h3 class="sectionTitle">리뷰코멘트</h3>
 					<div class="panel-group " id="accordion">
 
+					 <!-- BAR CHART 0826-->
+			          <div class="box box-warning">
+<!-- 			            <div class="box-header with-border"> -->
+<!-- 			              <h3 class="box-title">Bar Chart</h3> -->
+			
+<!-- 			              <div class="box-tools pull-right"> -->
+<!-- 			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> -->
+<!-- 			                </button> -->
+<!-- 			                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+<!-- 			              </div> -->
+<!-- 			            </div> -->
+			            <div class="box-body row">
+				              <div class="chart col-md-6" style="text-align: center" >
+				               		<h1 >${reviewTotalData}</h1>
+				               		<c:forEach begin="1" end="${reviewTotalData}" step="1">
+										<span class="stars-on"></span>
+									</c:forEach>
+									<c:forEach begin="${reviewTotalData}" end="4" step="1">
+										<span class="stars-off"></span>
+									</c:forEach>
+<!-- 	              					<span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span> -->
+	              					<p>총 만족도</p>
+				              </div>
+				              <div class="chart col-md-6" style="height: 100px; ">
+				                <canvas id="reviewbarChart"></canvas>
+				              </div>
+			            </div>
+			            <!-- /.box-body -->
+			          </div>
+
 						<c:forEach begin="0" end="5" varStatus="status"
 							items="${question}" var="question">
 							<div class="panel panel-default">
@@ -1045,8 +1273,8 @@ function jsonEscape(str)  {
 					<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
 					<p>Try to scroll this section and look at the navigation list while scrolling!가나다라</p>
 					<div class="panel-group "  style="color: black">
-						<div class="panel panel-default">
-							<div class="panel-body">
+<!-- 						<div class="panel panel-default"> -->
+<!-- 							<div class="panel-body"> -->
 								<div class="box box-danger">
 									<div class="box-header with-border">
 										<h3 class="box-title">면접 난이도</h3>
@@ -1070,10 +1298,10 @@ function jsonEscape(str)  {
 									</div>
 
 								</div>
+						<div class="col-xs-12" id="interviewNull"></div>
 
-
-							</div>
-						</div>
+<!-- 							</div> -->
+<!-- 						</div> -->
 						<!-- 면접후기1 -->
 						<c:forEach varStatus="status" var="interview" items="${interview}">
 							<div class="panel panel-default">
@@ -1219,7 +1447,7 @@ function jsonEscape(str)  {
 				</div>
 
 			</div>
-			<!-- 그래프 바뀔것0820 -->
+			<!-- 그래프 바뀔것 -->
 			<div class="module">
 				<div id="section4">
 					<h3 class="sectionTitle">월별그래프</h3>
@@ -1254,7 +1482,7 @@ function jsonEscape(str)  {
 
 <!-- 					<div class="panel panel-default"> -->
 <!-- 						<div class="panel-body" > -->
-						<div id="saramin-margin">
+						<div id="saramin-margin">							
 							<div class="row" id="saraminRow1">	
 							</div>
 							<div class="row" id="saraminRow2">	

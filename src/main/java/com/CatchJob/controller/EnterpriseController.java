@@ -67,6 +67,11 @@ public class EnterpriseController {
 		}
 		return "saramin"; 
 	}
+	@RequestMapping("/news")
+	public String news(@RequestParam(required = false , defaultValue="") String keyword, Model model) {
+		
+		return "news"; 
+	}
 
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
 	public String entListForm() {
@@ -109,7 +114,7 @@ public class EnterpriseController {
 		}
 		recordService.regViewRecord(mapData);
 		//기업정보
-		System.out.println("기업이름ㅃ??"+ entService.getEntInfo(mapData).get("ENT_NM"));
+		//System.out.println("기업이름ㅃ??"+ entService.getEntInfo(mapData).get("ENT_NM"));
 		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
 		model.addAttribute("entInfo", entService.getEntInfo(mapData));
 		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
@@ -121,6 +126,7 @@ public class EnterpriseController {
 		dataItvw.put("ENT_IDX", entIndex);
 		dataItvw.put("PAGE_NUM", currentPage);
 		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
+		//System.out.println("면점 :  "+itvwService.getInterviewList(dataItvw));
 		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
 		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
 		//뉴스
@@ -133,6 +139,10 @@ public class EnterpriseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+		//리뷰코멘트 총 만족도
+		System.out.println("항목별 만족도 : "+reviewService.valuesByItem(mapData));
+		model.addAttribute("reviewTotalData", reviewService.gettotalSatisfaction(mapData));
+		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewService.valuesByItem(mapData)));
 		
 		return "enterprise-view";
 	}

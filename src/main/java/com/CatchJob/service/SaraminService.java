@@ -147,14 +147,21 @@ public class SaraminService {
                 	 //System.out.println("token: "+token);
                 	 StringTokenizer st1 = new StringTokenizer(token, "&gt;");
                 	 
-                	 String str1 = st1.nextToken().trim();
-                	 String str2 = st1.nextToken().trim();
-                	 if(!str1.equals(tempStr)) {
-                		 tempStr = str1;
-                		 //arr.add(temp2);
-                		 strLocation = strLocation+str1+" > ";
+                	 if(st1.hasMoreTokens()) {
+                		 
+                		 String str1 = st1.nextToken().trim();
+                		 if(st1.hasMoreTokens()) {
+                			 
+                			 String str2 = st1.nextToken().trim();
+                			 if(!str1.equals(tempStr)) {
+                				 tempStr = str1;
+                				 //arr.add(temp2);
+                				 strLocation = strLocation+str1+" > ";
+                			 }
+                			 strLocation = strLocation+str2+", ";                		 
+                		 }
                 	 }
-                	strLocation = strLocation+str2+", ";                		 
+                	 
 //                	 if(st1.hasMoreTokens()) {
 //                		 String st2 = st1.nextToken();
 //                		 arr.add(st2);

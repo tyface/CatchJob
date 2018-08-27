@@ -118,12 +118,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 최근본 기업 보기  profile-recent.jsp-->
 	<select id="selectListEntRecent" parameterType="int" resultMap="entMap">
 		SELECT vie.VIEW_IDX,vie.VISIT_DT,fol.MBER_IDX  as FOLLOWING ,ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
-					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
+					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM
+<!-- 				,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT -->
 		FROM 		ENTERPRISE_TB ent
-		LEFT JOIN 	REVIEW_TB revw 
-		ON 			ent.ENT_IDX = revw.ENT_IDX
-		LEFT JOIN 	INTERVIEW_TB intvw 
-		ON 			ent.ENT_IDX = intvw.ENT_IDX
+<!-- 		LEFT JOIN 	REVIEW_TB revw  -->
+<!-- 		ON 			ent.ENT_IDX = revw.ENT_IDX -->
+<!-- 		LEFT JOIN 	INTERVIEW_TB intvw  -->
+<!-- 		ON 			ent.ENT_IDX = intvw.ENT_IDX -->
 		LEFT JOIN 	UPDATE_ENT_INFO_TB up
 		ON 			ent.ENT_IDX = up.ENT_IDX
 		LEFT JOIN 	LEGAL_DONG_TB ld 
