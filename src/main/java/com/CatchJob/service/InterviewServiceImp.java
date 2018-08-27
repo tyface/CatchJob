@@ -46,7 +46,7 @@ public class InterviewServiceImp implements InterviewService{
 	}
 	@Override
 	public boolean deleteInterview(Map<String, String> data) {
-		data.put("INTERVW_FL", "2");
+		data.put("INTEVW_FL", "2");
 		int result = itvwDao.deleteInterview(data);
 		if (result > 0) {
 			return true;
@@ -58,14 +58,14 @@ public class InterviewServiceImp implements InterviewService{
 	// 면접정보 가져오기- 회원이 면접리뷰 수정할 때 필요 
 	@Override
 	public Interview selectListByIndex(Map<String, String> data) {  
-		data.put("INTERVW_FL", "1");
+		data.put("INTEVW_FL", "1");
 		return itvwDao.selectListByIndex(data);
 	}
 
 
 	@Override
 	public List<Map<String,String>> interviewPieChart(Map<String, String> data) {	
-		data.put("INTERVW_FL", "1");
+		data.put("INTEVW_FL", "1");
 		return itvwDao.interviewPieChart(data);
 	}
 
@@ -73,14 +73,14 @@ public class InterviewServiceImp implements InterviewService{
 	
 	@Override
 	public List<Interview> selectListByMemberIdx(Map<String, String> data) {
-		data.put("INTERVW_FL", "1");
+		data.put("INTEVW_FL", "1");
 		return itvwDao.selectListByMemberIdx(data);
 	}
 
 	//면접 후기 작성시, 중복확인 메서드 
 	@Override
 	public boolean interviewDuplicationCheck(Map<String, String> data) {
-		data.put("INTERVW_FL", "1");
+		data.put("INTEVW_FL", "1");
 		int result = itvwDao.interviewDuplicationCheck(data);
 		if (result > 0) {//이미 등록하셨습니다.
 			return true;
@@ -96,7 +96,7 @@ public class InterviewServiceImp implements InterviewService{
 		//받아온 페이지 ...
 		//Constants.Config.RANK_VIEW_COUNT //화면에 표시할 row 수
 		//dataItvw.put("ENT_IDX", entIndex);
-		dataItvw.put("INTERVW_FL", 1);
+		dataItvw.put("INTEVW_FL", 1);
 		int PAGE_NUM = dataItvw.get("PAGE_NUM");
 		int START_ROW = Constants.Interview.NUM_OF_ITVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
 		dataItvw.put("NUM_OF_ITVW_PER_PAGE", Constants.Interview.NUM_OF_ITVW_PER_PAGE);
@@ -212,7 +212,7 @@ public class InterviewServiceImp implements InterviewService{
 	//interview total rows
 	@Override
 	public int getInterviewTotalRows(Map<String, String> data) {
-		data.put("INTERVW_FL", "1");
+		data.put("INTEVW_FL", "1");
 		int pageTotalCount = 0;
 		int totalRows = itvwDao.selectInterviewTotalRows(data);
 		if (totalRows != 0) {

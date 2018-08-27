@@ -27,11 +27,6 @@ public class MainController {
 		return "main";
 	}
 	
-	@RequestMapping(value = "/search")
-	public String search(String keyword) {
-		return "forward:enterprise/search";
-	}
-	
 	@RequestMapping(value = "/faq")
 	public String faq() {
 		return "faq";

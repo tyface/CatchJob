@@ -7,7 +7,6 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/bars-movie.css" >
 
-<%-- <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script> --%>
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/chartjs-plugin-datalabels.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
@@ -123,9 +122,10 @@ $(function(){
 		$("#salary-btn").attr('disabled', false);
 	});
 
-	//getReviewList();
+
 	entInf();
-	reviewbarChart();//리뷰  바 차트
+       reviewbarChart();//리뷰  바 차트
+       getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
@@ -804,7 +804,7 @@ function reviewValidation(){
 }
 function interviewValidation(){
 	 /* 면접후기 작성시 유효성 검사 */
-	$('#writeInterview').validate({
+	$('#writeinterview').validate({
 		rules : {
 
 			intrvwDifficulty:{
@@ -976,22 +976,22 @@ function jsonEscape(str)  {
 					</a>
 				</li>
 				<li>
-					<a href="#section3"> 
+					<a href="#section3">
 						<span class="fa fa-file-text logo-small"></span> 면접후기
 					</a>
 				</li>
 				<li>
-					<a href="#section4"> 
+					<a href="#section4">
 						<span class="fa fa-line-chart logo-small"></span> 월별그래프
 					</a>
 				</li>
 				<li>
-					<a href="#section5"> 
+					<a href="#section5">
 						<span class="fa fa-group logo-small"></span> 채용정보
 					</a>
 				</li>
 				<li>
-					<a href="#section6"> 
+					<a href="#section6">
 						<span class="fa fa-newspaper-o logo-small"></span> 뉴스
 					</a>
 				</li>
@@ -1026,7 +1026,7 @@ function jsonEscape(str)  {
 							<div class="row">
 								<div class="col-sm-6">
 									<button type="button" class="btn btn-default btn-lg btn-block" id="btnA">
-										<span class="f-left"><b>인원</b></span> 
+										<span class="f-left"><b>인원</b></span>
 										<span class="f-right">
 											<b id="person">${entInfo.NPN_SBSCRBER_CNT }</b>명
 										</span>
@@ -1035,7 +1035,7 @@ function jsonEscape(str)  {
 								<div class="col-sm-6">
 									<button type="button" class="btn btn-default btn-lg btn-block"
 										id="btnB">
-										<span class="f-left"><b>업력</b></span> 
+										<span class="f-left"><b>업력</b></span>
 										<span class="f-right">
 											<b id="establishmentYear">${entInfo.ENT_FOND_YMD}</b>년
 										</span>
@@ -1047,7 +1047,7 @@ function jsonEscape(str)  {
 							<div class="row">
 								<div class="col-sm-6">
 									<button type="button" class="btn btn-default btn-lg btn-block" id="btnC">
-										<span class="f-left"><b>입사</b></span> 
+										<span class="f-left"><b>입사</b></span>
 										<span  class="f-right">
 											<b id="newPerson">${person.newPerson}&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
 											<b id="newPersonPercent"></b>&nbsp;%
@@ -1056,7 +1056,7 @@ function jsonEscape(str)  {
 								</div>
 								<div class="col-sm-6">
 									<button type="button" class="btn btn-default btn-lg btn-block" id="btnD">
-										<span style="float: left"><b>퇴사</b></span> 
+										<span style="float: left"><b>퇴사</b></span>
 										<span style="float: right">
 											<b id="outPerson">${person.outPerson}&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
 											<b id="outPersonPercent"></b>&nbsp;%
@@ -1191,8 +1191,7 @@ function jsonEscape(str)  {
 						<c:forEach begin="0" end="5" varStatus="status"
 							items="${question}" var="question">
 							<div class="panel panel-default">
-								<div class="panel-heading"
-									onclick="getReviewList(${status.count})">
+								<div class="panel-heading" onclick="getReviewList(${status.count})">
 									<h4 class="panel-title row">
 										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}">
 											<span class="col-sm-8">
@@ -1226,7 +1225,7 @@ function jsonEscape(str)  {
 
 										<!-- 페이징처리-리뷰 코멘트 -->
 										<nav style="text-align: center">
-											<ul class="pagination">
+											<ul class="pagination revw-pagination">
 											</ul>
 										</nav>
 
@@ -1269,12 +1268,12 @@ function jsonEscape(str)  {
 			<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 				<div id="section3">
-					<h3 class="sectionTitle">면접후기</h3>
+					<h3 id="title">면접후기</h3>
 					<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
 					<p>Try to scroll this section and look at the navigation list while scrolling!가나다라</p>
-					<div class="panel-group "  style="color: black">
-<!-- 						<div class="panel panel-default"> -->
-<!-- 							<div class="panel-body"> -->
+					<div class="panel-group" style="color: black">
+						<div class="panel panel-default">
+							<div class="panel-body">
 								<div class="box box-danger">
 									<div class="box-header with-border">
 										<h3 class="box-title">면접 난이도</h3>
@@ -1282,12 +1281,7 @@ function jsonEscape(str)  {
 
 									<div class="row">
 										<div class="col-sm-2"></div>
-
 										<div class="col-sm-8">
-											<div class="card-header">
-												<i class="fa fa-table"></i> Pie Chart
-											</div>
-
 											<div class="card-body">
 												<canvas id="pieChart"></canvas>
 											</div>
@@ -1300,149 +1294,20 @@ function jsonEscape(str)  {
 								</div>
 						<div class="col-xs-12" id="interviewNull"></div>
 
-<!-- 							</div> -->
-<!-- 						</div> -->
-						<!-- 면접후기1 -->
-						<c:forEach varStatus="status" var="interview" items="${interview}">
-							<div class="panel panel-default">
-								<div class="panel-heading font-gray">${interview.regDate}</div>
-								<div class="panel-body ">
-									<div class="col-xs-3">
-										<div class="row">
-											<p>
-												<b>면접난이도</b>
-											</p>
-										</div>
-										<div id="difficulty${status.index}" class="row">
-											<p class="intrvwDifficulty">${interview.intrvwDifficulty}</p>
-												<div class="col-xs-1 progress-bars bar1" ></div>
-												<div class="col-xs-1 progress-bars bar2" ></div>
-												<div class="col-xs-1 progress-bars bar3" ></div>
-												<div class="col-xs-1 progress-bars bar4" ></div>
-												<div class="col-xs-1 progress-bars bar5" ></div>
 
-										</div>
-
-										<br>
-
-										<div class="row">
-											<p>
-												<b>면접일자</b>
-											</p>
-											<p>${interview.intrvwDate}</p>
-											<br>
-										</div>
-										<div class="row">
-											<p>
-												<b>면접경로</b>
-											</p>
-											<p>${interview.intrvwRoute}</p>
-											<br>
-										</div>
-
-									</div>
-									<div class="col-xs-9">
-										<table class="table">
-											<thead>
-												<tr>
-													<th colspan="6">"${interview.intrvwReview}"</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td colspan="6">
-														<p>
-															<b>면접질문</b>
-														</p>
-														<p class="font-gray">${interview.intrvwQuestion}</p>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="6">
-														<p>
-															<b>질문에 대한 답변</b>
-														</p>
-														<p class="font-gray">${interview.intrvwAnswer}</p>
-													</td>
-												</tr>
-												<tr>
-													<c:if test="${interview.presentationDate != '' && interview.presentationDate != null  }">
-														<th colspan="2">
-															<p class="well well-sm">
-																<span>발표시기</span> <span class="f-right"> <!-- 															 <span class="glyphicon glyphicon-thumbs-up"></span> -->
-																	${interview.presentationDate}일후
-																</span>
-															</p>
-														</th>
-													</c:if>
-													<c:if test="${interview.intrvwResult != '' && interview.intrvwResult != null  }">
-														<th colspan="2" >
-															<p class="well well-sm">
-																<span>면접결과</span> <span class="f-right"> <!-- 															 <span class="glyphicon glyphicon-thumbs-up"></span> -->
-																	${interview.intrvwResult}
-																</span>
-															</p>
-														</th>
-													</c:if>
-													<c:if test="${interview.intrvwExperience != '' && interview.intrvwExperience != null  }">
-														<th colspan="2" >
-															<p class="well well-sm">
-																<span>면접경험</span> <span class="f-right"> <!-- 															<span class="glyphicon glyphicon-thumbs-up"></span> -->
-																	${interview.intrvwExperience}
-																</span>
-															</p>
-														</th>
-													</c:if>
-												</tr>
-
-											</tbody>
-										</table>
-									</div>
-
-								</div>
 							</div>
-						</c:forEach>
+						</div>
 
+						<div class="interviewList">
+						<!-- 면접후기1 -->
+
+						</div>
 					</div>
 					<!-- 면접 페이징 처리  -->
 					<nav style="text-align: center">
-						<ul class="pagination">
-
-							<c:if test="${interviewPageData.startPage !=1 }">
-								<li><a
-									href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=1#section3"
-									class="underline">&laquo;</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${interviewPageData.startPage-1}#section3"
-									class="underline">&lt;</a>
-								<li>
-							</c:if>
-
-							<c:forEach var="pageNum" begin="${interviewPageData.startPage}"
-								end="${interviewPageData.endPage < interviewPageData.pageTotalCount ? interviewPageData.endPage : interviewPageData.pageTotalCount}">
-								<c:choose>
-									<c:when test="${pageNum == interviewPageData.currentPage}">
-										<%-- 										<b>[${pageNum}]</b> --%>
-										<li><a>${pageNum}</a></li>
-									</c:when>
-									<c:otherwise>
-										<li><a
-											href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${pageNum}#section3"
-											class="underline">${pageNum}</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-
-							<c:if
-								test="${interviewPageData.endPage < interviewPageData.pageTotalCount}">
-								<li><a
-									href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${interviewPageData.endPage+1}#section3"
-									class="underline">&gt;</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/enterprise/view?entIndex=${entInfo.ENT_IDX}&page=${interviewPageData.pageTotalCount}#section3"
-									class="underline">&raquo;</a></li>
-							</c:if>
+						<ul class="pagination intvw-pagination">
 						</ul>
+						<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
 					</nav>
 				</div>
 
@@ -1505,8 +1370,8 @@ function jsonEscape(str)  {
 					<div class="panel panel-default slideanim">
 						<div class="panel-body">
 							<c:forEach items="${newsList}" var="newsList">
-								<div class="row" ><!-- //news-interval -->
-									<span class="col-xs-8 f-left text-left blue-font news-interval" onclick="location.href='${newsList.link}'">${newsList.title}</span> 
+								<div class="row">
+									<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span> 
 									<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>		
 								</div>
 							</c:forEach>
@@ -1514,7 +1379,7 @@ function jsonEscape(str)  {
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -1530,7 +1395,7 @@ function jsonEscape(str)  {
 	<div class=" modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
-			<form action="writeInterview" id="writeInterview" method="post">
+			<form action="writeinterview" id="writeinterview" method="post">
 				<input type="hidden" name="entIndex" value="${entInfo.ENT_IDX}">
 				<div class="modal-header cat-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -1619,7 +1484,7 @@ function jsonEscape(str)  {
 						</div>
 					</div>
 					<!-- 면접결과 -->
-					<div class="row form-group ">
+					<div class="row form-group">
 						<div class="col-xs-3">
 							<label>이 기업에 합격하셨나요?</label>
 						</div>
@@ -1651,7 +1516,7 @@ function jsonEscape(str)  {
 						</div>
 					</div>
 					<!-- 면접경험 radio...........intrvwExperience-->
-					<div class="row form-group ">
+					<div class="row form-group">
 						<div class="col-xs-3">
 							<label>면접 경험 </label>
 						</div>

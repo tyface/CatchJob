@@ -119,7 +119,6 @@ Paging = function(totalCnt, dataSize, pageSize, pageNo, token){
 	 dataSize = parseInt(dataSize); // 페이지당 보여줄 데이타수
 	 pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10
 	 pageNo = parseInt(pageNo); // 현재페이지
-	 
 	 var html = new Array();
 	 if(totalCnt == 0){
 		  return "";
