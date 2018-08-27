@@ -4,19 +4,17 @@
 <jsp:include page="include/header.jsp" flush="true" />
 
 <link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/bars-movie.css" >
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/enterprise.css" >
 
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/chartjs-plugin-datalabels.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
-
-
+<script src="${pageContext.request.contextPath}/resources/js/chartjs-plugin-datalabels.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
 
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
 
 <style>
@@ -67,6 +65,8 @@ var totalPerson = new Array(); //총 인원
 var newPerson = new Array();
 var outPerson = new Array();
 
+
+
 $(function(){
 // 	if(${interview} ==""){
 // 		alert(333)
@@ -74,7 +74,7 @@ $(function(){
 // 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
 // 		interviewNullMent.appendTo(interviewNull);
 // 	}
-	
+
 	if('${member}'==''){
 	}else{
 		status = "login";
@@ -88,15 +88,15 @@ $(function(){
 	});
 
 
-	var viewDataJson = JSON.parse('${viewDataJson}');
-	for(var i in viewDataJson){
-		var num = Math.round((viewDataJson[i]['PAY_AMT'])/0.09/viewDataJson[i]['NPN_SBSCRBER_CNT']);
-		month.push(viewDataJson[i]['PAY_YM']) ;
+	var empCount = JSON.parse('${empCount}');
+	for(var i in empCount){
+		var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
+		month.push(empCount[i]['PAY_YM']) ;
 		salary.push(num) ;
 		viewSalary.push(num/10000) ;
-		totalPerson.push(viewDataJson[i]['NPN_SBSCRBER_CNT']) ;
-		newPerson.push(viewDataJson[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(viewDataJson[i]['NPN_SCBT_CNT']) ;
+		totalPerson.push(empCount[i]['NPN_SBSCRBER_CNT']) ;
+		newPerson.push(empCount[i]['NPN_NW_SBSCRBER_CNT']) ;
+		outPerson.push(empCount[i]['NPN_SCBT_CNT']) ;
 	}
  	//chartSalary();
  	chartPersonnel();
@@ -124,13 +124,13 @@ $(function(){
 
 
 	entInf();
-       reviewbarChart();//리뷰  바 차트
-       getInterviewList(1);
+  reviewbarChart();//리뷰  바 차트
+  getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
-	interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
+	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	reviewValidation()//리뷰 유효성 검사 부분
-	saramin(); //#section5 사람인채용정보 
+	saramin(); //#section5 사람인채용정보
 
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
 	if(following == 1){
@@ -232,64 +232,18 @@ $(function(){
 					    })
 		    		})
 
-// 		    		.then((willDelete) => {
-
-
-// 		    			if (willDelete) {
-// 		    				 $.ajax({
-// 						  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
-// 						  		  data:{entIndex : entIndex},
-// 						  		  type: "post",
-// 						  		  dataType:"json",
-// 						  		  success: function(result){
-// 						  			/* 성공 */
-// 						  				swal({
-// 						  				    title: "팔로잉이 해제되었습니다.",
-// 						  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
-// 						  				    icon: "success",
-//
-// 						  				    button: false
-// 						  				    //dangerMode:true
-// 						  			    });
-// 									   $this.toggleClass("fa-heart");
-// 									   $this.toggleClass("fa-heart-o");
-// 						  		  }
-// 						    })
-// 		    		    }
-
-
-// 		    	});
-
-
-// 		    	if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
-// 				  /* 팔로잉 기업 해지  */
-// 				    $.ajax({
-// 				  		  url:"${pageContext.request.contextPath}/enterprise/revFollow",
-// 				  		  data:{entIndex : entIndex},
-// 				  		  type: "post",
-// 				  		  dataType:"json",
-// 				  		  success: function(result){
-// 				  			/* 성공 */
-// 							   $this.toggleClass("fa-heart");
-// 							   $this.toggleClass("fa-heart-o");
-// 				  		  }
-// 				    })
-// 			    }
-
-
-
 		    }
 	    }
 
    });/* 기업 팔로잉 END */
 
- /* 기업리뷰 작성 START */
-      $("#myBtn").click(function(){
+ /* 면접후기 작성 START */
+      $("#intr-write-btn").click(function(){
     	  if(status == "logout"){
 
     		  swal({
 	        	  title: "로그인 하시겠습니까?",
-	        	  text: "기업 팔로우는 로그인 후에 이용 가능합니다.",
+	        	  text: "면접후기 작성은 로그인 후에 이용 가능합니다.",
 	        	  type: "info",
 	        	  showCancelButton: true,
 	        	  confirmButtonClass: "btn-info",
@@ -388,79 +342,77 @@ $(function(){
 
 function entInf(){
 
-	 var payAmtAvg = $("#payAmtAvg").text();
-	 payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";
-	payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
+	// var payAmtAvg = $("#payAmtAvg").text();
+	// payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";
+	// payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
+	//
+	// payAmtAvg = addComma(payAmtAvg);
+	//
+	// $("#payAmtAvg").text(payAmtAvg);
 
-	 payAmtAvg = addComma(payAmtAvg);
+	var dt = new Date();
+	var currentYear = dt.getFullYear();
+	var establishmentYear = $("#establishmentYear").text();
+	establishmentYear = establishmentYear.substr(0,4);
+	var currier = currentYear-establishmentYear;
+	$("#establishmentYear").text(currier);
 
-	 $("#payAmtAvg").text(payAmtAvg);
-
-	 var dt = new Date();
-	 var currentYear = dt.getFullYear();
-	 var establishmentYear = $("#establishmentYear").text();
-	 establishmentYear = establishmentYear.substr(0,4);
-	 var currier = currentYear-establishmentYear;
-	 $("#establishmentYear").text(currier);
-
-	 var personJson = JSON.parse('${personJson}');
-	 $("#newPerson").text(personJson['newPerson']);
-	 $("#outPerson").text(personJson['outPerson']);
-	 var newPersonPercent =parseFloat(( personJson['newPerson']/$("#person").text() )*100).toFixed(2);
-	 var outPersonPercent =parseFloat(( personJson['outPerson']/$("#person").text() )*100).toFixed(2);
-	 $("#newPersonPercent").text(newPersonPercent);
-	 $("#outPersonPercent").text(outPersonPercent);
+	var entHRInfo = JSON.parse('${entHRInfo}');
+	$("#newPerson").text(entHRInfo['newPerson']);
+	$("#outPerson").text(entHRInfo['outPerson']);
+	var newPersonPercent =parseFloat(( entHRInfo['newPerson']/$("#person").text() )*100).toFixed(2);
+	var outPersonPercent =parseFloat(( entHRInfo['outPerson']/$("#person").text() )*100).toFixed(2);
+	$("#newPersonPercent").text(newPersonPercent);
+ $("#outPersonPercent").text(outPersonPercent);
 	$("#numOfEnt").text($("#person").text());
-	 $("#btnA").click(function() {
 
-			$("#select").text("인원");
-			$("#numOfEnt").text($("#person").text());
-			$("#numOfInd").text("37");
-			$("#numOfTotEnt").text("28");
-			// var entPer =  DB의 '국민연금 총 가입자 수' 가져오면 됨
-			// var indPer = 동종산업군 전체 '국민연금 총 가입자 수' / 동종산업군 수
-			// var toEntPer = 전체기업의 '국민연금 총 가입자 수' / 전체 기업 수
-			$("#entPer").css('width', '60%');
-			$("#indPer").css('width', '10%');
-			$("#toEntPer").css('width', '100%');
+	$("#btnA").click(function() {
 
-		});
+		 $("#select").text("인원");
+		 $("#numOfEnt").text($("#person").text());
+		 $("#numOfInd").text("37");
+		 $("#numOfTotEnt").text("28");
+		 // var entPer =  DB의 '국민연금 총 가입자 수' 가져오면 됨
+		 // var indPer = 동종산업군 전체 '국민연금 총 가입자 수' / 동종산업군 수
+		 // var toEntPer = 전체기업의 '국민연금 총 가입자 수' / 전체 기업 수
+		 $("#entPer").css('width', '60%');
+		 $("#indPer").css('width', '10%');
+		 $("#toEntPer").css('width', '100%');
 
-		$("#btnB").click(function() {
-			$("#select").text("업력");
-			$("#numOfEnt").text(currier);
-			$("#numOfInd").text("30");
-			$("#numOfTotEnt").text("60");
+	 });
 
-			$("#entPer").css('width', "100%");
-			$("#indPer").css('width', '30%');
-			$("#toEntPer").css('width', '60%');
-		});
+	 $("#btnB").click(function() {
+		 $("#select").text("업력");
+		 $("#numOfEnt").text(currier);
+		 $("#numOfInd").text("30");
+		 $("#numOfTotEnt").text("60");
 
-		$("#btnC").click(function() {
-			$("#select").text("입사");
-			$("#numOfEnt").text(personJson['newPerson']);
-			$("#numOfInd").text("60");
-			$("#numOfTotEnt").text("40");
+		 $("#entPer").css('width', "100%");
+		 $("#indPer").css('width', '30%');
+		 $("#toEntPer").css('width', '60%');
+	 });
 
-			$("#entPer").css('width', '30%');
-			$("#indPer").css('width', '60%');
-			$("#toEntPer").css('width', '40%');
-		});
+	 $("#btnC").click(function() {
+		 $("#select").text("입사");
+		 $("#numOfEnt").text(entHRInfo['newPerson']);
+		 $("#numOfInd").text("60");
+		 $("#numOfTotEnt").text("40");
 
-		$("#btnD").click(function() {
-			$("#select").text("퇴사");
-			$("#numOfEnt").text(personJson['outPerson']);
-			$("#numOfInd").text("60");
-			$("#numOfTotEnt").text("30");
+		 $("#entPer").css('width', '30%');
+		 $("#indPer").css('width', '60%');
+		 $("#toEntPer").css('width', '40%');
+	 });
 
-			$("#entPer").css('width', '40%');
-			$("#indPer").css('width', '60%');
-			$("#toEntPer").css('width', '30%');
-		});
+	 $("#btnD").click(function() {
+		 $("#select").text("퇴사");
+		 $("#numOfEnt").text(entHRInfo['outPerson']);
+		 $("#numOfInd").text("60");
+		 $("#numOfTotEnt").text("30");
 
-
-
+		 $("#entPer").css('width', '40%');
+		 $("#indPer").css('width', '60%');
+		 $("#toEntPer").css('width', '30%');
+	 });
 
 }
 
@@ -486,7 +438,7 @@ function chartSalary(){
 		},
 		 options: {
 
-			 
+
 			 plugins: {//chartjs-plugin
 					datalabels: {
 						enabled: false,
@@ -537,11 +489,11 @@ function chartPersonnel(){
 					borderWidth: 3,
 					fill: false,
 					data: totalPerson,
-					
-					datalabels: {				
+
+					datalabels: {
 						color:  '#484c4f',
 					}
-					
+
 				}, {
 					type: 'bar',
 					label: '입사자',
@@ -549,29 +501,29 @@ function chartPersonnel(){
 					data: newPerson,
 					borderColor: 'white',
 					borderWidth: 0,
-					datalabels: {				
+					datalabels: {
 						color:  '#059BFF',
 					}
-				
+
 				}, {
 					type: 'bar',
 					label: '퇴사자',
 					backgroundColor: '#FF6B8A',
 					data: outPerson,
-					datalabels: {				
+					datalabels: {
 						color:  '#FF6B8A',
 					}
-				
+
 				}],
 				borderWidth: 1
 		},
 		options: {
-			
+
 			plugins: {
 				datalabels: {
 					align: 'end',
-					anchor: 'end',				
-					
+					anchor: 'end',
+
 					display: function(context) {
 						return context.dataset.data[context.dataIndex] > 0;
 					},
@@ -581,9 +533,9 @@ function chartPersonnel(){
 // 					formatter: Math.round
 				}
 			},
-			
-			
-		
+
+
+
 	        elements: {
 	            line: {
 	                //tension: 0, // disables bezier curves
@@ -594,7 +546,7 @@ function chartPersonnel(){
 	});
 }
 function reviewbarChart(){
-	
+
 	var reviewValuesByItem = JSON.parse('${reviewValuesByItem}');
 	var chartData = new Array(0,0,0,0,0);
 
@@ -613,16 +565,16 @@ function reviewbarChart(){
 // 					label: '퇴사자',
 					backgroundColor: '#FFBB00',
 					data: chartData,
-					datalabels: {				
+					datalabels: {
 						color:  '#FFBB00',
 					},
-					
-				
+
+
 				}],
 				borderWidth: 1
 		},
 		options: {
-			
+
 			layout:{
 				padding:{
 					top:20,
@@ -631,15 +583,15 @@ function reviewbarChart(){
 			legend: {
 		        display: false
 		    },
-			
+
 			responsive: true,
 			maintainAspectRatio: false,
-			
+
 			plugins: {
 				datalabels: {
 					align: 'end',
-					anchor: 'end',				
-					
+					anchor: 'end',
+
 					display: function(context) {
 						return context.dataset.data[context.dataIndex] > 0;
 					},
@@ -653,19 +605,19 @@ function reviewbarChart(){
 // 				gridLines: [{
 //                     display: false,
 // 				}],
-			
+
 				xAxes: [{
-					
+
 					barPercentage: 0.75,//차트 width 폭 줄이기
                     display: true,
                     offset: true,
-                    
+
 					gridLines: {
 						display: false,
 		            }
 				}],
 				yAxes: [{
-					
+
 					display: false,
                     ticks: {
                     	display: false,
@@ -676,7 +628,7 @@ function reviewbarChart(){
 		            }
 				}]
 			},
-					
+
 	        elements: {
 	            line: {
 	                //tension: 0, // disables bezier curves
@@ -713,7 +665,7 @@ function interviewPieChart(){
 		type: 'pie',
 		data: {
 				datasets: [{
-					
+
 // 					fillColor : "#ffff00",
 // 				    strokeColor : "#ffff00",
 					data: chartData,
@@ -725,7 +677,7 @@ function interviewPieChart(){
 						'rgba(29,219,22, 1)',
 
 					],
-				
+
 // 					label: 'Dataset 1'
 				}],
 				labels: [
@@ -750,7 +702,7 @@ function interviewPieChart(){
 
 function interviewDifficultyShape(){
 //	 var interviewJson = JSON.parse('${interviewJson}');
-    var interviewJson = JSON.parse(jsonEscape('${interviewJson}'));
+    var interviewJson = JSON.parse(jsonEscape('${interviewList}'));
 
 	 for(var i in interviewJson){
 		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
@@ -892,7 +844,7 @@ function interviewValidation(){
 
 /* VIEW 페이지 채용정보  */
 function saramin(){
-	
+
 	//alert(1)
 	var saraminList = JSON.parse('${saraminList}');
 	if(saraminList == ""){
@@ -911,7 +863,7 @@ function saramin(){
 		var location				= saraminList[i].location
 		var industry				= saraminList[i].industry
 		var href					= saraminList[i].href
-		
+
 		var trimLocation = location.substring(0,2);
 		var trimRequiredEducationLevel;
 		if(requiredEducationLevel != "학력무관"){
@@ -960,38 +912,38 @@ function jsonEscape(str)  {
 
 <div class="container">
 	<div class="row">
-		<nav class="col-sm-1 padding-zero" id="myScrollspy">
+		<nav class="col-sm-1 padding-zero" id="left-nav">
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
 				data-offset-top="205">
 				<!-- 				<li style="height: 30px"></li> -->
 				<li>
-					<a href="#section1">
+					<a onclick="fnMove('#section1')">
 						<span class="fa fa-building logo-small"></span> 기업정보
 					</a>
 				</li>
 				<li>
-					<a href="#section2">
+					<a onclick="fnMove('#section2')">
 						<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
 					</a>
 				</li>
 				<li>
-					<a href="#section3">
+					<a onclick="fnMove('#section3')">
 						<span class="fa fa-file-text logo-small"></span> 면접후기
 					</a>
 				</li>
 				<li>
-					<a href="#section4">
+					<a onclick="fnMove('#section4')">
 						<span class="fa fa-line-chart logo-small"></span> 월별그래프
 					</a>
 				</li>
 				<li>
-					<a href="#section5">
+					<a onclick="fnMove('#section5')">
 						<span class="fa fa-group logo-small"></span> 채용정보
 					</a>
 				</li>
 				<li>
-					<a href="#section6">
+				<a onclick="fnMove('#section6')">
 						<span class="fa fa-newspaper-o logo-small"></span> 뉴스
 					</a>
 				</li>
@@ -1162,7 +1114,7 @@ function jsonEscape(str)  {
 			          <div class="box box-warning">
 <!-- 			            <div class="box-header with-border"> -->
 <!-- 			              <h3 class="box-title">Bar Chart</h3> -->
-			
+
 <!-- 			              <div class="box-tools pull-right"> -->
 <!-- 			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> -->
 <!-- 			                </button> -->
@@ -1189,7 +1141,7 @@ function jsonEscape(str)  {
 			          </div>
 
 						<c:forEach begin="0" end="5" varStatus="status"
-							items="${question}" var="question">
+							items="${questionList}" var="question">
 							<div class="panel panel-default">
 								<div class="panel-heading" onclick="getReviewList(${status.count})">
 									<h4 class="panel-title row">
@@ -1269,7 +1221,7 @@ function jsonEscape(str)  {
 			<div class="module">
 				<div id="section3">
 					<h3 id="title">면접후기</h3>
-					<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
+					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
 					<p>Try to scroll this section and look at the navigation list while scrolling!가나다라</p>
 					<div class="panel-group" style="color: black">
 						<div class="panel panel-default">
@@ -1290,10 +1242,8 @@ function jsonEscape(str)  {
 										</div>
 										<div class="col-sm-2"></div>
 									</div>
-
 								</div>
-						<div class="col-xs-12" id="interviewNull"></div>
-
+								<div class="col-xs-12" id="interviewNull"></div>
 
 							</div>
 						</div>
@@ -1303,11 +1253,13 @@ function jsonEscape(str)  {
 
 						</div>
 					</div>
+
 					<!-- 면접 페이징 처리  -->
+
+					<button type="button" class="btn btn-info" id="intr-write-btn" >면접후기작성</button>
 					<nav style="text-align: center">
 						<ul class="pagination intvw-pagination">
 						</ul>
-						<button type="button" class="btn btn-info " id="myBtn">면접후기작성</button>
 					</nav>
 				</div>
 
@@ -1347,14 +1299,14 @@ function jsonEscape(str)  {
 
 <!-- 					<div class="panel panel-default"> -->
 <!-- 						<div class="panel-body" > -->
-						<div id="saramin-margin">							
-							<div class="row" id="saraminRow1">	
+						<div id="saramin-margin">
+							<div class="row" id="saraminRow1">
 							</div>
-							<div class="row" id="saraminRow2">	
+							<div class="row" id="saraminRow2">
 							</div>
-							<div class="row" id="saraminRow3">	
+							<div class="row" id="saraminRow3">
 							</div>
-							<div class="row" id="saraminRow4">	
+							<div class="row" id="saraminRow4">
 							</div>
 						</div>
 <!-- 						</div> -->
@@ -1371,8 +1323,8 @@ function jsonEscape(str)  {
 						<div class="panel-body">
 							<c:forEach items="${newsList}" var="newsList">
 								<div class="row">
-									<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span> 
-									<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>		
+									<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span>
+									<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>
 								</div>
 							</c:forEach>
 						</div>
@@ -1553,20 +1505,7 @@ function jsonEscape(str)  {
 </div>
  <script>
 $(document).ready(function(){
-  $('body').scrollspy({target: ".navbar", offset: 50});   
-  
-  $("#myScrollspy a").on('click', function(event) {
-    if (this.hash !== "") {
-      event.preventDefault();
-      var hash = this.hash;
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 800, function(){
-        window.location.hash = hash;
-      });
-    }  // End if
-  });
-  
+
   $(window).scroll(function() {
     $(".slideanim").each(function(){
       var pos = $(this).offset().top;
@@ -1578,6 +1517,6 @@ $(document).ready(function(){
     });
   });
 });
-</script> 
+</script>
 
 <jsp:include page="include/footer.jsp" flush="true" />

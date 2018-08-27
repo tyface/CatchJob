@@ -80,7 +80,6 @@ public class EnterpriseController {
 
 	@RequestMapping(value = "/search")
 	public String getEntList(String keyword, Model model, HttpSession session) {
-		System.out.println("진입!!!!=================");
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);		
 		try {
@@ -97,36 +96,32 @@ public class EnterpriseController {
 	}
   
 	@RequestMapping(value = "/view")
-	public String entDetailsForm(int entIndex,@RequestParam(defaultValue = "1")int page, HttpServletRequest req, Model model, HttpSession session)  {
+	public String entDetailsForm(int entIndex, HttpServletRequest req, Model model, HttpSession session)  {
 		// 기업정보 표출될때마다 viewCount올리는 부분
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("ENT_IDX", Integer.toString(entIndex));
-		mapData.put("BROWSER", req.getHeader("User-Agent"));
+		
 		try {
+			mapData.put("ENT_IDX", Integer.toString(entIndex));
+			mapData.put("BROWSER", req.getHeader("User-Agent"));
+			
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
-			mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가					
+			mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가	
+			
+			recordService.regViewRecord(mapData);
+			//기업정보
+			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
+			model.addAttribute("entInfo", entService.getEntInfo(mapData));
+			model.addAttribute("entHRInfo", new Gson().toJson(entService.getEntHRInfo(entIndex)));
+			model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
+			model.addAttribute("questionList", reviewService.question(mapData));
+			
 		} catch (UnknownHostException e) {
 			System.out.println("errer");
 		} catch (NullPointerException e) {//비로그인 상태( session 없을 때 )에서 view 진입
 			System.out.println("단지.. 로그인 안 되어 있을 뿐");
 		}
-		recordService.regViewRecord(mapData);
-		//기업정보
-		//System.out.println("기업이름ㅃ??"+ entService.getEntInfo(mapData).get("ENT_NM"));
-		model.addAttribute("viewDataJson", new Gson().toJson(entService.empCountGraph(entIndex)));
-		model.addAttribute("entInfo", entService.getEntInfo(mapData));
-		model.addAttribute("personJson", new Gson().toJson(entService.selectEntPeopleInfo(entIndex)));
-		model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
-		model.addAttribute("question", reviewService.question(mapData));
-		// 페이징 처리 - 인터뷰
-		int currentPage= page;
-		Map<String, Integer> dataItvw = new HashMap<String, Integer>();
-		dataItvw.put("ENT_IDX", entIndex);
-		dataItvw.put("PAGE_NUM", currentPage);
-		model.addAttribute("interview", itvwService.getInterviewList(dataItvw));
-		//System.out.println("면점 :  "+itvwService.getInterviewList(dataItvw));
-		model.addAttribute("interviewJson", new Gson().toJson(itvwService.getInterviewList(dataItvw)));
-		model.addAttribute("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
+		
+		
 		//뉴스
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
@@ -181,7 +176,6 @@ public class EnterpriseController {
 	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
 		//req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
-		System.out.println("컨트롤러 리뷰 entIndex: "+entIndex);
 		Map<String, Integer> dataRvw = new HashMap<String, Integer>();
 		int currentPage= pageNum;		
 		dataRvw.put("PAGE_NUM", currentPage);
@@ -215,22 +209,21 @@ public class EnterpriseController {
 	}
 	
 	@RequestMapping(value = "/getInterviewList")
-	public void getInterList(int entIndex, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
+	public void getInterviewList(int entIndex, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
 		resp.setCharacterEncoding("utf-8");
 		Map<String, Integer> dataMap = new HashMap<String, Integer>();
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		Gson gson = new GsonBuilder().create();
 		
-		int currentPage= pageNum;		
-		
+		int currentPage = (pageNum < 1)?1:pageNum;
 		dataMap.put("ENT_IDX", entIndex);
 		dataMap.put("PAGE_NUM", currentPage);
+		dataMap.put("INTRVW_FL", 1);
 		
 		List<Interview> interviewList = itvwService.getInterviewList(dataMap);
 		
 		resultMap.put("interviewList", gson.toJsonTree(interviewList).getAsJsonArray());
 		resultMap.put("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
-		
 		try {
 			resp.getWriter().println(new Gson().toJson(resultMap));
 		} catch (IOException e) {
@@ -244,10 +237,6 @@ public class EnterpriseController {
 	public boolean writeReview(Review review, HttpSession session) throws IOException {
 		System.out.println(review);
 		review.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
-		//review.setQuestionNum(Integer.parseInt(req.getParameter("questionNum")));
-//		review.setReviewFlag("1");
-		//req.getParameter("contents");
-		//req.getParameter("evaluationScore");
 
 		//System.out.println("writeReview-컨트롤러2"+review);
 		boolean result = reviewService.insertReview(review);
