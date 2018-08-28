@@ -1,55 +1,15 @@
-$(function(){
 
 
-
-//  $("#select").text("인원");
-//  $("#numOfEnt").text("6");
-//  $("#numOfInd").text("37");
-//  $("#numOfTotEnt").text("28");
-//  // var entPer =  DB의 '국민연금 총 가입자 수' 가져오면 됨
-//  // var indPer = 동종산업군 전체 '국민연금 총 가입자 수' / 동종산업군 수
-//  // var toEntPer = 전체기업의 '국민연금 총 가입자 수' / 전체 기업 수
-//  $("#entPer").css('width', '60%');
-//  $("#indPer").css('width', '10%');
-//  $("#toEntPer").css('width', '100%');
-
-
-
-    /*화면 느리게 이동하는거 ---------------- 순서 무조건 맨 마지막에 ★★★★★★★★★★★*/
-    // Add scrollspy to <body>
-      $('body').scrollspy({target: ".navbar", offset: 50});
-
-      // Add smooth scrolling on all links inside the navbar
-      $("#myNavbar a").on('click', function(event) {
-        // Make sure this.hash has a value before overriding default behavior
-        if (this.hash !== "") {
-          // Prevent default anchor click behavior
-          event.preventDefault();
-
-          // Store hash
-          var hash = this.hash;
-
-          // Using jQuery's animate() method to add smooth page scroll
-          // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-          $('html, body').animate({
-            scrollTop: $(hash).offset().top
-          }, 800, function(){
-
-            // Add hash (#) to URL when done scrolling (default click behavior)
-            window.location.hash = hash;
-          });
-        }  // End if
-      });
-
-});
 
 /* 무한 스크롤 페이징*/
 function appendEntList(entList,pageNum,pageViewCount){
   var appendObject;
   var firstNum = pageNum * pageViewCount;
-  var lastNum = firstNum + 9 ;
-
-  if(firstNum >= entList.length || lastNum >= entList.length){
+  var lastNum = firstNum + 9;
+  if(lastNum > entList.length){
+    lastNum = entList.length;
+  }
+  if(firstNum >= entList.length){
     return;
   }
 
@@ -59,13 +19,21 @@ function appendEntList(entList,pageNum,pageViewCount){
     var stars = "";
 
     for(var j = 0;j < 5;j++){
-      if(j < entList[i].evaluationAvg){
+      if(j < entList[i].following){
         stars += "<span class=stars-on/>";
       }else{
         stars += "<span class=stars-off/>";
       }
     }
 
+    /* 팔로우버튼 만들기*/
+    var follow = $("<a class='btn btnFollow' onclick='followAction("+entList[i].entIndex+",this)'></a>");
+
+    if(entList[i].following == '1'){
+      follow.append($("<i class='fa fa-heart'/>"));
+    }else{
+      follow.append($("<i class='fa fa-heart-o'/>"));
+    }
 
     appendObject =
       $("<div/>",{
@@ -76,27 +44,21 @@ function appendEntList(entList,pageNum,pageViewCount){
                             class:"row",
                             append: [$("<a/>",{
                                         class:"p25",
-                                        href:"enterprise/view?entIndex="+entList[i].entIndex ,
+                                        href:contextPath+"/enterprise/view?entIndex="+entList[i].entIndex ,
                                         html:entList[i].entName
                                       }),
-                                      $("<a/>",{
-                                        class:"btn btnFollow mailbox-star",
-                                        append:  $("<i/>", {
-                                                  class:"fa fa-heart",
-																											name:"tet",
-                                                  style:"color: red; font-size: 20px;"
-                                                })
-                                      })]
+                                      follow
+                                    ]
                           }),
                           $("<div/>",{
                             class:"row visible-lg visible-md visible-sm",
-                            text:entList[i].industryName + " | " + entList[i].bcityName + " " + entList[i].signguName
+                            html:entList[i].industryName + " | " + entList[i].bcityName + " " + entList[i].signguName
                           }),
                           $("<div/>",{
                             class:"row",
                             append: $("<p/>", {
                                       class:"p-1",
-                                      text:"평균연봉 " + entList[i].salaryAvg + " 만원"
+                                      html:"평균연봉 " + entList[i].salaryAvg + " 만원"
                                     })
                           })
                           ]
@@ -189,7 +151,7 @@ function getReviewList(questionNum, pageNum){/* 456 */
 				endPage = totalCnt
 			}
 
-			var appendObject = $(".pagination")
+			var appendObject = $(".revw-pagination")
 			appendObject.empty()
 
 			appendObject.append($("<li><a href='javascript:getReviewList("+questionNum+", "+1+");'class='underline'>&laquo;</a></li>"));
@@ -216,28 +178,265 @@ function getReviewList(questionNum, pageNum){/* 456 */
 		}
 	});
 
+
 }
 
-/* 맨위로 버튼*/
-$(function() {
-   $(window).scroll(function() {
-       if ($(this).scrollTop() > 500) {
-           $('.move-top').fadeIn();
-       } else {
-           $('.move-top').fadeOut();
-       }
-   });
 
-   $(".move-top").click(function() {
-       $('html, body').animate({
-           scrollTop : 0
-       }, 400);
-       return false;
-   });
-});
+/* 면접후기 리스트 호출*/
+function getInterviewList(pageNum){
+
+  var interviewListDiv = $(".interviewList");
+  var appendObject;
+	$.ajax({
+		url:contextPath+"/enterprise/getInterviewList",
+		data: {"entIndex" : entIndex,
+			     "pageNum" : pageNum
+		},
+		type:"post",
+		dataType:"json",
+		success : function(data){
+			interviewListDiv.empty()
+
+      var interviewList = data.interviewList;
+      var index = 0;
+
+
+
+			for(var i in interviewList){
+
+        var tempObject = $("<tr/>");
+
+        if(interviewList[i].presentationDate != "" && interviewList[i].presentationDate != null){
+          tempObject.append("<th colspan='2'><p class='well well-sm'><span>발표시기</span><span class='f-right'>"+ interviewList[i].presentationDate+"일후</span></p></th>");
+        }
+        if(interviewList[i].intrvwResult != "" && interviewList[i].intrvwResult != null){
+          tempObject.append("<th colspan='2'><p class='well well-sm'><span>면접결과</span><span class='f-right'>"+ interviewList[i].intrvwResult+"</span></p></th>");
+        }
+        if(interviewList[i].intrvwExperience != "" && interviewList[i].intrvwExperience != null){
+          tempObject.append("<th colspan='2'><p class='well well-sm'><span>면접경험</span><span class='f-right'>"+ interviewList[i].intrvwExperience+"</span></p></th>");
+        }
+
+        appendObject =
+        $("<div/>", {
+          class: "panel panel-default",
+          append: [$("<div/>", {
+                      class:"panel-heading font-gray",
+                      html:interviewList[i].regDate
+                    }),
+                    $("<div/>", {
+                      class:"panel-body",
+                      append: [$("<div/>", {
+                                class: "col-xs-3",
+                                append: [$("<div/>", {
+                                          class: "row",
+                                          html:"<p><b>면접난이도</b></p>"
+                                         }),
+                                         $("<div/>", {
+                                           id: "difficulty"+i,
+                                           class:"row",
+                                           append: [$("<p/>", {
+                                                     class:"intrvwDifficulty",
+                                                     html: interviewList[i].intrvwDifficulty,
+                                                    }),
+                                                    $("<div class='col-xs-1 progress-bars bar1' ></div>"),
+                                                    $("<div class='col-xs-1 progress-bars bar2' ></div>"),
+                                                    $("<div class='col-xs-1 progress-bars bar3' ></div>"),
+                                                    $("<div class='col-xs-1 progress-bars bar4' ></div>"),
+                                                    $("<div class='col-xs-1 progress-bars bar5' ></div>"),
+                                                    $("<br/>"),$("<br/>")
+                                                   ]
+                                          }),
+                                          $("<div/>",{
+                                            class:"row",
+                                            html:"<p><b>면접일자</b></p><p>"+interviewList[i].intrvwDate+"</p><br>"
+                                          }),
+                                          $("<div/>",{
+                                            class:"row",
+                                            html:"<p><b>면접경로</b></p><p>"+interviewList[i].intrvwRoute+"</p><br>"
+                                          })
+                                        ]
+                                }),
+                                $("<div/>",{
+                                  class:"col-xs-9",
+                                  append: $("<table/>",{
+                                            class:"table",
+                                            append: [$("<thead/>",{
+                                                        html: "<tr><th colspan='6'>"+interviewList[i].intrvwReview+"</th></tr>"
+                                                      }),
+                                                     $("<tbody/>",{
+                                                       append: [$("<tr><td colspan='6'><p><b>면접질문</b></p><p class='font-gray'>"+interviewList[i].intrvwQuestion+"</p></td></tr>"),
+                                                                $("<tr><td colspan='6'><p><b>질문에 대한 답변</b></p><p class='font-gray'>"+interviewList[i].intrvwAnswer+"</p></td></tr>"),
+                                                                tempObject
+                                                               ]
+                                                     })
+                                                    ]
+
+                                          })
+                                })
+                               ]
+                    })
+                   ]
+        });
+
+        index = index + 1;
+				interviewListDiv.append(appendObject)
+			}
+
+			totalCnt = parseInt(data.interviewPageData.pageTotalCount);// 전체레코드수
+		 	startPage = parseInt(data.interviewPageData.startPage); // 시작페이지
+		 	endPage = parseInt(data.interviewPageData.endPage); // 끝페이지
+		 	currentPage = parseInt(data.interviewPageData.currentPage); // 현재페이지
+			msgPerPage = parseInt(data.interviewPageData.msgPerPage); // 한페이지 보여중 네비개수
+			prevPage = currentPage -1;
+			nextPage = currentPage + 1;
+			if(nextPage > totalCnt){
+				nextPage = totalCnt
+			}
+			if(prevPage < 1){
+				prevPage = 1
+			}
+			if(endPage > totalCnt){
+				endPage = totalCnt
+			}
+
+			appendObject = $(".intvw-pagination")
+			appendObject.empty()
+
+			appendObject.append($("<li><a href='javascript:getInterviewList("+1+");'class='underline'>&laquo;</a></li>"));
+			appendObject.append($("<li><a href='javascript:getInterviewList("+ prevPage +");'class='underline'>&lt;</a></li>"));
+
+			for(var i = startPage; i <=endPage; i++){
+				if(i != currentPage){
+					appendObject.append($("<li><a href='javascript:getInterviewList("+i+");'>"+i+"</a></li>"));
+				}else{
+					appendObject.append($("<li><a><strong>"+i+"</strong></a></li>"));
+				}
+			}
+
+			appendObject.append($("<li><a href='javascript:getInterviewList("+nextPage+");'class='underline'>&gt;</a></li>"));
+			appendObject.append($("<li><a href='javascript:getInterviewList("+ totalCnt +");'class='underline'>&raquo;</a></li>"));
+
+      for(var j in interviewList){
+   		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
+
+   		 if(interviewList[j].intrvwDifficulty == '매우 어려움'){
+   			$("#difficulty"+j).addClass("intrvwlv5");
+   		} else if(interviewList[j].intrvwDifficulty == '어려움'){
+   			$("#difficulty"+j).addClass("intrvwlv4");
+   		}else if(interviewList[j].intrvwDifficulty == '보통'){
+   			$("#difficulty"+j).addClass("intrvwlv3");
+   		}else if(interviewList[j].intrvwDifficulty == '쉬움'){
+   			$("#difficulty"+j).addClass("intrvwlv2");
+   		}else if(interviewList[j].intrvwDifficulty == '매우 쉬움'){
+   			$("#difficulty"+j).addClass("intrvwlv1");
+   		}
+
+   	 }
+
+		},
+		error : function(request,status,error){
+			alert("요청 실패하였습니다.");
+			alert("request :" + request + "\n"+
+					"status :" + status + "\n"+
+					"error :" + error);
+		}
+	});
+
+
+
+}
+
 
 /*컨텍스트 패스 구하는 함수*/
 function getContextPath() {
 	var hostIndex = location.href.indexOf( location.host ) + location.host.length;
 	return location.href.substring( hostIndex, location.href.indexOf("/", hostIndex + 1) );
 }
+
+/* 팔로우 기능*/
+function followAction(entIndex,e){
+  //로그인 체크
+  if(member == "null"){
+    swal({
+      title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
+      text: "",
+      type: "info",
+      showCancelButton: true,
+      confirmButtonClass: "btn-info"
+    },
+    function() {
+      $("#loginModal").modal("show");
+    });
+    return false;
+  }
+
+  var $this = $(e).children("i");
+  var fa = $this.hasClass("fa");
+  var requestURL;
+  if($this.attr('class') == 'fa fa-heart') {
+    requestURL = "revFollow";
+  }else{
+    requestURL = "regFollow";
+  }
+
+  $.ajax({
+    url:contextPath+"/enterprise/"+requestURL,
+    data: {"entIndex" :entIndex},
+    type:"get",
+    dataType:"json",
+    success : function(data){
+        if (data) {
+          $this.toggleClass("fa-heart");
+          $this.toggleClass("fa-heart-o");
+        }
+    },
+    error : function(request,status,error){
+      alert("요청 실패하였습니다.");
+    }
+  });
+}
+
+$(function(){
+
+  /*화면 느리게 이동하는거 ---------------- 순서 무조건 맨 마지막에 ★★★★★★★★★★★*/
+  // Add scrollspy to <body>
+    $('body').scrollspy({target: ".navbar", offset: 50});
+
+    // Add smooth scrolling on all links inside the navbar
+    $("#myNavbar a").on('click', function(event) {
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
+        // Prevent default anchor click behavior
+        event.preventDefault();
+
+        // Store hash
+        var hash = this.hash;
+
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function(){
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      }  // End if
+    });
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 500) {
+            $('.move-top').fadeIn();
+        } else {
+            $('.move-top').fadeOut();
+        }
+    });
+
+    $(".move-top").click(function() {
+        $('html, body').animate({
+            scrollTop : 0
+        }, 400);
+        return false;
+    });
+
+});

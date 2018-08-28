@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.Review;
 
 
 
@@ -31,22 +30,19 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entList;
 	}
 
-	// @Override
-	// public Enterprise getEntInfo(int entIndex) {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-	// 기업식별 번호로 기업 정보 가져오기
+	//기업정보 가져오기
 	@Override
 	public Map<String, String> getEntInfo(Map<String, String> data) {
 		Map<String, String> entInfo = entDao.selectEntInfo(data);
+		int payAmtAvg = salaryCalculation(Integer.parseInt(String.valueOf(entInfo.get("PAY_AMT_AVG"))));
+		entInfo.replace("PAY_AMT_AVG", Integer.toString(payAmtAvg));
 		return entInfo;
 	}
 
 	// 그래프 - 인원
 	@Override
 	public List<Map<String, String>> empCountGraph(int ent_idx) {
-		return entDao.selectGraphInf(ent_idx);
+		return entDao.selectGraphInfo(ent_idx);
 	}
 
 	// 그래프 - 평균급여
@@ -62,8 +58,8 @@ public class EnterpriseServiceImp implements EnterpriseService {
 
 	// 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의 인원수 합)
 	@Override
-	public Map<String, String> selectEntPeopleInfo(int entIndex) {
-		return entDao.selectEntPeopleInfo(entIndex);
+	public Map<String, String> getEntHRInfo(int entIndex) {
+		return entDao.selectEntHRInfo(entIndex);
 	}
 
 	@Override
@@ -91,7 +87,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
 	}
-
+	
 	/* 관리자 페이징 처리 */
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();

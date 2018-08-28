@@ -7,8 +7,6 @@
 <script>
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
-
-
 $(function() {
 
 	$(".googleBtn").on("click",function() {
@@ -396,7 +394,7 @@ $(function() {
 					<li><a href="${pageContext.request.contextPath}/profile/follows">팔로잉 기업</a></li>
 					<li><a href="${pageContext.request.contextPath}/profile/recent">최근 본 기업</a></li>
 					 <li role="presentation" class="divider"></li>
-					<li><a href="/member/logout">로그아웃</a></li>
+				   <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
 				</ul>
 			</div>
 

@@ -1,86 +1,130 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap 101 Template</title>
-<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-<link href="/assets/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:include page="include/header.jsp" flush="true" />
 <style>
-p.list-group-item-text {
-	margin: 5px 0;
-}
-#result.col-xs-6 { 
-	border: 1px solid black;
-}
+ .panels {
+      border: 1px solid #B5B2FF; 
+      border-radius:0 !important;
+      transition: box-shadow 0.5s;
+      background-color: #fff;
+      margin-bottom: 20px;
+      
+  }
+  .panels:hover {
+      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+/*   .panel-footer .btn:hover { */
+/*       border: 1px solid #f4511e; */
+/*       background-color: #fff !important; */
+/*       color: #f4511e; */
+/*   } */
+  .panel-headings {
+      color: #fff !important;
+      background-color: #B5B2FF !important;
+      text-align: right; 
+       padding: 0px;  
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+  }
+  .panel-footers {
+      background-color: white !important;
+  }
+
+
 </style>
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-</head>
-<body>
-
-
-
-<div class="container">
-	<div class="input-group">
-      <input type="text" name="q" class="form-control" placeholder="직업 입력">
-      <span class="input-group-btn">
-        <button class="btn btn-default" id="searchBtn" type="button">검색</button>
-      </span>
-    </div><!-- /input-group -->
-    <hr>
-    <div id="result"></div>
-</div>
-<div id="pocket"></div>
-<script src="/assets/js/jquery-3.2.1.min.js"></script>
-<script src="/assets/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script>
-$('input[name="q"]').keydown(function(event){
-	if(event.keyCode == 13){ // enter-click
-		$('#searchBtn').trigger('click');
+
+$(function(){
+	
+	saramin();
+
+});
+
+function saramin(){
+	var saraminList = JSON.parse('${saraminList}');
+	for(var i in saraminList){
+		var url 					= saraminList[i].url
+		var name 					= saraminList[i].name
+		var expirationTimestamp 	= saraminList[i].expirationTimestamp
+		var title 					= saraminList[i].title
+		var experienceLevel			= saraminList[i].experienceLevel
+		var requiredEducationLevel	= saraminList[i].requiredEducationLevel
+		var location				= saraminList[i].location
+		var industry				= saraminList[i].industry
+		var href					= saraminList[i].href
+		
+		var trimLocation = location.substring(0,2);
+		var trimRequiredEducationLevel;
+		if(requiredEducationLevel != "학력무관"){
+			trimRequiredEducationLevel = requiredEducationLevel.substring(0,1)+"졸↑";
+		}else{
+			trimRequiredEducationLevel = requiredEducationLevel;
+		}
+			$(".name").text(name)
+			$(".expirationTimestamp").text(expirationTimestamp)
+			$(".title").text(title)
+			$(".experienceLevel").text(experienceLevel)
+			$(".requiredEducationLevel").text(requiredEducationLevel)
+			$(".location").text(location)
+			$(".industry").text(industry)
+// 		if(i<3){
+// 	 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'><div class='panel-headings'> <span class='expirationTimestamp f-right'>"+expirationTimestamp+"</span><h3 class='name'>"+name+"</h3></div><div class='panel-body'><h4><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h4></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow1);
+// 		}else if(i<6){
+// 			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'><div class='panel-headings'> <span class='expirationTimestamp f-right'>"+expirationTimestamp+"</span><h3 class='name'>"+name+"</h3></div><div class='panel-body'><h4><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h4></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow2);
+// 		}else if(i<9){
+// 			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'><div class='panel-headings'> <span class='expirationTimestamp f-right'>"+expirationTimestamp+"</span><h3 class='name'>"+name+"</h3></div><div class='panel-body'><h4><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h4></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow3);
+// 		}else{
+// 			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'><div class='panel-headings'> <span class='expirationTimestamp f-right'>"+expirationTimestamp+"</span><h3 class='name'>"+name+"</h3></div><div class='panel-body'><h4><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h4></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+// 			data.appendTo(saraminRow4);
+// 		}
 	}
-});
-
-$('#searchBtn').click(function(){
-	var q = $('input[name="q"]').val();
-	if(q.length > 1){
-		fetchSearchResult(q);
-	} else {
-		alert('검색어는 2글자 이상 입력하세요!');
-	}
-});
-
-function fetchSearchResult(q){
-	//console.log(q);
-	$.get('sarmin.php',{
-		keywords: q
-	}).done(function(data){
-		//console.log(data);
-		var items = $(data).find('job');
-		var results = [];
-		//console.log(items);
-		$.each(items, function(k, v){
-			var title = $(this).find('title').text();
-			var jobtype = $(this).find('job-type').text();
-			var jobcategory = $(this).find('job-category').text();
-			var salary = $(this).find('salary').text();
-			var url = $(this).find('url').text();
-			//console.log(url);
-			results.push('<a href="'+url+'" class="list-group-item" target="_blank"><div class="row"><div class="col-md-10"><h4 class="list-group-item-heading"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> '+title+'</h4><p class="list-group-item-text"><span class="label label-success"></span> '+jobtype+'</p><p class="list-group-item-text"><span class="label label-success">카테고리</span> '+jobcategory+'</p><p class="list-group-item-text"><span class="label label-success">연봉</span> '+salary+'</p></div></div></a>');
-		});
-		$('#result').html(results.join(''));
-	});
-};
-
-// click item
-$(document).on('click', 'a.list-group-item', function(evt){
-	$(this).siblings().removeClass('active').end().addClass('active');
-});
+}
 </script>
-</body>
-</html>
+
+<article>
+<div  id="saramin">
+</div>     
+</article>
+<!-- 	<div class="row" id="saraminRow1">	 -->
+<!-- 	</div> -->
+<!-- 	<div class="row" id="saraminRow2">	 -->
+<!-- 	</div> -->
+<!-- 	<div class="row" id="saraminRow3">	 -->
+<!-- 	</div> -->
+<!-- 	<div class="row" id="saraminRow4">	 -->
+<!-- 	</div> -->
+
+<article>
+	<div class="row">
+		<div class="col-sm-4" > 
+		     <div class="panels panel-default text-center">
+		       <div class="panel-headings">
+               		<span class="expirationTimestamp">마감</span>
+		       </div>
+		       <div class="panel-body">
+			       <h3 class="name">회사명</h3>
+		       		<h4><a class="title blue-font" ><b>제목</b></a></h4>
+		       </div>
+		       <div class="panel-footers">
+		       		<p><small>
+		       			<span class="experienceLevel">ㅎ</span> | 
+		       			<span class="requiredEducationLevel">ㅎ</span> | 
+		       			<span class="location">ㅎ</span> | 
+		       			<span class="industry">ㅎ</span>
+		       		</small></p>	       		
+		       </div>
+		     </div> 
+	     </div> 
+     </div>
+</article>
+
+
+
+
+<jsp:include page="include/footer.jsp" flush="true"/>

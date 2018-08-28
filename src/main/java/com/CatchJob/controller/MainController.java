@@ -27,14 +27,13 @@ public class MainController {
 		return "main";
 	}
 	
-	@RequestMapping(value = "/search")
-	public String search(String keyword) {
-		return "forward:enterprise/search";
-	}
-	
 	@RequestMapping(value = "/faq")
 	public String faq() {
 		return "faq";
+	}
+	@RequestMapping(value = "/slow")
+	public String slow() {
+		return "slow";
 	}
 	
 //	@RequestMapping(value = "/interviews")

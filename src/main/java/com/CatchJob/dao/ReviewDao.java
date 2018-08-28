@@ -60,4 +60,8 @@ public interface ReviewDao {
 	public int selectReviewTotalRows(Map<String, Integer> data);
 	// 리뷰 작성시, 중복 검사
 	public int reviewDuplicationCheck(Map<String, String> data);
+	// 리뷰 총 만족도 구하기
+	public double totalSatisfactionValue(Map<String, String> data);
+	//리뷰 항목별 만독도  
+	public List<Map<String, String>> valuesByItem(Map<String, String> data);
 }

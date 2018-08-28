@@ -151,7 +151,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW_TB
 		WHERE ENT_IDX=#{ENT_IDX} AND MBER_IDX=#{MBER_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL=#{REVW_FL}		
 	</select>
-
+	<!-- 리뷰 총 만족도 구하기 -->
+	<select id="totalSatisfactionValue" parameterType="map" resultType="double">
+		SELECT round(avg(EVALUATION),1) as AVG
+		FROM REVIEW_TB
+		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0
+	</select>
+	<!-- 리뷰 항목별 만독도  -->
+	<select id="valuesByItem" parameterType="map" resultType="map">
+		SELECT  EVALUATION, count(*) AS COUNT
+		FROM REVIEW_TB
+		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0
+		GROUP BY EVALUATION
+	</select>
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>
 		<result property="question" column="QUESTION"/>

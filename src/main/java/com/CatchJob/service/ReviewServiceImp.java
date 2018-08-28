@@ -244,5 +244,21 @@ public class ReviewServiceImp implements ReviewService {
 			return false;
 		}
 	}
+	// 리뷰 총 만족도 구하기
+	@Override
+	public double gettotalSatisfaction(Map<String, String> data) {
+		data.put("REVW_FL", "1");
+		try {
+			return reviewDao.totalSatisfactionValue(data);			
+		}catch(Exception e) {
+			return 0.0;
+		}
+	}
+	//리뷰 항목별 만독도  
+	@Override
+	public List<Map<String, String>> valuesByItem(Map<String, String> data) {
+		data.put("REVW_FL", "1");
+		return reviewDao.valuesByItem(data);
+	}
 
 }

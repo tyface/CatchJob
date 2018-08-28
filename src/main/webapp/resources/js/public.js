@@ -1,4 +1,11 @@
 
+/*페이지네 스크롤 위치 이동*/
+function fnMove(seq){
+        var offset = $(seq).offset();
+				var topNavHeight = 100; //상단 네비 길이
+        $('html, body').animate({scrollTop : offset.top - topNavHeight}, 600);
+}
+
 /* 비밀번호 재설정 메일 보내기창 */
 function passwordModifyForm() {
 	$('#loginModal').modal('hide')
@@ -119,7 +126,6 @@ Paging = function(totalCnt, dataSize, pageSize, pageNo, token){
 	 dataSize = parseInt(dataSize); // 페이지당 보여줄 데이타수
 	 pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10
 	 pageNo = parseInt(pageNo); // 현재페이지
-	 
 	 var html = new Array();
 	 if(totalCnt == 0){
 		  return "";

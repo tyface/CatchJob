@@ -45,7 +45,9 @@ public interface ReviewService {
 	public int getReviewTotalRows(Map<String, Integer> data);
 	//리부 등록시, 중복검사
 	public boolean duplicationCheck(Map<String, String> data);
-	
-
+	// 리뷰 총 만족도 구하기
+	public double gettotalSatisfaction(Map<String, String> data);
+	//리뷰 항목별 만독도  
+	public List<Map<String, String>> valuesByItem(Map<String, String> data);
 
 }

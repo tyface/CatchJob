@@ -17,7 +17,7 @@ public interface EnterpriseService {
 	// 기업식별 번호로  기업 정보 가져오기 
 	public Map<String,String> getEntInfo(Map<String, String> data);
 	//기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합)
-	public Map<String,String> selectEntPeopleInfo(int entIndex);
+	public Map<String,String> getEntHRInfo(int entIndex);
 	// 그래프 - 인원
 	public List<Map<String,String>> empCountGraph(int entIndex);
 

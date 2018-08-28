@@ -18,10 +18,6 @@ public class FollowServiceImp implements FollowService{
 	/* 팔로우 기업 등록하기 */
 	@Override
 	public boolean regFollowEnt(Map<String, String> mapData) {
-//		System.out.println("팔로우 서비스 : "+ mapData.get("MBER_IDX"));
-//		System.out.println("팔로우 서비스 : "+   Integer.parseInt(mapData.get("MBER_IDX"))  );
-		//session.getAttribute("mberIndex").toString()
-		//(int) (session.getAttribute("mberIndex"))
 		try {
 			int confirm = Integer.parseInt(mapData.get("MBER_IDX"));
 			//System.out.println(confirm);
@@ -32,8 +28,6 @@ public class FollowServiceImp implements FollowService{
 				return false;				
 			}
 
-//			followDao.insertFollows(mapData);	
-//			return true;
 		}catch(Exception e) {
 			System.out.println(e);
 			return false;
