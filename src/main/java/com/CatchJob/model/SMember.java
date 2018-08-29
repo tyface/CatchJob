@@ -12,8 +12,9 @@ public class SMember implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	// Spring security에서 사용할 UserDetails 클래스
 	// 사용자 권한 및 이름, 비밀번호를 가지고 있음
-	private String password;
+	private int userIndex;
 	private String username;
+	private String password;
 	private boolean accountNonExpired = true;
 	private boolean accountNonLocked = true;
 	private boolean credentialsNonExpired = true;
@@ -27,6 +28,14 @@ public class SMember implements UserDetails {
 
 	public void addAuthority(Role role) {
 		authorities.add(role);
+	}
+
+	public int getUserIndex() {
+		return userIndex;
+	}
+
+	public void setUserIndex(int userIndex) {
+		this.userIndex = userIndex;
 	}
 
 	public void setPassword(String password) {

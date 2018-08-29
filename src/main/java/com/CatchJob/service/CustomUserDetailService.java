@@ -31,8 +31,9 @@ public class CustomUserDetailService implements UserDetailsService {
 		//db에 아이디가 존재하면  ROLE_USER 권한 부여 		
 		if(member != null) {
 			smember = new SMember();
-			smember.setPassword(member.getMberPw());
+			smember.setUserIndex(member.getMberIndex());
 			smember.setUsername(member.getMberId());
+			smember.setPassword(member.getMberPw());
 			
 		//사용자 이름으로 auth table가서 권한 조회
 		List<String> authentifications = authDao.selectUserAuthorities(mberid);

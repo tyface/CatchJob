@@ -229,8 +229,6 @@ public class EnterpriseController {
 		resultMap.put("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
 		
 		try {
-			System.out.println("=====================================");
-			System.out.println(resultMap);
 			resp.getWriter().println(new Gson().toJson(resultMap));
 		} catch (IOException e) {
 			e.printStackTrace();

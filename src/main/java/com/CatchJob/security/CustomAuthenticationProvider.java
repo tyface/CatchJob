@@ -44,7 +44,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		} else {
 			System.out.println("비밀번호 일치");
 			System.out.println("member : " + member.getAuthorities());
-			authToken = new UsernamePasswordAuthenticationToken(mberid, mberPw, member.getAuthorities());
+			System.out.println("==========================================");
+			authToken = new UsernamePasswordAuthenticationToken(member, mberPw, member.getAuthorities());
 			System.out.println(authToken);
 			return authToken;
 		}
