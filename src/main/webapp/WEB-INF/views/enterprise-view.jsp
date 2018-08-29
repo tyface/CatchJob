@@ -50,7 +50,6 @@
 
 </style>
 <script>
-
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
 
@@ -88,18 +87,8 @@ $(function(){
 	});
 
 
-	var empCount = JSON.parse('${empCount}');
-	for(var i in empCount){
-		var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
-		month.push(empCount[i]['PAY_YM']) ;
-		salary.push(num) ;
-		viewSalary.push(num/10000) ;
-		totalPerson.push(empCount[i]['NPN_SBSCRBER_CNT']) ;
-		newPerson.push(empCount[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(empCount[i]['NPN_SCBT_CNT']) ;
-	}
- 	//chartSalary();
- 	chartPersonnel();
+
+
 	$("#salary-btn").on("click", function(){
 		$("canvas#comboBarLineChart").remove();
 // 		var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
@@ -122,7 +111,7 @@ $(function(){
 		$("#salary-btn").attr('disabled', false);
 	});
 
-
+	chartPersonnel();
 	entInf();
   reviewbarChart();//리뷰  바 차트
   getInterviewList(1);
@@ -980,13 +969,12 @@ function jsonEscape(str)  {
 									<button type="button" class="btn btn-default btn-lg btn-block" id="btnA">
 										<span class="f-left"><b>인원</b></span>
 										<span class="f-right">
-											<b id="person">${entInfo.NPN_SBSCRBER_CNT }</b>명
+											<b id="person">${entInfo.NPN_SBSCRBER_CNT}</b>명
 										</span>
 									</button>
 								</div>
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block"
-										id="btnB">
+									<button type="button" class="btn btn-default btn-lg btn-block" id="btnB">
 										<span class="f-left"><b>업력</b></span>
 										<span class="f-right">
 											<b id="establishmentYear">${entInfo.ENT_FOND_YMD}</b>년

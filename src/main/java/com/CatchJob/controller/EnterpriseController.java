@@ -105,11 +105,13 @@ public class EnterpriseController {
 			mapData.put("BROWSER", req.getHeader("User-Agent"));
 			
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
-			mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가	
+			
+			if((Member)session.getAttribute("member") != null) {
+				mapData.put("MBER_IDX",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));//0816인영추가
+			}
 			
 			recordService.regViewRecord(mapData);
 			//기업정보
-			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
 			model.addAttribute("entInfo", entService.getEntInfo(mapData));
 			model.addAttribute("entHRInfo", new Gson().toJson(entService.getEntHRInfo(entIndex)));
 			model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
@@ -224,7 +226,10 @@ public class EnterpriseController {
 		
 		resultMap.put("interviewList", gson.toJsonTree(interviewList).getAsJsonArray());
 		resultMap.put("interviewPageData", itvwService.interviewPageData(currentPage, entIndex));
+		
 		try {
+			System.out.println("=====================================");
+			System.out.println(resultMap);
 			resp.getWriter().println(new Gson().toJson(resultMap));
 		} catch (IOException e) {
 			e.printStackTrace();
