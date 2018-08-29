@@ -1,17 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
-<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <script>
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-
 $(function() {
-	$(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });
 
 	$(".googleBtn").on("click",function() {
 		location.href="${pageContext.request.contextPath}/member/googleLogin";
@@ -36,9 +28,7 @@ $(function() {
 					 "mberId" : $("#loginId").val(),
 					 "mberPw" : $("#loginPw").val()
 				},
-				    beforeSend : function(xhr){
-				    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	                },
+
 				dataType : "json",
 				success : function(data) {
 					 if (data.result == "CODE_01") {
@@ -153,9 +143,6 @@ $(function() {
 				"signUpPw" : $("#signUpPw").val(),
 				"signUpPwCheck" : $("#signUpPwCheck").val()
 			},
-			beforeSend : function(xhr){
-			    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
 			dataType : "json",
 			success : function(data) {
 				if (data.result) {
