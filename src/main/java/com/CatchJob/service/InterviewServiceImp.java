@@ -55,10 +55,11 @@ public class InterviewServiceImp implements InterviewService{
 		}
 	}
 
-	// 면접정보 가져오기- 회원이 면접리뷰 수정할 때 필요 
+	// 면접정보 가져오기- 회원이 면접후기 수정할 때 필요 
 	@Override
 	public Interview selectListByIndex(Map<String, String> data) {  
 		data.put("INTRVW_FL", "1");
+		System.out.println("serivedeeereee:"+data+itvwDao.selectListByIndex(data));
 		return itvwDao.selectListByIndex(data);
 	}
 
@@ -93,7 +94,10 @@ public class InterviewServiceImp implements InterviewService{
 	//view page, 면접후기 리스트 페이징처리
 	@Override
 	public List<Interview> getInterviewList(Map<String, Integer> dataItvw) {
-		
+		//받아온 페이지 ...
+		//Constants.Config.RANK_VIEW_COUNT //화면에 표시할 row 수
+		//dataItvw.put("ENT_IDX", entIndex);
+		dataItvw.put("INTRVW_FL", 1);
 		int PAGE_NUM = dataItvw.get("PAGE_NUM");
 		int START_ROW = Constants.Interview.NUM_OF_ITVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
 		dataItvw.put("NUM_OF_ITVW_PER_PAGE", Constants.Interview.NUM_OF_ITVW_PER_PAGE);

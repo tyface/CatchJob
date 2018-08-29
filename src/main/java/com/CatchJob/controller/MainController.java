@@ -35,6 +35,19 @@ public class MainController {
 	public String slow() {
 		return "slow";
 	}
+	@RequestMapping(value = "/404Error")
+	public String error404() {
+		return "404-error-page";
+	}
+	@RequestMapping(value = "/500Error")
+	public String error500() {
+		return "500-error-page";
+	}
+	@RequestMapping(value = "/blankError")
+	public String errorBlank() {
+		return "blank-error-page";
+	}
+	
 	
 //	@RequestMapping(value = "/interviews")
 //	public String profile() {
