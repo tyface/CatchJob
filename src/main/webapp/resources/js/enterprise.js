@@ -187,7 +187,7 @@ function getInterviewList(pageNum){
 
   var interviewListDiv = $(".interviewList");
   var appendObject;
-  console.log(contextPath,entIndex);
+  console.log(contextPath,entIndex,pageNum);
 	$.ajax({
 		url:contextPath+"/enterprise/getInterviewList",
 		data: {"entIndex" : entIndex,
@@ -400,7 +400,7 @@ function followAction(entIndex,e){
 
 
 $(function(){
-	
+
 
   /*화면 느리게 이동하는거 ---------------- 순서 무조건 맨 마지막에 ★★★★★★★★★★★*/
   // Add scrollspy to <body>

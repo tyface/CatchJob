@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
-<meta name="_csrf" content="${_csrf.token}"/>
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 
 <script>
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
+
 $(function() {
+	$(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
 
 	$(".googleBtn").on("click",function() {
 		location.href="${pageContext.request.contextPath}/member/googleLogin";
@@ -149,7 +153,7 @@ $(function() {
 				"signUpPw" : $("#signUpPw").val(),
 				"signUpPwCheck" : $("#signUpPwCheck").val()
 			},
-			beforeSend : function(xhr){ 
+			beforeSend : function(xhr){
 			    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
             },
 			dataType : "json",
@@ -311,7 +315,7 @@ $(function() {
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span>
 									</span>
-									<input type="text" class="form-control" id="inputError"	
+									<input type="text" class="form-control" id="inputError"
 									aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
 								</div>
 							</div>

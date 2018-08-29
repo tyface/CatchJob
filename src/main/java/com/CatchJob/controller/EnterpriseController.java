@@ -112,6 +112,7 @@ public class EnterpriseController {
 			
 			recordService.regViewRecord(mapData);
 			//기업정보
+			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
 			model.addAttribute("entInfo", entService.getEntInfo(mapData));
 			model.addAttribute("entHRInfo", new Gson().toJson(entService.getEntHRInfo(entIndex)));
 			model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
@@ -129,7 +130,7 @@ public class EnterpriseController {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
 			model.addAttribute("newsList", newsList);
 			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
-//			System.out.println("컨트롤러 사람인!!!!!!123123: "+saraminList);
+			System.out.println("컨트롤러 사람인!!!!!!123123: "+saraminList);
 			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,6 +160,21 @@ public class EnterpriseController {
 		return followService.revFollowEnt(mapData);
 	}
 	
+	
+//	@ResponseBody
+//	@RequestMapping(value = "/reviewList/{entIndex}")
+//	public ResponseEntity<List<Review>> list(
+//			@PathVariable("entIndex") int entIndex){		
+//		ResponseEntity<List<Review>> entity = null;		
+//		try {
+//			List<Review> replyList = reviewService.reviewList(entIndex);
+//			entity = new ResponseEntity<List<Review>>(replyList,HttpStatus.OK);
+//		}catch(Exception e) {
+//			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//		return entity;
+//	}
+//	@ResponseBody
 	@RequestMapping(value = "/reviewList")
 	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
 		//req.setCharacterEncoding("utf-8");
@@ -195,7 +211,7 @@ public class EnterpriseController {
 		 
 	}
 	
-	@RequestMapping(value = "/getInterviewList")
+	@RequestMapping(value = "/getInterviewList", method = RequestMethod.POST)
 	public void getInterviewList(int entIndex, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
 		resp.setCharacterEncoding("utf-8");
 		Map<String, Integer> dataMap = new HashMap<String, Integer>();
