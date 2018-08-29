@@ -456,7 +456,10 @@ label.error {
  .panels:hover {
      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
  }
-
+.panels-body{
+	 min-height: 139px;
+	 padding: 15px;
+}
  .panel-headings {
 
      color: #fff !important;
@@ -469,6 +472,7 @@ label.error {
      border-bottom-left-radius: 0px;
      border-bottom-right-radius: 0px;
  }
+ .
  .panel-footers {
      background-color: white !important;
  }

@@ -32,7 +32,7 @@ public class SaraminService {
 	
 	public List<Saramin> searchSaramin(String keywords) throws Exception{
 		List<Saramin> saraminList = new ArrayList<Saramin>();    	
-		
+		System.out.println("---------------------------------svs----------------------------------------------------");
 		//BufferedReader br = null;
         //DocumentBuilderFactory 생성
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -41,7 +41,8 @@ public class SaraminService {
         Document doc = null;
 		
 		StringBuilder urlBuilder = new StringBuilder("http://api.saramin.co.kr/job-search"); /*URL*/
-		urlBuilder.append("?" + URLEncoder.encode("keywords","UTF-8") + "=" + URLEncoder.encode(keywords, "UTF-8")); /*시도(행정자치부 법정동 주소코드 참조)*/
+		urlBuilder.append("?" + URLEncoder.encode("keywords","UTF-8") + "=" + URLEncoder.encode(keywords, "UTF-8")); /* 키워드*/
+		urlBuilder.append("&" + URLEncoder.encode("count","UTF-8") + "=" + URLEncoder.encode("110", "UTF-8")); /* 키워드*/
 		URL url = new URL(urlBuilder.toString());
 		System.out.println(urlBuilder);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -79,7 +80,12 @@ public class SaraminService {
          NodeList nodeList2 = (NodeList) expr2.evaluate(doc, XPathConstants.NODESET);
          XPathExpression expr3 = xpath.compile("//job/url");
          NodeList nodeList3 = (NodeList) expr3.evaluate(doc, XPathConstants.NODESET);
-         
+        
+         try {
+        	 
+         }catch(NullPointerException e){
+        	 System.out.println("error 입니다....");
+         }
          for (int i = 0; i < nodeList.getLength(); i++) {
         	 Saramin saramin  = new Saramin();
              NodeList child = nodeList.item(i).getChildNodes();

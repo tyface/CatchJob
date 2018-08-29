@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
+import com.CatchJob.model.Interview;
 
 
 
@@ -72,22 +73,59 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		}
 		return entList;
 	}
-	
+	//최근 기업 정보 보기 //TODO 서비스랑 dao, mapper 분리하기 //RecentSerciveImp
 	@Override
-	public List<Enterprise> getRecentsEntList(int memberIndex) {
-		
-		List<Enterprise> entList = entDao.selectListEntRecent(memberIndex);
+	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData) {
+		int PAGE_NUM = mapData.get("PAGE_NUM");
+		int START_ROW = Constants.Recent.NUM_OF_RECENT_PER_PAGE * ( PAGE_NUM - 1 ) ;
+		mapData.put("NUM_OF_RECENT_PER_PAGE", Constants.Recent.NUM_OF_RECENT_PER_PAGE);
+		mapData.put("START_ROW", START_ROW);
+		System.out.println("서비스 메타데이터: "+mapData);
+		List<Enterprise> entList = entDao.selectListEntRecent(mapData);
 
 		for (Enterprise ent : entList) {
 			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
 		}
 		return entList;
 	}
-	
-	public int salaryCalculation(int payAmtAvg) {
-		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
+	 //TODO 옮길것
+	@Override
+	public Map<String, Integer> recentPageData(int currentPage,int memberIndex) {
+		Map<String, Integer> recentPageData = new HashMap<String,Integer>();
+		Map<String, String> data = new HashMap<String, String>();
+		//data.put("ENT_IDX", Integer.toString(entIndex));
+		recentPageData.put("currentPage", currentPage);	
+		recentPageData.put("pageTotalCount", getrecentTotalRows(memberIndex));
+		recentPageData.put("startPage", getRecentStartPage(currentPage));
+		recentPageData.put("endPage", getRecentEndPage(currentPage));
+		recentPageData.put("msgPerPage", Constants.Interview.NUM_OF_ITVW_PER_PAGE);
+		System.out.println("recentPageData: "+recentPageData);
+		return recentPageData;
 	}
-	
+	 //TODO 옮길것
+	@Override
+	public int getrecentTotalRows(int memberIndex) {
+		//data.put("INTRVW_FL", "1");
+		int pageTotalCount = 0;
+		int totalRows = entDao.selectRecentTotalRows(memberIndex);
+		System.out.println("totalRows: "+totalRows);
+		if (totalRows != 0) {
+			pageTotalCount = (int) Math.ceil(((double) totalRows / Constants.Interview.NUM_OF_ITVW_PER_PAGE));
+		}
+		return pageTotalCount;
+		
+	}
+	 //TODO 옮길것
+	public int getRecentStartPage(int pageNum) {
+		int startPage = ((pageNum - 1) / Constants.Recent.NUM_OF_NAVI_PAGE) * Constants.Recent.NUM_OF_NAVI_PAGE + 1;
+		return startPage;
+	}
+	 //TODO 옮길것
+	public int getRecentEndPage(int pageNum) {
+		int endPage = (((pageNum - 1) / Constants.Recent.NUM_OF_NAVI_PAGE) + 1) * Constants.Recent.NUM_OF_NAVI_PAGE;
+		return endPage;
+	}
+
 	/* 관리자 페이징 처리 */
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
@@ -171,6 +209,11 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	public Enterprise selectEnt(int entIndex) {
 		Enterprise ent = entDao.selectEnt(entIndex);
 		return ent;
+	}
+	
+
+	public int salaryCalculation(int payAmtAvg) {
+		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
 	}
 	
 }

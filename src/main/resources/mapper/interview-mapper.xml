@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM INTERVIEW_TB i
 		LEFT JOIN ENTERPRISE_TB e
 		ON i.ENT_IDX = e.ENT_IDX
-		WHERE i.ENT_IDX=#{entIndex} AND i.MBER_IDX=#{mberIndex} AND i.INTRVW_FL=#{INTRVW_FL}
+		WHERE i.ENT_IDX=#{ENT_IDX} AND i.MBER_IDX=#{MBER_IDX} AND i.INTRVW_FL=#{INTRVW_FL}
 	</select>
 	<!-- 계정에서 인터뷰 정보 출력할때 필요.. -->
 	<select id="selectListByMemberIdx" parameterType="map" resultMap="interviewMap">

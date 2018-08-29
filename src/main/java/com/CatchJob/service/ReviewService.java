@@ -36,7 +36,6 @@ public interface ReviewService {
 	public Map<String, Object> getMessageList(Map<String, Object> data);
 	
 	public boolean modifyReview(Review review);
-
 //	리뷰코멘트 VIEW 페이지에서 페이징처리
 	public List<Review> getReviewsList(Map<String, Integer> data);
 	//Review page data
