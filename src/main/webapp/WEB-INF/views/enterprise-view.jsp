@@ -14,10 +14,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/chartjs-plugin-datalabels.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
 
-<!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
+<!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script>
 
 <style>
 .box {
@@ -84,8 +84,7 @@ $(function(){
 // 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
 // 		interviewNullMent.appendTo(interviewNull);
 // 	}
-
-	if('${principal}'==''){
+	if(member == 'anonymousUser'){
 	}else{
 		status = "login";
 	}
@@ -760,7 +759,7 @@ function reviewValidation(){
 }
 function interviewValidation(){
 	 /* 면접후기 작성시 유효성 검사 */
-	$('#writeinterview').validate({
+	$('#writeInterview').validate({
 		rules : {
 
 			intrvwDifficulty:{
@@ -1050,10 +1049,10 @@ function jsonEscape(str)  {
 							<br> <br>
 
 							<div class="row">
-								<div class="col-md-2"></div>
-								<div class="col-md-8">
+<!-- 								<div class="col-md-2"></div> -->
+								<div class="col-md-12">
 
-									<div class="box">
+									<div class="box box-primary">
 										<div class="box-header">
 											<h3 class="box-title">
 												<span id="select">인원</span>
@@ -1112,27 +1111,9 @@ function jsonEscape(str)  {
 
 							<br>
 
-<!-- 							<div class="row"> -->
-<!-- 								<div class="col-sm-2"> -->
-<!-- 									<p> -->
-<!-- 										<b> 평균연봉</b> -->
-<!-- 									</p> -->
-<!-- 									<p>(국민연금)</p> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-sm-4"> -->
-<!-- 									<h2> -->
-<%-- 										<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span>만원</b> --%>
-<!-- 									</h2> -->
-<!-- 								</div> -->
-
-<!-- 							</div> -->
-
 
 						</div>
 					</div>
-
-<!-- 				</div> -->
-
 			</div>
 			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////////// -->
 
@@ -1251,9 +1232,9 @@ function jsonEscape(str)  {
 			<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 				<div id="section3">
-					<h3 id="title">면접후기</h3>
+					<h3 class="sectionTitle">면접후기</h3>
 					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
-					<div class="panel-group" style="color: black">
+					<div class="panel-group" >
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<div class="box box-danger">
@@ -1366,7 +1347,7 @@ function jsonEscape(str)  {
 	<div class=" modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
-			<form action="writeinterview" id="writeinterview" method="post">
+			<form action="writeInterview" id="writeInterview" method="post">
 				<input type="hidden" name="entIndex" value="${entInfo.ENT_IDX}">
 				<div class="modal-header cat-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>

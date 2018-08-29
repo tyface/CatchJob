@@ -369,7 +369,7 @@ function followAction(entIndex,e){
     });
     return false;
   }
-
+  
   var $this = $(e).children("i");
   var fa = $this.hasClass("fa");
   var requestURL;

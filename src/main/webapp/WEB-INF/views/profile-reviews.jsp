@@ -6,8 +6,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script> --%>
-<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/jquery.validate.min.js"></script> --%>
-<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/messages_ko.min.js"></script> --%>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script>
 
 <script>
 $(function(){

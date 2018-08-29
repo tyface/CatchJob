@@ -1,7 +1,5 @@
 package com.CatchJob.model;
 
-import java.util.Date;
-
 public class News {
 	private String title;//개별 검색 결과이며, title, originallink, link, description, pubDate 를 포함한다.
 	private String originallink; //검색 결과 문서의 제공 언론사 하이퍼텍스트 link를 나타낸다.

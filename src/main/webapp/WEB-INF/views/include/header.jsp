@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,13 +20,12 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/public.js"></script>
-
+<security:authentication var="principal" property="principal"/>
 
 
 <script type="text/javascript">
 	var contextPath = "${pageContext.request.contextPath}";
-	var member = "<%=session.getAttribute("member")%>"
-
+	var member = "${principal}"
 	// 페이스북 리다이렉트 프래그먼트 포함 오류 해결용(임시)
 	if (window.location.hash && window.location.hash == '#_=_') {
 		if (window.history && history.pushState) {

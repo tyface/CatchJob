@@ -149,24 +149,6 @@ $(function(){
 	
 			</div>
 		</c:forEach>
-		<!-- 페이지 네비 -->
-		<a href="${pageContext.request.contextPath}/profile/recent?page=1" class="underline">[처음]</a>
-		<a href="${pageContext.request.contextPath}/profile/recent?page=${recentViewPageData.startPage-1}" class="underline">[이전]</a>
-			
-		<c:forEach var="pageNum" begin="${recentViewPageData.startPage}"
-			end="${recentViewPageData.endPage < recentViewPageData.pageTotalCount ? recentViewPageData.endPage : viewData.pageTotalCount}">
-			<c:choose>
-				<c:when test="${pageNum == recentViewPageData.currentPage}">
-					<b>[${pageNum}]</b>
-				</c:when>
-				<c:otherwise>
-					<a href="${pageContext.request.contextPath}/profile/recent?page=${pageNum}" class="underline">[${pageNum}]</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>			
-			
-		<a href="${pageContext.request.contextPath}/profile/recent?page=${recentViewPageData.endPage+1}" class="underline">[다음]</a>
-		<a href="${pageContext.request.contextPath}/profile/recent?page=${recentViewPageData.pageTotalCount}" class="underline">[마지막]</a>
 		
 		
 	</div>

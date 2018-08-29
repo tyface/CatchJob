@@ -186,12 +186,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT 				#{NUM_OF_RECENT_PER_PAGE} 
 		OFFSET				#{START_ROW}
 	</select>
-	<!-- 최근본 기업 네비  profile-recent.jsp-->
-<!-- 	<select id="selectRecentTotalRows" parameterType="int" resultType="int"> -->
-<!-- 		SELECT count( distinct ENT_IDX) -->
-<!-- 		FROM VIEW_RECORD_TB -->
-<!-- 		WHERE MBER_IDX=#{MBER_IDX} -->
-<!-- 	</select> -->
 	<resultMap type="enterprise" id="entMap">
 		<result property="entIndex" column="ENT_IDX" />
 		<result property="entName" column="ENT_NM" />

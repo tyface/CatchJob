@@ -30,12 +30,9 @@ public interface EnterpriseService {
 	//팔로잉 기업 보기
 	public List<Enterprise> getFollowsEntList(int memberIndex);
 	
-//	 최근 본 기업 보기//TODO 서비스랑 dao, mapper 분리하기 //RecentSercive
+//	 최근 본 기업 보기//TODO  분리하기 //RecentSercive
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData);
-	 //TODO 옮길것
-	public Map<String, Integer> recentPageData(int currentPage,int memberIndex);
-	 //TODO 옮길것
-	public int getrecentTotalRows(int memberIndex);
+
 	
 	//관리자 페이지
 	public Map<String, Object> getMessageList(Map<String, Object> data);

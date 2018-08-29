@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.Review;
+import com.CatchJob.model.SMember;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
 import com.CatchJob.service.InterviewService;
@@ -39,21 +41,22 @@ public class ProfileController {
 	private FollowService followService;
 
 	@RequestMapping(value = "/reviews")
-	public String reviewsView(Model model, HttpSession session) {		
+	public String reviewsView(Model model, Authentication authentication) {		
+		//System.out.println("세션:------------------------"+(   (Member)session.getAttribute("member")).getMberIndex()   );
 		//회원번호로 조회해서 리뷰 데이터 가져오기 
 		//System.out.println("진ㅇ입성공입니다 리뷰유리븁리"+session.getAttribute("mberIndex"));
 		Map<String, String> data = new HashMap<String,String>();
-		data.put("MBER_IDX", Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		data.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
 		model.addAttribute("reviewList", reviewService.reviewListByMember(data));
 		//System.out.println(reviewService.reviewListByMember(((Member)session.getAttribute("member")).getMberIndex()));
 		return "profile-reviews";
 	}
 	@ResponseBody
 	@RequestMapping(value = "/reviewForm")
-	public Review reviewsView( Model model,HttpSession session, String entIndex, String questionNum,HttpServletResponse resp) {
+	public Review reviewsView( Model model,Authentication authentication, String entIndex, String questionNum,HttpServletResponse resp) {
 		Map<String, String> data = new HashMap<String,String>();
 		
-		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
+		int memberIndex = ((SMember)authentication.getPrincipal()).getUserIndex();
 		data.put("mberIndex", Integer.toString(memberIndex));
 		data.put("entIndex", entIndex);
 		data.put("questionNum", questionNum);
@@ -65,8 +68,8 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/updateReview")
-	public String updateReview(Review review, HttpSession session) {
-		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
+	public String updateReview(Review review,Authentication authentication) {
+		int memberIndex = ((SMember)authentication.getPrincipal()).getUserIndex();
 		review.setMberIndex(memberIndex);
 		reviewService.updateReview(review);
 //		System.out.println(review);		
@@ -74,9 +77,9 @@ public class ProfileController {
 	}     
 	@ResponseBody
 	@RequestMapping(value="/deleteReview")
-	public boolean deleteReview (HttpServletRequest req, HttpSession session) {		
+	public boolean deleteReview (HttpServletRequest req,Authentication authentication) {		
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("mberIndex",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		data.put("mberIndex", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
 		data.put("entIndex", req.getParameter("entIndex"));
 		data.put("questionNum", req.getParameter("questionNum"));
 		System.out.println("리뷰 지울 데이터: "+data);
@@ -89,9 +92,9 @@ public class ProfileController {
 	
 	/* 회원정보를 통해 작성한 인터뷰정보 가져오기....... */
 	@RequestMapping(value = "/interviews")
-	public String interviewView(Model model, HttpSession session) {
+	public String interviewView(Model model,Authentication authentication) {
 		Map<String, String> data = new HashMap<String,String>();
-		data.put("MBER_IDX", Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		data.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
 		model.addAttribute("viewData", itvwService.selectListByMemberIdx(data));
 		return "profile-interviews";
 	
@@ -99,12 +102,12 @@ public class ProfileController {
 	 /*회원정보와, 기업정보 이용해서 해당 면접리뷰 수정 모달 열기 */
 	
 	@RequestMapping(value = "/interviewForm")
-	public void form(Model model,HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+	public void form(Model model,Authentication authentication, HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8"); 
 		resp.setCharacterEncoding("utf-8");
 		//System.out.println("진입성공-------------------------");
 		Map<String, String> data = new HashMap<String,String>();
-		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
+		int memberIndex = ((SMember)authentication.getPrincipal()).getUserIndex();
 		data.put("MBER_IDX", Integer.toString(memberIndex));
 		data.put("ENT_IDX", req.getParameter("entIndex"));
 	
@@ -119,11 +122,11 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/updateInterview")
-	public String updateInterview(Interview interview, HttpSession session) {
+	public String updateInterview(Interview interview,Authentication authentication) {
 		//interview.setMberIndex(((Member)session.getAttribute("member")).getMberIndex());
 		//interview.setIntrvwFlag("1");
 		//System.out.println("들어는왔니---");
-		int memberIndex = ((Member)session.getAttribute("member")).getMberIndex();
+		int memberIndex = ((SMember)authentication.getPrincipal()).getUserIndex();
 		interview.setMberIndex(memberIndex);
 		//System.out.println(interview);
 		
@@ -137,10 +140,10 @@ public class ProfileController {
 	}  
 	@ResponseBody	
 	@RequestMapping(value="/deleteInterview")
-	public boolean deleteInterview (HttpServletRequest req, HttpSession session, String entIndex) {
+	public boolean deleteInterview (HttpServletRequest req, Authentication authentication, String entIndex) {
 		
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("mberIndex",  Integer.toString(((Member)session.getAttribute("member")).getMberIndex()));
+		data.put("mberIndex",  Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
 //		data.put("entIndex", req.getParameter("entIndex"));
 		data.put("entIndex", entIndex);
 		
@@ -151,27 +154,24 @@ public class ProfileController {
 	
 
 	@RequestMapping(value = "/follows")
-	public String followView (Model model, HttpSession session) {
+	public String followView (Model model, Authentication authentication) {
 //		System.out.println("gg");
 //		System.out.println("컨트롤러: 팔로우 :"+entService.getFollowsEntList(((Member)session.getAttribute("member")).getMberIndex()));
-		model.addAttribute("followView", entService.getFollowsEntList(((Member)session.getAttribute("member")).getMberIndex()));
+		model.addAttribute("followView", entService.getFollowsEntList(((SMember)authentication.getPrincipal()).getUserIndex()));
 		
 		
 		return "profile-follows";
 	}
 	
 	@RequestMapping(value = "/recent")
-	public String recentView (@RequestParam(defaultValue = "1")int page,Model model, HttpSession session) {
-		int MBER_IDX = ((Member)session.getAttribute("member")).getMberIndex();
+	public String recentView (Model model, Authentication authentication) {
+		int MBER_IDX = ((SMember)authentication.getPrincipal()).getUserIndex();
 		System.out.println("프로파일 컨트롤러...."+(MBER_IDX));
-		int currentPage= page;
 		
 		Map<String, Integer> mapData = new HashMap<String, Integer>();
 		mapData.put("MBER_IDX", MBER_IDX);
-		mapData.put("PAGE_NUM", page);
 		model.addAttribute("recentView", entService.getRecentEntList(mapData));
 		model.addAttribute("recentViewJson", new Gson().toJson(entService.getRecentEntList(mapData)));
-		model.addAttribute("recentViewPageData", entService.recentPageData(page, MBER_IDX));
 		return "profile-recent";
 	}
 	
