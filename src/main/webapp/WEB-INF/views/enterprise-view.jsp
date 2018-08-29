@@ -67,13 +67,22 @@ var outPerson = new Array();
 
 
 $(function(){
-// 	if(${interview} ==""){
+	
+	entInf();
+	reviewbarChart();//리뷰  바 차트
+	getInterviewList(1);
+	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
+	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
+	interviewValidation(); //인터뷰 유효성 검사 부분
+	reviewValidation()//리뷰 유효성 검사 부분
+	saramin(); //#section5 사람인채용정보	
+// 	if(${interview} =="" || ${interview} == null){
 // 		alert(333)
-// 		//interviewNull
+// 		interviewNull
 // 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
 // 		interviewNullMent.appendTo(interviewNull);
 // 	}
-
+//alert(2)
 	if('${member}'==''){
 	}else{
 		status = "login";
@@ -122,14 +131,8 @@ $(function(){
 	});
 
 
-	entInf();
-  reviewbarChart();//리뷰  바 차트
-  getInterviewList(1);
-	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
-	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
-	interviewValidation(); //인터뷰 유효성 검사 부분
-	reviewValidation()//리뷰 유효성 검사 부분
-	saramin(); //#section5 사람인채용정보
+	
+
 
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
 	if(following == 1){
@@ -850,41 +853,61 @@ function saramin(){
 		//alert(333)
 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
 		img.appendTo(saraminRow1);
-	}
-	for(var i in saraminList){
-		//alert(3)
-		var url 					= saraminList[i].url
-		var name 					= saraminList[i].name
-		var expirationTimestamp 	= saraminList[i].expirationTimestamp
-		var title 					= saraminList[i].title
-		var experienceLevel			= saraminList[i].experienceLevel
-		var requiredEducationLevel	= saraminList[i].requiredEducationLevel
-		var location				= saraminList[i].location
-		var industry				= saraminList[i].industry
-		var href					= saraminList[i].href
-
-		var trimLocation = location.substring(0,2);
-		var trimRequiredEducationLevel;
-		if(requiredEducationLevel != "학력무관"){
-			trimRequiredEducationLevel = requiredEducationLevel.substring(0,1)+"졸↑";
-		}else{
-			trimRequiredEducationLevel = requiredEducationLevel;
-		}
-		if(i<3){
-	 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
-			data.appendTo(saraminRow1);
-		}else if(i<6){
-			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
-			data.appendTo(saraminRow2);
-		}else if(i<9){
-			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
-			data.appendTo(saraminRow3);
-		}else{
-			var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");			data.appendTo(saraminRow4);
+	}else{
+		for(var i in saraminList){
+			//alert(3)
+			var url 					= saraminList[i].url
+			var name 					= saraminList[i].name
+			var expirationTimestamp 	= saraminList[i].expirationTimestamp
+			var title 					= saraminList[i].title
+			var experienceLevel			= saraminList[i].experienceLevel
+			var requiredEducationLevel	= saraminList[i].requiredEducationLevel
+			var location				= saraminList[i].location
+			var industry				= saraminList[i].industry
+			var href					= saraminList[i].href
+	
+			var trimLocation = location.substring(0,2);
+			var trimRequiredEducationLevel;
+			if(requiredEducationLevel != "학력무관"){
+				trimRequiredEducationLevel = requiredEducationLevel.substring(0,1)+"졸↑";
+			}else{
+				trimRequiredEducationLevel = requiredEducationLevel;
+			}
+			if(i<3){
+		 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+				data.appendTo(saraminRow1);
+			}else if(i<6){
+				var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+				data.appendTo(saraminRow2);
+			}
+	
 		}
 	}
 }
+/* 뉴스 */
+// function news(){
+// 	var newsList = JSON.parse('${newsList}');
+// 	if(newsList == ""){
+// 		alert(333)
+// 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
+// 		img.appendTo(news);
+// 	}
+// 	else{
+// 		alert(444)
+// 		for(var i in newsList){
+// 			var title	 = newsList[i].title
+// 			var pubDate	 = newsList[i].pubDate
+// 			var link 	 = newsList[i].link
+// 			alert(i+" link: "+link)
+//  			//var data = $("<span class='col-xs-8 f-left text-left blue-font'>제목</span><span class='col-xs-4 f-right text-right'>출판일</span>")
+// 			var data = $("<span>미친</span>");
+			
+// 			//alert("dddd: "+$('#news').text()+data)
+// 			//data.appendTo(news);
+// 		}
+// 	}
 
+// }
 /* 숫자에 컴마 찍는 함수 */
 function addComma(num) {
    var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -896,25 +919,12 @@ function jsonEscape(str)  {
 }
 </script>
 
-<div class="container module-main">
-	<h1 style="padding-top: 50px; color: #2196F3;">${entInfo.ENT_NM}</h1>
-
-
-	<a href="#" class="follow follow-btn follow"> <i
-		class="fa fa-heart-o follow" id="follow"></i>
-	<!-- 123 -->
-	</a>
-
-</div>
-<br>
-
-
 <div class="container">
 	<div class="row">
 		<nav class="col-sm-1 padding-zero" id="left-nav">
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix"
-				data-offset-top="205">
+				data-offset-top="70">
 				<!-- 				<li style="height: 30px"></li> -->
 				<li>
 					<a onclick="fnMove('#section1')">
@@ -942,7 +952,7 @@ function jsonEscape(str)  {
 					</a>
 				</li>
 				<li>
-				<a onclick="fnMove('#section6')">
+					<a onclick="fnMove('#section6')">
 						<span class="fa fa-newspaper-o logo-small"></span> 뉴스
 					</a>
 				</li>
@@ -951,10 +961,29 @@ function jsonEscape(str)  {
 		</nav>
 
 		<div class="col-sm-11">
+			<div class="module" id="entNameModule">
+				<div class=" row" id="section1">
+					<div class="col-sm-6">
+						<span id="entName">${entInfo.ENT_NM}</span>
+						<a href="#" class="follow follow-btn follow" > 
+							<i class="fa fa-heart-o follow" id="follow"></i>
+						</a>
+					</div>
+					<div class="col-sm-6">
+						<div class="row">
+								<p>예상평균연봉(국민연금)</p>
+								<h1>
+									<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span></b>만원
+								</h1>
+						</div>
+					</div>
+				</div>
+
+			</div>
 			<!-- 기업정보//////////////////////////////////////////////////////////////////////////////// -->
 			<div class="module">
 
-				<div id="section1">
+<!-- 				<div id="section1"> -->
 					<h3  class="sectionTitle">기업정보</h3>
 
 					<div class="panel panel-default">
@@ -993,6 +1022,7 @@ function jsonEscape(str)  {
 									</button>
 								</div>
 							</div>
+							
 							<br>
 
 							<div class="row">
@@ -1080,26 +1110,26 @@ function jsonEscape(str)  {
 
 							<br>
 
-							<div class="row">
-								<div class="col-sm-2">
-									<p>
-										<b> 평균연봉</b>
-									</p>
-									<p>(국민연금)</p>
-								</div>
-								<div class="col-sm-4">
-									<h2>
-										<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span>만원</b>
-									</h2>
-								</div>
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col-sm-2"> -->
+<!-- 									<p> -->
+<!-- 										<b> 평균연봉</b> -->
+<!-- 									</p> -->
+<!-- 									<p>(국민연금)</p> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-sm-4"> -->
+<!-- 									<h2> -->
+<%-- 										<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span>만원</b> --%>
+<!-- 									</h2> -->
+<!-- 								</div> -->
 
-							</div>
+<!-- 							</div> -->
 
 
 						</div>
 					</div>
 
-				</div>
+<!-- 				</div> -->
 
 			</div>
 			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////////// -->
@@ -1221,7 +1251,6 @@ function jsonEscape(str)  {
 				<div id="section3">
 					<h3 id="title">면접후기</h3>
 					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
-					<p>Try to scroll this section and look at the navigation list while scrolling!가나다라</p>
 					<div class="panel-group" style="color: black">
 						<div class="panel panel-default">
 							<div class="panel-body">
@@ -1231,15 +1260,11 @@ function jsonEscape(str)  {
 									</div>
 
 									<div class="row">
-										<div class="col-sm-2"></div>
-										<div class="col-sm-8">
+										<div class="col-md-6">
 											<div class="card-body">
 												<canvas id="pieChart"></canvas>
 											</div>
-											<div class="card-footer small text-muted">Updated
-												yesterday at 11:59 PM</div>
 										</div>
-										<div class="col-sm-2"></div>
 									</div>
 								</div>
 								<div class="col-xs-12" id="interviewNull"></div>
@@ -1267,26 +1292,17 @@ function jsonEscape(str)  {
 			<div class="module">
 				<div id="section4">
 					<h3 class="sectionTitle">월별그래프</h3>
-					<p>Try to scroll this section and look at the navigation list while scrolling!</p>
 					<div class="btn-group graph-btn" >
-							<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
-							<button class="btn btn-default " id="salary-btn">평균 급여</button>
+						<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
+						<button class="btn btn-default " id="salary-btn">평균 급여</button>
 					</div>
 					<!-- 그래프 -->
 					<div class="panel panel-default ">
 						<div class="panel-body">
-							<div class="card-header">
-								<i class="fa fa-table"></i> Combo Bar Line Chart
-							</div>
-
 							<div class="card-body chartreport">
 								<canvas id="comboBarLineChart"></canvas>
 							</div>
-
-							<div class="card-footer small text-muted">Updated yesterday
-								at 11:59 PM</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -1303,10 +1319,6 @@ function jsonEscape(str)  {
 							</div>
 							<div class="row" id="saraminRow2">
 							</div>
-							<div class="row" id="saraminRow3">
-							</div>
-							<div class="row" id="saraminRow4">
-							</div>
 						</div>
 <!-- 						</div> -->
 <!-- 					</div> -->
@@ -1317,17 +1329,23 @@ function jsonEscape(str)  {
 
 				<div id="section6">
 					<h3  class="sectionTitle" >뉴스</h3>
-
-					<div class="panel panel-default slideanim">
-						<div class="panel-body">
-							<c:forEach items="${newsList}" var="newsList">
-								<div class="row">
-									<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span>
-									<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>
-								</div>
-							</c:forEach>
-						</div>
-					</div>
+							<c:choose>
+								<c:when test="${newsList.size() > 0 }">
+									<div class="panel panel-default slideanim">
+										<div class="panel-body" >
+										 	<c:forEach items="${newsList}" var="newsList">
+												<div class="row">
+													<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span>
+													<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class='well well-lg'>뉴스정보가 없습니다</div>
+								</c:otherwise>
+							</c:choose>
 				</div>
 			</div>
 
