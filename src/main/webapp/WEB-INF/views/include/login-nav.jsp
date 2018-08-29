@@ -3,7 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 
 <script>
-
 $(function() {
 
 	$(".googleBtn").on("click",function() {
@@ -29,9 +28,7 @@ $(function() {
 					 "mberId" : $("#loginId").val(),
 					 "mberPw" : $("#loginPw").val()
 				},
-				    beforeSend : function(xhr){
-				    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-	                },
+
 				dataType : "json",
 				success : function(data) {
 					 if (data.result == "CODE_01") {
@@ -146,9 +143,6 @@ $(function() {
 				"signUpPw" : $("#signUpPw").val(),
 				"signUpPwCheck" : $("#signUpPwCheck").val()
 			},
-			beforeSend : function(xhr){
-			    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-            },
 			dataType : "json",
 			success : function(data) {
 				if (data.result) {
