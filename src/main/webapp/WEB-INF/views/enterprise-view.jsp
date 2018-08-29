@@ -516,7 +516,7 @@ function chartPersonnel(){
 					
 					data: outPerson,
 					datalabels: {				
-						color:  '#FF6B8A',
+						color:  '#bad0ff',
 					}
 
 				}],
@@ -543,7 +543,7 @@ function chartPersonnel(){
 
 	        elements: {
 	            line: {
-	                //tension: 0, // disables bezier curves
+	                tension: 0, // disables bezier curves
 	            }
 	        }
 	    }
@@ -852,10 +852,10 @@ function interviewValidation(){
 function saramin(){
 	
 	var saraminList = JSON.parse('${saraminList}');
-// 	if(saraminList == ""){
-// 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
-// 		img.appendTo(saraminRow1);
-// 	}
+	if(saraminList == ""){
+		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
+		img.appendTo(saraminRow1);
+	}
 	for(var i in saraminList){
 		var url 					= saraminList[i].url
 		var name 					= saraminList[i].name
