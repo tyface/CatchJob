@@ -110,22 +110,16 @@ public class MemberController {
 		}
 	}*/
 	
-	@ResponseBody
+	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-		String data ="";
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
-			data = "{\"result\" : true}";
-		} else {
-			data = "{\"result\" : false}";
-		}
-		return data;
+		} 
+		return "redirect:/";
 	}
 	
-	
-
 	/* 회원가입 */
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public void join(HttpServletRequest request, HttpServletResponse resp, String signUpId, String signUpPw,
