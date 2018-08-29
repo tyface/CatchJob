@@ -69,16 +69,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합) -->
 	<select id="selectEntHRInfo" parameterType="int" resultType="map">
-	SELECT a.ENT_IDX,sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as outPerson
+		SELECT a.ENT_IDX, sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as outPerson
 		FROM (SELECT ENT_IDX,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM
-		FROM NPN_DTLS_TB
-		WHERE ENT_IDX = #{ENT_IDX}
-		order by PAY_YM desc		    	
-		limit 12)a
+			    FROM NPN_DTLS_TB
+			   WHERE ENT_IDX = #{ENT_IDX}
+			ORDER BY PAY_YM desc		    	
+			   LIMIT 12
+			  ) a
 	</select>
 	
-	<select id="selectGraphInfo" parameterType="int"
-		resultType="hashMap">
+	<select id="selectGraphInfo" parameterType="int" resultType="hashMap">
 		SELECT
 		NPN_DTLS_IDX,ENT_IDX,NPN_SBSCRBER_CNT,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM,PAY_AMT
 		FROM NPN_DTLS_TB

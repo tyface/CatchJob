@@ -14,11 +14,10 @@
 
 	<security:http auto-config="true" use-expressions="true">
 
-		<!-- 여기에 기업인증회원만 리뷰 작성할수 있는 url 적기 <security:intercept-url pattern="/faq" 
+		<!-- 여기에 기업인증회원만 리뷰 작성할 수 있는 url 적기 <security:intercept-url pattern="/faq" 
 			access="hasRole('ROLE_AUTHENTICATED')" /> -->
 
-		<security:intercept-url pattern="/**"
-			access="permitAll" />
+		<security:intercept-url pattern="/" access="permitAll" />
 
 		<security:form-login login-page="/"
 			login-processing-url="/member/login"
@@ -27,12 +26,9 @@
 			default-target-url="/" username-parameter="mberId"
 			password-parameter="mberPw" />
 
-		<security:logout invalidate-session="true"
-			logout-success-url="/" logout-url="/member/logout" />
-
+		<security:logout invalidate-session="true" logout-url="/member/logout" />
 		<security:csrf />
 	</security:http>
-
 
 	<security:authentication-manager>
 		<security:authentication-provider
