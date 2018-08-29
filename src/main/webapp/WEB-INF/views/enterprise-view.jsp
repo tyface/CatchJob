@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<security:authentication var="principal" property="principal"/>
 <jsp:include page="include/header.jsp" flush="true" />
 
 <link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
@@ -82,8 +84,8 @@ $(function(){
 // 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
 // 		interviewNullMent.appendTo(interviewNull);
 // 	}
-//alert(2)
-	if('${member}'==''){
+
+	if('${principal}'==''){
 	}else{
 		status = "login";
 	}
