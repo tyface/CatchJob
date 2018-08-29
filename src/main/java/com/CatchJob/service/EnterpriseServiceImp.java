@@ -102,6 +102,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		recentPageData.put("startPage", getRecentStartPage(currentPage));
 		recentPageData.put("endPage", getRecentEndPage(currentPage));
 		recentPageData.put("msgPerPage", Constants.Interview.NUM_OF_ITVW_PER_PAGE);
+		System.out.println("recentPageData: "+recentPageData);
 		return recentPageData;
 	}
 	 //TODO 옮길것
@@ -110,6 +111,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		//data.put("INTRVW_FL", "1");
 		int pageTotalCount = 0;
 		int totalRows = entDao.selectRecentTotalRows(memberIndex);
+		System.out.println("totalRows: "+totalRows);
 		if (totalRows != 0) {
 			pageTotalCount = (int) Math.ceil(((double) totalRows / Constants.Interview.NUM_OF_ITVW_PER_PAGE));
 		}
