@@ -187,7 +187,6 @@ function getInterviewList(pageNum){
 
   var interviewListDiv = $(".interviewList");
   var appendObject;
-  console.log(contextPath,entIndex,pageNum);
 	$.ajax({
 		url:contextPath+"/enterprise/getInterviewList",
 		data: {"entIndex" : entIndex,

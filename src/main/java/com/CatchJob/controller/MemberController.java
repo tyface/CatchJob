@@ -360,7 +360,6 @@ public class MemberController {
 	// 구글 Callback호출 메소드
 	@RequestMapping(value = "/googleSignInCallback", method = { RequestMethod.GET, RequestMethod.POST })
 	public String googleCallback(@RequestParam String code, HttpSession session) throws IOException {
-
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(),
 				null);
