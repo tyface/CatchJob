@@ -1,5 +1,6 @@
 
 
+
 /* 무한 스크롤 페이징*/
 function appendEntList(entList,pageNum,pageViewCount){
   var appendObject;
@@ -183,6 +184,7 @@ function getReviewList(questionNum, pageNum){/* 456 */
 
 /* 면접후기 리스트 호출*/
 function getInterviewList(pageNum){
+
   var interviewListDiv = $(".interviewList");
   var appendObject;
 	$.ajax({
@@ -303,7 +305,7 @@ function getInterviewList(pageNum){
 			appendObject.append($("<li><a href='javascript:getInterviewList("+1+");'class='underline'>&laquo;</a></li>"));
 			appendObject.append($("<li><a href='javascript:getInterviewList("+ prevPage +");'class='underline'>&lt;</a></li>"));
 
-			for(var i = startPage;i <=endPage;i++){
+			for(var i = startPage; i <=endPage; i++){
 				if(i != currentPage){
 					appendObject.append($("<li><a href='javascript:getInterviewList("+i+");'>"+i+"</a></li>"));
 				}else{
@@ -314,7 +316,23 @@ function getInterviewList(pageNum){
 			appendObject.append($("<li><a href='javascript:getInterviewList("+nextPage+");'class='underline'>&gt;</a></li>"));
 			appendObject.append($("<li><a href='javascript:getInterviewList("+ totalCnt +");'class='underline'>&raquo;</a></li>"));
 
-      interviewDifficultyShape()
+      for(var j in interviewList){
+   		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
+
+   		 if(interviewList[j].intrvwDifficulty == '매우 어려움'){
+   			$("#difficulty"+j).addClass("intrvwlv5");
+   		} else if(interviewList[j].intrvwDifficulty == '어려움'){
+   			$("#difficulty"+j).addClass("intrvwlv4");
+   		}else if(interviewList[j].intrvwDifficulty == '보통'){
+   			$("#difficulty"+j).addClass("intrvwlv3");
+   		}else if(interviewList[j].intrvwDifficulty == '쉬움'){
+   			$("#difficulty"+j).addClass("intrvwlv2");
+   		}else if(interviewList[j].intrvwDifficulty == '매우 쉬움'){
+   			$("#difficulty"+j).addClass("intrvwlv1");
+   		}
+
+   	 }
+
 		},
 		error : function(request,status,error){
 			alert("요청 실패하였습니다.");
@@ -423,6 +441,5 @@ $(function(){
         }, 400);
         return false;
     });
-
 
 });

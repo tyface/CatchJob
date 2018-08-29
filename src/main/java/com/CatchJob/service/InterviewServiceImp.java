@@ -102,7 +102,6 @@ public class InterviewServiceImp implements InterviewService{
 		int START_ROW = Constants.Interview.NUM_OF_ITVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
 		dataItvw.put("NUM_OF_ITVW_PER_PAGE", Constants.Interview.NUM_OF_ITVW_PER_PAGE);
 		dataItvw.put("START_ROW", START_ROW);
-		
 		List<Interview> interviewList = itvwDao.selectInterviewList(dataItvw);
 		
 		for(int i = 0 ; i<interviewList.size();i++) {			
@@ -122,8 +121,6 @@ public class InterviewServiceImp implements InterviewService{
 			case "5":
 				interviewList.get(i).setIntrvwDifficulty("매우 쉬움");
 				break;
-			//default : interviewList.get(i).setIntrvwDifficulty("매우 쉬움");;
-			//	break;
 			}
 		}
 		/* 면접 경로 */		

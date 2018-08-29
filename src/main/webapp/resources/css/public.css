@@ -296,17 +296,10 @@ article {
 	text-decoration: none;
 }
 
-.logo-small {
-	/* 	color: #2196F3; */
-	font-size: 30px;
-	color: lime;
-	/* width:50px; */
-	display: block;
-}
 
 .affix {
-	top: 20px;
-	z-index: 9999 !important;
+	top: 60px;
+	z-index: 998 !important;
 }
 
 .module {
@@ -451,14 +444,14 @@ label.error {
 
 /* VIEW 페이지 채용정보 색 */
 .panels {
-	
-     border-bottom-style:solid; 
+
+     border-bottom-style:solid;
 /*      border-radius: 10px; */
 /*      border-radius:0 !important; */
      transition: box-shadow 0.5s;
      background-color: #fff;
      margin-bottom: 20px;
-     
+
  }
  .panels:hover {
      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
@@ -468,11 +461,11 @@ label.error {
 	 padding: 15px;
 }
  .panel-headings {
- 	
+
      color: #fff !important;
      background-color: #B5B2FF !important;
-     text-align: right; 
-     padding: 0px 5px 0px 0px ;  
+     text-align: right;
+     padding: 0px 5px 0px 0px ;
      border-bottom: 1px solid transparent;
      border-top-left-radius: 0px;
      border-top-right-radius: 0px;
@@ -489,13 +482,13 @@ label.error {
 /* Tablet */
 @media ( min-width :768px) and (max-width:1024px) {
 	#saramin-margin{
-		margin: 0px 10px 0px 10px; 
+		margin: 0px 10px 0px 10px;
 	}
 }
 /* Desktop */
 @media ( min-width :1025px) {
 	#saramin-margin{
-		margin: 0px 50px 0px 50px; 
+		margin: 0px 50px 0px 50px;
 	}
 }
 #saramin-margin .title{
@@ -503,7 +496,7 @@ label.error {
 }
 #saramin-margin h4{
 	display: inline-block;
-	
+
 }
 /* VIEW 페이지 뉴스 줄 간격 */
 .news-interval {

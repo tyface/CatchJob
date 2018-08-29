@@ -2,15 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans" 
 xmlns:context="http://www.springframework.org/schema/context" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:aop="http://www.springframework.org/schema/aop"
 xsi:schemaLocation="http://www.springframework.org/schema/beans 
 http://www.springframework.org/schema/beans/spring-beans.xsd 
 http://www.springframework.org/schema/context 
 http://www.springframework.org/schema/context/spring-context.xsd "> 
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="com.CatchJob.service" />
-	
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-    	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   <context:component-scan base-package="com.CatchJob.service" />
+
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+       <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
+    
+
 </beans>

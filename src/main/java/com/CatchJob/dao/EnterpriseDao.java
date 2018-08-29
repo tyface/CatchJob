@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.Review;
 
 @Repository
 public interface EnterpriseDao {
@@ -22,9 +21,9 @@ public interface EnterpriseDao {
 	// 기업식별 번호로  기업 정보 가져오기 -VIEW page
 	public Map<String,String> selectEntInfo(Map<String, String> data);
 	//기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합)
-	public Map<String,String> selectEntPeopleInfo(int entIndex);
+	public Map<String,String> selectEntHRInfo(int entIndex);
 	// 기업정보의 그래프 만들기 위해 필요한 데이터 
-	public  List<Map<String,String>>  selectGraphInf(int entIndex);
+	public  List<Map<String,String>>  selectGraphInfo(int entIndex);
 	
 	
 	//팔로잉 기업 보기

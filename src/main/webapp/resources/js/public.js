@@ -1,4 +1,11 @@
 
+/*페이지네 스크롤 위치 이동*/
+function fnMove(seq){
+        var offset = $(seq).offset();
+				var topNavHeight = 100; //상단 네비 길이
+        $('html, body').animate({scrollTop : offset.top - topNavHeight}, 600);
+}
+
 /* 비밀번호 재설정 메일 보내기창 */
 function passwordModifyForm() {
 	$('#loginModal').modal('hide')

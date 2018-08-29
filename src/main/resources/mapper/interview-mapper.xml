@@ -56,12 +56,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 면접후기  VIEW 페이지에서 페이징처리 -->
 	<select id="selectInterviewList" parameterType="map" resultMap="interviewMap">
-		SELECT SQL_CALC_FOUND_ROWS * 
-		FROM 						INTERVIEW_TB 
-		WHERE 						ENT_IDX=#{ENT_IDX} AND INTRVW_FL=#{INTRVW_FL}
-		ORDER BY 					INTRVW_IDX desc 
-		LIMIT 						#{NUM_OF_ITVW_PER_PAGE} 
-		OFFSET						#{START_ROW}
+		SELECT 		SQL_CALC_FOUND_ROWS * 
+		FROM 		INTERVIEW_TB 
+		WHERE 		ENT_IDX=#{ENT_IDX} AND INTRVW_FL=#{INTRVW_FL}
+		ORDER BY 	INTRVW_IDX desc 
+		LIMIT 		#{NUM_OF_ITVW_PER_PAGE} 
+		OFFSET		#{START_ROW}
 	</select>
 	<select id="selectInterviewTotalRows" parameterType="map" resultType="int">
 		SELECT 	 count(*) AS TOTAL_ROWS 

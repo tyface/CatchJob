@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <script>
-
-
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
 $(function() {
 
 	$(".googleBtn").on("click",function() {
@@ -28,6 +32,9 @@ $(function() {
 					 "mberId" : $("#loginId").val(),
 					 "mberPw" : $("#loginPw").val()
 				},
+				    beforeSend : function(xhr){
+				    	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+	                },
 				dataType : "json",
 				success : function(data) {
 					 if (data.result == "CODE_01") {
@@ -141,8 +148,10 @@ $(function() {
 				"signUpId" : $("#signUpId").val(),
 				"signUpPw" : $("#signUpPw").val(),
 				"signUpPwCheck" : $("#signUpPwCheck").val()
-
 			},
+			beforeSend : function(xhr){ 
+			    xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            },
 			dataType : "json",
 			success : function(data) {
 				if (data.result) {
@@ -167,7 +176,6 @@ $(function() {
 		});
 		return false;
 	});
-
 
 });
 
@@ -206,7 +214,7 @@ $(function() {
 
 </script>
 
-<c:if test="${member.mberIndex == null}">
+<security:authorize access="isAnonymous()">
 
 <nav class="navbar navbar-inverse">
   <div class="f-left">
@@ -231,7 +239,7 @@ $(function() {
         <div class="modal-body" style="padding:40px 50px;">
 
           <form role="form" method="post" id="loginForm">
-						<div class="form-group has-feedback">
+					<div class="form-group has-feedback">
 								<input type="email" class="form-control" id="loginId"   placeholder="Enter">
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
@@ -303,7 +311,8 @@ $(function() {
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span>
 									</span>
-									<input type="text" class="form-control" id="inputError"	aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
+									<input type="text" class="form-control" id="inputError"	
+									aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
 								</div>
 							</div>
 						</form>
@@ -358,11 +367,9 @@ $(function() {
 			</div>
 		</div> --%>
 
-</c:if>
-
+</security:authorize>
 <!-- 로그인 후! -->
-<c:if test="${member.mberIndex != null}">
-
+<security:authorize access="isAuthenticated()">
 	<nav class="navbar navbar-inverse">
 
 		<div class="f-left">
@@ -387,7 +394,7 @@ $(function() {
 					<li><a href="${pageContext.request.contextPath}/profile/follows">팔로잉 기업</a></li>
 					<li><a href="${pageContext.request.contextPath}/profile/recent">최근 본 기업</a></li>
 					 <li role="presentation" class="divider"></li>
-					<li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
+				   <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
 				</ul>
 			</div>
 
@@ -434,7 +441,4 @@ $(function() {
 
 		</div>
 	</div>
-
-
-
-</c:if>
+</security:authorize>
