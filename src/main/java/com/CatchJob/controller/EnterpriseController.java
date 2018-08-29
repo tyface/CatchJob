@@ -127,10 +127,11 @@ public class EnterpriseController {
 		
 		//뉴스
 		try {
+			System.out.println("////////////////////////////////////////////////////////////////////");
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
-			model.addAttribute("newsList", newsList);
+			System.out.println("컨트롤러newsList!!!!!123123: "+newsList);
+			model.addAttribute("newsList",newsList);
 			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
-			System.out.println("컨트롤러 사람인!!!!!!123123: "+saraminList);
 			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
 			e.printStackTrace();
