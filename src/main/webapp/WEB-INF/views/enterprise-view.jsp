@@ -25,7 +25,7 @@
 	border-top: 3px solid #d2d6de;
 	margin-bottom: 20px;
 	width: 100%;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .box.box-primary {
