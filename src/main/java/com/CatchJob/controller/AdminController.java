@@ -1,4 +1,4 @@
-package com.CatchJob.controller;
+/*package com.CatchJob.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -50,14 +50,13 @@ public class AdminController {
 	@Autowired
 	UniversalDomainService domainService;
 	
-	/* 로그인폼 */
+	 로그인폼 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String loginForm() {
 		return "admin/admin-login";
 	}
 
-
-	/* 로그아웃 */
+	 로그아웃 
 	@RequestMapping("/logout")
 	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +65,7 @@ public class AdminController {
 		}
 	}
 
-	/* 회원 그룹 관리 */
+	 회원 그룹 관리 
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 
 		int pageNumber = 1;	
@@ -131,7 +130,7 @@ public class AdminController {
 	
 	}
 	
-	/* 관리자 그룹 관리 */
+	 관리자 그룹 관리 
 	@RequestMapping(value = "/mngAdmin")
 	public String mngAdmin(Model model, String page, String msgPerPage, String num, String keyword) {
 		int pageNumber = 1;	
@@ -153,8 +152,8 @@ public class AdminController {
 		}
 		
 		if(num!=null) {
-			Admin admin = adminService.getAdmin(Integer.parseInt(num));
-			model.addAttribute("admin", admin);
+			Member member=memberService.getMember(Integer.parseInt(num));
+			model.addAttribute("admin", member);
 		}
 	
 		Map<String, Object> viewData = adminService.getMessageList(data);
@@ -196,7 +195,7 @@ public class AdminController {
 									
 	}
 	
-	/* 리뷰 관리*/
+	 리뷰 관리
 	@RequestMapping(value = "/mngReview")
 	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {
 		
@@ -487,7 +486,7 @@ public class AdminController {
 		}	
 	}
 	
-/*	@RequestMapping(value = "/mngInduty")
+	@RequestMapping(value = "/mngInduty")
 	public String mngInduty() {
 		
 		return "admin/mng-industry";
@@ -501,7 +500,8 @@ public class AdminController {
 	@RequestMapping(value = "/mngFAQ")
 	public String mngQnA() {
 		return "admin/mng-FAQ";
-	}*/
+	}
 
 
 }
+*/
