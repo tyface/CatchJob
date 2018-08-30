@@ -40,7 +40,7 @@ $(function() {
 						 })
 					 }else if(data.result == "CODE_03"){
 						 swal({
-						   title:"사용자가 존재하지 않습니다.",
+						   title:"사용자가 존재하지 않습니다",
 							 type:"error",
 							 confirmButtonClass: "btn-danger"
 						 })
@@ -48,9 +48,9 @@ $(function() {
 				},
 				error : function() {
 					swal({
-						title:"아이디를 다시 입력해 주세요",
-						type:"warning",
-						confirmButtonClass: "btn-warning"
+						title:"사용자가 존재하지 않습니다",
+						type:"error",
+						confirmButtonClass: "btn-danger"
 					});
 				}
 		 });

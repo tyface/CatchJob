@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
@@ -21,15 +20,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
-		System.out.println("----------CustomAuthenticationProvider start-------");
 		UsernamePasswordAuthenticationToken authToken = null;
 		// 사용자가 입력한 비밀번호와 service가 가져다 준 사용자 정보의 비밀번호가 같으면 권한 제공
 
 		// 사용자가 입력한 이름 가져오기
 		String mberid = authentication.getName();
 		String mberPw = (String) authentication.getCredentials();
-
+		
 		UserDetails member = userDetailService.loadUserByUsername(mberid);
 
 		if (member == null) {
@@ -42,9 +39,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
 		} else {
-			System.out.println("비밀번호 일치");
-			System.out.println("member : " + member.getAuthorities());
-			System.out.println("==========================================");
+			System.out.println("비밀번호 일치// member : " + member.getAuthorities());
+			
 			authToken = new UsernamePasswordAuthenticationToken(member, mberPw, member.getAuthorities());
 			System.out.println(authToken);
 			return authToken;

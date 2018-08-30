@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.AdminDao;
+import com.CatchJob.dao.MemberDao;
 import com.CatchJob.model.Admin;
 
 @Service
 public class AdminServiceImp implements AdminService {	
 	@Autowired
 	AdminDao adminDao;
-
+	@Autowired
+	MemberDao memberDao;
+	
 	@Override
 	public Admin getAdmin(int adminIndex) {
 		return adminDao.selectOne(adminIndex);
@@ -66,10 +69,10 @@ public class AdminServiceImp implements AdminService {
 			String keyword = (String) data.get("keyword");
 			map.put("keyword", keyword);		
 			viewData.put("keyword", keyword);
-			totalCount  = adminDao.selectCount(keyword); 
+			totalCount  = memberDao.selectCount(keyword); 
 		} else {
 			map.put("keyword", "");
-			totalCount  = adminDao.selectCount(""); 
+			totalCount  = memberDao.selectCount(""); 
 		}		
 		
 		int firstRow = 0;     

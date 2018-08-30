@@ -29,9 +29,9 @@ public interface ReviewService {
 	/* 관리자 페이지 */
 	public int calPageTotalCount(int totalCount, int numOfMsgPage);
 
-	public int getStartPage(int pageNum);
+	public int getReviewStartPage(int pageNum);
 
-	public int getEndPage(int pageNum);
+	public int getReviewEndPage(int pageNum);
 
 	public Map<String, Object> getMessageList(Map<String, Object> data);
 	

@@ -1,6 +1,5 @@
 package com.CatchJob.controller;
 
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +31,9 @@ import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.CatchJob.commons.Constants;
 import com.CatchJob.model.Member;
@@ -73,53 +70,48 @@ public class MemberController {
 	private ResourceLoader resourceLoader;
 
 	/*
-	/* 로그인 */
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(HttpSession session, HttpServletResponse resp, String mberId, String mberPw) {
-		String data = "";
-		Member member = memberService.getMemberById(mberId);
+	 * /* 로그인
+	 */
+	/*
+	 * @RequestMapping(value = "/login", method = RequestMethod.POST) public void
+	 * login(HttpSession session, HttpServletResponse resp, String mberId, String
+	 * mberPw) { String data = ""; Member member =
+	 * memberService.getMemberById(mberId);
+	 * 
+	 * System.out.println(
+	 * "진입=============================================================================="
+	 * ); if (member != null) { System.out.println(
+	 * "logib=============================================================================="
+	 * ); boolean result = memberService.login(mberId, mberPw); System.out
+	 * .println("login end=============================================================================="
+	 * ); if (result) { memberService.visitUpdate(member.getMberIndex());
+	 * session.setAttribute("member", member);
+	 * 
+	 * data = "{\"result\" : \"CODE_01\"}"; //로그인 성공
+	 * 
+	 * } else { System.out .println(
+	 * "else=============================================================================="
+	 * );
+	 * 
+	 * data = "{\"result\" : \"CODE_02\"}"; //비밀번호 불일치, 인증되지 않은 회원 }
+	 * 
+	 * } else { data = "{\"result\" : \"CODE_03\"}"; // 사용자가 존재하지 않습니다. }
+	 * 
+	 * System.out.println(
+	 * "종료=============================================================================="
+	 * ); try { resp.getWriter().print(data); } catch (IOException e) {
+	 * e.printStackTrace(); } }
+	 */
 
-		System.out.println("진입==============================================================================");
-		if (member != null) {
-			System.out.println("logib==============================================================================");
-			boolean result = memberService.login(mberId, mberPw);
-			System.out
-					.println("login end==============================================================================");
-			if (result) {
-				memberService.visitUpdate(member.getMberIndex());
-				session.setAttribute("member", member);
-				
-				 * data = "{\"result\" : \"CODE_01\"}"; //로그인 성공
-				 
-			} else {
-				System.out
-						.println("else==============================================================================");
-				
-				 * data = "{\"result\" : \"CODE_02\"}"; //비밀번호 불일치, 인증되지 않은 회원
-				  }
-
-		} else {
-			data = "{\"result\" : \"CODE_03\"}"; // 사용자가 존재하지 않습니다.
-		}
-
-		System.out.println("종료==============================================================================");
-		try {
-			resp.getWriter().print(data);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
-	
-	
 	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	public void logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
-		} 
-		return "redirect:/";
+		}
+
 	}
-	
+
 	/* 회원가입 */
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public void join(HttpServletRequest request, HttpServletResponse resp, String signUpId, String signUpPw,
@@ -131,10 +123,10 @@ public class MemberController {
 
 		Member member = new Member();
 		member.setMberId(signUpId);
-		//비밀번호 암호화
+		// 비밀번호 암호화
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		member.setMberPw(encoder.encode(signUpPw));
-		
+
 		member.setOauthId(key);
 		member.setMberFlag("2");
 
@@ -308,9 +300,9 @@ public class MemberController {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
+
 	/* 비밀번호 재설정 페이지 뷰 */
 	@RequestMapping(value = "/passwordModifyView")
 	public String passwordModifyView(Model model, String memberId, String oauthId) {
@@ -360,6 +352,7 @@ public class MemberController {
 	// 구글 Callback호출 메소드
 	@RequestMapping(value = "/googleSignInCallback", method = { RequestMethod.GET, RequestMethod.POST })
 	public String googleCallback(@RequestParam String code, HttpSession session) throws IOException {
+
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(),
 				null);
