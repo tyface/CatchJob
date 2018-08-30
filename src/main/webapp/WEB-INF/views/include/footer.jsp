@@ -10,12 +10,11 @@
 		</div>
 			<div class="footer-infos pull-right">
 				<div class="footer-info">
-					<strong>Copyright &copy;<a
-						href="${pageContext.request.contextPath}">Spring MVC Board</a></strong> All
+					<strong>Copyright &copy;<a href="https://github.com/tyface/CatchJob" target="_blank">Catch Job</a></strong> All
 					rights reserved. <br> <b>Version</b> 1.0
 				</div>
 			</div>
-		
+
 	</div>
 </footer>
 </body>

@@ -334,7 +334,7 @@ function getInterviewList(pageNum){
      	 }
      }else{
        interviewListDiv.append($("<div class='well well-lg'><center>면접 후기가 없습니다</center></div>"));
-       $(".card-body").empty();
+       $(".box-danger").empty();
      }
 
 

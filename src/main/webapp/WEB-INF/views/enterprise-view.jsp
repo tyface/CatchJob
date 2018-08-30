@@ -76,14 +76,16 @@ var outPersonPerMonth = new Array();
 
 
 $(function(){
-	
+
 	entInf();
+	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	reviewValidation()//리뷰 유효성 검사 부분
+
 	saramin(); //#section5 사람인채용정보
 // 	if(${interview} =="" || ${interview} == null){
 // 		alert(333)
@@ -114,6 +116,7 @@ $(function(){
 	}
 
 	chartPersonnel();
+
 	$("#salary-btn").on("click", function(){
 		$("canvas#comboBarLineChart").remove();
 		$("div.chartreport").append('<canvas id="lineChart"></canvas>');
@@ -315,6 +318,7 @@ function entInf(){
 
 }
 
+//select1 그래프
 function changeAvgInfo(e){
 	var arr;
 	switch (e) {
@@ -353,14 +357,14 @@ function chartSalary(){
 
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
-		
-		
+
+
 		type: 'bar',
 
-		
+
 		data: {
 			labels: month,
-			datasets: [{			
+			datasets: [{
 					type: 'line',
 					label: '평균 급여',
 					borderColor: '#BDBDBD',
@@ -374,7 +378,7 @@ function chartSalary(){
 // 	                pointColor : "rgba(151,187,205,1)",
 // 	                pointStrokeColor : "#fff",
 				},
-				
+
 			],
 
 				borderWidth: 1
@@ -424,13 +428,13 @@ function chartSalary(){
 		        },
 		        scales: {
                     yAxes: [{
-                    	
+
                     	 scaleLabel: {
                              display: true,
                              labelString: '(만원)',
                           },
                           ticks: {
-                        	  
+
                           	  min:0,
                               callback: function(value, index, values) {
                                   return Math.round(value/10000);
@@ -443,20 +447,20 @@ function chartSalary(){
                           ticks: {
                               callback: function(value, index, values) {
                               	  var month = '';
-                              	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);	  
+                              	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
                                   return '\''+value.substring(2,4)+' '+month+'월';
                               },
                            },
                    }]
                 },
-                
+
                 tooltips: {
                     enabled: true,
                     mode: 'index',
                     axis: 'y',
                     callbacks: {
-                        label: function(tooltipItems, data) { 
-                        	/* 컴마찍는 부분 */                        
+                        label: function(tooltipItems, data) {
+                        	/* 컴마찍는 부분 */
                         	var value = data.datasets[0].data[tooltipItems.index];
                         	 if(parseInt(value) >= 1000){
                         		 value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -473,7 +477,7 @@ function chartSalary(){
 //                        pointColor: 'red',
 //                     }
 //                  },
-                
+
 		    }
 
 	});
@@ -505,12 +509,12 @@ function chartPersonnel(){
 						anchor: 'start',
 						display: true,
 					},
-		     
+
 
 				}, {
 					type: 'bar',
 					label: '입사자',
-					backgroundColor: '#059BFF',
+					backgroundColor: '#6B66FF',
 					data: newPersonPerMonth,
 					borderColor: 'white',
 					borderWidth: 0,
@@ -535,7 +539,7 @@ function chartPersonnel(){
 // 							return context.dataset.data[context.dataIndex]==1;
 // 						},
 					}
-				
+
 
 				}],
 				borderWidth: 1
@@ -578,14 +582,14 @@ function chartPersonnel(){
                 mode: 'index',
                 axis: 'y',
                 callbacks: {
-                    label: function(tooltipItems, data) { 
+                    label: function(tooltipItems, data) {
                     	 return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel + ' 명';
                     }
                 }
             },
             scales: {
                 yAxes: [{
-                	
+
                 	 scaleLabel: {
                          display: true,
                          labelString: '(명)',
@@ -595,13 +599,13 @@ function chartPersonnel(){
                       ticks: {
                           callback: function(value, index, values) {
                           	  var month = '';
-                          	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);	  
+                          	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
                               return '\''+value.substring(2,4)+' '+month+'월';
                           },
                        },
                }]
             },
-	        
+
 	    }
 
 	});
@@ -661,7 +665,9 @@ function reviewbarChart(){
 					},
 // 					formatter: Math.round
 				    formatter: function(value, context) {
-                        return Math.ceil(value*100/${numOfValuesByItem}) + '%';
+
+                        return Math.ceil(value/'${numOfValuesByItem}')*100+'%';
+												//return value;
                     }
 
 				}
@@ -759,7 +765,7 @@ function interviewPieChart(){
 			},
 			options: {
 				responsive: true,
-				layout:{	
+				layout:{
 					padding:{
 						top:20,
 						bottom:20,
@@ -1011,8 +1017,7 @@ function jsonEscape(str)  {
 	<div class="row">
 		<nav class="col-sm-1 padding-zero" id="left-nav">
 
-			<ul class="nav nav-pills nav-stacked" data-spy="affix"
-				data-offset-top="70">
+			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
 				<!-- 				<li style="height: 30px"></li> -->
 				<li>
 					<a onclick="fnMove('#section1')">
@@ -1134,44 +1139,44 @@ function jsonEscape(str)  {
 							</div>
 							<br> <br>
 
-							<div class="row">
+							<div class="row"  id="section01">
 <!-- 								<div class="col-md-2"></div> -->
 								<div class="col-md-12">
 
 									<div class="box box-primary">
 										<div class="box-header">
 											<h3 class="box-title">
-												<span id="select"></span>
+												<center><span id="select"></span></center>
 											</h3>
 										</div>
 										<!-- /.box-header -->
-										<div class="box-body no-padding">
+										<div class="box-body no-padding ">
 											<table class="table table-condensed">
-												<tr>
-													<td class="col-xs-1">1.</td>
-													<td class="col-xs-2">현재 기업</td>
-													<td class="col-xs-8">
-														<div class="progress progress-xs   ">
+												<tr class="row">
+													<td class="col-sm-1">1.</td>
+													<td class="col-sm-2">현재 기업</td>
+													<td class="col-sm-7">
+														<div class="progress">
 															<div class="progress-bar progress-bar-danger" id="entPer"></div>
 														</div>
 													</td>
-													<td class="col-xs-1"><span class="badge bg-red" id="numOfEnt"></span></td>
+													<td class="col-sm-1"><span class="badge bg-red" id="numOfEnt"></span></td>
 												</tr>
-												<tr>
+												<tr class="row">
 													<td>2.</td>
 													<td>동종 산업군</td>
 													<td>
-														<div class="progress progress-xs   ">
+														<div class="progress">
 															<div class="progress-bar progress-bar-warning "id="indPer"></div>
 														</div>
 													</td>
 													<td><span class="badge bg-yellow" id="numOfInd"></span></td>
 												</tr>
-												<tr>
+												<tr class="row">
 													<td>3.</td>
 													<td>전체 기업</td>
 													<td>
-														<div class="progress progress-xs  ">
+														<div class="progress">
 															<div class="progress-bar progress-bar-primary" id="toEntPer"></div>
 														</div>
 													</td>
@@ -1314,16 +1319,16 @@ function jsonEscape(str)  {
 					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
 					<div class="panel-group" >
 								<div class="box box-danger">
-									<div class="box-body row" >
+									<div class="box-body row">
 											<div class="chart col-md-3" >
 												<h3 class="box-title">면접 난이도</h3>
 											</div>
 											<div class="chart col-md-6" >
-												
+
 												<canvas id="pieChart" ></canvas>
-											</div>				
+											</div>
 									</div>
-						
+
 								</div>
 
 						<div class="interviewList">
@@ -1392,7 +1397,7 @@ function jsonEscape(str)  {
 							<div class="panel panel-default slideanim">
 								<div class="panel-body" >
 								 	<c:forEach items="${newsList}" var="newsList">
-										<div class="row news-margin" >							
+										<div class="row news-margin" >
 											<a class="col-xs-10 f-left text-left blue-font"  href="${newsList.link}" target="_blank">${newsList.title}</a>
 											<span class="col-xs-2 f-right text-right">${newsList.pubDate}</span>
 										</div>
