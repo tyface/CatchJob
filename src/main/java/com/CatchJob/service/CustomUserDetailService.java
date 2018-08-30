@@ -17,23 +17,17 @@ public class CustomUserDetailService implements UserDetailsService {
 	private MemberDao memberDao;
 	@Autowired
 	private AuthorityDao authDao;
-	
+
 	@Override
-	public UserDetails loadUserByUsername(String mberid) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String mberId) throws UsernameNotFoundException {
 		System.out.println("----------CustomUserDetailService start-------");
-		
-		Member member = memberDao.selectById(mberid);
-		
-		//db에 아이디가 존재하면  ROLE_USER 권한 부여 		
-		if(member != null) {
-			
-		//사용자 이름으로 auth table가서 권한 조회
-//		List<String> authentifications = authDao.selectMemberType(mberid);
-		
-		
-		member.addAuthority(new Role(authDao.selectMemberType(mberid)));
-					
-	} 
+
+		Member member = memberDao.selectById(mberId);
+
+		// db에 아이디가 존재하면 ROLE_USER 권한 부여
+		if (member != null) {
+			member.addAuthority(new Role(authDao.selectMemberType(mberId)));
+		}
 		return member;
 	}
 }

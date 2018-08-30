@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 
 <style>
 .form-horizontal {
@@ -114,8 +110,8 @@ $(document).ready(function () {
 </div>
 <div id="navbar" class="navbar-collapse collapse">
 	<ul class="nav navbar-nav navbar-right">
-		<li><a href="#"><span class="glyphicon glyphicon-user">&nbsp;</span>${adminId}
-				님 접속 상태입니다</a></li>
+		<li><a href="#"><span class="glyphicon glyphicon-user">&nbsp;</span>
+		<security:authentication property="principal.username"/> 님 접속 상태입니다</a></li>
 		<li class="pull-right"><button class="btn btn-danger navbar-btn"
 				onclick="location.href='logout'">로그아웃</button>&nbsp;</li>
 	</ul>
