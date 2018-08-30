@@ -118,6 +118,7 @@ public class EnterpriseController {
 		List<Map<String, String>> reviewValuesByItem =  reviewService.valuesByItem(mapData);
 		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewValuesByItem));
 		model.addAttribute("numOfValuesByItem",reviewService.numOfValuesByItem(reviewValuesByItem));
+		System.out.println("numOfValuesByItem:::"+reviewService.numOfValuesByItem(reviewValuesByItem));
 		//System.out.println("reviewValuesByItem: "+reviewService.numOfValuesByItem(reviewValuesByItem));
 		return "enterprise-view";
 	}
