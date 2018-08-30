@@ -1,4 +1,4 @@
-package com.CatchJob.model;
+/*package com.CatchJob.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -98,3 +98,4 @@ public class SMember implements UserDetails {
 	}
 
 }
+*/
