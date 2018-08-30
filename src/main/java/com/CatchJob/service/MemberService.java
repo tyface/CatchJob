@@ -31,7 +31,9 @@ public interface MemberService {
 	
 	public Member getMemberByOauthId(String mberId,String oauthId);
 
-	public Map<String, Object> getMessageList(Map<String, Object> data);
+	public Map<String, Object> getMemberMessageList(Map<String, Object> data);
+	
+	public Map<String, Object> getAdminMessageList(Map<String, Object> data);
 	
 	public int calPageTotalCount(int totalCount, int numOfMsgPage);
 	

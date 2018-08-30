@@ -42,7 +42,7 @@ public interface MemberDao {
 	
 	public int selectAdminCount(String keyword);
 	
-	public List<Member> selectList(Map<String, Object> map);
+	public List<Member> selectMemberList(Map<String, Object> map);
 	
-	
+	public List<Member> selectAdminList(Map<String, Object> map);
 }

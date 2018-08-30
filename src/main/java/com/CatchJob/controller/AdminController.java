@@ -91,7 +91,7 @@ public class AdminController {
 			model.addAttribute("member", member);
 		}	
 	
-		Map<String, Object> viewData = memberService.getMessageList(data);
+		Map<String, Object> viewData = memberService.getMemberMessageList(data);
 		model.addAttribute("viewData", viewData);	
 		return "admin/member-member-mng";						
 	}
@@ -156,7 +156,7 @@ public class AdminController {
 			model.addAttribute("admin", member);
 		}
 	
-		Map<String, Object> viewData = memberService.getMessageList(data);
+		Map<String, Object> viewData = memberService.getAdminMessageList(data);
 		model.addAttribute("viewData", viewData);
 		return "admin/member-admin-mng";
 	}
