@@ -1,20 +1,14 @@
 package com.CatchJob.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,12 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.CatchJob.model.Admin;
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.Review;
 import com.CatchJob.model.UniversalDomain;
-import com.CatchJob.service.AdminService;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
@@ -152,11 +144,15 @@ public class AdminController {
 		}
 		
 		if(num!=null) {
-			Member member=memberService.getMember(Integer.parseInt(num));
+			Member member = memberService.getMember(Integer.parseInt(num));
 			model.addAttribute("admin", member);
+			
+			System.out.println(member);
 		}
 	
 		Map<String, Object> viewData = memberService.getAdminMessageList(data);
+		
+		System.out.println(viewData);
 		model.addAttribute("viewData", viewData);
 		return "admin/member-admin-mng";
 	}

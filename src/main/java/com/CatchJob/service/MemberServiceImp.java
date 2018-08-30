@@ -193,29 +193,33 @@ public class MemberServiceImp implements MemberService {
 			map.put("keyword", keyword);		
 			viewData.put("keyword", keyword);
 			totalCount  = memberDao.selectAdminCount(keyword); 
-		} else {	
+		} else {
 			map.put("keyword", "");
 			totalCount  = memberDao.selectAdminCount(""); 
-		}	
-		
+		}		
 		if(totalCount==0) {
 			totalCount = 1;
 		}
-		
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
-
+	
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
-		
+
+		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
+	
+
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", memberDao.selectAdminList(map));
+		System.out.println(memberDao.selectAdminList(map));
 		return viewData;
 	}
 
