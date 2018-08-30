@@ -225,9 +225,8 @@ function interviewValidation(){
 	<div class="contents-wrap">
 	
 	  <h2>면접후기</h2>
-	  <p>The .table-responsive class creates a responsive table which will scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, there is no difference:</p>                                                                                      
 	  <div class="table-responsive">          
-	  <table class="table table-hover text-center">
+	  <table class="table table-hover text-center mypage-table-width">
 	    <thead>
 	      <tr>
 	<!--         <th>#</th> -->

@@ -302,36 +302,41 @@ function getInterviewList(pageNum){
 			appendObject = $(".intvw-pagination")
 			appendObject.empty()
 
-			appendObject.append($("<li><a href='javascript:getInterviewList("+1+");'class='underline'>&laquo;</a></li>"));
-			appendObject.append($("<li><a href='javascript:getInterviewList("+ prevPage +");'class='underline'>&lt;</a></li>"));
+      if(interviewList.length > 0){
+        appendObject.append($("<li><a href='javascript:getInterviewList("+1+");'class='underline'>&laquo;</a></li>"));
+  			appendObject.append($("<li><a href='javascript:getInterviewList("+ prevPage +");'class='underline'>&lt;</a></li>"));
 
-			for(var i = startPage; i <=endPage; i++){
-				if(i != currentPage){
-					appendObject.append($("<li><a href='javascript:getInterviewList("+i+");'>"+i+"</a></li>"));
-				}else{
-					appendObject.append($("<li><a><strong>"+i+"</strong></a></li>"));
-				}
-			}
+  			for(var i = startPage; i <=endPage; i++){
+  				if(i != currentPage){
+  					appendObject.append($("<li><a href='javascript:getInterviewList("+i+");'>"+i+"</a></li>"));
+  				}else{
+  					appendObject.append($("<li><a><strong>"+i+"</strong></a></li>"));
+  				}
+  			}
 
-			appendObject.append($("<li><a href='javascript:getInterviewList("+nextPage+");'class='underline'>&gt;</a></li>"));
-			appendObject.append($("<li><a href='javascript:getInterviewList("+ totalCnt +");'class='underline'>&raquo;</a></li>"));
+  			appendObject.append($("<li><a href='javascript:getInterviewList("+nextPage+");'class='underline'>&gt;</a></li>"));
+  			appendObject.append($("<li><a href='javascript:getInterviewList("+ totalCnt +");'class='underline'>&raquo;</a></li>"));
 
-      for(var j in interviewList){
-   		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
+        for(var j in interviewList){
+     		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
 
-   		 if(interviewList[j].intrvwDifficulty == '매우 어려움'){
-   			$("#difficulty"+j).addClass("intrvwlv5");
-   		} else if(interviewList[j].intrvwDifficulty == '어려움'){
-   			$("#difficulty"+j).addClass("intrvwlv4");
-   		}else if(interviewList[j].intrvwDifficulty == '보통'){
-   			$("#difficulty"+j).addClass("intrvwlv3");
-   		}else if(interviewList[j].intrvwDifficulty == '쉬움'){
-   			$("#difficulty"+j).addClass("intrvwlv2");
-   		}else if(interviewList[j].intrvwDifficulty == '매우 쉬움'){
-   			$("#difficulty"+j).addClass("intrvwlv1");
-   		}
+     		 if(interviewList[j].intrvwDifficulty == '매우 어려움'){
+     			$("#difficulty"+j).addClass("intrvwlv5");
+     		} else if(interviewList[j].intrvwDifficulty == '어려움'){
+     			$("#difficulty"+j).addClass("intrvwlv4");
+     		}else if(interviewList[j].intrvwDifficulty == '보통'){
+     			$("#difficulty"+j).addClass("intrvwlv3");
+     		}else if(interviewList[j].intrvwDifficulty == '쉬움'){
+     			$("#difficulty"+j).addClass("intrvwlv2");
+     		}else if(interviewList[j].intrvwDifficulty == '매우 쉬움'){
+     			$("#difficulty"+j).addClass("intrvwlv1");
+     		}
+     	 }
+     }else{
+       interviewListDiv.append($("<div class='well well-lg'><center>면접 후기가 없습니다</center></div>"));
+       $(".card-body").empty();
+     }
 
-   	 }
 
 		},
 		error : function(request,status,error){
@@ -397,10 +402,6 @@ function followAction(entIndex,e){
 }
 
 $(function(){
-
-
-
-
 
     $(window).scroll(function() {
         if ($(this).scrollTop() > 500) {

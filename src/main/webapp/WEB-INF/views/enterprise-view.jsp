@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<meta charset="UTF-8">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <security:authentication var="principal" property="principal"/>
@@ -52,6 +53,7 @@
 
 </style>
 <script>
+
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
 var empCount = JSON.parse('${empCount}');
@@ -74,8 +76,8 @@ var outPersonPerMonth = new Array();
 
 
 $(function(){
-	entInf()
-	changeAvgInfo('인원')
+	
+	entInf();
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
@@ -147,21 +149,11 @@ $(function(){
 	        	  type: "info",
 	        	  confirmButtonClass: "btn-info",
 	        	  showCancelButton: true,
-	        	 // buttons: true,
-	        	  //infoMode: true,
 	        	},
 	        	function(){
 	        		/* 로그인 모달 띄우기 */
 					$("#loginModal").modal("show");
 	        	})
-
-// 	        	.then((willDelete) => {
-// 	        	  if (willDelete) {
-// 	        		  /* 로그인 모달 띄우기 */
-// 					   $("#loginModal").modal("show");
-// 	        	  }
-// 	        });
-
 	    }else{/* 로그인 상태임 */
 		    if($this.hasClass("fa-heart-o")){
 			  /* 팔로잉 기업 추가  */
@@ -173,14 +165,11 @@ $(function(){
 			  		  success: function(result){
 			  			/* 성공 */
 			  			  if(result){
-
 			  				swal({
 			  				  title: "팔로잉되었습니다!",
 			  				  text: "팔로잉 기업은 [마이페이지 > 팔로잉 기업]에서 확인할 수 있습니다.",
 			  				  type: "success",
 			  			      confirmButtonClass: "btn-success",
-
-			  				  //button: false
 			  				});
 				    	      $this.toggleClass("fa-heart-o");
 				    	      $this.toggleClass("fa-heart");
@@ -190,8 +179,6 @@ $(function(){
 				  				  text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 				  				  type: "warning",
 				  				  confirmButtonClass: "btn-warning",
-				  				  //button: false
-				  				  //dangerMode:true
 				  			  });
 			  			  }
 			  		  }
@@ -199,13 +186,10 @@ $(function(){
 		    }else{
 		    	swal({
 		    		  title: "팔로잉을 중단하시겠습니까?",
-		    		  //text: "Once deleted, you will not be able to recover this file!",
 		    		  type: "info",
 		    		  confirmButtonClass: "btn-info",
 		    		  showCancelButton: true,
 		    		  closeOnConfirm: false,
-		    		  //buttons: true,
-		    		  //dangerMode: true,
 		    		},
 		    		function(){
 		    			 $.ajax({
@@ -217,11 +201,8 @@ $(function(){
 					  			/* 성공 */
 					  				swal({
 					  				    title: "팔로잉이 해제되었습니다.",
-					  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 					  				    type: "success",
 					  				    confirmButtonClass: "btn-success",
-					  				    //button: false
-					  				    //dangerMode:true
 					  			    });
 								   $this.toggleClass("fa-heart");
 								   $this.toggleClass("fa-heart-o");
@@ -244,17 +225,12 @@ $(function(){
 	        	  type: "info",
 	        	  showCancelButton: true,
 	        	  confirmButtonClass: "btn-info",
-	        	 // buttons: true,
-	        	  //infoMode: true,
 	        	},
 	        	function(){
 	        		/* 로그인 모달 띄우기 */
-							$("#loginModal").modal("show");
+					$("#loginModal").modal("show");
 	        	})
-
 		  }else{/* 로그인 상태임 */
-
-
 	    	  $.ajax({
 			  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
 			  		data:{entIndex : entIndex},
@@ -279,10 +255,8 @@ $(function(){
 
 /* 기업리뷰  등록 START */
  	$(".review-btn").on("click",function(){
-
 		var point = $(this).parent().parent().prev().children().children("div").text();
 		var statusCount = $(this).next().val();
-
 			if(status == "logout"){
 				swal({
 					title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
@@ -294,7 +268,6 @@ $(function(){
 				function() {
 					$("#loginModal").modal("show");
 				})
-
 		  }else{/* 로그인 상태임 */
 			var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
 			point = Number(point);
@@ -322,19 +295,14 @@ $(function(){
 							text:" 이미 등록하셨습니다.",
 							type: "warning",
 							confirmButtonClass:"btn-warning",
-
 						})
-
 					}
 					getReviewList(questionNum);
 				}
 			});
 			 return false;
-
 		}
-
  	});/* 기업리뷰  등록 END */
-
 });/* FUNCTION END */
 
 function entInf(){
@@ -379,82 +347,165 @@ function changeAvgInfo(e){
 
 
 }
-/* 월별그래프-평균급여 */
+
+/* section4 월별그래프-평균급여 */
 function chartSalary(){
 
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
+		
+		
 		type: 'bar',
+
+		
 		data: {
 			labels: month,
-			datasets: [{
+			datasets: [{			
 					type: 'line',
 					label: '평균 급여',
-					borderColor: '#2196F3',
-					borderWidth: 3,
+					borderColor: '#BDBDBD',
+				 	borderWidth: 2,
+				 	pointBorderColor: '#6B66FF',
+				 	pointBorderWidth: 3,
 					fill: false,
-					data: salary
-				}],
+					data: salary,
+// 					fillColor : "rgba(151,187,205,0.5)",
+// 	                strokeColor : "rgba(151,187,205,1)",
+// 	                pointColor : "rgba(151,187,205,1)",
+// 	                pointStrokeColor : "#fff",
+				},
+				
+			],
 
 				borderWidth: 1
 		},
 		 options: {
 
+			 plugins: {
+				datalabels: {
+					color: '#6B66FF',
+ 					align: 'start',
+ 					anchor: 'start',
 
-			 plugins: {//chartjs-plugin
-					datalabels: {
-						enabled: false,
-						color: 'black',
-						display: function(context) {
-							return context.dataset.data[context.dataIndex];
-						},
-						font: {
-							weight: 'bold'
-						},
+					display: function(context) {
+						return context.dataset.data[context.dataIndex] ;
+					},
+					font: {
+						weight: 'bold'
+					},
+ 					//formatter: Math.round
+ 					formatter: function(value, context){
+ 						return Math.round(value/10000)
+ 					}
+				}
+			},
 
- 						formatter: Math.round
-					}
-				},
+
+// 			 plugins: {//chartjs-plugin
+// 					datalabels: {
+// 						enabled: false,
+// 						color: 'black',
+// 						display: function(context) {
+// 							return context.dataset.data[context.dataIndex];
+// 						},
+// 						font: {
+// 							weight: 'bold'
+// 						},
+
+//  						formatter: Math.round
+// 					}
+// 				},
 // 				events: ['click']
 // 				,
 		        elements: {
 		            line: {
-		              //  tension: 0, // disables bezier curves
+		                tension: 0, // disables bezier curves
 		            }
 		        },
 		        scales: {
                     yAxes: [{
-                            ticks: {
-                             //  max:3900000,
-                               min:0
-                            }
-                        }]
-                }
+                    	
+                    	 scaleLabel: {
+                             display: true,
+                             labelString: '(만원)',
+                          },
+                          ticks: {
+                        	  
+                          	  min:0,
+                              callback: function(value, index, values) {
+                                  return Math.round(value/10000);
+                              },
+                           },
+//                          type: 'linear',
+//                          position: 'bottom',
+                    }],
+                    xAxes: [{
+                          ticks: {
+                              callback: function(value, index, values) {
+                              	  var month = '';
+                              	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);	  
+                                  return '\''+value.substring(2,4)+' '+month+'월';
+                              },
+                           },
+                   }]
+                },
+                
+                tooltips: {
+                    enabled: true,
+                    mode: 'index',
+                    axis: 'y',
+                    callbacks: {
+                        label: function(tooltipItems, data) { 
+                        	/* 컴마찍는 부분 */                        
+                        	var value = data.datasets[0].data[tooltipItems.index];
+                        	 if(parseInt(value) >= 1000){
+                        		 value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                              } else {
+                            	 value = value;
+                              }
+                        	return data.datasets[tooltipItems.datasetIndex].label +': ' + value + ' 원';
+                        }
+                    }
+                },
+//                 legend: {
+//                     labels: {
+//                        usePointStyle: true,
+//                        pointColor: 'red',
+//                     }
+//                  },
+                
 		    }
 
 	});
 
 }
 
-/* 월별그래프-인원*/
+/* #section4 월별그래프-인원*/
 function chartPersonnel(){
 	// comboBarLineChart
 	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
 	var comboBarLineChart = new Chart(ctx2, {
 		type: 'bar',
+		scaleOverride: false,
 		data: {
 			labels: month,
 			datasets: [{
 					type: 'line',
 					label: '총 인원',
-					borderColor: '#484c4f',
-					borderWidth: 3,
+					borderColor: '#BDBDBD',
+					borderWidth: 2,
+					pointBorderColor: '#6B66FF',
+					pointBorderWidth: 3,
 					fill: false,
 					data: totalPersonPerMonth,
 
 					datalabels: {
-						color:  '#484c4f',
-					}
+						color:  '#6B66FF',
+						align: 'start',
+						anchor: 'start',
+						display: true,
+					},
+		     
 
 				}, {
 					type: 'bar',
@@ -464,17 +515,27 @@ function chartPersonnel(){
 					borderColor: 'white',
 					borderWidth: 0,
 					datalabels: {
-						color:  '#059BFF',
+						display: false,
+						color:  '#6B66FF',
+// 						align: 'end',
+// 						anchor: 'start',
 					}
 
 				}, {
 					type: 'bar',
 					label: '퇴사자',
-					backgroundColor: '#FF6B8A',
+					backgroundColor: '#D1B2FF',//FF6B8A
 					data: outPersonPerMonth,
 					datalabels: {
-						color:  '#FF6B8A',
+						display: false,
+// 						color:  '#D1B2FF',
+// 						align: 'end',
+// 						anchor: 'end',
+// 						display: function(context) {
+// 							return context.dataset.data[context.dataIndex]==1;
+// 						},
 					}
+				
 
 				}],
 				borderWidth: 1
@@ -483,12 +544,12 @@ function chartPersonnel(){
 
 			plugins: {
 				datalabels: {
-					align: 'end',
-					anchor: 'end',
+// 					align: 'end',
+// 					anchor: 'end',
 
-					display: function(context) {
-						return context.dataset.data[context.dataIndex] > 0;
-					},
+// 					display: function(context) {
+// 						return context.dataset.data[context.dataIndex] > 0;
+// 					},
 					font: {
 						weight: 'bold'
 					},
@@ -500,19 +561,58 @@ function chartPersonnel(){
 
 	        elements: {
 	            line: {
-	                //tension: 0, // disables bezier curves
+	                tension: 0, // disables bezier curves
 	            }
-	        }
+	        },
+
+// 	        layout: {
+// 	            padding: {
+// 	                left: 0,
+// 	                right: 0,
+// 	                top: 10,
+// 	                bottom: 0
+// 	            }
+// 	        },
+	        tooltips: {
+                enabled: true,
+                mode: 'index',
+                axis: 'y',
+                callbacks: {
+                    label: function(tooltipItems, data) { 
+                    	 return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel + ' 명';
+                    }
+                }
+            },
+            scales: {
+                yAxes: [{
+                	
+                	 scaleLabel: {
+                         display: true,
+                         labelString: '(명)',
+                      },
+                }],
+                xAxes: [{
+                      ticks: {
+                          callback: function(value, index, values) {
+                          	  var month = '';
+                          	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);	  
+                              return '\''+value.substring(2,4)+' '+month+'월';
+                          },
+                       },
+               }]
+            },
+	        
 	    }
 
 	});
 }
+/* #section2 리뷰코멘트 - 만족도 */
 function reviewbarChart(){
-
+	//var i=0;
 	var reviewValuesByItem = JSON.parse('${reviewValuesByItem}');
 	var chartData = new Array(0,0,0,0,0);
 
-	  for(var i in reviewValuesByItem){
+	  for( var i in reviewValuesByItem){
 		  chartData[i]= reviewValuesByItem[i].COUNT;
 	 }
 //	alert("chartData: "+chartData)
@@ -528,7 +628,7 @@ function reviewbarChart(){
 					backgroundColor: '#FFBB00',
 					data: chartData,
 					datalabels: {
-						color:  '#FFBB00',
+						color:  '#abaaaa',
 					},
 
 
@@ -539,7 +639,7 @@ function reviewbarChart(){
 
 			layout:{
 				padding:{
-					top:20,
+					top:30,
 				}
 			},
 			legend: {
@@ -553,7 +653,6 @@ function reviewbarChart(){
 				datalabels: {
 					align: 'end',
 					anchor: 'end',
-
 					display: function(context) {
 						return context.dataset.data[context.dataIndex] > 0;
 					},
@@ -561,6 +660,10 @@ function reviewbarChart(){
 						weight: 'bold'
 					},
 // 					formatter: Math.round
+				    formatter: function(value, context) {
+                        return Math.ceil(value*100/${numOfValuesByItem}) + '%';
+                    }
+
 				}
 			},
 			scales: {
@@ -601,6 +704,7 @@ function reviewbarChart(){
 	});
 
 }
+/* #section3 면접후기 면접난이도 */
 function interviewPieChart(){
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
 
@@ -639,6 +743,9 @@ function interviewPieChart(){
 						'rgba(29,219,22, 1)',
 
 					],
+					datalabels: {
+						color:  'white',
+					},
 
 // 					label: 'Dataset 1'
 				}],
@@ -652,10 +759,28 @@ function interviewPieChart(){
 			},
 			options: {
 				responsive: true,
+				layout:{	
+					padding:{
+						top:20,
+						bottom:20,
+					}
+				},
 				legend: {
 			        display: true,
 			        position: 'right'
 			    },
+			    plugins: {
+					datalabels: {
+						display: function(context) {
+							return context.dataset.data[context.dataIndex] > 0;
+						},
+						font: {
+							weight: 'bold'
+						},
+//	 					formatter: Math.round
+					}
+				},
+
 			}
 
 	});
@@ -685,28 +810,28 @@ function interviewDifficultyShape(){
 }
 function reviewValidation(){
 	$('.reviewForm').validate({
-		rules : {
+// 		rules : {
 
-			stars:{
-				required : true
-			},
-			contents:{
-				required : true,
-				minlength : 10,
-				maxlength : 500
-			}
-		},
+// 			stars:{
+// 				required : true
+// 			},
+// 			contents:{
+// 				required : true,
+// 				minlength : 10,
+// 				maxlength : 500
+// 			}
+// 		},
 
-		messages : {
-			stars:{
-				required : "다른 항목을 선택해주세요"
-			},
-			contents:{
-// 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다",
-				maxlength : "최대 500글자까지 입력할 수 있습니다"
-			}
-		},
+// 		messages : {
+// 			stars:{
+// 				required : "다른 항목을 선택해주세요"
+// 			},
+// 			contents:{
+// // 				required : "필수로입력하세요",
+// 				minlength : "최소 10글자이상이어야 합니다",
+// 				maxlength : "최대 500글자까지 입력할 수 있습니다"
+// 			}
+// 		},
 	    submitHandler: function(form) {
 		    swal("등록되었습니다", "You clicked the button!", "success")
 		    .then(()=>{
@@ -834,11 +959,14 @@ function saramin(){
 				trimRequiredEducationLevel = requiredEducationLevel;
 			}
 			if(i<3){
-		 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+		 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
 				data.appendTo(saraminRow1);
 			}else if(i<6){
-				var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panel-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+				var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
 				data.appendTo(saraminRow2);
+			}else{
+				var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
+				data.appendTo(saraminRow3);
 			}
 
 		}
@@ -1111,13 +1239,14 @@ function jsonEscape(str)  {
 													${question.QUESTION}
 												<span style="color: #6799FF">(${question.COUNT}) </span>
 											</span>
-											<span class="col-sm-4">${question.AVG}
+											<span class="col-sm-4">
 												<c:forEach begin="1" end="${question.AVG}" step="1">
 													<span class="stars-on"></span>
 												</c:forEach>
 												<c:forEach begin="${question.AVG}" end="4" step="1">
 													<span class="stars-off"></span>
 												</c:forEach>
+												${question.AVG}
 											</span>
 										</a>
 									</h4>
@@ -1184,25 +1313,18 @@ function jsonEscape(str)  {
 					<h3 class="sectionTitle">면접후기</h3>
 					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
 					<div class="panel-group" >
-						<div class="panel panel-default">
-							<div class="panel-body">
 								<div class="box box-danger">
-									<div class="box-header with-border">
-										<h3 class="box-title">면접 난이도</h3>
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="card-body">
-												<canvas id="pieChart"></canvas>
+									<div class="box-body row" >
+											<div class="chart col-md-3" >
+												<h3 class="box-title">면접 난이도</h3>
 											</div>
-										</div>
+											<div class="chart col-md-6" >
+												
+												<canvas id="pieChart" ></canvas>
+											</div>				
 									</div>
+						
 								</div>
-								<div class="col-xs-12" id="interviewNull"></div>
-
-							</div>
-						</div>
 
 						<div class="interviewList">
 						<!-- 면접후기1 -->
@@ -1224,9 +1346,11 @@ function jsonEscape(str)  {
 			<div class="module">
 				<div id="section4">
 					<h3 class="sectionTitle">월별그래프</h3>
-					<div class="btn-group graph-btn" >
-						<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
-						<button class="btn btn-default " id="salary-btn">평균 급여</button>
+					<div class="row graph-row">
+						<div class="btn-group graph-btn" >
+							<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
+							<button class="btn btn-default " id="salary-btn">평균 급여</button>
+						</div>
 					</div>
 					<!-- 그래프 -->
 					<div class="panel panel-default ">
@@ -1251,6 +1375,8 @@ function jsonEscape(str)  {
 							</div>
 							<div class="row" id="saraminRow2">
 							</div>
+							<div class="row" id="saraminRow3">
+							</div>
 						</div>
 <!-- 						</div> -->
 <!-- 					</div> -->
@@ -1261,23 +1387,23 @@ function jsonEscape(str)  {
 
 				<div id="section6">
 					<h3  class="sectionTitle" >뉴스</h3>
-							<c:choose>
-								<c:when test="${newsList.size() > 0 }">
-									<div class="panel panel-default slideanim">
-										<div class="panel-body" >
-										 	<c:forEach items="${newsList}" var="newsList">
-												<div class="row">
-													<span class="col-xs-8 f-left text-left blue-font" onclick="location.href='${newsList.link}'">${newsList.title}</span>
-													<span class="col-xs-4 f-right text-right">${newsList.pubDate}</span>
-												</div>
-											</c:forEach>
+					<c:choose>
+						<c:when test="${newsList.size() > 0 }">
+							<div class="panel panel-default slideanim">
+								<div class="panel-body" >
+								 	<c:forEach items="${newsList}" var="newsList">
+										<div class="row news-margin" >							
+											<a class="col-xs-10 f-left text-left blue-font"  href="${newsList.link}" target="_blank">${newsList.title}</a>
+											<span class="col-xs-2 f-right text-right">${newsList.pubDate}</span>
 										</div>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class='well well-lg'>뉴스정보가 없습니다</div>
-								</c:otherwise>
-							</c:choose>
+									</c:forEach>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class='well well-lg'>뉴스정보가 없습니다</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 

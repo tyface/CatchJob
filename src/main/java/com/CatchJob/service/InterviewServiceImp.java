@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.InterviewDao;
 import com.CatchJob.model.Interview;
+import com.CatchJob.model.Review;
 
 @Service
 public class InterviewServiceImp implements InterviewService{
@@ -75,7 +76,11 @@ public class InterviewServiceImp implements InterviewService{
 	@Override
 	public List<Interview> selectListByMemberIdx(Map<String, String> data) {
 		data.put("INTRVW_FL", "1");
-		return itvwDao.selectListByMemberIdx(data);
+		List<Interview> result = itvwDao.selectListByMemberIdx(data);
+		for(Interview list: result) {
+			list.setRegDate(list.getRegDate().substring(0, 10));
+		}
+		return result;
 	}
 
 	//면접 후기 작성시, 중복확인 메서드 

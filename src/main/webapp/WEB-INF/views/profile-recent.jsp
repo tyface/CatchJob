@@ -105,7 +105,7 @@ $(function(){
 <article class="container non-padding-top">
 	<div class="contents-wrap">
 	  
-	  <h1>최근 본 기업</h1>
+	  <h2>최근 본 기업</h2>
 	  		<c:forEach begin="0" varStatus="status"  var="recent" items="${recentView}">
 			<div class="row ent-list">
 	

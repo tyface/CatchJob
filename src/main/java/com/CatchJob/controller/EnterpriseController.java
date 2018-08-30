@@ -111,8 +111,10 @@ public class EnterpriseController {
 		}	
 		//리뷰코멘트 총 만족도
 		model.addAttribute("reviewTotalData", reviewService.gettotalSatisfaction(mapData));
-		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewService.valuesByItem(mapData)));
-		
+		List<Map<String, String>> reviewValuesByItem =  reviewService.valuesByItem(mapData);
+		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewValuesByItem));
+		model.addAttribute("numOfValuesByItem",reviewService.numOfValuesByItem(reviewValuesByItem));
+		//System.out.println("reviewValuesByItem: "+reviewService.numOfValuesByItem(reviewValuesByItem));
 		return "enterprise-view";
 	}
 	

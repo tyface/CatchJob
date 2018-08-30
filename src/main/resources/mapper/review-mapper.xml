@@ -26,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 질문가져오기 -->
 	<select id="question" parameterType="map"  resultType="map">
-		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG
+<!-- 		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG -->
+		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, if(rev.EVALUATION is null, 0.0,round(avg(rev.EVALUATION),1) ) as AVG
 		FROM   REVIEW_QESTN_TB qes
 		LEFT OUTER JOIN REVIEW_TB rev
 		ON qes.QESTN_NO = rev.QESTN_NO
@@ -150,10 +151,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 리뷰 항목별 만독도  -->
 	<select id="valuesByItem" parameterType="map" resultType="map">
-		SELECT  EVALUATION, count(*) AS COUNT
-		FROM REVIEW_TB
-		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0
-		GROUP BY EVALUATION
+<!-- 		SELECT  EVALUATION, count(*) AS COUNT -->
+<!-- 		FROM REVIEW_TB -->
+<!-- 		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0 -->
+<!-- 		GROUP BY EVALUATION -->
+		
+		SELECT qes.QESTN_NO as EVALUATION_NUM , count(rev.REVW_IDX) as COUNT
+		FROM   REVIEW_QESTN_TB qes
+		LEFT JOIN REVIEW_TB rev
+		ON qes.QESTN_NO = rev.EVALUATION
+		AND rev.ENT_IDX=${ENT_IDX}
+		AND rev.REVW_FL=${REVW_FL}
+		AND EVALUATION > 0
+		GROUP BY qes.QESTN_NO 
+		ORDER BY qes.QESTN_NO 
 	</select>
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>

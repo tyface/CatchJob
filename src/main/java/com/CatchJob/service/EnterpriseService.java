@@ -29,7 +29,7 @@ public interface EnterpriseService {
 	//팔로잉 기업 보기
 	public List<Enterprise> getFollowsEntList(int memberIndex);
 	
-//	 최근 본 기업 보기//TODO  분리하기 //RecentSercive
+//	 최근 본 기업 보기 //RecentSercive
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData);
 	
 	//동종산업군, 전체 산업군 평균정보 가져오기

@@ -48,5 +48,6 @@ public interface ReviewService {
 	public double gettotalSatisfaction(Map<String, String> data);
 	//리뷰 항목별 만독도  
 	public List<Map<String, String>> valuesByItem(Map<String, String> data);
-
+	//기업별 , 리뷰 항목 수
+	public int numOfValuesByItem(List<Map<String, String>> data);
 }

@@ -42,7 +42,7 @@ public class SaraminService {
 		
 		StringBuilder urlBuilder = new StringBuilder("http://api.saramin.co.kr/job-search"); /*URL*/
 		urlBuilder.append("?" + URLEncoder.encode("keywords","UTF-8") + "=" + URLEncoder.encode(keywords, "UTF-8")); /* 키워드*/
-		urlBuilder.append("&" + URLEncoder.encode("count","UTF-8") + "=" + URLEncoder.encode("6", "UTF-8")); /* 키워드*/
+		urlBuilder.append("&" + URLEncoder.encode("count","UTF-8") + "=" + URLEncoder.encode("9", "UTF-8")); /* 키워드*/
 		URL url = new URL(urlBuilder.toString());
 		System.out.println(urlBuilder);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();

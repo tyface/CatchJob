@@ -402,7 +402,7 @@ public class AdminController {
 	}
 	//도메인 관리
 	@RequestMapping("/mngDomain")
-	public String mngDomain(Model model, String page, String msgPerPage, String keyword, String keywordOption) { 
+	public String mngDomain(Model model, String page, String msgPerPage) { 
 		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
@@ -421,7 +421,8 @@ public class AdminController {
 			data.put("keyword", keyword);
 			data.put("keywordOption", keywordOption);
 		}
-		System.out.println("**************");
+		
+		System.out.println("**************"); //TODO 
 		System.out.println(pageNumber);
 		System.out.println(numOfMsgPage);
 		System.out.println(keyword);
