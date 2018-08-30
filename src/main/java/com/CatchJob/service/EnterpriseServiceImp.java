@@ -73,16 +73,10 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		}
 		return entList;
 	}
-	//최근 기업 정보 보기 //TODO 서비스랑 dao, mapper 분리하기 //RecentSerciveImp
+	//최근 기업 정보 보기 
 	@Override
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData) {
-//		int PAGE_NUM = mapData.get("PAGE_NUM");
-		int START_ROW = 0;
-		mapData.put("NUM_OF_RECENT_PER_PAGE", Constants.Recent.NUM_OF_RECENT_PER_PAGE);
-		mapData.put("START_ROW", START_ROW);
-//		System.out.println("서비스 메타데이터: "+mapData);
 		List<Enterprise> entList = entDao.selectListEntRecent(mapData);
-
 		for (Enterprise ent : entList) {
 			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
 		}
