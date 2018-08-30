@@ -42,11 +42,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
-	<select id="selectList" parameterType="map" resultMap="memberMap">
+	<select id="selectMemberList" parameterType="map" resultMap="memberMap">
 		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
 		FROM MEMBER_TB 
 		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') 
 		AND MBER_TYPE!='ROLE_ADMIN'
+		LIMIT #{NUM_OF_MSG_PER_PAGE}
+		OFFSET #{START_ROW}
+	</select>
+	<select id="selectAdminList" parameterType="map" resultMap="memberMap">
+		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
+		FROM MEMBER_TB 
+		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') 
+		AND MBER_TYPE='ROLE_ADMIN'
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>
@@ -63,10 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MBER_ID like CONCAT('%',#{keyword},'%') AND MBER_TYPE!='ROLE_ADMIN';
 	</select>
 	<select id="selectAdminCount" resultType="int" parameterType="String">
-		SELECT COUNT(*)<!-- TODO -->
+		SELECT COUNT(*)
 		FROM MEMBER_TB
-		WHERE MBER_ID like CONCAT('%',#{keyword},'%') AND MBER_TYPE!='ROLE_USER' 
-		AND MBER_TYPE!='ROLE_AUTHENTICATED';
+		WHERE MBER_ID like CONCAT('%',#{keyword},'%') AND MBER_TYPE='ROLE_ADMIN';
 	</select>
 	<resultMap type="member" id="memberMap">
 		<result property="mberIndex" column="MBER_IDX" />

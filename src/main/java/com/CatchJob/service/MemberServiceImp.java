@@ -140,7 +140,7 @@ public class MemberServiceImp implements MemberService {
 	}
 	
 	/* 페이징 처리 */
-	public Map<String, Object> getMessageList(Map<String, Object> data) {
+	public Map<String, Object> getMemberMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
 		Map<String, Object> map = new HashMap<>();
@@ -155,15 +155,13 @@ public class MemberServiceImp implements MemberService {
 			map.put("keyword", "");
 			totalCount  = memberDao.selectMemberCount(""); 
 		}		
-		
+		if(totalCount==0) {
+			totalCount = 1;
+		}
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
 	
-		if(totalCount==0) {
-			totalCount = 1;
-		}
-		
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
@@ -171,14 +169,56 @@ public class MemberServiceImp implements MemberService {
 		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
 		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
 		map.put("START_ROW", startRow);
+	
 
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
-		viewData.put("boardList", memberDao.selectList(map));
-		System.out.println(memberDao.selectList(map));
+		viewData.put("boardList", memberDao.selectMemberList(map));
+		System.out.println(memberDao.selectMemberList(map));
+		return viewData;
+	}
+	
+	public Map<String, Object> getAdminMessageList(Map<String, Object> data) {
+		Map<String, Object> viewData = new HashMap<String,Object>();
+		int totalCount = 0;  	
+		Map<String, Object> map = new HashMap<>();
+		
+		/* 검색 키워드 존재 시*/
+		if(data.get("keyword")!=null) {
+			String keyword = (String) data.get("keyword");
+			map.put("keyword", keyword);		
+			viewData.put("keyword", keyword);
+			totalCount  = memberDao.selectAdminCount(keyword); 
+		} else {
+			map.put("keyword", "");
+			totalCount  = memberDao.selectAdminCount(""); 
+		}		
+		if(totalCount==0) {
+			totalCount = 1;
+		}
+		int numOfMsgPage = (int) data.get("numOfMsgPage");
+		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
+		int pageNumber = (int) data.get("pageNumber");
+	
+		if(pageNumber > pageTotalCount) {
+			pageNumber = pageTotalCount;
+		}
+
+		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
+	
+
+		viewData.put("currentPage", pageNumber);	
+		viewData.put("pageTotalCount", pageTotalCount);
+		viewData.put("startPage", getStartPage(pageNumber));
+		viewData.put("endPage", getEndPage(pageNumber));
+		viewData.put("msgPerPage", numOfMsgPage);	
+		viewData.put("boardList", memberDao.selectAdminList(map));
+		System.out.println(memberDao.selectAdminList(map));
 		return viewData;
 	}
 
