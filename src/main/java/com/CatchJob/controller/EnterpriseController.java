@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,7 +23,6 @@ import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.News;
 import com.CatchJob.model.Review;
-import com.CatchJob.model.SMember;
 import com.CatchJob.model.Saramin;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
@@ -67,7 +65,7 @@ public class EnterpriseController {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);		
 		try {
-			data.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));		
+			data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));		
 		}catch(NullPointerException e) {
 		}		
 		
@@ -83,32 +81,28 @@ public class EnterpriseController {
 		// 기업정보 표출될때마다 viewCount올리는 부분
 		Map<String, String> mapData = new HashMap<String, String>();
 		try {
-			System.out.println("*1");
 			mapData.put("ENT_IDX", Integer.toString(entIndex));
 			mapData.put("BROWSER", req.getHeader("User-Agent"));
 			
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
 			if(authentication != null) {
-				mapData.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
+				mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 			}
 			recordService.regViewRecord(mapData);
 			//기업정보
 			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
 			model.addAttribute("entInfo", entService.getEntInfo(mapData));
-			model.addAttribute("entHRInfo", new Gson().toJson(entService.getEntHRInfo(entIndex)));
+			model.addAttribute("industryAvgInfo", new Gson().toJson(entService.getIndustryAvgInfo(entIndex)));
 			model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
 			model.addAttribute("questionList", reviewService.question(mapData));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			System.out.println("errer");
 		} catch (NullPointerException e) {//비로그인 상태( session 없을 때 )에서 view 진입
 			e.printStackTrace();
-			System.out.println("단지.. 로그인 안 되어 있을 뿐");
 		}
 		//뉴스
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
-			//System.out.println("컨트롤러newsList!!!!!123123: "+newsList);
 			model.addAttribute("newsList",newsList);
 			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
 			model.addAttribute("saraminList",new Gson().toJson(saraminList));
@@ -126,7 +120,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/regFollow")
 	public boolean regFollow (String entIndex, Authentication authentication) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));	
+		mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));	
 		mapData.put("ENT_IDX", entIndex );	
 		return followService.regFollowEnt(mapData);
 	}
@@ -134,7 +128,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/revFollow")
 	public boolean revFollow (String entIndex, Authentication authentication) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
+		mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 		mapData.put("ENT_IDX", entIndex );
 		return followService.revFollowEnt(mapData);
 	}
@@ -191,7 +185,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/writeReview", method = RequestMethod.POST)
 	public boolean writeReview(Review review, Authentication authentication) throws IOException {
 	//	System.out.println(review);
-		review.setMberIndex(((SMember)authentication.getPrincipal()).getUserIndex());
+		review.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
 
 		//System.out.println("writeReview-컨트롤러2"+review);
 		boolean result = reviewService.insertReview(review);
@@ -209,7 +203,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/itvwDuplicationCheck")
 	public boolean interviewDuplicationCheck(Authentication authentication, String entIndex) {
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
+		data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 		data.put("ENT_IDX", entIndex );
 		return itvwService.interviewDuplicationCheck(data);
 	}
@@ -218,7 +212,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview,Authentication authentication) {
 		System.out.println("123456"+interview);
-		interview.setMberIndex(((SMember)authentication.getPrincipal()).getUserIndex());
+		interview.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
 //		// boolean result = entService.insertInterview(interview);
 		System.out.println(itvwService.insertInterview(interview));
 	//	itvwService.insertInterview(interview);

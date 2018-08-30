@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,9 +35,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.CatchJob.commons.Constants;
 import com.CatchJob.model.Member;
+import com.CatchJob.model.Role;
 import com.CatchJob.service.MailHandler;
 import com.CatchJob.service.MailService;
 import com.CatchJob.service.MemberService;
@@ -71,7 +74,7 @@ public class MemberController {
 
 	/*
 	 * /* 로그인
-	 */
+	 */  //TODO 삭제 대기중
 	/*
 	 * @RequestMapping(value = "/login", method = RequestMethod.POST) public void
 	 * login(HttpSession session, HttpServletResponse resp, String mberId, String
@@ -173,12 +176,14 @@ public class MemberController {
 
 	/* 패스워드 수정 */
 	@RequestMapping(value = "/passwordModify", method = RequestMethod.POST)
-	public void pwModify(String password, String passwordCheck, HttpSession session, HttpServletResponse resp) {
+	public void pwModify(String password, String passwordCheck, HttpSession session, HttpServletResponse resp,Authentication authentication) {
 		String data = "";
 
 		if (password.equals(passwordCheck)) {
-			Member member = (Member) session.getAttribute("member");
-			member.setMberPw(password);
+			System.out.println(authentication.getPrincipal());
+			Member member = (Member)authentication.getPrincipal();
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			member.setMberPw(encoder.encode(password));
 			memberService.passwordModify(member);
 			data = "{\"result\" : true}";
 		} else {
@@ -194,10 +199,10 @@ public class MemberController {
 
 	/* 정회원 인증 메일 보내기 */
 	@RequestMapping(value = "/regularMemberMail")
-	public void regularMemberMail(String email, HttpSession session, HttpServletResponse resp) {
+	public void regularMemberMail(String email, HttpSession session, HttpServletResponse resp,Authentication authentication) {
 		String data = "";
 		String domain;
-		Member member = (Member) session.getAttribute("member");
+		Member member = (Member)authentication.getPrincipal();
 
 		String memberId = member.getMberId();
 
@@ -271,7 +276,6 @@ public class MemberController {
 	@RequestMapping(value = "/findPasswordMail")
 	public void findPasswordMail(String email, HttpServletResponse resp) {
 		String data = "";
-		System.out.println();
 
 		try {
 			MailHandler mailHandler = new MailHandler(mailSender);
@@ -313,18 +317,15 @@ public class MemberController {
 
 	/* 패스워드 재설정2 */
 	@RequestMapping(value = "/passwordModify2", method = RequestMethod.POST)
-	public void pwModify2(String password, String memberId, String oauthId, HttpSession session,
-			HttpServletResponse resp) {
+	public void pwModify2(String password, String memberId, String oauthId,HttpServletResponse resp) {
 		String data = "";
-		Member member = new Member();
-		System.out.println(memberId);
-		System.out.println(password);
-		System.out.println(oauthId);
-		member.setMberId(memberId);
-		member.setMberPw(password);
-		member.setOauthId(oauthId);
-
-		if (memberService.getMemberByOauthId(memberId, oauthId) != null) {
+		Member member = memberService.getMemberByOauthId(memberId, oauthId);
+		
+		if (member != null) {
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			member.setMberId(memberId);
+			member.setMberPw(encoder.encode(password));
+			member.setOauthId(oauthId);
 			memberService.passwordModify(member);
 			data = "{\"result\" : true}";
 		} else {
@@ -351,7 +352,7 @@ public class MemberController {
 
 	// 구글 Callback호출 메소드
 	@RequestMapping(value = "/googleSignInCallback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback(@RequestParam String code, HttpSession session) throws IOException {
+	public String googleCallback(@RequestParam String code, HttpSession session,HttpServletResponse resp, RedirectAttributes redirectAttributes) throws IOException {
 
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(),
@@ -387,7 +388,8 @@ public class MemberController {
 			System.out.println("예외발생!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}
 		memberService.visitUpdate(member.getMberIndex());
-		session.setAttribute("member", member);
+		member.addAuthority(new Role(member.getMberType()));
+		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(member, null,member.getAuthorities()));
 		return "redirect:/";
 	}
 
@@ -442,7 +444,8 @@ public class MemberController {
 		}
 
 		memberService.visitUpdate(member.getMberIndex());
-		session.setAttribute("member", member);
+		member.addAuthority(new Role(member.getMberType()));
+		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(member, null,member.getAuthorities()));
 
 		return "redirect:http://localhost:8090/catchjob/";
 	}

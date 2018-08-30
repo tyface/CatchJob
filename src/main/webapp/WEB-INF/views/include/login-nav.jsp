@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <security:authentication var="principal" property="principal"/>
 <script>
+
 $(function() {
 	$(".googleBtn").on("click",function() {
 		location.href="${pageContext.request.contextPath}/member/googleLogin";
@@ -230,7 +231,7 @@ $(function() {
 
           <form role="form" method="post" id="loginForm">
 					<div class="form-group has-feedback">
-								<input type="email" class="form-control" id="loginId"   placeholder="Enter">
+								<input type="email" class="form-control" id="loginId" placeholder="Enter">
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
 						<div class="form-group has-feedback">
@@ -359,6 +360,7 @@ $(function() {
 
 </security:authorize>
 <!-- 로그인 후! -->
+
 <security:authorize access="isAuthenticated()">
 	<nav class="navbar navbar-inverse">
 
@@ -408,7 +410,7 @@ $(function() {
 				<div class="modal-body" style="padding: 40px 50px;">
 					<form role="form" method="post" id="pwModifyForm">
 						<div class="form-group has-feedback">
-							<input	type="email" class="form-control" id="signUpId"	value="${member.mberId}" readonly>
+							<input	type="email" class="form-control" id="signUpId"	value="${principal.username}" readonly>
 							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
 						<!-- 비밀번호 -->

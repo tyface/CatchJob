@@ -16,9 +16,8 @@ public interface EnterpriseService {
 	
 	// 기업식별 번호로  기업 정보 가져오기 
 	public Map<String,String> getEntInfo(Map<String, String> data);
-	//기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합)
-	public Map<String,String> getEntHRInfo(int entIndex);
-	// 그래프 - 인원
+	
+	// 그래프 - 인원 TODO 사용하는지 확인 후 삭제
 	public List<Map<String,String>> empCountGraph(int entIndex);
 
 	// 그래프 - 평균급여
@@ -32,7 +31,9 @@ public interface EnterpriseService {
 	
 //	 최근 본 기업 보기//TODO  분리하기 //RecentSercive
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData);
-
+	
+	//동종산업군, 전체 산업군 평균정보 가져오기
+	public Map<String, String> getIndustryAvgInfo(int entIndex);
 	
 	//관리자 페이지
 	public Map<String, Object> getMessageList(Map<String, Object> data);
@@ -44,7 +45,7 @@ public interface EnterpriseService {
 	public int getEndPage(int pageNum);
 	//기업 수정
 	public boolean modifyEnt(Enterprise ent);
-    //기업 하나 선택
+    //기업 하나 선택 TODO get으로 이름바꾸고 사용하는지 확인할거쇼
 	public Enterprise selectEnt(int entIndex);
 }	
 	
