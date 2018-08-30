@@ -57,6 +57,18 @@ public class AdminController {
 	}
 
 
+/*	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public String login(HttpSession session, Model model, String adminPw, String adminId) {
+		System.out.println("나오면 안돼!!!!");
+		boolean result = adminService.login(adminId, adminPw);
+		if (result) {
+			Admin admin = adminService.getAdminById(adminId);
+			return "redirect:/admin/mngMber";
+		} else {
+			return "admin/admin-login";
+		}
+	}*/
+
 	/* 로그아웃 */
 	@RequestMapping("/logout")
 	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -66,6 +78,13 @@ public class AdminController {
 		}
 	}
 
+/*	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("adminIndex");
+		session.removeAttribute("adminId");
+		return "redirect:/admin";
+	}
+*/
 	/* 회원 그룹 관리 */
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 
