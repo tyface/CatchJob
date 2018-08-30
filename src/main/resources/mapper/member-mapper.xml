@@ -42,19 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
-	<select id="selectListMember" parameterType="map"
-		resultMap="memberMap">
-		SELECT * FROM (
-				SELECT @ROWNUM:=@ROWNUM+1 AS rnum, m.MBER_IDX, m.MBER_ID, m.MBER_PW,
- 				       m.MBER_TYPE, m.USE_FL, m.REG_DT, m.LAST_DT
-				  FROM (
-				  		SELECT MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
-						  FROM MEMBER_TB, (select @ROWNUM := 0) a
-					     WHERE MBER_ID like CONCAT('%',#{keyword},'%')
-			  ORDER BY MBER_IDX) m) n
-		 WHERE rnum BETWEEN #{firstRow} AND #{endRow}
+	<select id="selectListMember" parameterType="map" resultMap="memberMap">
+		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
+		FROM MEMBER_TB 
+		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%')
+		LIMIT #{NUM_OF_MSG_PER_PAGE}
+		OFFSET #{START_ROW}
 	</select>
-
 	<select id="selectById" parameterType="String"
 		resultMap="memberMap">
 		SELECT * FROM MEMBER_TB WHERE MBER_ID = #{mberId}

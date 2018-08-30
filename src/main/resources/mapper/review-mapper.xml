@@ -115,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN MEMBER_TB m
 		ON r.MBER_IDX = m.MBER_IDX
 		INNER JOIN ENTERPRISE_TB e
-		ON r.ENT_IDX = e.ENT_IDX,
+		ON r.ENT_IDX = e.ENT_IDX
 		WHERE 1=1
 		<if test="entIndexKeyword != null">
 			AND r.ENT_IDX = #{entIndexKeyword}

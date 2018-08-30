@@ -22,7 +22,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		UsernamePasswordAuthenticationToken authToken = null;
 		// 사용자가 입력한 비밀번호와 service가 가져다 준 사용자 정보의 비밀번호가 같으면 권한 제공
-
+		System.out.println("----------CustomAuthenticationProvider start-------");
 		// 사용자가 입력한 이름 가져오기
 		String mberid = authentication.getName();
 		String mberPw = (String) authentication.getCredentials();

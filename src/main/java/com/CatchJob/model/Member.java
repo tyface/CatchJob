@@ -1,16 +1,42 @@
 package com.CatchJob.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 /* 회원 정보 */
-public class Member {
+public class Member implements UserDetails{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int mberIndex; // 회원 식별번호
 	private String mberId; // 아이디(email)
 	private String mberPw; // 비밀번호
-	private String mberType; // 회원구분(1:일반,2:기업인증)
+	private String mberType; // 회원구분(1:일반,2:기업인증,3:관리자)
 	private int entIndex; // 기업회원일 경우 해당기업 식별번호
 	private String mberFlag; // 계정상태(1:등록,2:탈퇴)
 	private String regDate; // 회원가입일
 	private String lastDate; // 마지막방문일
 	private String oauthId; // oauth 아이디
+	
+	private boolean accountNonExpired = true;
+	private boolean accountNonLocked = true;
+	private boolean credentialsNonExpired = true;
+	private boolean enabled = true;
+
+	private List<Role> authorities;
+
+	public Member() {
+		authorities = new ArrayList<Role>();
+	}
+	
+	public void addAuthority(Role role) {
+		authorities.add(role);
+	}
 	
 	public int getMberIndex() {
 		return mberIndex;
@@ -72,6 +98,49 @@ public class Member {
 		return "Member [mberIndex=" + mberIndex + ", mberId=" + mberId + ", mberPw=" + mberPw + ", mberType=" + mberType
 				+ ", entIndex=" + entIndex + ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate="
 				+ lastDate + ", oauthId=" + oauthId + "]";
+	}
+	
+	
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getPassword() {
+		return mberPw;
+	}
+	@Override
+	public String getUsername() {
+		return mberId;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return accountNonExpired;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return credentialsNonExpired;
+	}
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 	
 }
