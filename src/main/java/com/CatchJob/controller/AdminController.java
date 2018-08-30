@@ -417,7 +417,7 @@ public class AdminController {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("pageNumber", pageNumber);
-		data.put("numOfMsgPage", numOfMsgPage);
+		data.put("numOfMsgPage", numOfMsgPage);   
 
 		if (keyword != null) {
 			data.put("keyword", keyword);
