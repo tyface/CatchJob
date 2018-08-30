@@ -11,6 +11,8 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<security:http auto-config="true" pattern="/admin/**" disable-url-rewriting="true">
+		<security:intercept-url pattern="/admin" access="permitAll" /> 
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" /> 
 		<security:form-login login-page="/admin"
 			login-processing-url="/admin/login"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler"
@@ -25,7 +27,7 @@
 	<security:http auto-config="true" use-expressions="true" disable-url-rewriting="true" pattern="/**">
 <!-- 		여기에 기업인증회원만 리뷰 작성할 수 있는 url 적기 -->
 		<security:intercept-url pattern="/faq" access="hasRole('ROLE_AUTHENTICATED')" />
-		<security:intercept-url pattern="/profile/**" access="hasRole('1')" /> 
+		<security:intercept-url pattern="/profile/**" access="hasRole('ROLE_USER')" /> 
 		
 		<security:form-login login-page="/"
 			login-processing-url="/member/login"

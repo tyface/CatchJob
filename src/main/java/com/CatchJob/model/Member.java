@@ -8,10 +8,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /* 회원 정보 */
-public class Member implements UserDetails{
+public class Member implements UserDetails {
 	/**
-	 * 
-	 */
+	* 
+	*/
 	private static final long serialVersionUID = 1L;
 	private int mberIndex; // 회원 식별번호
 	private String mberId; // 아이디(email)
@@ -22,7 +22,7 @@ public class Member implements UserDetails{
 	private String regDate; // 회원가입일
 	private String lastDate; // 마지막방문일
 	private String oauthId; // oauth 아이디
-	
+
 	private boolean accountNonExpired = true;
 	private boolean accountNonLocked = true;
 	private boolean credentialsNonExpired = true;
@@ -33,114 +33,139 @@ public class Member implements UserDetails{
 	public Member() {
 		authorities = new ArrayList<Role>();
 	}
-	
+
 	public void addAuthority(Role role) {
 		authorities.add(role);
 	}
-	
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
 	public int getMberIndex() {
 		return mberIndex;
 	}
+
 	public void setMberIndex(int mberIndex) {
 		this.mberIndex = mberIndex;
 	}
+
 	public String getMberId() {
 		return mberId;
 	}
+
 	public void setMberId(String mberId) {
 		this.mberId = mberId;
 	}
+
 	public String getMberPw() {
 		return mberPw;
 	}
+
 	public void setMberPw(String mberPw) {
 		this.mberPw = mberPw;
 	}
+
 	public String getMberType() {
 		return mberType;
 	}
+
 	public void setMberType(String mberType) {
 		this.mberType = mberType;
 	}
+
 	public int getEntIndex() {
 		return entIndex;
 	}
+
 	public void setEntIndex(int entIndex) {
 		this.entIndex = entIndex;
 	}
+
 	public String getMberFlag() {
 		return mberFlag;
 	}
+
 	public void setMberFlag(String mberFlag) {
 		this.mberFlag = mberFlag;
 	}
+
 	public String getRegDate() {
 		return regDate;
 	}
+
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+
 	public String getLastDate() {
 		return lastDate;
 	}
+
 	public void setLastDate(String lastDate) {
 		this.lastDate = lastDate;
 	}
+
 	public String getOauthId() {
 		return oauthId;
 	}
+
 	public void setOauthId(String oauthId) {
 		this.oauthId = oauthId;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Member [mberIndex=" + mberIndex + ", mberId=" + mberId + ", mberPw=" + mberPw + ", mberType=" + mberType
 				+ ", entIndex=" + entIndex + ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate="
 				+ lastDate + ", oauthId=" + oauthId + "]";
 	}
-	
-	
+
 	public void setAccountNonExpired(boolean accountNonExpired) {
 		this.accountNonExpired = accountNonExpired;
 	}
+
 	public void setAccountNonLocked(boolean accountNonLocked) {
 		this.accountNonLocked = accountNonLocked;
 	}
+
 	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
+
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	@Override
 	public String getPassword() {
 		return mberPw;
 	}
+
 	@Override
 	public String getUsername() {
 		return mberId;
 	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return accountNonExpired;
 	}
+
 	@Override
 	public boolean isAccountNonLocked() {
 		return accountNonLocked;
 	}
+
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return credentialsNonExpired;
 	}
+
 	@Override
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 }
