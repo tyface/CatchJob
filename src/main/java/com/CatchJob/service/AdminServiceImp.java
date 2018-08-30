@@ -69,27 +69,24 @@ public class AdminServiceImp implements AdminService {
 			String keyword = (String) data.get("keyword");
 			map.put("keyword", keyword);		
 			viewData.put("keyword", keyword);
-			totalCount  = memberDao.selectCount(keyword); 
+			totalCount  = memberDao.selectAdminCount(keyword); 
 		} else {
 			map.put("keyword", "");
-			totalCount  = memberDao.selectCount(""); 
+			totalCount  = memberDao.selectAdminCount(""); 
 		}		
 		
-		int firstRow = 0;     
-		int endRow =0;
+		
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
-	
+
+		if(totalCount==0) {
+			totalCount = 1;
+		}
+
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
-		
-		firstRow = (pageNumber-1)*numOfMsgPage +1;  
-		endRow = pageNumber*numOfMsgPage;  
-
-		map.put("firstRow", String.valueOf(firstRow));
-		map.put("endRow",  String.valueOf(endRow));
 		
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);

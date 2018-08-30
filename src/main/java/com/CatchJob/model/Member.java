@@ -16,7 +16,7 @@ public class Member implements UserDetails {
 	private int mberIndex; // 회원 식별번호
 	private String mberId; // 아이디(email)
 	private String mberPw; // 비밀번호
-	private String mberType; // 회원구분(1:일반,2:기업인증,3:관리자)
+	private String mberType; //회원구분(USER:일반,AUTHENTICATED:기업인증,ADMIN:관리자)
 	private int entIndex; // 기업회원일 경우 해당기업 식별번호
 	private String mberFlag; // 계정상태(1:등록,2:탈퇴)
 	private String regDate; // 회원가입일

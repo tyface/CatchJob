@@ -33,8 +33,8 @@ import com.CatchJob.service.UniversalDomainService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@Autowired
-	AdminService adminService;
+	/*@Autowired
+	AdminService adminService;*/
 	@Autowired
 	MemberService memberService;
 	@Autowired
@@ -49,7 +49,6 @@ public class AdminController {
 	public String loginForm() {
 		return "admin/admin-login";
 	}
-
 
 	/* 로그아웃 */
 	@RequestMapping("/logout")
@@ -147,11 +146,11 @@ public class AdminController {
 		}
 		
 		if(num!=null) {
-			Admin admin = adminService.getAdmin(Integer.parseInt(num));
-			model.addAttribute("admin", admin);
+			Member member=memberService.getMember(Integer.parseInt(num));
+			model.addAttribute("admin", member);
 		}
 	
-		Map<String, Object> viewData = adminService.getMessageList(data);
+		Map<String, Object> viewData = memberService.getMessageList(data);
 		model.addAttribute("viewData", viewData);
 		return "admin/member-admin-mng";
 	}
@@ -159,19 +158,21 @@ public class AdminController {
 	@RequestMapping(value="/modifyAdmin", method=RequestMethod.POST)
 	public String modifyAdmin(Model model, String adminId, String adminPw, String adminLv, String regDate, String lastDate) { 
 		try {
-			Admin adminOne = adminService.getAdminById(adminId);	
-			Admin admin = new Admin();
-			admin.setAdminId(adminId);
-			admin.setAdminPw(adminPw);		
+			Member memberOne = memberService.getMemberById(adminId);
+			Member member = new Member();
+			member.setMberIndex(memberOne.getMberIndex());
+			member.setMberId(adminId);
+			member.setMberPw(adminPw);
 			if(adminLv==null) {
-				admin.setAdminLv(adminOne.getAdminLv());
+				member.setMberType(memberOne.getMberType());
 			} else {
-				admin.setAdminLv(adminLv);			
+				member.setMberType(adminLv);
 			}
-			admin.setRegDate(regDate);
-			admin.setLastDate(lastDate);
-			admin.setAdminIndex(adminOne.getAdminIndex());	
-			boolean result = adminService.modify(admin);
+			member.setMberFlag(memberOne.getMberFlag());
+			member.setRegDate(regDate);
+			member.setLastDate(lastDate);
+			
+			boolean result = memberService.modify(member);
 	
 			if(result) {
 				model.addAttribute("url", "mngAdmin");

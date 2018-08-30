@@ -38,9 +38,11 @@ public interface MemberDao {
 	public Member selectByOauthId(Map<String, String> mapData);
 	
 	//페이징 처리
-	public int selectCount(String keyword);
+	public int selectMemberCount(String keyword);
 	
-	public List<Member> selectListMember(Map<String, Object> map);
+	public int selectAdminCount(String keyword);
+	
+	public List<Member> selectList(Map<String, Object> map);
 	
 	
 }
