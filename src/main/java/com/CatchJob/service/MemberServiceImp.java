@@ -151,16 +151,20 @@ public class MemberServiceImp implements MemberService {
 			String keyword = (String) data.get("keyword");
 			map.put("keyword", keyword);		
 			viewData.put("keyword", keyword);
-			totalCount  = memberDao.selectCount(keyword); 
+			totalCount  = memberDao.selectMemberCount(keyword); 
 		} else {
 			map.put("keyword", "");
-			totalCount  = memberDao.selectCount(""); 
+			totalCount  = memberDao.selectMemberCount(""); 
 		}		
 		
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
 	
+		if(totalCount==0) {
+			totalCount = 1;
+		}
+		
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
@@ -174,8 +178,8 @@ public class MemberServiceImp implements MemberService {
 		viewData.put("startPage", getStartPage(pageNumber));
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
-		viewData.put("boardList", memberDao.selectListMember(map));
-		
+		viewData.put("boardList", memberDao.selectList(map));
+		System.out.println(memberDao.selectList(map));
 		return viewData;
 	}
 
