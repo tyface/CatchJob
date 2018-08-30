@@ -105,7 +105,7 @@ $(function(){
 <jsp:include page="include/profile-article.jsp" flush="true" />
 <article class="container  non-padding-top">
 	<div class="contents-wrap ">
-		<h1>팔로잉 기업</h1>
+		<h2>팔로잉 기업</h2>
 		<c:forEach begin="0" varStatus="status" end="9" var="follow" items="${followView}">
 			<div class="row ent-list">
 	

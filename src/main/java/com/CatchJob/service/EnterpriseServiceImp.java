@@ -76,6 +76,8 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	//최근 기업 정보 보기 
 	@Override
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData) {
+		mapData.put("NUM_OF_RECENT_PER_PAGE", Constants.Recent.NUM_OF_RECENT_PER_PAGE);
+		mapData.put("START_ROW", 0);
 		List<Enterprise> entList = entDao.selectListEntRecent(mapData);
 		for (Enterprise ent : entList) {
 			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));

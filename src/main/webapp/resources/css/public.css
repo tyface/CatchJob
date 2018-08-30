@@ -452,4 +452,7 @@ label.error {
 .text-right {
 	text-align: right;
 }
+.mypage-table-width th{
+	width: 25%;
+}
 /* 마이페이지 END */
