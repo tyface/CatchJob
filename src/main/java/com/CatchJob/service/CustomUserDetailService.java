@@ -37,10 +37,13 @@ public class CustomUserDetailService implements UserDetailsService {
 			
 		//사용자 이름으로 auth table가서 권한 조회
 		List<String> authentifications = authDao.selectUserAuthorities(mberid);
-			for(String auth:authentifications) {
-				smember.addAuthority(new Role("ROLE_ANONYMOUS"));
-			}			
-		} 
+		
+		System.out.println(authentifications);
+		
+		for(String auth:authentifications) {
+			smember.addAuthority(new Role(auth));
+		}			
+	} 
 		return smember;
 	}
 }

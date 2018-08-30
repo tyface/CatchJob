@@ -4,6 +4,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.AuthorityDao">
 	<select id="selectUserAuthorities" parameterType="string" resultType="string">
-		SELECT AUTHORITY FROM AUTHORITIES_TB WHERE MBER_ID = #{mberid}
+		SELECT AUTHORITY FROM AUTHORITIES_TB WHERE MBER_ID=#{mberid}
 	</select>
+	<insert id="insertAuthority" parameterType="map">
+		INSERT INTO 
+		AUTHORITIES_TB(MBER_IDX,MBER_ID,AUTHORITY,REG_DT)
+		VALUES(#{mberIndex},#{mberId},'ROLE_USER',sysdate())
+	</insert>
+	<update id="updateAuthority" parameterType="int">
+		UPDATE AUTHORITIES_TB 
+		SET    AUTHORITY=#{authority}
+		WHERE  MBER_IDX=#{mberIndex}
+	</update>
 </mapper>

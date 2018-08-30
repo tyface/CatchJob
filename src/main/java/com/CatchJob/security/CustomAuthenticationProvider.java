@@ -1,5 +1,8 @@
 package com.CatchJob.security;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,7 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
@@ -42,9 +46,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
 		} else {
-			System.out.println("비밀번호 일치");
-			System.out.println("member : " + member.getAuthorities());
-			System.out.println("==========================================");
+			System.out.println("비밀번호 일치// member : " + member.getAuthorities());
+			
 			authToken = new UsernamePasswordAuthenticationToken(member, mberPw, member.getAuthorities());
 			System.out.println(authToken);
 			return authToken;
