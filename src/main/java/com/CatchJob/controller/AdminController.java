@@ -404,7 +404,7 @@ public class AdminController {
 	}
 	//도메인 관리
 	@RequestMapping("/mngDomain")
-	public String mngDomain(Model model, String page, String msgPerPage) { 
+	public String mngDomain(Model model, String page, String msgPerPage, String keyword,String keywordOption) { 
 		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
