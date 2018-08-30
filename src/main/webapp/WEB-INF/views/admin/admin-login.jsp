@@ -85,7 +85,7 @@ a, a:hover, a:focus {
 			<span class="icon-bar"></span>
 		</button>
  		<div class="navbar-brand">
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="sidebarCollapse"  href="/catchjob/admin"> <span
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="sidebarCollapse"  href="${pageContext.request.contextPath}/admin"> <span
 			class="glyphicon glyphicon-th-list">&nbsp;</span>Admin Page
 		</a>
 		</div>
@@ -95,13 +95,11 @@ a, a:hover, a:focus {
 	</nav>	
 	
 	<div class="container" style="margin-top:200px">
-
-		<form class="form-signin" action="" method="post">
+		<form class="form-signin" action="${pageContext.request.contextPath}/admin/login" method="post">
 			<h2 class="form-signin-heading">Please login</h2>
 			<div class="input-group">
-				<span class="input-group-addon"><i
-					class="glyphicon glyphicon-user"></i></span> <input type="text"
-					class="form-control" name="adminId" placeholder="Admin ID"/>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+				<input type="text"	class="form-control" name="adminId" placeholder="Admin ID"/>
 			</div>
 		
 			<div class="input-group" style="margin-top:10px">

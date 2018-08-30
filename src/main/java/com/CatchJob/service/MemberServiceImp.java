@@ -1,7 +1,5 @@
 package com.CatchJob.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +19,11 @@ public class MemberServiceImp implements MemberService {
 	private MemberDao memberDao;
 	@Autowired
 	private AuthorityDao authDao;
-	
+/*	사용안함
 	@Override
 	public List<Member> getListMembers(Map<String, String> map) {
 		return memberDao.selectListMember(map);
-	}
+	}*/
 
 	@Override
 	public boolean login(String mberId, String mberPw) {
@@ -60,7 +58,6 @@ public class MemberServiceImp implements MemberService {
 	
 	@Override
 	public boolean modify(Member member) {
-		
 		int rowCount = memberDao.updateMember(member);
 		
 		if (rowCount > 0) {		
@@ -147,7 +144,7 @@ public class MemberServiceImp implements MemberService {
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
@@ -160,8 +157,6 @@ public class MemberServiceImp implements MemberService {
 			totalCount  = memberDao.selectCount(""); 
 		}		
 		
-		int firstRow = 0;     
-		int endRow =0;
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
@@ -169,13 +164,11 @@ public class MemberServiceImp implements MemberService {
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
-		
-		firstRow = (pageNumber-1)*numOfMsgPage +1;  
-		endRow = pageNumber*numOfMsgPage;  
 
-		map.put("firstRow", String.valueOf(firstRow));
-		map.put("endRow",  String.valueOf(endRow));
-		
+		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
+
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-	@ResponseBody
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authenticationException) throws IOException, ServletException {
+		
 		if (authenticationException instanceof UsernameNotFoundException) {
 			System.out.println("사용자 없음");
 			response.getWriter().print("{\"result\" : \"CODE_03\"}");
