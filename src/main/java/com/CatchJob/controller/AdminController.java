@@ -1,4 +1,4 @@
-/*package com.CatchJob.controller;
+package com.CatchJob.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -39,8 +39,8 @@ import com.CatchJob.service.UniversalDomainService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@Autowired
-	AdminService adminService;
+	/*@Autowired
+	AdminService adminService;*/
 	@Autowired
 	MemberService memberService;
 	@Autowired
@@ -50,13 +50,13 @@ public class AdminController {
 	@Autowired
 	UniversalDomainService domainService;
 	
-	 로그인폼 
+	/* 로그인폼 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String loginForm() {
 		return "admin/admin-login";
 	}
 
-	 로그아웃 
+	/* 로그아웃 */
 	@RequestMapping("/logout")
 	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -65,7 +65,7 @@ public class AdminController {
 		}
 	}
 
-	 회원 그룹 관리 
+	/* 회원 그룹 관리 */
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 
 		int pageNumber = 1;	
@@ -130,7 +130,7 @@ public class AdminController {
 	
 	}
 	
-	 관리자 그룹 관리 
+	/* 관리자 그룹 관리 */
 	@RequestMapping(value = "/mngAdmin")
 	public String mngAdmin(Model model, String page, String msgPerPage, String num, String keyword) {
 		int pageNumber = 1;	
@@ -156,7 +156,7 @@ public class AdminController {
 			model.addAttribute("admin", member);
 		}
 	
-		Map<String, Object> viewData = adminService.getMessageList(data);
+		Map<String, Object> viewData = memberService.getMessageList(data);
 		model.addAttribute("viewData", viewData);
 		return "admin/member-admin-mng";
 	}
@@ -164,19 +164,21 @@ public class AdminController {
 	@RequestMapping(value="/modifyAdmin", method=RequestMethod.POST)
 	public String modifyAdmin(Model model, String adminId, String adminPw, String adminLv, String regDate, String lastDate) { 
 		try {
-			Admin adminOne = adminService.getAdminById(adminId);	
-			Admin admin = new Admin();
-			admin.setAdminId(adminId);
-			admin.setAdminPw(adminPw);		
+			Member memberOne = memberService.getMemberById(adminId);
+			Member member = new Member();
+			member.setMberIndex(memberOne.getMberIndex());
+			member.setMberId(adminId);
+			member.setMberPw(adminPw);
 			if(adminLv==null) {
-				admin.setAdminLv(adminOne.getAdminLv());
+				member.setMberType(memberOne.getMberType());
 			} else {
-				admin.setAdminLv(adminLv);			
+				member.setMberType(adminLv);
 			}
-			admin.setRegDate(regDate);
-			admin.setLastDate(lastDate);
-			admin.setAdminIndex(adminOne.getAdminIndex());	
-			boolean result = adminService.modify(admin);
+			member.setMberFlag(memberOne.getMberFlag());
+			member.setRegDate(regDate);
+			member.setLastDate(lastDate);
+			
+			boolean result = memberService.modify(member);
 	
 			if(result) {
 				model.addAttribute("url", "mngAdmin");
@@ -195,7 +197,7 @@ public class AdminController {
 									
 	}
 	
-	 리뷰 관리
+	/* 리뷰 관리*/
 	@RequestMapping(value = "/mngReview")
 	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {
 		
@@ -486,7 +488,7 @@ public class AdminController {
 		}	
 	}
 	
-	@RequestMapping(value = "/mngInduty")
+/*	@RequestMapping(value = "/mngInduty")
 	public String mngInduty() {
 		
 		return "admin/mng-industry";
@@ -500,8 +502,7 @@ public class AdminController {
 	@RequestMapping(value = "/mngFAQ")
 	public String mngQnA() {
 		return "admin/mng-FAQ";
-	}
+	}*/
 
 
 }
-*/

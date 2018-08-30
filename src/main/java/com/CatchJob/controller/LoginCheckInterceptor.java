@@ -1,4 +1,4 @@
-package com.CatchJob.controller;
+/*package com.CatchJob.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,4 +21,4 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			return true; // 요청 계속 진행
 		}
 	}
-}
+}*/
