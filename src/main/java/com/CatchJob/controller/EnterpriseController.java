@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,7 +23,6 @@ import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.News;
 import com.CatchJob.model.Review;
-import com.CatchJob.model.SMember;
 import com.CatchJob.model.Saramin;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.FollowService;
@@ -67,7 +65,7 @@ public class EnterpriseController {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);		
 		try {
-			data.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));		
+			data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));		
 		}catch(NullPointerException e) {
 		}		
 		
@@ -89,7 +87,7 @@ public class EnterpriseController {
 			
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
 			if(authentication != null) {
-				mapData.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
+				mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 			}
 			recordService.regViewRecord(mapData);
 			//기업정보
@@ -126,7 +124,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/regFollow")
 	public boolean regFollow (String entIndex, Authentication authentication) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));	
+		mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));	
 		mapData.put("ENT_IDX", entIndex );	
 		return followService.regFollowEnt(mapData);
 	}
@@ -134,7 +132,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/revFollow")
 	public boolean revFollow (String entIndex, Authentication authentication) {
 		Map<String, String> mapData = new HashMap<String, String>();
-		mapData.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
+		mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 		mapData.put("ENT_IDX", entIndex );
 		return followService.revFollowEnt(mapData);
 	}
@@ -191,7 +189,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/writeReview", method = RequestMethod.POST)
 	public boolean writeReview(Review review, Authentication authentication) throws IOException {
 	//	System.out.println(review);
-		review.setMberIndex(((SMember)authentication.getPrincipal()).getUserIndex());
+		review.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
 
 		//System.out.println("writeReview-컨트롤러2"+review);
 		boolean result = reviewService.insertReview(review);
@@ -209,7 +207,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/itvwDuplicationCheck")
 	public boolean interviewDuplicationCheck(Authentication authentication, String entIndex) {
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("MBER_IDX", Integer.toString(((SMember)authentication.getPrincipal()).getUserIndex()));
+		data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 		data.put("ENT_IDX", entIndex );
 		return itvwService.interviewDuplicationCheck(data);
 	}
@@ -218,7 +216,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview,Authentication authentication) {
 		System.out.println("123456"+interview);
-		interview.setMberIndex(((SMember)authentication.getPrincipal()).getUserIndex());
+		interview.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
 //		// boolean result = entService.insertInterview(interview);
 		System.out.println(itvwService.insertInterview(interview));
 	//	itvwService.insertInterview(interview);
