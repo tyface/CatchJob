@@ -1183,15 +1183,15 @@ function jsonEscape(str)  {
 										</div>
 										<!-- /.box-header -->
 										<div class="box-body no-padding">
-											<table class="table table-condensed">
+											<table class="table table-condensed text-center">
 												<tr>
-													<th style="width: 10px">#</th>
-													<th>Task</th>
-													<th>Progress</th>
-													<th style="width: 40px">Label</th>
+<!-- 													<th style="width: 10px">#</th> -->
+													<th style="width: 25%">Task</th>
+													<th style="width: 50%">Progress</th>
+													<th style="width: 25%">Label</th>
 												</tr>
 												<tr>
-													<td>1.</td>
+<!-- 													<td>1.</td> -->
 													<td>현재 기업</td>
 													<td>
 														<div class="progress progress-xs   ">
@@ -1202,7 +1202,7 @@ function jsonEscape(str)  {
 													<td><span class="badge bg-red" id="numOfEnt">55</span></td>
 												</tr>
 												<tr>
-													<td>2.</td>
+<!-- 													<td>2.</td> -->
 													<td>동종 산업군</td>
 													<td>
 														<div class="progress progress-xs   ">
@@ -1213,7 +1213,7 @@ function jsonEscape(str)  {
 													<td><span class="badge bg-yellow" id="numOfInd">70</span></td>
 												</tr>
 												<tr>
-													<td>3.</td>
+<!-- 													<td>3.</td> -->
 													<td>전체 기업</td>
 													<td>
 														<div class="progress progress-xs  ">
