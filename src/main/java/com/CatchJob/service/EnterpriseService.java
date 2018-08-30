@@ -30,7 +30,7 @@ public interface EnterpriseService {
 	//팔로잉 기업 보기
 	public List<Enterprise> getFollowsEntList(int memberIndex);
 	
-//	 최근 본 기업 보기//TODO  분리하기 //RecentSercive
+//	 최근 본 기업 보기 //RecentSercive
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData);
 
 	
