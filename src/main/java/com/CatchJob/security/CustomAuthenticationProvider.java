@@ -1,8 +1,5 @@
 package com.CatchJob.security;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
@@ -25,15 +20,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
-		System.out.println("----------CustomAuthenticationProvider start-------");
 		UsernamePasswordAuthenticationToken authToken = null;
 		// 사용자가 입력한 비밀번호와 service가 가져다 준 사용자 정보의 비밀번호가 같으면 권한 제공
 
 		// 사용자가 입력한 이름 가져오기
 		String mberid = authentication.getName();
 		String mberPw = (String) authentication.getCredentials();
-
+		
 		UserDetails member = userDetailService.loadUserByUsername(mberid);
 
 		if (member == null) {

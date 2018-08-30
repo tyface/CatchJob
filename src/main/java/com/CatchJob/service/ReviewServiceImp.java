@@ -119,7 +119,7 @@ public class ReviewServiceImp implements ReviewService {
 		dataRvw.put("REVW_FL", 1);
 		int pageNum = dataRvw.get("PAGE_NUM");
 		int startRow = Constants.Review.NUM_OF_RVW_PER_PAGE * ( pageNum - 1 ) ;
-		dataRvw.put("NUM_OF_RVW_PER_PAGE", Constants.Review.NUM_OF_RVW_PER_PAGE);
+		dataRvw.put("NUM_OF_RVW_PER_PAGE",Constants.Review.NUM_OF_RVW_PER_PAGE);
 		dataRvw.put("START_ROW", startRow);
 		return reviewDao.selectReviewsList(dataRvw);
 	}
@@ -148,6 +148,7 @@ public class ReviewServiceImp implements ReviewService {
 		}
 		return pageTotalCount;
 	}
+	
 
 	public int getReviewStartPage(int pageNum) {
 		int startPage = ((pageNum - 1) / Constants.Review.NUM_OF_NAVI_PAGE) * Constants.Review.NUM_OF_NAVI_PAGE + 1;
@@ -159,12 +160,12 @@ public class ReviewServiceImp implements ReviewService {
 		return endPage;
 	}
 
-
+	
 	/* 관리자 페이징 처리 */
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 				
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
@@ -189,9 +190,7 @@ public class ReviewServiceImp implements ReviewService {
 		}		
 			
 		totalCount  = reviewDao.selectCountByKeyword(map); 		
-		
-		int firstRow = 0;     
-		int endRow =0;
+
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
@@ -199,17 +198,15 @@ public class ReviewServiceImp implements ReviewService {
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
-		
-		firstRow = (pageNumber-1)*numOfMsgPage +1;  
-		endRow = pageNumber*numOfMsgPage;  
-
-		map.put("firstRow", String.valueOf(firstRow));
-		map.put("endRow",  String.valueOf(endRow));
+			
+		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
 
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
-		viewData.put("startPage", getStartPage(pageNumber));
-		viewData.put("endPage", getEndPage(pageNumber));
+		viewData.put("startPage", getReviewStartPage(pageNumber));
+		viewData.put("endPage", getReviewEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", reviewDao.selectReviewList(map));
 		
@@ -226,15 +223,6 @@ public class ReviewServiceImp implements ReviewService {
 		return pageTotalCount;
 	}
 
-	public int getStartPage(int pageNum) {
-		int startPage = ((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) * Constants.Admin.NUM_OF_NAVI_PAGE + 1;
-		return startPage;
-	}
-
-	public int getEndPage(int pageNum) {
-		int endPage = (((pageNum - 1) / Constants.Admin.NUM_OF_NAVI_PAGE) + 1) * Constants.Admin.NUM_OF_NAVI_PAGE;
-		return endPage;
-	}
 	@Override
 	public boolean modifyReview(Review review) {
 		int result = reviewDao.updateReviewByRevwIdx(review);
@@ -260,5 +248,6 @@ public class ReviewServiceImp implements ReviewService {
 		data.put("REVW_FL", "1");
 		return reviewDao.valuesByItem(data);
 	}
+
 
 }

@@ -91,52 +91,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM	 REVIEW_TB
 		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL = #{REVW_FL}
 	</select>
-
-	<select id="selectCount" resultType="int" parameterType="String">
-		SELECT COUNT(*)
-		FROM REVIEW_TB
-	</select>
-	
 	<select id="selectCountByKeyword" resultType="int" parameterType="map">
 		SELECT COUNT(*)
-			FROM REVIEW_TB r
-				INNER JOIN MEMBER_TB m 
-				ON r.MBER_IDX = m.MBER_IDX
-				INNER JOIN ENTERPRISE_TB e
-				ON r.ENT_IDX = e.ENT_IDX 
-				WHERE 1=1 
-			<if test="entIndexKeyword != null">
-				AND r.ENT_IDX = #{entIndexKeyword} 
-		    </if>
-		    <if test="entNameKeyword != null"> 
-		  	 	AND e.ENT_NM LIKE '%${entNameKeyword}%'
-		    </if>
-		    <if test="questionNumKeyword != null"> 
-		  	  	AND r.QESTN_NO = #{questionNumKeyword} 
-		    </if>
+		FROM REVIEW_TB r
+			INNER JOIN MEMBER_TB m 
+			ON r.MBER_IDX = m.MBER_IDX
+			INNER JOIN ENTERPRISE_TB e
+			ON r.ENT_IDX = e.ENT_IDX 
+			WHERE 1=1 
+		<if test="entIndexKeyword != null">
+			AND r.ENT_IDX = #{entIndexKeyword} 
+	    </if>
+	    <if test="entNameKeyword != null"> 
+	  	 	AND e.ENT_NM LIKE '%${entNameKeyword}%'
+	    </if>
+	    <if test="questionNumKeyword != null"> 
+	  	  	AND r.QESTN_NO = #{questionNumKeyword} 
+	    </if>
 	</select>
-	<select id="selectReviewList" resultMap="reviewMap" parameterType="map">
-		SELECT * FROM (	
-			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM, r.REVW_IDX, m.MBER_ID, e.ENT_NM, r.ENT_IDX, r.QESTN_NO, r.EVALUATION,
-			r.REVW_FL, r.CONTENTS, r.REG_DT
-			  FROM  REVIEW_TB r 
-					INNER JOIN MEMBER_TB m 
-					ON r.MBER_IDX = m.MBER_IDX
-					INNER JOIN ENTERPRISE_TB e
-					ON r.ENT_IDX = e.ENT_IDX, 
-					(SELECT @ROWNUM := 0) ROWNUM 
-					WHERE 1=1 
-					<if test="entIndexKeyword != null">
-				  	  AND r.ENT_IDX = #{entIndexKeyword} 
-				    </if>
-				    <if test="entNameKeyword != null"> 
-				  	  AND e.ENT_NM LIKE '%${entNameKeyword}%'
-				    </if>
-				    <if test="questionNumKeyword != null"> 
-				  	  AND r.QESTN_NO = #{questionNumKeyword} 
-				    </if>
-					) n
-		WHERE RNUM BETWEEN #{firstRow} AND #{endRow} 
+	<select id="selectReviewList" resultMap="reviewMap"	parameterType="map">
+		SELECT SQL_CALC_FOUND_ROWS *
+		FROM REVIEW_TB r
+		INNER JOIN MEMBER_TB m
+		ON r.MBER_IDX = m.MBER_IDX
+		INNER JOIN ENTERPRISE_TB e
+		ON r.ENT_IDX = e.ENT_IDX,
+		WHERE 1=1
+		<if test="entIndexKeyword != null">
+			AND r.ENT_IDX = #{entIndexKeyword}
+		</if>
+		<if test="entNameKeyword != null">
+			AND e.ENT_NM LIKE '%${entNameKeyword}%'
+		</if>
+		<if test="questionNumKeyword != null">
+			AND r.QESTN_NO = #{questionNumKeyword}
+		</if>
+		LIMIT #{NUM_OF_MSG_PER_PAGE}
+		OFFSET #{START_ROW}
 	</select>
 
 	<update id="updateReviewByRevwIdx" parameterType="review">

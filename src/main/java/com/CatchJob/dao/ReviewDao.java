@@ -46,9 +46,9 @@ public interface ReviewDao {
 //	public List<Review> reviewListByQNum(Map<String, String> data);
 	
 	//관리자 페이지 페이징 처리+검색
-	public int selectCountByKeyword(Map<String, String> map);
+	public int selectCountByKeyword(Map<String, Object> map);
 
-	public List<Review> selectReviewList(Map<String, String> map);
+	public List<Review> selectReviewList(Map<String, Object> map);
 	//리뷰 수정 
 	public int updateReviewByRevwIdx(Review review);
 
