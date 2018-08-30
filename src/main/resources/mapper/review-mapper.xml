@@ -26,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 질문가져오기 -->
 	<select id="question" parameterType="map"  resultType="map">
-		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG
+<!-- 		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, round(avg(rev.EVALUATION),1) as AVG -->
+		SELECT qes.QESTN_NO, qes.QUESTION, count(rev.QESTN_NO) as COUNT, sum(rev.EVALUATION) as SUM, if(rev.EVALUATION is null, 0.0,round(avg(rev.EVALUATION),1) ) as AVG
 		FROM   REVIEW_QESTN_TB qes
 		LEFT OUTER JOIN REVIEW_TB rev
 		ON qes.QESTN_NO = rev.QESTN_NO

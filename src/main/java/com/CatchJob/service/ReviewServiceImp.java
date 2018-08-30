@@ -84,6 +84,9 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public List<Map<String, String>> question(Map<String, String> data) {
 		data.put("REVW_FL", "1");
+		System.out.println("야야아: "+reviewDao.question(data));
+		//List<Map<String, String>> result = reviewDao.question(data);
+		
 		return reviewDao.question(data);
 	}
 	
@@ -102,7 +105,11 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public List<Review> reviewListByMember(Map<String, String> map) {
 		map.put("REVW_FL", "1");
-		return reviewDao.reviewListByMember(map);
+		List<Review> result = reviewDao.reviewListByMember(map);
+		for(Review list: result) {
+			list.setRegDate(list.getRegDate().substring(0, 10));
+		}
+		return result;
 	}
 	//수정 할 데이터 가져오기
 	@Override
@@ -246,8 +253,24 @@ public class ReviewServiceImp implements ReviewService {
 	@Override
 	public List<Map<String, String>> valuesByItem(Map<String, String> data) {
 		data.put("REVW_FL", "1");
-		return reviewDao.valuesByItem(data);
+		List<Map<String, String>> valuesByItem = reviewDao.valuesByItem(data);
+	//	Map<String, String> test =  valuesByItem.get(0);
+		
+	//	System.out.println("fff: "+ String.valueOf(test.get("COUNT")));
+		
+		//valuesByItem.add(numOfValuesByItem(valuesByItem));
+		return valuesByItem;
 	}
-
-
+	//기업별 , 리뷰 항목 수
+	@Override
+	public int numOfValuesByItem(List<Map<String, String>> data){
+		//data.get(0).get("EVALUATION_NUM");
+		System.out.println("서비스 평가 점수 떠야함 0점  : "+String.valueOf(data.get(0).get("COUNT")));
+		int numOfValuesByItem = 0;
+		for(Map<String, String> map : data) {
+			numOfValuesByItem += Integer.parseInt(String.valueOf(map.get("COUNT")));
+		}
+		
+		return numOfValuesByItem;
+	}
 }

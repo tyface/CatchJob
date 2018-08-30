@@ -39,28 +39,51 @@
 }
 
 /* VIEW 페이지 그래프  START*/
+.graph-row {
+    text-align: center;
+    margin-bottom: 10px;
+}
 .graph-btn {
-	background-color: #1ABC9C;
+	background-color: #8041D9;
 	color: white;
 	border-radius: 5px;
+/* 	margin: 0 0 10px 40%; */
+}
+#personnel-btn, #salary-btn {
+    width: 100px;
 }
 
 /* VIEW 페이지 채용정보 색 */
 .panels {
-
+/* 	 min-height: 1000px; */
      border-bottom-style:solid;
 /*      border-radius: 10px; */
 /*      border-radius:0 !important; */
      transition: box-shadow 0.5s;
      background-color: #fff;
      margin-bottom: 20px;
-
  }
+ @media ( min-width :768px) and (max-width:1024px) {
+	.panels{
+		 min-height: 212px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	.panels{
+		 min-height: 220px;
+	}
+}
+@media ( min-width :1200px) {
+	.panels{
+		 min-height: 186px;
+	}
+}
  .panels:hover {
      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
  }
 .panels-body{
-	 min-height: 139px;
+/* 	 min-height: 139px; */
 	 padding: 15px;
 }
  .panel-headings {
@@ -102,7 +125,6 @@
 
 }
 /* VIEW 페이지 뉴스 줄 간격 */
-.news-interval {
-	margin-botton: 10px;
-	margin-top: 10px"
+.news-margin {
+	margin-bottom: 15px;
 }
