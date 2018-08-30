@@ -7,7 +7,7 @@ import com.CatchJob.model.Member;
 
 public interface MemberService {
 	
-	public List<Member> getListMembers(Map<String, String> map);
+/*	public List<Member> getListMembers(Map<String, String> map);*/
 
 	public Member getMember(int mberIndex);
 

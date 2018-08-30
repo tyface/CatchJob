@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,28 +56,35 @@ public class AdminController {
 		return "admin/admin-login";
 	}
 
-	/* 로그인 요청 */
-	@RequestMapping(value = "", method = RequestMethod.POST)
+
+/*	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(HttpSession session, Model model, String adminPw, String adminId) {
+		System.out.println("나오면 안돼!!!!");
 		boolean result = adminService.login(adminId, adminPw);
 		if (result) {
 			Admin admin = adminService.getAdminById(adminId);
-			session.setAttribute("adminIndex", admin.getAdminIndex());
-			session.setAttribute("adminId", adminId);
 			return "redirect:/admin/mngMber";
 		} else {
 			return "admin/admin-login";
 		}
-	}
+	}*/
 
 	/* 로그아웃 */
-	@RequestMapping(value = "/logout")
+	@RequestMapping("/logout")
+	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+	}
+
+/*	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("adminIndex");
 		session.removeAttribute("adminId");
 		return "redirect:/admin";
 	}
-
+*/
 	/* 회원 그룹 관리 */
 	@RequestMapping("/mngMber")
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 

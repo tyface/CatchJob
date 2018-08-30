@@ -40,7 +40,7 @@ public interface MemberDao {
 	//페이징 처리
 	public int selectCount(String keyword);
 	
-	public List<Member> selectListMember(Map<String, String> mapData);
+	public List<Member> selectListMember(Map<String, Object> map);
 	
 	
 }
