@@ -28,8 +28,8 @@
 <!-- 		여기에 기업인증회원만 리뷰 작성할 수 있는 url 적기 -->
 		<!-- <security:intercept-url pattern="/faq" access="hasRole('ROLE_AUTHENTICATED')" />
 		 -->
-		  <security:intercept-url pattern="/resources/**" access="permitAll" /> 
-		 <security:intercept-url pattern="/profile/**" access="hasAnyRole('ROLE_USER','ROLE_AUTHENTICATED','ROLE_ADMIN')" /> 
+		<security:intercept-url pattern="/resources/**" access="permitAll" /> 
+		<security:intercept-url pattern="/profile/**" access="hasAnyRole('ROLE_USER','ROLE_AUTHENTICATED','ROLE_ADMIN')" /> 
 		
 		<security:form-login login-page="/"
 			login-processing-url="/member/login"
@@ -38,7 +38,7 @@
 			default-target-url="/" 
 			username-parameter="mberId"
 			password-parameter="mberPw"/>
-		<security:logout invalidate-session="true" logout-url="/member/logout" logout-success-url="/"/>
+		<security:logout invalidate-session="true" logout-url="/member/logout" success-handler-ref="customlogoutSuccessHandler"/>
 		<security:csrf disabled="true"/>
 	</security:http>
 	

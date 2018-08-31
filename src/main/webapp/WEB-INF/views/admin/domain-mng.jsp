@@ -53,11 +53,11 @@
 <script>
 	function newPage() {	
 		var url="mngDomain?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()
-			/* +"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val(); */		
+			 +"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val(); 		
 		window.location=url;
 	}
 		//서치
-	/* function searchFunction(){
+	 function searchFunction(){
 		  $("#hiddenElement").attr("name", "keywordOption");	  
 		if($("#mngSelect option:selected").text()=='도메인명'){
 		     $("#hiddenElement").attr("value", "domainNameKeyword");//TODO
@@ -67,7 +67,7 @@
 		      
 		} 
 		$("#hiddenElement").appendChild($("#searchForm"));	
-	}		 */
+	}		
 	
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -109,7 +109,7 @@ $(function(){
 						onclick="newPage()"> &nbsp; entries
 					</label>
 				</div>
-			<%-- 	<div class="col-sm-2">
+			 	<div class="col-sm-2">
 					<select id="mngSelect" value="${viewData.keywordOption}">
 						<option value="domainNameKeyword">도메인명</option><!-- TODO -->
 						<option value="domainAddressKeyword">도메인 주소</option>
@@ -130,7 +130,7 @@ $(function(){
 							</button>
 						</div>
 					</div>
-				</form> --%>
+				</form> 
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
@@ -152,8 +152,7 @@ $(function(){
 							<input class="btn btn-info btn-sm" type="button" data-target="#modifyDomainModal" data-toggle="modal"
 							data-domainaddress="${domain.domainAddress}" data-domainname="${domain.domainName}" value="수정하기">
 							</td>
-							<td>
-							<input class="btn btn-danger btn-sm" type="button" 
+							<td><input class="btn btn-danger btn-sm" type="button" 
 							onclick="location.href='${pageContext.request.contextPath}/admin/deleteDomain?domainIndex=${domain.domainIndex}'" value="삭제하기">
 							</td>
 						</tr>

@@ -268,8 +268,8 @@ public class AdminController {
 		}
 	}
 	@RequestMapping(value="/modifyComment", method=RequestMethod.POST)
-	public String modifyComment(Model model, String reviewIndex, 
-			String entIndex, String mberId, String questionNum, String contents, String regDate, String evaluation) {
+	public String modifyComment(Model model, String reviewIndex, String entIndex, String mberId, 
+			String questionNum, String contents, String regDate, String evaluation) {
 			
 		try {
 			Review review = reviewService.selectReview(reviewIndex);

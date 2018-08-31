@@ -16,8 +16,6 @@ public class MemberServiceImp implements MemberService {
 		
 	@Autowired
 	private MemberDao memberDao;
-	@Autowired
-	private AuthorityDao authDao;
 /*	사용안함
 	@Override
 	public List<Member> getListMembers(Map<String, String> map) {
@@ -42,10 +40,6 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean join(Member member) {
 		int rowCount = memberDao.insertMember(member);
-		Map<String, Object> data=new HashMap<>();
-		data.put("mberIndex", member.getMberIndex());
-		data.put("mberId", member.getMberId());
-		authDao.insertAuthority(data);
 		
 		if (rowCount > 0) {
 			return true;
