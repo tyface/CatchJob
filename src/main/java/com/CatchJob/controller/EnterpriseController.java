@@ -81,7 +81,6 @@ public class EnterpriseController {
 		// 기업정보 표출될때마다 viewCount올리는 부분
 		Map<String, String> mapData = new HashMap<String, String>();
 		try {
-			System.out.println("*1");
 			mapData.put("ENT_IDX", Integer.toString(entIndex));
 			mapData.put("BROWSER", req.getHeader("User-Agent"));
 			
@@ -93,20 +92,17 @@ public class EnterpriseController {
 			//기업정보
 			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
 			model.addAttribute("entInfo", entService.getEntInfo(mapData));
-			model.addAttribute("entHRInfo", new Gson().toJson(entService.getEntHRInfo(entIndex)));
+			model.addAttribute("industryAvgInfo", new Gson().toJson(entService.getIndustryAvgInfo(entIndex)));
 			model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
 			model.addAttribute("questionList", reviewService.question(mapData));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			System.out.println("errer");
 		} catch (NullPointerException e) {//비로그인 상태( session 없을 때 )에서 view 진입
 			e.printStackTrace();
-			System.out.println("단지.. 로그인 안 되어 있을 뿐");
 		}
 		//뉴스
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
-			//System.out.println("컨트롤러newsList!!!!!123123: "+newsList);
 			model.addAttribute("newsList",newsList);
 			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
 			model.addAttribute("saraminList",new Gson().toJson(saraminList));

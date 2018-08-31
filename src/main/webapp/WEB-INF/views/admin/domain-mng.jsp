@@ -52,12 +52,12 @@
 </style>
 <script>
 	function newPage() {	
-		var url="mngDomain?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+
-		"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val();		
+		var url="mngDomain?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()
+			/* +"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val(); */		
 		window.location=url;
 	}
 		//서치
-	function searchFunction(){
+	/* function searchFunction(){
 		  $("#hiddenElement").attr("name", "keywordOption");	  
 		if($("#mngSelect option:selected").text()=='도메인명'){
 		     $("#hiddenElement").attr("value", "domainNameKeyword");//TODO
@@ -67,7 +67,7 @@
 		      
 		} 
 		$("#hiddenElement").appendChild($("#searchForm"));	
-	}		
+	}		 */
 	
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -165,7 +165,7 @@ $(function(){
 					<c:if test="${viewData.startPage != 1}">
 						<li class="page-item"><a class="page-link"
 							aria-label="Previous"
-							href="mngDomain?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
+							href="mngDomain?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}">
 								<span aria-hidden='true'>&laquo;</span>
 						</a></li>
 					</c:if>
@@ -174,18 +174,18 @@ $(function(){
 						<c:choose>
 							<c:when test="${pageNum == viewData.currentPage}">
 								<li class="page-item active"><a class="page-link"
-									href="mngDomain?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}<span
+									href="mngDomain?page=${pageNum}&msgPerPage=${viewData.msgPerPage}">${pageNum}<span
 										class="sr-only">(current)</span></a>
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link"
-									href="mngDomain?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}</a>
+									href="mngDomain?page=${pageNum}&msgPerPage=${viewData.msgPerPage}">${pageNum}</a>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 					<c:if test="${viewData.endPage < viewData.pageTotalCount}">
 						<li class="page-item"><a class="page-link"
-							href="mngDomain?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
+							href="mngDomain?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}">
 								<span aria-hidden='true'>&raquo;</span>
 						</a></li>
 					</c:if>

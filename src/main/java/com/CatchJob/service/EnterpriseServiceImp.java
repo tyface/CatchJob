@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.Interview;
 
 
 
@@ -40,7 +39,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entInfo;
 	}
 
-	// 그래프 - 인원
+	// 그래프 - 인원 TODO 사용하는지 확인후 삭제
 	@Override
 	public List<Map<String, String>> empCountGraph(int ent_idx) {
 		return entDao.selectGraphInfo(ent_idx);
@@ -55,12 +54,6 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	@Override
 	public List<Map<String, String>> getEmpCntList() {
 		return entDao.selectListEmpCntRank(Constants.Config.RANK_VIEW_COUNT);
-	}
-
-	// 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의 인원수 합)
-	@Override
-	public Map<String, String> getEntHRInfo(int entIndex) {
-		return entDao.selectEntHRInfo(entIndex);
 	}
 
 	@Override
@@ -170,6 +163,15 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return ent;
 	}
 	
+	//해당기업, 동종산업군, 전체 평균정보 가져오기(최근 12개월)
+	@Override
+	public Map<String, String> getIndustryAvgInfo(int entIndex){
+		Map<String, String> dataMap = new HashMap<String,String>();
+		dataMap.putAll(entDao.selectEntBaseInfo(entIndex));
+		dataMap.putAll(entDao.selectPeerIndustryAvgInfo(entIndex));
+		dataMap.putAll(entDao.selectTotalAvgInfo());
+		return dataMap;
+	};
 
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);

@@ -1,4 +1,4 @@
-package com.CatchJob.dao;
+/*package com.CatchJob.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -24,3 +24,4 @@ public interface AdminDao {
 	public List<Admin> selectListAdmin(Map<String, String> map);
 
 }
+*/

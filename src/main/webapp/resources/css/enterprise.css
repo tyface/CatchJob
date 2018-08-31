@@ -1,3 +1,33 @@
+#left-nav{
+  display: none;
+}
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+	#left-nav{
+    display:block;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	#left-nav {
+    display:block;
+	}
+}
+
+#section01{
+    display: none;
+}
+@media ( min-width :768px) and (max-width:1024px) {
+  #section01{
+    display:block;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+  #section01{
+    display:block;
+	}
+}
 #intr-write-btn {
   float: right;
   right:60px;

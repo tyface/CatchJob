@@ -89,14 +89,14 @@
 								<tbody>
 									 <c:forEach var="admins" items="${viewData.boardList}">
 										 <tr>	
-										<td>${admins.adminIndex}</td>
-										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&num=${admins.adminIndex}									
-										">${admins.adminId}</a></td>
+										<td>${admins.mberIndex}</td>
+										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&num=${admins.mberIndex}									
+										">${admins.mberId}</a></td>
 										<td>
-											<c:set var="name" value="${admins.adminLv}"/>
+											<c:set var="name" value="${admins.mberType}"/>
 												<c:choose>
-													<c:when test="${name.equals('1')}">Level1</c:when>
-													<c:when test="${name.equals('2')}">Level2</c:when>	
+													<c:when test="${name.equals('ROLE_ADMIN')}">Level1</c:when>
+													<c:when test="${name.equals('ROLE_MANAGER')}">Level2</c:when>	
 													<c:otherwise>Level3</c:otherwise>	
 												</c:choose>
 										</td> 
@@ -137,28 +137,28 @@
 									<label for="adminId" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="adminId" id="adminId"
-											placeholder="아이디" value="${admin.adminId}" readonly="readonly">
+											placeholder="아이디" value="${admin.memberId}" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="adminPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
 										<input type="password" class="form-control" id="adminPw" name="adminPw"
-											placeholder="비밀번호" value="${admin.adminPw}">
+											placeholder="비밀번호" value="${admin.memberPw}">
 									</div>
 								</div>
 
-								<div class="form-group" style="text-align: right">
+								<%-- <div class="form-group" style="text-align: right"> TODO
 									<label for="adminLv" class="control-label" style="margin-right: 15px">권한</label>
 									<div class="col-sm-8 pull-right">
 										<select class="form-control" style="color:gray" name="adminLv" id="adminLv">
-											<option value="${admin.adminLv}" selected disabled hidden>level${admin.adminLv}</option>
+											<option value="${admin.mberType}" selected disabled hidden>level${admin.adminLv}</option>
 											<option value="1">level1</option>								
 											<option value="2">level2</option>
 											<option value="3">level3</option>
 										</select>
 									</div>
-								</div>
+								</div> --%>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">

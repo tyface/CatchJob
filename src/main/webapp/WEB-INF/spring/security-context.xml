@@ -29,7 +29,7 @@
 		<!-- <security:intercept-url pattern="/faq" access="hasRole('ROLE_AUTHENTICATED')" />
 		 -->
 		  <security:intercept-url pattern="/resources/**" access="permitAll" /> 
-		 <security:intercept-url pattern="/profile/**" access="hasRole('ROLE_USER')" /> 
+		 <security:intercept-url pattern="/profile/**" access="hasAnyRole('ROLE_USER','ROLE_AUTHENTICATED','ROLE_ADMIN')" /> 
 		
 		<security:form-login login-page="/"
 			login-processing-url="/member/login"

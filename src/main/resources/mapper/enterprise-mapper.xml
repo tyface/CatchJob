@@ -67,23 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	WHERE ent.ENT_IDX = #{ENT_IDX}    	
 	</select>
 	
-	<!-- 기업정보의 입사 퇴사 구하기 (최근 12개월 동안의  인원수 합) -->
-	<select id="selectEntHRInfo" parameterType="int" resultType="map">
-		SELECT a.ENT_IDX, sum(a.NPN_NW_SBSCRBER_CNT) as newPerson,sum(a.NPN_SCBT_CNT) as outPerson
-		FROM (SELECT ENT_IDX,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM
-			    FROM NPN_DTLS_TB
-			   WHERE ENT_IDX = #{ENT_IDX}
-			ORDER BY PAY_YM desc		    	
-			   LIMIT 12
-			  ) a
-	</select>
-	
 	<select id="selectGraphInfo" parameterType="int" resultType="hashMap">
-		SELECT
-		NPN_DTLS_IDX,ENT_IDX,NPN_SBSCRBER_CNT,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM,PAY_AMT
-		FROM NPN_DTLS_TB
-		WHERE ENT_IDX = #{ENT_IDX}
-		ORDER BY PAY_YM
+		SELECT		NPN_DTLS_IDX,ENT_IDX,NPN_SBSCRBER_CNT,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM,PAY_AMT
+		FROM 		NPN_DTLS_TB
+		WHERE 		ENT_IDX = #{ENT_IDX}
+		ORDER BY 	PAY_YM
 	</select>
 	
 
@@ -186,6 +174,74 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT 				#{NUM_OF_RECENT_PER_PAGE} 
 		OFFSET				#{START_ROW}
 	</select>
+	
+	<!-- 기업정보의 기본정보 가져오기 (최근 12개월) -->
+	<select id="selectEntBaseInfo" parameterType="int" resultType="map">
+		SELECT up.NPN_SBSCRBER_CNT, (year(sysdate()))-year(ent.ENT_FOND_YMD) AS ENT_FOND_YMD, sum(a.NPN_NW_SBSCRBER_CNT) AS NPN_NW_SBSCRBER_CNT,sum(a.NPN_SCBT_CNT) AS NPN_SCBT_CNT
+		FROM ENTERPRISE_TB ent
+		INNER JOIN (SELECT	ENT_IDX,NPN_NW_SBSCRBER_CNT,NPN_SCBT_CNT,PAY_YM
+				    FROM 	NPN_DTLS_TB
+				    WHERE 	ENT_IDX =3 
+				    AND 	PAY_YM >= date_format(date_add(now(), interval -1 year),'%Y%m')
+				    ORDER 	BY PAY_YM desc		    	
+				    ) a
+		ON ent.ENT_IDX = a.ENT_IDX
+		INNER JOIN UPDATE_ENT_INFO_TB up
+		ON ent.ENT_IDX = up.ENT_IDX
+	</select>
+	
+	<!-- 동종 산업군 평균정보 가져오기 (최근 12개월)  -->
+	<select id="selectPeerIndustryAvgInfo" parameterType="int" resultType="hashMap">
+		SELECT 		peer.NPN_SBSCRBER_AVG AS PEER_NPN_SBSCRBER_AVG, peer.ENT_FOND_YMD_AVG AS PEER_ENT_FOND_YMD_AVG , peer.NPN_NW_SBSCRBER_AVG AS PEER_NPN_NW_SBSCRBER_AVG, peer.NPN_SCBT_AVG AS PEER_NPN_SCBT_AVG
+		FROM 		ENTERPRISE_TB ent
+		INNER JOIN 	INDUTY_CODE_TB incd
+		ON 			ent.ENT_INDUTY_CD = incd.INDUTY_CD
+		INNER JOIN 	UPDATE_PEER_INDUSTRY_INFO peer
+		ON 			incd.LCLASS_CD = peer.LCLASS_CD
+		WHERE 		ent.ENT_IDX = #{entIndex}
+	</select>
+	<!-- 전체 산업군 평균정보 가져오기  (최근 12개월) -->
+	<select id="selectTotalAvgInfo" resultType="hashMap">
+		SELECT 		avg(NPN_SBSCRBER_AVG)as TOTAL_NPN_SBSCRBER_AVG, avg(ENT_FOND_YMD_AVG) as TOTAL_ENT_FOND_YMD_AVG
+					, avg(NPN_NW_SBSCRBER_AVG) as TOTAL_NPN_NW_SBSCRBER_AVG, avg(NPN_SCBT_AVG) as TOTAL_NPN_SCBT_AVG
+		FROM	 	UPDATE_PEER_INDUSTRY_INFO 
+	</select>
+	
+	<!-- 	동종 산업군 정보1 인원, 업력 업데이트 쿼리 -->
+	<update id="updatePeerIndustryInfo1">
+		UPDATE  UPDATE_PEER_INDUSTRY_INFO peer
+		JOIN    (SELECT 	incd.LCLASS_CD, avg(up.NPN_SBSCRBER_CNT) as NPN_SBSCRBER_CNT,(year(sysdate()))-avg(year(ent.ENT_FOND_YMD)) as ENT_FOND_YMD
+				 FROM 		ENTERPRISE_TB ent
+				 LEFT JOIN  INDUTY_CODE_TB incd
+				 ON 		ent.ENT_INDUTY_CD = incd.INDUTY_CD
+				 LEFT JOIN  UPDATE_ENT_INFO_TB up
+				 ON 		ent.ENT_IDX = up.ENT_IDX
+				 WHERE 		ent.ENT_FL = 1
+				 GROUP BY 	incd.LCLASS_CD) a
+		SET     NPN_SBSCRBER_AVG = a.NPN_SBSCRBER_CNT, ENT_FOND_YMD_AVG = a.ENT_FOND_YMD
+		WHERE   peer.LCLASS_CD = a.LCLASS_CD
+	</update>
+	
+	<!-- 	동종 산업군 정보2 입사자, 퇴사자 업데이트 쿼리 -->
+	<update id="updatePeerIndustryInfo2">
+		UPDATE 		UPDATE_PEER_INDUSTRY_INFO peer
+		INNER JOIN 	(SELECT   np.LCLASS_CD, avg(np.NPN_NW_SBSCRBER_CNT)as NPN_NW_SBSCRBER_CNT, avg(np.NPN_SCBT_CNT) as NPN_SCBT_CNT
+					 FROM 	 (SELECT 	 ent.ENT_IDX,incd.LCLASS_CD, sum(NPN_NW_SBSCRBER_CNT) AS NPN_NW_SBSCRBER_CNT, sum(NPN_SCBT_CNT) AS NPN_SCBT_CNT
+							  FROM		 NPN_DTLS_TB np
+							  INNER 	 JOIN ENTERPRISE_TB ent
+							  ON 		 ent.ENT_IDX = np.ENT_IDX 
+							  INNER JOIN INDUTY_CODE_TB incd
+							  ON 		 ent.ENT_INDUTY_CD = incd.INDUTY_CD 
+							  AND 	 	 ent.ENT_FL=1
+							  WHERE 	 PAY_YM >= date_format(date_add(now(), interval -1 year),'%Y%m')
+							  GROUP BY   ent.ENT_IDX
+							 )np
+					 GROUP BY 	np.LCLASS_CD		 
+					) np
+		ON 			peer.LCLASS_CD = np.LCLASS_CD
+		SET 		peer.NPN_NW_SBSCRBER_AVG = np.NPN_NW_SBSCRBER_CNT , peer.NPN_SCBT_AVG = np.NPN_SCBT_CNT
+	</update>
+	
 	<resultMap type="enterprise" id="entMap">
 		<result property="entIndex" column="ENT_IDX" />
 		<result property="entName" column="ENT_NM" />
@@ -207,20 +263,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="reviewCount" column="REVW_CNT" />
 		<result property="interviewCount" column="INTRVW_CNT" />
 	</resultMap>
-	
-<!-- 	<sql id="memberId"> -->
-<!-- 		<choose> -->
-<!-- 			<when test="MBER_IDX != null"> -->
-<!-- 				#{MBER_IDX} -->
-<!-- 			</when> -->
-<!-- 			<otherwise> -->
-<!-- 				'0' -->
-<!-- 			</otherwise> -->
-		
-<!-- 		</choose>		 -->
-<!-- 	</sql> -->
-
-
 	
 </mapper>
 

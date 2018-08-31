@@ -300,10 +300,9 @@ article {
 .affix {
 	top: 70px;
 	z-index: 998 !important;
-	
 }
 #entNameModule{
-	margin-top: 70px;
+   margin-top: 70px;
 }
 .module {
 	box-sizing: border-box;

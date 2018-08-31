@@ -56,7 +56,12 @@
 
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
-
+var empCount = JSON.parse('${empCount}');
+var industryAvgInfo = JSON.parse('${industryAvgInfo}');
+var totalPerson = [industryAvgInfo.NPN_SBSCRBER_CNT,industryAvgInfo.PEER_NPN_SBSCRBER_AVG.toFixed(0),industryAvgInfo.TOTAL_NPN_SBSCRBER_AVG.toFixed(0)];
+var fondDate = [industryAvgInfo.ENT_FOND_YMD,industryAvgInfo.PEER_ENT_FOND_YMD_AVG.toFixed(0),industryAvgInfo.TOTAL_ENT_FOND_YMD_AVG.toFixed(0)];
+var newPerson = [industryAvgInfo.NPN_NW_SBSCRBER_CNT, industryAvgInfo.PEER_NPN_NW_SBSCRBER_AVG.toFixed(0),industryAvgInfo.TOTAL_NPN_NW_SBSCRBER_AVG.toFixed(0)];
+var outPerson = [industryAvgInfo.NPN_SCBT_CNT,industryAvgInfo.PEER_NPN_SCBT_AVG.toFixed(0),industryAvgInfo.TOTAL_NPN_SCBT_AVG.toFixed(0)];
 
 //$(document).ready(function(){
 var status = "logout";
@@ -64,34 +69,31 @@ var status = "logout";
 var month = new Array(); //월
 var salary = new Array(); //연금정보
 var viewSalary = new Array();
-var totalPerson = new Array(); //총 인원
-var newPerson = new Array();
-var outPerson = new Array();
+var totalPersonPerMonth = new Array(); //총 인원
+var newPersonPerMonth = new Array();
+var outPersonPerMonth = new Array();
 
 
 
 $(function(){
-	//alert("reviewValuesByItemSize: "+'${reviewValuesByItemSize}')
-	//var reviewValuesByItemSize = ${reviewValuesByItemSize};
+
 	entInf();
+	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	reviewValidation()//리뷰 유효성 검사 부분
-	saramin(); //#section5 사람인채용정보	
+
+	saramin(); //#section5 사람인채용정보
 // 	if(${interview} =="" || ${interview} == null){
 // 		alert(333)
 // 		interviewNull
 // 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
 // 		interviewNullMent.appendTo(interviewNull);
 // 	}
-	console.log(member == 'anonymousUser')
-	console.log(member)
 	if(member == 'anonymousUser'){
-		
-	
 	}else{
 		status = "login";
 	}
@@ -103,43 +105,33 @@ $(function(){
 	    }
 	});
 
-
-	var empCount = JSON.parse('${empCount}');
 	for(var i in empCount){
-		var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
-		month.push(empCount[i]['PAY_YM']) ;
-		salary.push(num) ;
-		viewSalary.push(num/10000) ;
-		totalPerson.push(empCount[i]['NPN_SBSCRBER_CNT']) ;
-		newPerson.push(empCount[i]['NPN_NW_SBSCRBER_CNT']) ;
-		outPerson.push(empCount[i]['NPN_SCBT_CNT']) ;
+		 var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
+		 month.push(empCount[i]['PAY_YM']) ;
+		 salary.push(num) ;
+		 viewSalary.push(num/10000) ;
+		 totalPersonPerMonth.push(empCount[i]['NPN_SBSCRBER_CNT']) ;
+		 newPersonPerMonth.push(empCount[i]['NPN_NW_SBSCRBER_CNT']) ;
+		 outPersonPerMonth.push(empCount[i]['NPN_SCBT_CNT']) ;
 	}
- 	//chartSalary();
- 	chartPersonnel();
+
+	chartPersonnel();
+
 	$("#salary-btn").on("click", function(){
 		$("canvas#comboBarLineChart").remove();
-// 		var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
-// 		ctx2.clear();
 		$("div.chartreport").append('<canvas id="lineChart"></canvas>');
 		chartSalary();
 
 		$("#personnel-btn").attr('disabled', false);
 		$("#salary-btn").attr('disabled', true);
-		//chartSalary();
 	});
 	$("#personnel-btn").on("click", function(){
 		$("canvas#lineChart").remove();
-// 		var ctx1 = document.getElementById("lineChart").getContext('2d');
-// 		ctx1.clear();
 		$("div.chartreport").append('<canvas id="comboBarLineChart"></canvas>');
 		chartPersonnel();
-		//chartPersonnel();
 		$("#personnel-btn").attr('disabled', true);
 		$("#salary-btn").attr('disabled', false);
 	});
-
-
-	
 
 
 	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
@@ -317,71 +309,47 @@ $(function(){
 });/* FUNCTION END */
 
 function entInf(){
-	// var payAmtAvg = $("#payAmtAvg").text();
-	// payAmtAvg =  Math.round(payAmtAvg*12/0.09)+"";
-	// payAmtAvg = payAmtAvg.substr(0,payAmtAvg.length-4);
-	//
-	// payAmtAvg = addComma(payAmtAvg);
-	//
-	// $("#payAmtAvg").text(payAmtAvg);
-	var dt = new Date();
-	var currentYear = dt.getFullYear();
-	var establishmentYear = $("#establishmentYear").text();
-	establishmentYear = establishmentYear.substr(0,4);
-	var currier = currentYear-establishmentYear;
-	$("#establishmentYear").text(currier);
+	$("#person").text(totalPerson[0]);
+	$("#fondDate").text(fondDate[0]);
+	$("#newPerson").text(newPerson[0]);
+	$("#outPerson").text(outPerson[0]);
+	$("#newPersonPercent").text(parseFloat((newPerson[0]/totalPerson[0])*100).toFixed(1));
+ 	$("#outPersonPercent").text(parseFloat((outPerson[0]/totalPerson[0])*100).toFixed(1));
 
-	var entHRInfo = JSON.parse('${entHRInfo}');
-	$("#newPerson").text(entHRInfo['newPerson']);
-	$("#outPerson").text(entHRInfo['outPerson']);
-	var newPersonPercent =parseFloat(( entHRInfo['newPerson']/$("#person").text() )*100).toFixed(2);
-	var outPersonPercent =parseFloat(( entHRInfo['outPerson']/$("#person").text() )*100).toFixed(2);
-	$("#newPersonPercent").text(newPersonPercent);
-    $("#outPersonPercent").text(outPersonPercent);
-	$("#numOfEnt").text($("#person").text());
+}
 
-	$("#btnA").click(function() {
-		 $("#select").text("인원");
-		 $("#numOfEnt").text($("#person").text());
-		 $("#numOfInd").text("37");
-		 $("#numOfTotEnt").text("28");
-		 // var entPer =  DB의 '국민연금 총 가입자 수' 가져오면 됨
-		 // var indPer = 동종산업군 전체 '국민연금 총 가입자 수' / 동종산업군 수
-		 // var toEntPer = 전체기업의 '국민연금 총 가입자 수' / 전체 기업 수
-		 $("#entPer").css('width', '60%');
-		 $("#indPer").css('width', '10%');
-		 $("#toEntPer").css('width', '100%');
-	 });
+//select1 그래프
+function changeAvgInfo(e){
+	var arr;
+	switch (e) {
+		case '인원':
+			arr = totalPerson;
+			break;
+		case '업력':
+			arr = fondDate;
+			break;
+		case '입사':
+			arr = newPerson;
+			break;
+		case '퇴사':
+			arr = outPerson;
+			break;
+	}
 
-	 $("#btnB").click(function() {
-		 $("#select").text("업력");
-		 $("#numOfEnt").text(currier);
-		 $("#numOfInd").text("30");
-		 $("#numOfTotEnt").text("60");
-		 $("#entPer").css('width', "100%");
-		 $("#indPer").css('width', '30%');
-		 $("#toEntPer").css('width', '60%');
-	 });
 
-	 $("#btnC").click(function() {
-		 $("#select").text("입사");
-		 $("#numOfEnt").text(entHRInfo['newPerson']);
-		 $("#numOfInd").text("60");
-		 $("#numOfTotEnt").text("40");
-		 $("#entPer").css('width', '30%');
-		 $("#indPer").css('width', '60%');
-		 $("#toEntPer").css('width', '40%');
-	 });
 
-	 $("#btnD").click(function() {
-		 $("#select").text("퇴사");
-		 $("#numOfEnt").text(entHRInfo['outPerson']);
-		 $("#numOfInd").text("60");
-		 $("#numOfTotEnt").text("30");
-		 $("#entPer").css('width', '40%');
-		 $("#indPer").css('width', '60%');
-		 $("#toEntPer").css('width', '30%');
-	 });
+	var max = Math.max.apply(null, arr);
+
+	$("#select").text(e);
+	$("#numOfEnt").text(arr[0]);
+	$("#numOfInd").text(arr[1]);
+	$("#numOfTotEnt").text(arr[2]);
+
+	$("#entPer").css('width', arr[0]/max*100+'%');
+	$("#indPer").css('width', arr[1]/max*100+'%');
+	$("#toEntPer").css('width', arr[2]/max*100+'%');
+
+
 }
 
 /* section4 월별그래프-평균급여 */
@@ -389,14 +357,14 @@ function chartSalary(){
 
 	var ctx1 = document.getElementById("lineChart").getContext('2d');
 	var lineChart = new Chart(ctx1, {
-		
-		
+
+
 		type: 'bar',
 
-		
+
 		data: {
 			labels: month,
-			datasets: [{			
+			datasets: [{
 					type: 'line',
 					label: '평균 급여',
 					borderColor: '#BDBDBD',
@@ -410,7 +378,7 @@ function chartSalary(){
 // 	                pointColor : "rgba(151,187,205,1)",
 // 	                pointStrokeColor : "#fff",
 				},
-				
+
 			],
 
 				borderWidth: 1
@@ -460,13 +428,13 @@ function chartSalary(){
 		        },
 		        scales: {
                     yAxes: [{
-                    	
+
                     	 scaleLabel: {
                              display: true,
                              labelString: '(만원)',
                           },
                           ticks: {
-                        	  
+
                           	  min:0,
                               callback: function(value, index, values) {
                                   return Math.round(value/10000);
@@ -479,20 +447,20 @@ function chartSalary(){
                           ticks: {
                               callback: function(value, index, values) {
                               	  var month = '';
-                              	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);	  
+                              	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
                                   return '\''+value.substring(2,4)+' '+month+'월';
                               },
                            },
                    }]
                 },
-                
+
                 tooltips: {
                     enabled: true,
                     mode: 'index',
                     axis: 'y',
                     callbacks: {
-                        label: function(tooltipItems, data) { 
-                        	/* 컴마찍는 부분 */                        
+                        label: function(tooltipItems, data) {
+                        	/* 컴마찍는 부분 */
                         	var value = data.datasets[0].data[tooltipItems.index];
                         	 if(parseInt(value) >= 1000){
                         		 value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -509,7 +477,7 @@ function chartSalary(){
 //                        pointColor: 'red',
 //                     }
 //                  },
-                
+
 		    }
 
 	});
@@ -533,7 +501,7 @@ function chartPersonnel(){
 					pointBorderColor: '#6B66FF',
 					pointBorderWidth: 3,
 					fill: false,
-					data: totalPerson,
+					data: totalPersonPerMonth,
 
 					datalabels: {
 						color:  '#6B66FF',
@@ -541,13 +509,13 @@ function chartPersonnel(){
 						anchor: 'start',
 						display: true,
 					},
-		     
+
 
 				}, {
 					type: 'bar',
 					label: '입사자',
-					backgroundColor: '#6B66FF', //059BFF
-					data: newPerson,
+					backgroundColor: '#6B66FF',
+					data: newPersonPerMonth,
 					borderColor: 'white',
 					borderWidth: 0,
 					datalabels: {
@@ -561,7 +529,7 @@ function chartPersonnel(){
 					type: 'bar',
 					label: '퇴사자',
 					backgroundColor: '#D1B2FF',//FF6B8A
-					data: outPerson,
+					data: outPersonPerMonth,
 					datalabels: {
 						display: false,
 // 						color:  '#D1B2FF',
@@ -571,7 +539,7 @@ function chartPersonnel(){
 // 							return context.dataset.data[context.dataIndex]==1;
 // 						},
 					}
-				
+
 
 				}],
 				borderWidth: 1
@@ -614,14 +582,14 @@ function chartPersonnel(){
                 mode: 'index',
                 axis: 'y',
                 callbacks: {
-                    label: function(tooltipItems, data) { 
+                    label: function(tooltipItems, data) {
                     	 return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel + ' 명';
                     }
                 }
             },
             scales: {
                 yAxes: [{
-                	
+
                 	 scaleLabel: {
                          display: true,
                          labelString: '(명)',
@@ -631,13 +599,13 @@ function chartPersonnel(){
                       ticks: {
                           callback: function(value, index, values) {
                           	  var month = '';
-                          	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);	  
+                          	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
                               return '\''+value.substring(2,4)+' '+month+'월';
                           },
                        },
                }]
             },
-	        
+
 	    }
 
 	});
@@ -697,7 +665,9 @@ function reviewbarChart(){
 					},
 // 					formatter: Math.round
 				    formatter: function(value, context) {
-                        return Math.ceil(value*100/${numOfValuesByItem}) + '%';
+
+                        return Math.ceil(value/'${numOfValuesByItem}')*100+'%';
+												//return value;
                     }
 
 				}
@@ -795,7 +765,7 @@ function interviewPieChart(){
 			},
 			options: {
 				responsive: true,
-				layout:{	
+				layout:{
 					padding:{
 						top:20,
 						bottom:20,
@@ -986,7 +956,7 @@ function saramin(){
 			var location				= saraminList[i].location
 			var industry				= saraminList[i].industry
 			var href					= saraminList[i].href
-	
+
 			var trimLocation = location.substring(0,2);
 			var trimRequiredEducationLevel;
 			if(requiredEducationLevel != "학력무관"){
@@ -1004,7 +974,7 @@ function saramin(){
 				var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
 				data.appendTo(saraminRow3);
 			}
-	
+
 		}
 	}
 }
@@ -1025,7 +995,7 @@ function saramin(){
 // 			alert(i+" link: "+link)
 //  			//var data = $("<span class='col-xs-8 f-left text-left blue-font'>제목</span><span class='col-xs-4 f-right text-right'>출판일</span>")
 // 			var data = $("<span>미친</span>");
-			
+
 // 			//alert("dddd: "+$('#news').text()+data)
 // 			//data.appendTo(news);
 // 		}
@@ -1047,8 +1017,7 @@ function jsonEscape(str)  {
 	<div class="row">
 		<nav class="col-sm-1 padding-zero" id="left-nav">
 
-			<ul class="nav nav-pills nav-stacked" data-spy="affix"
-				data-offset-top="70">
+			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
 				<!-- 				<li style="height: 30px"></li> -->
 				<li>
 					<a onclick="fnMove('#section1')">
@@ -1089,7 +1058,7 @@ function jsonEscape(str)  {
 				<div class=" row" id="section1">
 					<div class="col-sm-6">
 						<span id="entName">${entInfo.ENT_NM}</span>
-						<a href="#" class="follow follow-btn follow" > 
+						<a href="#" class="follow follow-btn follow" >
 							<i class="fa fa-heart-o follow" id="follow"></i>
 						</a>
 					</div>
@@ -1129,41 +1098,40 @@ function jsonEscape(str)  {
 
 							<div class="row">
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block" id="btnA">
+									<button type="button" class="btn btn-default btn-lg btn-block" onclick="changeAvgInfo('인원')">
 										<span class="f-left"><b>인원</b></span>
 										<span class="f-right">
-											<b id="person">${entInfo.NPN_SBSCRBER_CNT }</b>명
+											<b id="person"></b>명
 										</span>
 									</button>
 								</div>
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block"
-										id="btnB">
+									<button type="button" class="btn btn-default btn-lg btn-block" onclick="changeAvgInfo('업력')">
 										<span class="f-left"><b>업력</b></span>
 										<span class="f-right">
-											<b id="establishmentYear">${entInfo.ENT_FOND_YMD}</b>년
+											<b id="fondDate"></b>년
 										</span>
 									</button>
 								</div>
 							</div>
-							
+
 							<br>
 
 							<div class="row">
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block" id="btnC">
+									<button type="button" class="btn btn-default btn-lg btn-block" onclick="changeAvgInfo('입사')">
 										<span class="f-left"><b>입사</b></span>
 										<span  class="f-right">
-											<b id="newPerson">${person.newPerson}&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
+											<b id="newPerson">&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
 											<b id="newPersonPercent"></b>&nbsp;%
 										</span>
 									</button>
 								</div>
 								<div class="col-sm-6">
-									<button type="button" class="btn btn-default btn-lg btn-block" id="btnD">
+									<button type="button" class="btn btn-default btn-lg btn-block" onclick="changeAvgInfo('퇴사')">
 										<span style="float: left"><b>퇴사</b></span>
 										<span style="float: right">
-											<b id="outPerson">${person.outPerson}&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
+											<b id="outPerson">&nbsp;</b> &nbsp;명 &nbsp; &nbsp;
 											<b id="outPersonPercent"></b>&nbsp;%
 										</span>
 									</button>
@@ -1171,57 +1139,48 @@ function jsonEscape(str)  {
 							</div>
 							<br> <br>
 
-							<div class="row">
+							<div class="row"  id="section01">
 <!-- 								<div class="col-md-2"></div> -->
 								<div class="col-md-12">
 
 									<div class="box box-primary">
 										<div class="box-header">
 											<h3 class="box-title">
-												<span id="select">인원</span>
+												<center><span id="select"></span></center>
 											</h3>
 										</div>
 										<!-- /.box-header -->
-										<div class="box-body no-padding">
-											<table class="table table-condensed text-center">
-												<tr>
-<!-- 													<th style="width: 10px">#</th> -->
-													<th style="width: 25%">Task</th>
-													<th style="width: 50%">Progress</th>
-													<th style="width: 25%">Label</th>
-												</tr>
-												<tr>
-<!-- 													<td>1.</td> -->
-													<td>현재 기업</td>
-													<td>
-														<div class="progress progress-xs   ">
-															<div class="progress-bar progress-bar-danger"
-																style="width: 55%" id="entPer"></div>
+										<div class="box-body no-padding ">
+											<table class="table table-condensed">
+												<tr class="row">
+													<td class="col-sm-1">1.</td>
+													<td class="col-sm-2">현재 기업</td>
+													<td class="col-sm-7">
+														<div class="progress">
+															<div class="progress-bar progress-bar-danger" id="entPer"></div>
 														</div>
 													</td>
-													<td><span class="badge bg-red" id="numOfEnt">55</span></td>
+													<td class="col-sm-1"><span class="badge bg-red" id="numOfEnt"></span></td>
 												</tr>
-												<tr>
-<!-- 													<td>2.</td> -->
+												<tr class="row">
+													<td>2.</td>
 													<td>동종 산업군</td>
 													<td>
-														<div class="progress progress-xs   ">
-															<div class="progress-bar progress-bar-warning "
-																style="width: 20%" id="indPer"></div>
+														<div class="progress">
+															<div class="progress-bar progress-bar-warning "id="indPer"></div>
 														</div>
 													</td>
-													<td><span class="badge bg-yellow" id="numOfInd">70</span></td>
+													<td><span class="badge bg-yellow" id="numOfInd"></span></td>
 												</tr>
-												<tr>
-<!-- 													<td>3.</td> -->
+												<tr class="row">
+													<td>3.</td>
 													<td>전체 기업</td>
 													<td>
-														<div class="progress progress-xs  ">
-															<div class="progress-bar progress-bar-primary"
-																style="width: 30%" id="toEntPer"></div>
+														<div class="progress">
+															<div class="progress-bar progress-bar-primary" id="toEntPer"></div>
 														</div>
 													</td>
-													<td><span class="badge bg-light-blue" id="numOfTotEnt">30</span></td>
+													<td><span class="badge bg-light-blue" id="numOfTotEnt"></span></td>
 												</tr>
 
 											</table>
@@ -1268,7 +1227,7 @@ function jsonEscape(str)  {
 <!-- 	              					<span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span> -->
 	              					<p>총 만족도</p>
 				              </div>
-				              <div class="chart col-md-6">
+				              <div class="chart col-md-6" style="height: 100px; ">
 				                <canvas id="reviewbarChart"></canvas>
 				              </div>
 			            </div>
@@ -1360,16 +1319,16 @@ function jsonEscape(str)  {
 					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
 					<div class="panel-group" >
 								<div class="box box-danger">
-									<div class="box-body row" >
+									<div class="box-body row">
 											<div class="chart col-md-3" >
 												<h3 class="box-title">면접 난이도</h3>
 											</div>
 											<div class="chart col-md-6" >
-												
+
 												<canvas id="pieChart" ></canvas>
-											</div>				
+											</div>
 									</div>
-						
+
 								</div>
 
 						<div class="interviewList">
@@ -1438,7 +1397,7 @@ function jsonEscape(str)  {
 							<div class="panel panel-default slideanim">
 								<div class="panel-body" >
 								 	<c:forEach items="${newsList}" var="newsList">
-										<div class="row news-margin" >							
+										<div class="row news-margin" >
 											<a class="col-xs-10 f-left text-left blue-font"  href="${newsList.link}" target="_blank">${newsList.title}</a>
 											<span class="col-xs-2 f-right text-right">${newsList.pubDate}</span>
 										</div>

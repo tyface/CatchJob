@@ -51,17 +51,10 @@
 
 	<!-- CONTENTS -->
 	<section>
-		<%-- <div class="ui-widget">
-
-		  <label for="city">도시: </label>
-
-		  <input id="city">
-
-		</div> --%>
 		<article id="main-center">
 				<!-- 			슬로건 -->
 				<p class="frijole-font" >Find The Job That Fits Your Life</p>
-				<h1 class="frijole-font" id="h1-main">CATct!! <br>JOB.</h1>
+				<h1 class="frijole-font" id="h1-main">Catch!! <br>JOB.</h1>
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
