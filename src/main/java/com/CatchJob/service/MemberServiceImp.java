@@ -51,13 +51,30 @@ public class MemberServiceImp implements MemberService {
 	
 	@Override
 	public boolean modify(Member member) {
-		int rowCount = memberDao.updateMember(member);
-		
-		if (rowCount > 0) {		
-			return true;
-		} else {
+		try {
+			int rowCount = memberDao.updateMember(member);			
+			if (rowCount > 0) {		
+				return true;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean entIndexmodify(Member member) {
+		try {
+			int rowCount = memberDao.updateMemberEntIndex(member);			
+			if (rowCount > 0) {		
+				return true;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
 	}
 	
 	@Override

@@ -64,8 +64,7 @@
 									<input type="number" min="5" max="15" step="5" id="quantity" value="${viewData.msgPerPage}" 
 									 onclick="newPage()">
 									&nbsp; entries</label></div> 	
-
-								<form action="mngMber" class="form-inline pull-right">
+							<form action="mngMber" class="form-inline pull-right">
 									<div class="input-group">
 										<input type="hidden" name="page" value="${viewData.currentPage}">
 										<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">										
@@ -82,22 +81,28 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>NO</th>
-										<th>아이디</th>
-										<th>구분</th>
+										<th style="width:3%">NO</th>
+										<th style="width:7%">아이디</th>
+										<th style="width:5%">구분</th>
+										<th style="width:5%">상태</th>
 									</tr>
 								</thead>		
 								<tbody>
 								<c:forEach var="members" items="${viewData.boardList}">
 									 <tr>
 										<td>${members.mberIndex}</td>
-										<td><a href="mngMber?num=${members.mberIndex}&page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}
+										<td><a href="mngMber?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}&num=${members.mberIndex}
 										">${members.mberId}</a></td>
 										<td>
 											<c:set var="name" value="${members.mberType}"/>
-												<c:if test="${name.equals('1')}">일반 회원</c:if>
-												<c:if test="${name.equals('2')}">기업인증 회원</c:if>										
+											<c:if test="${name.equals('ROLE_USER')}">일반 회원</c:if>
+											<c:if test="${name.equals('ROLE_AUTHENTICATED')}">기업인증 회원</c:if>										
 										</td> 
+										<td>
+											<c:set var="name" value="${members.mberFlag}"/>
+											<c:if test="${name.equals('1')}">가입</c:if>
+											<c:if test="${name.equals('2')}">탈퇴</c:if>	
+										</td>
 									</tr> 
 								</c:forEach>   
 								</tbody>						
@@ -127,8 +132,7 @@
 								</c:if>
 							</ul> 
 						</div>	
-						</div>
-
+					</div>
 						<div class="col-md-5" id="selectOneBox">
 							<form class="form-horizontal" action="modifyMber" method="post">
 								<div class="form-group">
@@ -141,8 +145,9 @@
 								<div class="form-group">
 									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
-										<input type="password" class="form-control" name="mberPw"
-											placeholder="비밀번호" value="${member.mberPw}">
+										<input type="text" class="form-control"
+											placeholder="비밀번호">
+										<input type="hidden" name="mberPw" value="${member.mberPw}">
 									</div>
 								</div>
 								<div class="form-group" style="text-align:right">
@@ -151,19 +156,30 @@
 									<div class="col-sm-8 pull-right">
 										<select class="form-control" style="color:gray" id="mberType" name="mberType">
 											<option value="" selected disabled hidden>
-											<c:set var="name" value="${member.mberType}" />
+											<c:set var="name" value="${member.mberType}"/>
 												<c:choose>
-													<c:when test="${name.equals('1')}">일반 회원</c:when>
-													<c:when test="${name.equals('2')}">기업인증 회원</c:when>
+													<c:when test="${name.equals('ROLE_USER')}">일반 회원</c:when>
+													<c:when test="${name.equals('ROLE_AUTHENTICATED')}">기업인증 회원</c:when>
 													<c:otherwise>회원 구분</c:otherwise>
 												</c:choose>
 											</option>
-											<option value="1">일반 회원</option>
-											<option value="2">기업인증 회원</option>
+											<option value="ROLE_USER">일반 회원</option>
+											<option value="ROLE_AUTHENTICATED">기업인증 회원</option>
 										</select>
 									</div>
 								</div>
-								
+								<c:if test="${member.mberType.equals('ROLE_AUTHENTICATED')}">
+									<div class="form-group">
+										<label for="entIndex" class="col-sm-4 control-label">기업코드</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" name="entIndex" id="entIndex"
+												placeholder="기업코드" value="${member.entIndex}">
+										</div>
+									</div>
+								</c:if>
+<%-- 								<c:if test="${member.mberType.equals('ROLE_USER')}">
+									<input type="hidden" name="entIndex" value="0">
+								</c:if> --%>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">
@@ -237,12 +253,11 @@
 										<input type="submit" class="btn btn-info" value="수정하기">
 										<input type="reset" class="btn btn-warning" value="초기화">								
 								</div>
-							</form>
-						</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>	<!--<div class="row"> end -->
 	</div><!--<div class="container-fluid"> end -->
-
 </body>
 </html>

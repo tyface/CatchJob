@@ -17,6 +17,8 @@ public interface MemberService {
 	
 	public boolean modify(Member member);
 	
+	public boolean entIndexmodify(Member member);
+	
 	public boolean passwordModify(Member member);
 
 	public boolean memberTypeModify(Member member);

@@ -13,19 +13,21 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class CustomAuthenticationFailHandler implements AuthenticationFailureHandler {
 
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authenticationException) throws IOException, ServletException {
-		
-		System.out.println("멤버 로그인 실패");
+			AuthenticationException authenticationException) throws ServletException, IOException {
+
+		System.out.println("어드민 로그인 실패");
 		if (authenticationException instanceof UsernameNotFoundException) {
-			System.out.println("멤버 사용자 없음");
-			response.getWriter().print("{\"result\" : \"CODE_03\"}");
+			request.setAttribute("msg", "사용자가 존재하지 않습니다");
 		} else if (authenticationException instanceof BadCredentialsException) {
-			System.out.println("멤버 비밀번호 일치 하지 않음");
-			response.getWriter().print("{\"result\" : \"CODE_02\"}");
-		} 
+			request.setAttribute("msg", "사용자가 없거나 비밀번호가 일치하지 않습니다");
+		} else if (authenticationException instanceof Exception) {
+			request.setAttribute("msg", "올바른 아이디 혹은 비밀번호를 입력해 주세요");
+		}
+		request.setAttribute("url", "admin");
+		request.getRequestDispatcher("result").forward(request, response);
 
 	}
 }

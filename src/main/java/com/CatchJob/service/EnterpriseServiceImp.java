@@ -82,7 +82,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 				
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
@@ -91,18 +91,19 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				String entNameKeyword = (String) data.get("keyword");
 				map.put("entNameKeyword", entNameKeyword);
 				viewData.put("keyword", entNameKeyword);
-				viewData.put("keywordOption", "entNameKeyword");			
+				viewData.put("keywordOption", "entNameKeyword");
+				totalCount  = entDao.selectCountByKeyword(map); 
 			}else if(keywordOption.equals("entIndexKeyword")) {
 				String entIndexKeyword = (String) data.get("keyword");
 				map.put("entIndexKeyword", entIndexKeyword);
 				viewData.put("keyword", entIndexKeyword);
 				viewData.put("keywordOption", "entIndexKeyword");
+				totalCount  = entDao.selectCountByKeyword(map); 
 			} 		
 		}					
-		totalCount  = entDao.selectCountByKeyword(map); 		
-		
-		int firstRow = 0;     
-		int endRow =0;
+		if(totalCount==0) {
+			totalCount = 1;
+		}
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
@@ -110,12 +111,10 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
-		
-		firstRow = (pageNumber-1)*numOfMsgPage +1;  
-		endRow = pageNumber*numOfMsgPage;  
 
-		map.put("firstRow", String.valueOf(firstRow));
-		map.put("endRow",  String.valueOf(endRow));
+		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
 
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
@@ -158,7 +157,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 	}
 	
 	@Override
-	public Enterprise selectEnt(int entIndex) {
+	public Enterprise getEnt(int entIndex) {
 		Enterprise ent = entDao.selectEnt(entIndex);
 		return ent;
 	}

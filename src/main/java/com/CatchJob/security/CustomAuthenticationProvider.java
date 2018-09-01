@@ -27,16 +27,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String mberid = authentication.getName();
 		String mberPw = (String) authentication.getCredentials();
 		
+		
+		System.out.println(mberid);
+		
 		UserDetails member = userDetailService.loadUserByUsername(mberid);
-
+		System.out.println(1);
 		if (member == null) {
+			System.out.println(2);
 			throw new UsernameNotFoundException(mberid + "가 존재하지 않습니다");
 		}
-
+		System.out.println(4);
 		if (!passwordEncoder.matches(mberPw, member.getPassword())) {
 			System.out.println("password:" + mberPw);
 			System.out.println("member.getPassword():" + member.getPassword());
-
+			
 			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
 		} else {
 			System.out.println("비밀번호 일치// member : " + member.getAuthorities());

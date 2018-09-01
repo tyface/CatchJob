@@ -60,10 +60,10 @@
 	 function searchFunction(){
 		  $("#hiddenElement").attr("name", "keywordOption");	  
 		if($("#mngSelect option:selected").text()=='도메인명'){
-		     $("#hiddenElement").attr("value", "domainNameKeyword");//TODO
+		     $("#hiddenElement").attr("value", "domainNameKeyword");
 		
 		} else if($("#mngSelect option:selected").text()=='도메인 주소'){
-			 $("#hiddenElement").attr("value", "domainAddressKeyword");//TODO
+			 $("#hiddenElement").attr("value", "domainAddressKeyword");
 		      
 		} 
 		$("#hiddenElement").appendChild($("#searchForm"));	
@@ -79,9 +79,9 @@
 $(function(){
 	if(getParameterByName('keywordOption')!=null){
 		if(getParameterByName('keywordOption')=='domainNameKeyword'){	
-			$("#mngSelect").val(getParameterByName('keywordOption'))//TODO
+			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}else if(getParameterByName('keywordOption')=='domainAddressKeyword'){
-			$("#mngSelect").val(getParameterByName('keywordOption'))//TODO
+			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}
 	}	 
 	
@@ -89,6 +89,7 @@ $(function(){
 	 $('#modifyDomainModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget);
 		  var modal = $(this)	  
+		  modal.find('.modal-body #domainIndex').val(button.data('domainindex'))
 		  modal.find('.modal-body #domainAddress').val(button.data('domainaddress'))
 		  modal.find('.modal-body #domainName').val(button.data('domainname'))
 	});
@@ -150,6 +151,7 @@ $(function(){
 							<td>${domain.domainName}</td>
 							<td>
 							<input class="btn btn-info btn-sm" type="button" data-target="#modifyDomainModal" data-toggle="modal"
+							data-domainindex="${domain.domainIndex}"
 							data-domainaddress="${domain.domainAddress}" data-domainname="${domain.domainName}" value="수정하기">
 							</td>
 							<td><input class="btn btn-danger btn-sm" type="button" 
@@ -193,7 +195,7 @@ $(function(){
 					<input class="btn btn-primary" type="button" data-target="#regDomainModal" value="등록하기" data-toggle="modal">
 				</div>
 			</div>
-				<!-- modal -->
+				<!-- 수정하기 modal  -->
 			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" id="modifyDomainModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -204,24 +206,27 @@ $(function(){
 							</button>
 							<h4 class="modal-title" id="modalLabel">세부사항</h4>
 						</div>
-						<form action="registerDomain" method="post">
+						<form action="updateDomain" method="post">
+						
 							<div class="modal-body">
 								<div class="row form-group">
 									<div class="col-xs-3 form-group">
-										<label for="domainName" class="control-label">도메인명</label>
-									</div>
-									<div class="col-xs-9">
-										<input type="text" id="domainName" name="domainName" class="form-control">
-									</div>
-								</div>
-								<div class="row form-group">
-									<div class="col-xs-3">
 										<label for="domainAddress" class="control-label">도메인 주소</label>
 									</div>
 									<div class="col-xs-9">
 										<input type="text" id="domainAddress" name="domainAddress"
 											class="form-control" />
 									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-3">
+										<label for="domainName" class="control-label">도메인명</label>
+									</div>
+									<div class="col-xs-9">
+										<input type="text" id="domainName" name="domainName" 
+										class="form-control">
+									</div>
+										<input type="hidden" id="domainIndex" name="domainIndex" class="form-control">
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -232,7 +237,7 @@ $(function(){
 						</form>
 					</div>
 				</div>  
-		<!-- modal -->
+		<!-- 등록하기 modal -->
 			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" id="regDomainModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -243,7 +248,7 @@ $(function(){
 							</button>
 							<h4 class="modal-title" id="modalLabel">세부사항</h4>
 						</div>
-						<form action="registerDomain" method="post">
+						<form action="registDomain" method="post">
 							<div class="modal-body">
 								<div class="row form-group">
 									<div class="col-xs-3 form-group">

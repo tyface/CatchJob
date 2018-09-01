@@ -182,22 +182,25 @@ public class ReviewServiceImp implements ReviewService {
 				String entNameKeyword = (String) data.get("keyword");
 				map.put("entNameKeyword", entNameKeyword);
 				viewData.put("keyword", entNameKeyword);
-				viewData.put("keywordOption", "entNameKeyword");			
+				viewData.put("keywordOption", "entNameKeyword");	
+				totalCount  = reviewDao.selectCountByKeyword(map); 	
 			}else if(keywordOption.equals("entIndexKeyword")) {
 				String entIndexKeyword = (String) data.get("keyword");
 				map.put("entIndexKeyword", entIndexKeyword);
 				viewData.put("keyword", entIndexKeyword);
 				viewData.put("keywordOption", "entIndexKeyword");
+				totalCount  = reviewDao.selectCountByKeyword(map); 	
 			} else if(keywordOption.equals("questionNumKeyword")){
 				String questionNumKeyword = (String) data.get("keyword");
 				map.put("questionNumKeyword", questionNumKeyword);
 				viewData.put("keyword", questionNumKeyword);
 				viewData.put("keywordOption", "questionNumKeyword");
+				totalCount  = reviewDao.selectCountByKeyword(map); 	
 			}				
 		}		
-			
-		totalCount  = reviewDao.selectCountByKeyword(map); 		
-
+		if(totalCount==0) {
+			totalCount = 1;
+		}
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
@@ -205,10 +208,11 @@ public class ReviewServiceImp implements ReviewService {
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
-			
+
 		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
 		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
 		map.put("START_ROW", startRow);
+
 
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);

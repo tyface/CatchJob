@@ -20,8 +20,8 @@ public interface UniversalDomainDao {
 	
 	public List<UniversalDomain> selectListAll();
 	//관리자 페이지
-	public List<UniversalDomain> selectListDomain(Map<String, String> map);
+	public List<UniversalDomain> selectListDomain(Map<String, Object> map);
 	 
-	public int selectCount(Map<String, String> map);
+	public int selectCount(Map<String, Object> map);
 	
 }
