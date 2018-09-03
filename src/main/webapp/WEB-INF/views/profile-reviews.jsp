@@ -15,16 +15,16 @@ $(function(){
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
 	    	     // alert(value);
-	    	      $("#evaluationScore").text(value);	    	      
+	    	      $("#evaluationScore").text(value);
 	    	      $("#hiddenEvaluationScore").val(value);
-	    	      
 
-	    	      
+
+
 	    }
 	});
 	reviewValidation();
 // 	 $("#update-btn").on("click",function(){
-// 		 $("#writeForm").submit(); 
+// 		 $("#writeForm").submit();
 // 		 alert("수정되었습니다^^")
 // 	 });
 })
@@ -33,7 +33,7 @@ function updateForm(num, questionNum){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/profile/reviewForm",
 		type: 'get',
-		data: {"entIndex": num, 
+		data: {"entIndex": num,
 			"questionNum":questionNum},
 		dataType: "json",
 		success: function(review){
@@ -44,14 +44,16 @@ function updateForm(num, questionNum){
 			$("#evaluationScore").text(evaluationScore);
 			$("#contents").text(review.contents);
 			$("#hiddenQuestionNum").val(review.questionNum);
-			$("#hiddenEntIndex").val(review.entIndex)			
+			$("#hiddenEntIndex").val(review.entIndex)
+      $("#hiddenReviewFlag").val(review.reviewFlag)
+      $("#hiddenReviewIndex").val(review.reviewIndex)
 			$('#stars').barrating('set', evaluationScore);
 		},
 		error: function(request, status, error){
 			alert("실패~");
 		}
 	});
-	
+
 	$("#myModal").modal();
 }
 function deleteReview(entIndex,questionNum){
@@ -71,60 +73,60 @@ function deleteReview(entIndex,questionNum){
 				url:"${pageContext.request.contextPath}/profile/deleteReview",
 				data: {"entIndex":entIndex,
 					"questionNum":questionNum},
-				type:"post",					
+				type:"post",
 				success: function(result){
 					if(result){
 						swal({
-							title:"Deleted!", 
-							text:"Your imaginary file has been deleted.", 
+							title:"Deleted!",
+							text:"Your imaginary file has been deleted.",
 							type:"success",
 							confirmButtonClass:"btn-success",
 							showCancelButton: false
-							}, 
+							},
 							function(){
 								location.reload();
 							})
-						
+
 					}else{
 						swal({
-							title: "Cancelled", 
+							title: "Cancelled",
 							text: "Your imaginary file is safe :",
 							type: "error",
 							confirmButtonClass:"btn-error"
-							}) 
-											
+							})
+
 					}
 				}
 			})
 		});
-	
+
 }
 function reviewValidation(){
-	$('.writeForm').validate({		
+	$('.writeForm').validate({
 		rules : {
-			
+
 			stars:{
 				required : true
 			},
 			contents:{
 				required : true,
-				minlength : 10,	
+				minlength : 10,
 				maxlength : 500
-			}			
+			}
 		},
-		
-		messages : {			
+
+		messages : {
 			stars:{
 				required : "다른 항목을 선택해주세요"
 			},
 			contents:{
 // 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다",	
-				maxlength : "최대 500글자까지 입력할 수 있습니다"	
+				minlength : "최소 10글자이상이어야 합니다",
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			}
 		}
-		
-	});	
+
+	});
 }
 </script>
 
@@ -139,11 +141,11 @@ function reviewValidation(){
 	      <tr>
 	        <th>기업명</th>
 	        <th>질문내용</th>
-	        <th>작성일</th>  
+	        <th>작성일</th>
 	        <th>
 	        	수정 | 삭제
 	        </th>
-	 
+
 	      </tr>
 	    </thead>
 	    <tbody>
@@ -156,15 +158,15 @@ function reviewValidation(){
 		        	<span class="update blue-font" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </span> |
 		        	<span class="delete blue-font" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </span>
 		        </td>
-		      </tr>		      
+		      </tr>
 	      </c:forEach>
-	      
+
 	    </tbody>
 	  </table>
 	  </div>
-	  
-	  
-	  
+
+
+
 <!-- 	</div> -->
 </article>
 
@@ -181,7 +183,9 @@ function reviewValidation(){
 		<!-- Modal content-->
 		<div class="modal-content">
 			<form action="${pageContext.request.contextPath}/profile/updateReview" id="writeForm" method="post">
-				<input type="hidden" name="entIndex" id="hiddenEntIndex" >
+        <input type="hidden" name="reviewIndex" id="hiddenReviewIndex" >
+        <input type="hidden" name="entIndex" id="hiddenEntIndex">
+          <input type="hidden" name="reviewFlag" id="hiddenReviewFlag">
 				<input type="hidden" name="questionNum" id="hiddenQuestionNum" >
 				<input type="hidden" name="evaluationScore" id="hiddenEvaluationScore" >
 				<div class="modal-header cat-header"> <!--  -->
@@ -191,7 +195,7 @@ function reviewValidation(){
 				<div class="modal-body">
 					<!-- 리뷰 코멘트/ 기업명 -->
 					<div class="form-group">
-						<label>기업명</label> 
+						<label>기업명</label>
 						<input type="text" class="form-control" id="entName" name="entName"	 readonly="readonly">
 					</div>
 					<!-- 리뷰 코멘트/ 질문내용 -->
@@ -220,10 +224,10 @@ function reviewValidation(){
 					<!-- 리뷰 코멘트/ 내용 -->
 					<div class="form-group">
 						<label>내용</label>
-						<textarea class="form-control" rows="2" name="contents" id="contents"  placeholder="기업리뷰를 추가로 입력해주세요."></textarea> 
+						<textarea class="form-control" rows="2" name="contents" id="contents"  placeholder="기업리뷰를 추가로 입력해주세요."></textarea>
 						<!-- <input type="text" class="form-control" id="contents" name="contents"	 > -->
 					</div>
-	
+
 				</div>
 				<div class="modal-footer">
 					<button class="btn cat-header" id="update-btn">제출</button>
@@ -235,5 +239,5 @@ function reviewValidation(){
 	</div>
 </div>
 
-   
+
 <jsp:include page="include/footer.jsp" flush="true" />

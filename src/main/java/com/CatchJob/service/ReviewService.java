@@ -9,8 +9,7 @@ public interface ReviewService {
 
 	// 리뷰 등록
 	public boolean insertReview(Review review);
-	// 리뷰 수정
-	public boolean updateReview(Review review);
+	
 	// 리뷰 하나보기
 	public Review selectReview(String reviewIndex);
 	//리뷰 삭제
@@ -34,7 +33,7 @@ public interface ReviewService {
 	public int getReviewEndPage(int pageNum);
 
 	public Map<String, Object> getMessageList(Map<String, Object> data);
-	
+	//리뷰 수정
 	public boolean modifyReview(Review review);
 //	리뷰코멘트 VIEW 페이지에서 페이징처리
 	public List<Review> getReviewsList(Map<String, Integer> data);
@@ -45,7 +44,7 @@ public interface ReviewService {
 	//리부 등록시, 중복검사
 	public boolean duplicationCheck(Map<String, String> data);
 	// 리뷰 총 만족도 구하기
-	public double gettotalSatisfaction(Map<String, String> data);
+	public double getTotalSatisfaction(Map<String, String> data);
 	//리뷰 항목별 만독도  
 	public List<Map<String, String>> valuesByItem(Map<String, String> data);
 	//기업별 , 리뷰 항목 수

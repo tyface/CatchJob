@@ -5,8 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.CatchJob.dao.RecodeDao">
 	<insert id="insertViewRecode" parameterType="map">
 		INSERT INTO VIEW_RECORD_TB(VIEW_IDX,ENT_IDX,MBER_IDX,BROWSER,CONN_IP,VISIT_DT)
-		VALUES(0, #{ENT_IDX}, #{MBER_IDX}, #{BROWSER}, #{CONN_IP}, sysdate())
+		VALUES(0, #{ENT_IDX}, #{MBER_IDX}, #{BROWSER}, #{CONN_IP}, now())
 	</insert>
+	
+	<update id="updateViewRecode" parameterType="int">
+		UPDATE 	VIEW_RECORD_TB 
+		SET 	VISIT_DT = now()
+		WHERE 	VIEW_IDX = #{VIEW_IDX}
+	</update>
+	
+	
 	<select id="selectListPopularSearches" parameterType="int" resultType="map">
 		SELECT tmp.ENT_IDX,ent.ENT_NM from (
 			SELECT ENT_IDX,COUNT(ENT_IDX) AS searcheCount
@@ -18,5 +26,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN ENTERPRISE_TB ent
 		ON tmp.ENT_IDX = ent.ENT_IDX;
 	</select>
+	
+	<select id="selectViewRecode" parameterType="map" resultType="map">
+		SELECT   VIEW_IDX
+		FROM     VIEW_RECORD_TB 
+		WHERE    ENT_IDX = #{ENT_IDX} AND CONN_IP = #{CONN_IP}
+			     AND MBER_IDX = #{MBER_IDX} AND date_format(VISIT_DT,'%Y%m%d') = date_format(now(),'%Y%m%d')
+	</select>
+	
 </mapper>
 

@@ -136,26 +136,11 @@ public class MemberController {
 		try {
 			if (memberService.getMemberById(signUpId) == null && signUpPw.equals(signUpPwCheck)) {
 				memberService.join(member);
-				// 회원가입 성공
-				// "가입 시 사용한 이메일로 인증해 주세요"
-				System.out.println("이메일 인증 시작");
 
 				MailHandler mailHandler = new MailHandler(mailSender);
 
-				mailHandler.setSubject("catch job 인증 이메일 입니다.");
-				mailHandler.setText(new StringBuffer().append("<h1>메일인증</h1>")
-						.append("<a href='" + Constants.Config.HOST + "/member/verify?memberId=")
-						.append(member.getMberId()).append("&oauthKey=").append(key)
-						.append("' target='_blank'>이메일 인증 확인</a>").toString());
-				mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
-				mailHandler.setTo(member.getMberId());
-				mailHandler.send();
-				
-				
-				
-				mailHandler.setSubject("catch job 인증 이메일 입니다.");
-				mailHandler.setText(mailService.getMailTemplate(signUpId, Constants.File.PW_RESET));
-
+				mailHandler.setSubject("CatchJob 회원가입 이메일 입니다.");
+				mailHandler.setText(mailService.getMailTemplate(signUpId, Constants.File.JOIN));
 				FileSystemResource fsr = new FileSystemResource(
 						resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
 				mailHandler.addInline("image-1", fsr);
@@ -297,7 +282,7 @@ public class MemberController {
 
 		try {
 			MailHandler mailHandler = new MailHandler(mailSender);
-			mailHandler.setSubject("catch job 비밀번호 재설정 메일 입니다.");
+			mailHandler.setSubject("CatchJob 비밀번호 재설정 메일 입니다.");
 			mailHandler.setText(mailService.getMailTemplate(email, Constants.File.PW_RESET));
 
 			FileSystemResource fsr = new FileSystemResource(
@@ -489,20 +474,21 @@ public class MemberController {
 	// return "test";
 	// }
 
-	@RequestMapping(value = "/verify", method = RequestMethod.GET)
-	public String signSuccess(String memberId, String oauthKey, HttpSession session) {
+	@RequestMapping(value = "/verify", method = { RequestMethod.GET, RequestMethod.POST })
+	public String signSuccess(String memberId, String oauthId, HttpSession session) {
 
 		System.out.println("이메일 인증 처리완료?");
-		System.out.println(memberId + "//" + oauthKey);
+		System.out.println(memberId + "//" + oauthId);
 
-		Member member = memberService.getMemberByOauthId(memberId, oauthKey);
+		Member member = memberService.getMemberByOauthId(memberId, oauthId);
 
 		if (member != null) {
 			member.setMberFlag("1");
 			memberService.modify(member);
 			memberService.visitUpdate(member.getMberIndex());
 
-			session.setAttribute("member", member);
+			member.addAuthority(new Role(member.getMberType()));
+			SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(member, null,member.getAuthorities()));
 		}
 
 		return "redirect:/";

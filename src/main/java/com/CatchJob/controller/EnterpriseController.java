@@ -110,7 +110,7 @@ public class EnterpriseController {
 			e.printStackTrace();
 		}	
 		//리뷰코멘트 총 만족도
-		model.addAttribute("reviewTotalData", reviewService.gettotalSatisfaction(mapData));
+		model.addAttribute("reviewTotalData", reviewService.getTotalSatisfaction(mapData));
 		List<Map<String, String>> reviewValuesByItem =  reviewService.valuesByItem(mapData);
 		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewValuesByItem));
 		model.addAttribute("numOfValuesByItem",reviewService.numOfValuesByItem(reviewValuesByItem));
@@ -190,7 +190,6 @@ public class EnterpriseController {
 	//	System.out.println(review);
 		review.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
 
-		//System.out.println("writeReview-컨트롤러2"+review);
 		boolean result = reviewService.insertReview(review);
 		
 		if(result) {
@@ -214,7 +213,6 @@ public class EnterpriseController {
 	//@ResponseBody
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview,Authentication authentication) {
-		System.out.println("123456"+interview);
 		interview.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
 //		// boolean result = entService.insertInterview(interview);
 		System.out.println(itvwService.insertInterview(interview));
