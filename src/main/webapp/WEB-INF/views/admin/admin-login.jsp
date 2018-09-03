@@ -69,7 +69,7 @@ a, a:hover, a:focus {
 	  border-top-left-radius: 0;
 	  border-top-right-radius: 0;
 	}
-}
+
 
 </style>
 </head>

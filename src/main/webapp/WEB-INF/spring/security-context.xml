@@ -12,22 +12,6 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<bean id="roleVoter"
-		class="org.springframework.security.access.vote.RoleHierarchyVoter">
-		<constructor-arg ref="roleHierarchy" />
-	</bean>
-	<bean id="roleHierarchy"
-		class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
-		<property name="hierarchy">
-			<value>
-				ROLE_AUTENTICATED > ROLE_USER
-				ROLE_ADMIN > ROLE_AUTENTICATED
-				ROLE_MANAGER > ROLE_ADMIN
-				ROLE_MASTER > ROLE_MANAGER
-			</value>
-		</property>
-	</bean>
-
 	<security:http auto-config="true" pattern="/admin/**">
 		<security:intercept-url pattern="/admin"
 			access="permitAll" />
@@ -54,9 +38,6 @@
 		<security:intercept-url pattern="/profile/**"
 			access="hasAnyRole('ROLE_USER','ROLE_AUTHENTICATED','ROLE_ADMIN')" />
 
-		<security:remember-me
-			remember-me-parameter="remember" token-validity-seconds="2419200" />
-
 		<security:form-login login-page="/"
 			login-processing-url="/member/login"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler"
@@ -65,7 +46,6 @@
 			password-parameter="mberPw" />
 
 		<security:logout
-			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"
 			invalidate-session="true" logout-url="/member/logout"
 			success-handler-ref="customlogoutSuccessHandler" />
 

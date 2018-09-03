@@ -61,12 +61,13 @@
 						<div class="col-xs-11">
 							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required autocomplete=off>
 						</div>
-						<div class="col-xs-1">
-							<span class="glyphicon glyphicon-search"></span>
-						</div>
+					<div class="input-group-btn">	
+			          <button class="btn" type="submit">
+			            <span class="glyphicon glyphicon-search"></span>
+			          </button>
+			        </div>
 				</form>
 		</article>
-
 		<!--  하단 기업순위  시작 -->
 		<div class="container text-center bg-grey">
 			<div id="myCarousel" class="carousel slide text-center"	data-ride="carousel">

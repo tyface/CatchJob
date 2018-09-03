@@ -95,24 +95,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/modifyMber", method=RequestMethod.POST)
-	public String modifyAuthenticatedMber(Model model, String mberId, String mberPw, String mberType, String regDate, String lastDate,
-			 @RequestParam(required=false, value="entIndex") int entIndex) { 
-		try {			
-			
-			System.out.println("mberId:"+mberId);
-			
-			System.out.println("mberPw"+mberPw);
-		
-			System.out.println("entIndex:"+entIndex);
-			System.out.println("regDate"+regDate);
-			
-			System.out.println("lastDate"+lastDate);
-		
-			
+	public String modifyAuthenticatedMber(Model model, String mberId, String mberPw, 
+			@RequestParam(required=false, value="mberType")String mberType, String regDate, 
+			@RequestParam(required=false, value="mberFlag")String mberFlag, String lastDate) { 
+		try {					
 			Member memberOne = memberService.getMemberById(mberId);
-			
-			System.out.println("mberType"+memberOne.getMberType());
-			System.out.println("memberOne.getMberIndex()"+memberOne.getMberIndex());	
 			
 			Member member = new Member();
 			member.setMberIndex(memberOne.getMberIndex());
@@ -126,30 +113,26 @@ public class AdminController {
 			} else {
 				member.setMberType(mberType);
 			}
-			member.setMberFlag(memberOne.getMberFlag());
+			
+			if(mberFlag==null) {
+				member.setMberFlag(memberOne.getMberFlag());
+			} else {
+				member.setMberFlag(mberFlag);
+			}
+			
 			member.setRegDate(regDate);
 			member.setLastDate(lastDate);
 					
-			if(entIndex==0) {
-				boolean result = memberService.modify(member);
-				if(result) {				
-					model.addAttribute("msg", "수정 dasdsadasd완료되었습니다");
-				} else {
-					model.addAttribute("msg", "수정 실패했습니다");
-				}
+			boolean result = memberService.modify(member);
 				
-			} else if(enterpriseService.getEnt(entIndex)==null) {
-				model.addAttribute("msg", "존재하지 않는 기업 코드입니다");
-			}else if(entIndex!=0) {
-				member.setEntIndex(entIndex);
-				memberService.entIndexmodify(member);
-				boolean result = memberService.modify(member);
-				if(result) {				
-					model.addAttribute("msg", "수정 완료되었습니다");
-				} else {
-					model.addAttribute("msg", "수정 실패했습니다");
-				}
+			System.out.println(result);
+			
+			if(result) {				
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("msg", "수정 실패했습니다");
 			}
+		
 			model.addAttribute("url", "mngMber");
 			return "admin/include/result";
 		} catch(Exception e) {
@@ -197,7 +180,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/modifyAdmin", method=RequestMethod.POST)
-	public String modifyAdmin(Model model, String mberId, String mberPw, String mberType, 
+	public String modifyAdmin(Model model, String mberId, String mberPw, @RequestParam(required=false, value="mberType")String mberType, 
 			 @RequestParam(required=false, value="regDate")String regDate, @RequestParam(required=false, value="lastDate")String lastDate) { 
 		try {		
 
@@ -223,6 +206,7 @@ public class AdminController {
 			} else {
 				member.setMberType(mberType);
 			}
+
 			member.setMberFlag(memberOne.getMberFlag());
 			member.setRegDate(regDate);
 			member.setLastDate(lastDate);
