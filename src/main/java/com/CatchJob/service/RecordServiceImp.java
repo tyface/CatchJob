@@ -17,12 +17,21 @@ public class RecordServiceImp implements RecordService {
 
 	@Override
 	public boolean regViewRecord(Map<String, String> mapData) {
-
-		if (recordDao.insertViewRecode(mapData) > 0) {
-			return true;
-		} else {
-			return false;
+		
+		boolean result = false;
+		Map<String, Integer> resultMap = recordDao.selectViewRecode(mapData);
+		
+		if(resultMap != null){
+			Integer viewIndex = Integer.valueOf(String.valueOf(resultMap.get("VIEW_IDX")));
+			if (recordDao.updateViewRecode(viewIndex) > 0) {
+				return true;
+			} 
+		}else {
+			if (recordDao.insertViewRecode(mapData) > 0) {
+				return true;
+			} 
 		}
+		return result;
 	}
 
 	@Override

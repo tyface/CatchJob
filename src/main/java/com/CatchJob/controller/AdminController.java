@@ -54,20 +54,8 @@ public class AdminController {
 	/* ROLE_ADMIN이 ROLE_MASTER 권한 요구할 때 */
 	@RequestMapping(value ="/403", method = {RequestMethod.GET,RequestMethod.POST})
 	public String error403(HttpServletRequest request,HttpServletResponse response,Model model) {
-		try {
-			response.setStatus(HttpStatus.OK.value());
-			System.out.println("======================");
-			System.out.println(request.getHeader("referer"));
-			System.out.println(request.getHeaderNames());
-			System.out.println(request.getRequestURL());
-			
-			response.sendRedirect(request.getHeader("referer"));	
-//			model.addAttribute("url", );
-			model.addAttribute("msg", "권한이 없습니다");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "admin/include/result";
+		model.addAttribute("msg", "권한이 없습니다");
+		return "admin/include/historyBack";
 	}
 	
 	/* 확인창 */

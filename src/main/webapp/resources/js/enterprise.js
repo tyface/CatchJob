@@ -14,12 +14,11 @@ function appendEntList(entList,pageNum,pageViewCount){
   }
 
   for(var i = firstNum; i < lastNum;i++){
-
     /* 별점 만들기 */
     var stars = "";
 
     for(var j = 0;j < 5;j++){
-      if(j < entList[i].following){
+      if(j < entList[i].evaluationAvg){
         stars += "<span class=stars-on/>";
       }else{
         stars += "<span class=stars-off/>";

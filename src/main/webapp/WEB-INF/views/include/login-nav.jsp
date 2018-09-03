@@ -206,7 +206,6 @@ $(function() {
 </script>
 
 <security:authorize access="isAnonymous()">
-
 <nav class="navbar navbar-inverse">
  <div class="container-fluid">
   <div class="f-left">
@@ -232,14 +231,14 @@ $(function() {
         <div class="modal-body" style="padding:40px 50px;">
 
           <form role="form" method="post" id="loginForm">
-					<div class="form-group has-feedback">
-								<input type="email" class="form-control" id="loginId" placeholder="Enter">
-								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-						</div>
-						<div class="form-group has-feedback">
-							 <input type="password" class="form-control" id="loginPw" placeholder="Password">
-							 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-						</div>
+				<div class="form-group has-feedback">
+					<input type="email" class="form-control" id="loginId" placeholder="Enter">
+					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					 <input type="password" class="form-control" id="loginPw" placeholder="Password">
+					 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
               <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
 
@@ -372,9 +371,10 @@ $(function() {
 	      <div class="input-group" style="padding:0; margin:0; width:500px;">
 	        <input type="text" class="form-control" placeholder="기업을 검색해 보세요" name="keyword" style="height:28px">
 		        <div class="input-group-btn">	
-		          <button class="btn btn-default" style="height:28px" type="submit">
-		            <i class="glyphicon glyphicon-search"></i>
-		          </button>
+		         <i class="glyphicon glyphicon-search">
+		          <button class="btn btn-default" style="height:28px" type="submit"> </button>
+		           </i>
+		         
 		        </div>
 	      </div>
 	 	</form>

@@ -113,7 +113,7 @@
 							</div>			
 						<div class="col-md-4">						 	
 							<div id="indutyBox">			
-								<div id="indutyName">2차 산업군</div>
+								<div id="indutyName">업종 코드</div>
 							
 								
 						</div>

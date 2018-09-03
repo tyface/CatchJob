@@ -113,15 +113,15 @@ function searchValidation(){
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
-						<div class="col-xs-11">
-							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete=off>
-						</div>
-						<div class="col-xs-1" >
-<!-- 							<button type="submit" class="glyphicon glyphicon-search"></button> -->
-								<button type="submit">
-										<span class="glyphicon glyphicon-search"></span>
-								</button>
-						</div>
+					<div class="col-xs-11">
+						<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" placeholder="  기업을 검색해 보세요 " required autocomplete=off>
+					</div>
+					<div class="col-xs-1">
+						<div class="input-group-btn">	
+					<button class="btn" type="submit">
+			            <span class="glyphicon glyphicon-search"></span>
+				        </button>
+			</div>
 				</form>
 		</article>
 		<!--  하단 기업순위  시작 -->
