@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER_TB 
-		SET    MBER_ID=#{mberId}, MBER_PW=#{mberPw}, MBER_TYPE=#{mberType}, ENT_IDX=#{entIndex}, USE_FL=#{mberFlag}, OAUTH_ID = #{oauthId}
+		SET    MBER_ID=#{mberId}, MBER_PW=#{mberPw}, MBER_TYPE=#{mberType}, USE_FL=#{mberFlag}, OAUTH_ID = #{oauthId}
 		WHERE  MBER_IDX=#{mberIndex}
 	</update>
 	

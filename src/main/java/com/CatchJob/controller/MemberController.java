@@ -117,7 +117,7 @@ public class MemberController {
 
 	/* 회원가입 */
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public void join(HttpServletRequest request, HttpServletResponse resp, String signUpId, String signUpPw,
+	public void join(HttpServletResponse resp, String signUpId, String signUpPw,
 			String signUpPwCheck) {
 		// "잘못된 형식의 이메일 주소입니다". 유효성 검사
 		// "비밀번호는 00자리 이상 입력해 주세요 유효성 검사2
@@ -150,6 +150,24 @@ public class MemberController {
 				mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
 				mailHandler.setTo(member.getMberId());
 				mailHandler.send();
+				
+				
+				
+				mailHandler.setSubject("catch job 인증 이메일 입니다.");
+				mailHandler.setText(mailService.getMailTemplate(signUpId, Constants.File.PW_RESET));
+
+				FileSystemResource fsr = new FileSystemResource(
+						resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
+				mailHandler.addInline("image-1", fsr);
+				fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_LOGO_1).getFile());
+				mailHandler.addInline("logo", fsr);
+
+				mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
+				mailHandler.setTo(signUpId);
+				mailHandler.send();
+
+				
+				
 
 				data = "{\"result\" : true}";
 			} else {
@@ -304,7 +322,6 @@ public class MemberController {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	/* 비밀번호 재설정 페이지 뷰 */
