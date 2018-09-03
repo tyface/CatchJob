@@ -69,32 +69,32 @@
 }
 
 /* Mobile */
-#main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+#main-search-bar,#main-search-form div:first-child, #main-search-form button:last-child {
   padding: 0px;
   height : 45px;
   font-size: 18px;
 }
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {
-  #main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+  #main-search-bar,#main-search-form div:first-child, #main-search-form button:last-child {
     height : 60px;
     font-size: 27px;
   }
 }
 /* Desktop */
 @media (min-width:1025px) {
-  #main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+  #main-search-bar,#main-search-form div:first-child, #main-search-form button:last-child {
     height : 60px;
     font-size: 27px;
   }
 }
 
 
-#main-search-form div:last-child{
+#main-search-form button:last-child{
   color: #fff;
   background-color: #333333;
   margin-left: -3px;
-  padding-top: 12px;
+  border: 0px;
   border-radius: 0px 4px 4px 0px;
 }
 

@@ -50,22 +50,22 @@ $(function(){
 // 		})
 	searchValidation();
 })
-	
+
 function searchValidation(){
 	/* 유효성검사  */
-		$('#main-search-form').validate({	
+		$('#main-search-form').validate({
 			/* 규칙 */
 			rules : {
 				keyword:{
 					required : true,
 					laxEmail : true,
-				},
+				}
 			},
 			/* 규칙 어길 때, 메시지 */
 			messages : {
 				keyword:{
 					required : "필수로입력하세요",
-				},
+				}
 			},
 			/* 규칙 어길 때, 툴팁 띄우기  */
 			showErrors: function(errorMap, errorList) {
@@ -94,14 +94,14 @@ function searchValidation(){
 					$('#main-search-bar').val($keyword);
 					form.submit();
 			}
-		});	
+		});
 		/* validate-plugin 사용시, 추가로 사용자가 사용할 메서드 선언 */
-		 jQuery.validator.addMethod("laxEmail", function(value, element) {
+			jQuery.validator.addMethod("laxEmail", function(value, element) {
 		  var result = value.replace(/ /gi, "");
-		  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test( result );
+		  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test(result);
 		 }, '올바른 언어(영어/한글)로 입력했는지 확인해 보세요.');
 }
-	
+
 </script>
 
 	<!-- CONTENTS -->
@@ -114,14 +114,14 @@ function searchValidation(){
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
 						<div class="col-xs-11">
-							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete=off>
+							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
 						</div>
-						<div class="col-xs-1" >
-<!-- 							<button type="submit" class="glyphicon glyphicon-search"></button> -->
-								<button type="submit">
-										<span class="glyphicon glyphicon-search"></span>
-								</button>
-						</div>
+						<button type="submit" class="col-xs-1">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+						<%-- <div type="submit" class="col-xs-1">
+							<span class="glyphicon glyphicon-search"></span>
+						</div> --%>
 				</form>
 		</article>
 		<!--  하단 기업순위  시작 -->
