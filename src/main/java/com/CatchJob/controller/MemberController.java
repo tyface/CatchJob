@@ -72,40 +72,6 @@ public class MemberController {
 	@Autowired
 	private ResourceLoader resourceLoader;
 
-	/*
-	 * /* 로그인
-	 */  //TODO 삭제 대기중
-	/*
-	 * @RequestMapping(value = "/login", method = RequestMethod.POST) public void
-	 * login(HttpSession session, HttpServletResponse resp, String mberId, String
-	 * mberPw) { String data = ""; Member member =
-	 * memberService.getMemberById(mberId);
-	 * 
-	 * System.out.println(
-	 * "진입=============================================================================="
-	 * ); if (member != null) { System.out.println(
-	 * "logib=============================================================================="
-	 * ); boolean result = memberService.login(mberId, mberPw); System.out
-	 * .println("login end=============================================================================="
-	 * ); if (result) { memberService.visitUpdate(member.getMberIndex());
-	 * session.setAttribute("member", member);
-	 * 
-	 * data = "{\"result\" : \"CODE_01\"}"; //로그인 성공
-	 * 
-	 * } else { System.out .println(
-	 * "else=============================================================================="
-	 * );
-	 * 
-	 * data = "{\"result\" : \"CODE_02\"}"; //비밀번호 불일치, 인증되지 않은 회원 }
-	 * 
-	 * } else { data = "{\"result\" : \"CODE_03\"}"; // 사용자가 존재하지 않습니다. }
-	 * 
-	 * System.out.println(
-	 * "종료=============================================================================="
-	 * ); try { resp.getWriter().print(data); } catch (IOException e) {
-	 * e.printStackTrace(); } }
-	 */
-
 	@RequestMapping("/logout")
 	public void logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -167,12 +133,6 @@ public class MemberController {
 			}
 		}
 	}
-
-	/* 로그아웃 */
-	/*
-	 * @RequestMapping("/logout") public String logout(HttpSession session) {
-	 * session.removeAttribute("member"); return "redirect:/"; }
-	 */
 
 	/* 패스워드 수정 */
 	@RequestMapping(value = "/passwordModify", method = RequestMethod.POST)
@@ -243,7 +203,6 @@ public class MemberController {
 	}
 
 	/* 정회원 인증 하기 */
-
 	@RequestMapping(value = "/verifyRegularMember")
 	public String verifyRegularMember(String memberId, String oauthId, HttpSession session, HttpServletResponse resp) {
 		String data = "";

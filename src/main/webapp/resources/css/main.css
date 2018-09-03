@@ -122,3 +122,14 @@
   opacity : 0.6;
   z-index: -1;
 }
+
+article .btn:not(.nohover):hover {  
+}
+
+article .btn{
+	background-color:#333333; 
+	height:60px;
+	font-size:28px;	
+	paddding:0;
+	 color:white;
+}

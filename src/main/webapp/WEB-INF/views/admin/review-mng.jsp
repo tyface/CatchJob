@@ -7,58 +7,8 @@
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>			
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
-<style>
-	select {
-		width: 190px;
-		height: 20px;
-	}
-	.row{
-		padding:15px;
-	}
-	.page-header{
-		text-align: center; 
-		font-weight: bold;
-		margin-bottom: 50px;
-	}
-	#quantity{
-		width: 90px; 
-		height: 26px;
-		border-radius:3px;	
-	}
-
-	#pagenation{
-		text-align:center;
-	}
-	table{	
-        table-layout: fixed;
-        word-wrap: break-word;
-    }
-
-    table th, table td {
-        overflow: hidden;
-        
-	}
-	select{
-		height:27px;
-		border-radius:4px;
-		border-line: 1px solid #ccc;
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	}
-
-	#chkDelete{		
-		margin-right:10px;
-	}
-	.glyphicon-ok{
-		color:green;
-	}
-	.glyphicon-remove{
-		color:darkRed;
-	}
-	.row.form-group{
-		padding:0;
-	}
-</style>
 <script>		
 	function newPage() {	
 		var url="mngReview?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+

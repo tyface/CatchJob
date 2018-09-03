@@ -208,12 +208,14 @@ $(function() {
 <security:authorize access="isAnonymous()">
 
 <nav class="navbar navbar-inverse">
+ <div class="container-fluid">
   <div class="f-left">
     <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
   </div>
   <div class="f-right nav-btn-1">
     <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div>
     <div class="col-xs-6 cursorOn myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</div>
+  </div>
   </div>
 </nav>
 
@@ -238,9 +240,6 @@ $(function() {
 							 <input type="password" class="form-control" id="loginPw" placeholder="Password">
 							 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
-            <div class="checkbox">
-              <label><input id = "remember_me" name ="remember" type = "checkbox">Remember me</label>
-            </div>
               <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
 
@@ -367,9 +366,25 @@ $(function() {
 		<div class="f-left">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH	JOB</a>
 		</div>
+		
+	<div class="f-middle"> 
+		<form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/enterprise/search">
+	      <div class="input-group" style="padding:0; margin:0; width:500px;">
+	        <input type="text" class="form-control" placeholder="기업을 검색해 보세요" name="keyword" style="height:28px">
+		        <div class="input-group-btn">	
+		          <button class="btn btn-default" style="height:28px" type="submit">
+		            <i class="glyphicon glyphicon-search"></i>
+		          </button>
+		        </div>
+	      </div>
+	 	</form>
+	</div>
+		
+		  
+	    
+		
 
 		<div class="f-right nav-btn-1">
-
 			<div class="dropdown col-xs-6 f-right" >
 
 				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>

@@ -99,7 +99,7 @@ function searchValidation(){
 		 jQuery.validator.addMethod("laxEmail", function(value, element) {
 		  var result = value.replace(/ /gi, "");
 		  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test( result );
-		 }, '한글을 정확히 입력해 주세요');
+		 }, '올바른 언어(영어/한글)로 입력했는지 확인해 보세요.');
 }
 	
 </script>
@@ -117,11 +117,13 @@ function searchValidation(){
 							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete=off>
 						</div>
 						<div class="col-xs-1" >
-							<button type="submit" class="glyphicon glyphicon-search"></button>
+<!-- 							<button type="submit" class="glyphicon glyphicon-search"></button> -->
+								<button type="submit">
+										<span class="glyphicon glyphicon-search"></span>
+								</button>
 						</div>
 				</form>
 		</article>
-
 		<!--  하단 기업순위  시작 -->
 		<div class="container text-center bg-grey">
 			<div id="myCarousel" class="carousel slide text-center"	data-ride="carousel">

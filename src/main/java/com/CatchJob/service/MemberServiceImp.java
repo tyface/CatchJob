@@ -63,19 +63,6 @@ public class MemberServiceImp implements MemberService {
 		return false;
 	}
 	
-	@Override
-	public boolean entIndexmodify(Member member) {
-		try {
-			int rowCount = memberDao.updateMemberEntIndex(member);			
-			if (rowCount > 0) {		
-				return true;
-			} 
-		} catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return false;
-	}
 	
 	@Override
 	public boolean memberTypeModify(Member member) {

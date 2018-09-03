@@ -12,27 +12,36 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<bean id="roleVoter"
-		class="org.springframework.security.access.vote.RoleHierarchyVoter">
-		<constructor-arg ref="roleHierarchy" />
-	</bean>
-	<bean id="roleHierarchy"
-		class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
-		<property name="hierarchy">
-			<value>
-				ROLE_AUTENTICATED > ROLE_USER
-				ROLE_ADMIN > ROLE_AUTENTICATED
-				ROLE_MANAGER > ROLE_ADMIN
-				ROLE_MASTER > ROLE_MANAGER
-			</value>
-		</property>
-	</bean>
-
 	<security:http auto-config="true" pattern="/admin/**">
+		<security:access-denied-handler error-page="/admin/403" />
 		<security:intercept-url pattern="/admin"
 			access="permitAll" />
+		<security:intercept-url pattern="/admin/modifyMber"
+			access="hasRole('ROLE_MASTER')" />
+		<security:intercept-url pattern="/admin/modifyAdmin"
+			access="hasRole('ROLE_MASTER')" />
+		<security:intercept-url pattern="/admin/modifyReviewFlag"
+			access="hasRole('ROLE_MASTER')" />	
+		<security:intercept-url pattern="/admin/deleteReviewFlag"
+			access="hasRole('ROLE_MASTER')" />
+		<security:intercept-url pattern="/admin/modifyComment"
+			access="hasRole('ROLE_MASTER')" />		
+		<security:intercept-url pattern="/admin/modifyEntFlag"
+			access="hasRole('ROLE_MASTER')" />	
+		<security:intercept-url pattern="/admin/deleteEntFlag"
+			access="hasRole('ROLE_MASTER')" />	
+		<security:intercept-url pattern="/admin/modifyEnt"
+			access="hasRole('ROLE_MASTER')" />
+		<security:intercept-url pattern="/admin/mngDomain"
+			access="hasRole('ROLE_MASTER')" />
+		<security:intercept-url pattern="/admin/registDomain"
+			access="hasRole('ROLE_MASTER')" />
+		<security:intercept-url pattern="/admin/updateDomain"
+			access="hasRole('ROLE_MASTER')" />	
+		<security:intercept-url pattern="/admin/deleteDomain"
+			access="hasRole('ROLE_MASTER')" />											
 		<security:intercept-url pattern="/admin/**"
-			access="hasRole('ROLE_ADMIN')" />
+			access="hasAnyRole('ROLE_ADMIN','ROLE_MASTER')" />
 		<security:form-login login-page="/admin"
 			login-processing-url="/admin/login"
 			authentication-success-handler-ref="customAuthenticationSuccessHandler"
@@ -40,7 +49,7 @@
 			default-target-url="/admin" username-parameter="mberId"
 			password-parameter="mberPw" />
 		<security:logout invalidate-session="true"
-			logout-url="/admin/logout" logout-success-url="/admin" />
+			logout-url="/admin/logout" logout-success-url="/admin"/>
 		<security:csrf disabled="true" />
 	</security:http>
 	<!-- member security -->
@@ -52,10 +61,7 @@
 		<security:intercept-url pattern="/resources/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/profile/**"
-			access="hasAnyRole('ROLE_USER','ROLE_AUTHENTICATED','ROLE_ADMIN')" />
-
-		<security:remember-me
-			remember-me-parameter="remember" token-validity-seconds="2419200" />
+			access="hasAnyRole('ROLE_USER','ROLE_AUTHENTICATED','ROLE_ADMIN','ROLE_MASTER')" />
 
 		<security:form-login login-page="/"
 			login-processing-url="/member/login"
@@ -65,12 +71,12 @@
 			password-parameter="mberPw" />
 
 		<security:logout
-			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"
 			invalidate-session="true" logout-url="/member/logout"
 			success-handler-ref="customlogoutSuccessHandler" />
 
 		<security:csrf disabled="true" />
 	</security:http>
+
 
 	<security:authentication-manager>
 		<security:authentication-provider

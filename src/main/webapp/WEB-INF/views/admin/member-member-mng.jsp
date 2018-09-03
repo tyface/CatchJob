@@ -6,45 +6,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Admin Page</title>
-<style>
-	.row{
-		padding:15px;
-	}
-	.page-header{
-		text-align: center; 
-		font-weight: bold;
-		margin-bottom: 50px;
-	}
-	#quantity{
-		width: 90px; 
-		height: 25px;
-		border-radius:4px;
-		border-line: 1px solid #ccc;
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	}
-	
-	#keyword{
-		height:28px;
-	}
-	#pagenation{
-		text-align:center;
-	}
-	#selectOneBox{
-		margin-top:15px;
-	}
-	#btnForm{
-		padding:20px;
-	}
-	table {
-        table-layout: fixed;
-        word-wrap: break-word;
-    }
-
-    table th, table td {
-        overflow: hidden;
-    }
-	
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <script>
 	function newPage() {	
 		var url="mngMber?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+"&keyword="+$("#keyword").val();		
@@ -82,9 +44,9 @@
 								<thead>
 									<tr>
 										<th style="width:3%">NO</th>
-										<th style="width:7%">아이디</th>
+										<th style="width:10%">아이디</th>
 										<th style="width:5%">구분</th>
-										<th style="width:5%">상태</th>
+										<th style="width:3%">상태</th>
 									</tr>
 								</thead>		
 								<tbody>
@@ -168,18 +130,6 @@
 										</select>
 									</div>
 								</div>
-								<c:if test="${member.mberType.equals('ROLE_AUTHENTICATED')}">
-									<div class="form-group">
-										<label for="entIndex" class="col-sm-4 control-label">기업코드</label>
-										<div class="col-sm-8">
-											<input type="text" class="form-control" name="entIndex" id="entIndex"
-												placeholder="기업코드" value="${member.entIndex}">
-										</div>
-									</div>
-								</c:if>
-<%-- 								<c:if test="${member.mberType.equals('ROLE_USER')}">
-									<input type="hidden" name="entIndex" value="0">
-								</c:if> --%>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">
@@ -192,6 +142,24 @@
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="lastDate" id="lastDate"
 											placeholder="최근 방문날짜" value="${member.lastDate}">
+									</div>
+								</div>
+								<div class="form-group" style="text-align:right">
+									<label for="mberFlag" class="control-label"
+										style="margin-right: 15px">상태</label>
+									<div class="col-sm-8 pull-right">
+										<select class="form-control" style="color:gray" id="mberFlag" name="mberFlag">
+											<option value="" selected disabled hidden>
+											<c:set var="name" value="${member.mberFlag}"/>
+												<c:choose>
+													<c:when test="${name.equals('1')}">가입</c:when>
+													<c:when test="${name.equals('2')}">탈퇴</c:when>
+													<c:otherwise>회원 상태</c:otherwise>
+												</c:choose>
+											</option>
+											<option value="1">가입</option>
+											<option value="2">탈퇴</option>
+										</select>
 									</div>
 								</div>
 							<!-- 	<div class="form-group">
