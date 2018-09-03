@@ -100,7 +100,7 @@ function deleteReview(entIndex,questionNum){
 	
 }
 function reviewValidation(){
-	$('.writeForm').validate({		
+	$('#writeForm').validate({		
 		rules : {
 			
 			stars:{
@@ -203,8 +203,8 @@ function reviewValidation(){
 					<div class="form-group">
 						<label>만족도</label>
 						<div>
-							<select class="stars" id="stars">
-								<option value="" >별점</option>
+							<select class="stars" id="stars" name="stars">
+<!-- 								<option value="" >별점</option> -->
 							    <option value="1">1</option>
 							    <option value="2">2</option>
 							    <option value="3">3</option>

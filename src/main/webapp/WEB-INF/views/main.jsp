@@ -10,6 +10,9 @@
 <link href="https://fonts.googleapis.com/css?family=Frijole|Nanum+Pen+Script" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 
+<!-- 유효성 검사 -->
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+<%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script> --%>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -41,12 +44,64 @@
 // });
 
 //]]>
-	$(function(){
-		$("#main-search-btn").on("click",function(){
-			$("#main-search-form").submit();
-		})
+$(function(){
+// 		$("#main-search-btn").on("click",function(){
+// 			$("#main-search-form").submit();
+// 		})
+	searchValidation();
+})
+	
+function searchValidation(){
+	/* 유효성검사  */
+		$('#main-search-form').validate({	
+			/* 규칙 */
+			rules : {
+				keyword:{
+					required : true,
+					laxEmail : true,
+				},
+			},
+			/* 규칙 어길 때, 메시지 */
+			messages : {
+				keyword:{
+					required : "필수로입력하세요",
+				},
+			},
+			/* 규칙 어길 때, 툴팁 띄우기  */
+			showErrors: function(errorMap, errorList) {
+		          // Clean up any tooltips for valid elements
+		          $.each(this.validElements(), function (index, element) {
+		              var $element = $(element);
 
-	})
+		              $element.data("title", "") // Clear the title - there is no error associated anymore
+		                  .removeClass("error")
+		                  .tooltip("destroy");
+		          });
+		          // Create new tooltips for invalid elements
+		          $.each(errorList, function (index, error) {
+		              var $element = $(error.element);
+
+		              $element.tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+		                  .data("title", error.message)
+		                  .addClass("error")
+		                  .tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+		          });
+		      },
+		      /* 규칙 맞으면, 실행됨 */
+			 submitHandler: function(form) {
+					var $keyword = $('#main-search-bar').val();
+					$keyword = $keyword.replace(/ /gi, "");
+					$('#main-search-bar').val($keyword);
+					form.submit();
+			}
+		});	
+		/* validate-plugin 사용시, 추가로 사용자가 사용할 메서드 선언 */
+		 jQuery.validator.addMethod("laxEmail", function(value, element) {
+		  var result = value.replace(/ /gi, "");
+		  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test( result );
+		 }, '한글을 정확히 입력해 주세요');
+}
+	
 </script>
 
 	<!-- CONTENTS -->
@@ -59,10 +114,10 @@
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
 						<div class="col-xs-11">
-							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 " required autocomplete=off>
+							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete=off>
 						</div>
-						<div class="col-xs-1">
-							<span class="glyphicon glyphicon-search"></span>
+						<div class="col-xs-1" >
+							<button type="submit" class="glyphicon glyphicon-search"></button>
 						</div>
 				</form>
 		</article>
