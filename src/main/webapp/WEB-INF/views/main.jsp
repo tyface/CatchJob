@@ -67,6 +67,9 @@ function searchValidation(){
 					required : "필수로입력하세요",
 				}
 			},
+			focusInvalid: true,
+      focusCleanup: true,
+      onkeyup: false,
 			/* 규칙 어길 때, 툴팁 띄우기  */
 			showErrors: function(errorMap, errorList) {
 		          // Clean up any tooltips for valid elements
@@ -90,9 +93,9 @@ function searchValidation(){
 		      /* 규칙 맞으면, 실행됨 */
 			 submitHandler: function(form) {
 					var $keyword = $('#main-search-bar').val();
-					$keyword = $keyword.replace(/ /gi, "");
-					$('#main-search-bar').val($keyword);
-					form.submit();
+			 		$keyword = $keyword.replace(/ /gi, "");
+			 		$('#main-search-bar').val($keyword);
+			 		form.submit();
 			}
 		});
 		/* validate-plugin 사용시, 추가로 사용자가 사용할 메서드 선언 */
@@ -113,10 +116,10 @@ function searchValidation(){
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
-						<div class="col-xs-11">
+						<div class="col-xs-11 search-btn1">
 							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
 						</div>
-						<button type="submit" class="col-xs-1">
+						<button type="submit" class="col-xs-1 search-btn2">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 						<%-- <div type="submit" class="col-xs-1">
