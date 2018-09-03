@@ -64,6 +64,7 @@ public class ReviewServiceImp implements ReviewService {
 		data.put("REVW_FL", "2");
 		int result = reviewDao.deleteReview(data);
 		if(result > 0) {
+			reviewDao.updateEvaluationAvg(Integer.parseInt((String.valueOf(data.get("entIndex")))));
 			return true;
 		}else {			
 			return false;
@@ -206,6 +207,7 @@ public class ReviewServiceImp implements ReviewService {
 	public boolean modifyReview(Review review) {
 		int result = reviewDao.updateReview(review);
 		if(result > 0) {
+			reviewDao.updateEvaluationAvg(review.getEntIndex());
 			return true;
 		}else {			
 			return false;

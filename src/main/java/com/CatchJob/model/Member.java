@@ -17,7 +17,6 @@ public class Member implements UserDetails {
 	private String mberId; // 아이디(email)
 	private String mberPw; // 비밀번호
 	private String mberType; //회원구분(USER:일반,AUTHENTICATED:기업인증,ADMIN:관리자)
-	private int entIndex; // 기업회원일 경우 해당기업 식별번호
 	private String mberFlag; // 계정상태(1:등록,2:탈퇴)
 	private String regDate; // 회원가입일
 	private String lastDate; // 마지막방문일
@@ -75,14 +74,6 @@ public class Member implements UserDetails {
 		this.mberType = mberType;
 	}
 
-	public int getEntIndex() {
-		return entIndex;
-	}
-
-	public void setEntIndex(int entIndex) {
-		this.entIndex = entIndex;
-	}
-
 	public String getMberFlag() {
 		return mberFlag;
 	}
@@ -118,7 +109,7 @@ public class Member implements UserDetails {
 	@Override
 	public String toString() {
 		return "Member [mberIndex=" + mberIndex + ", mberId=" + mberId + ", mberPw=" + mberPw + ", mberType=" + mberType
-				+ ", entIndex=" + entIndex + ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate="
+				+ ", mberFlag=" + mberFlag + ", regDate=" + regDate + ", lastDate="
 				+ lastDate + ", oauthId=" + oauthId + "]";
 	}
 

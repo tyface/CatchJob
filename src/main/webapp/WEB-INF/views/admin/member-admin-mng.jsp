@@ -5,44 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Admin Page</title>
-<style>
-	.row{
-		padding:15px;
-	}
-	.page-header{
-		text-align: center; 
-		font-weight: bold;
-		margin-bottom: 50px;
-	}
-	#quantity{
-		width: 90px; 
-		height: 25px;
-		border-radius:4px;
-		border-line: 1px solid #ccc;
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	}	
-	
-	#keyword{
-		height:28px;
-	}
-	#pagenation{
-		text-align:center;
-	}
-	#selectOneBox{
-		margin-top:15px;
-	}
-	#btnForm{
-		padding:20px;
-	}
-	table {
-        table-layout: fixed;
-        word-wrap: break-word;
-    }
-
-    table th, table td {
-        overflow: hidden;
-    }
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <script>
 	function newPage() {	
 		var url="mngAdmin?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()
@@ -81,9 +44,9 @@
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>NO</th>
-										<th>아이디</th>
-										<th>권한</th>
+										<th style="width:3%">NO</th>
+										<th style="width:8%">아이디</th>
+										<th style="width:4%">권한</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -93,12 +56,9 @@
 										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}&num=${admin.mberIndex}							
 										">${admin.mberId}</a></td>
 										<td>
-											<c:set var="name" value="${admin.mberType}"/>
-											<c:choose>
-												<c:when test="${name.equals('ROLE_ADMIN')}">Level1</c:when>
-												<c:when test="${name.equals('ROLE_MANAGER')}">Level2</c:when>	
-												<c:otherwise>Level3</c:otherwise>	
-											</c:choose>
+											<c:set var="name" value="${admin.mberType}"/>											
+											<c:if test="${name.equals('ROLE_ADMIN')}">Level1</c:if>
+											<c:if test="${name.equals('ROLE_MASTER')}">Level2</c:if>	
 										</td> 
 										</tr> 
 									</c:forEach> 
@@ -156,15 +116,11 @@
 										<select class="form-control" style="color:gray" id="mberType" name="mberType">
 											<option value="" selected disabled hidden>
 											<c:set var="name" value="${admin.mberType}"/>
-												<c:choose>
-													<c:when test="${name.equals('ROLE_ADMIN')}">level1</c:when>
-													<c:when test="${name.equals('ROLE_MANAGER')}">level2</c:when>
-													<c:otherwise>level3</c:otherwise>
-												</c:choose>
+												<c:if test="${name.equals('ROLE_ADMIN')}">level1</c:if>
+												<c:if test="${name.equals('ROLE_MASTER')}">level2</c:if>
 											</option>
 											<option value="ROLE_ADMIN">level1</option>
-											<option value="ROLE_MANAGER">level2</option>
-											<option value="ROLE_MASTER">level3</option>
+											<option value="ROLE_MASTER">level2</option>
 										</select>
 									</div>
 								</div> 
