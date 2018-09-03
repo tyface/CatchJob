@@ -13,7 +13,8 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<security:http auto-config="true" pattern="/admin/**">
-		<security:access-denied-handler error-page="/admin/403" />
+		<security:access-denied-handler error-page="/admin/403"/>
+		<security:access-denied-handler ref=""/>
 		<security:intercept-url pattern="/admin"
 			access="permitAll" />
 		<security:intercept-url pattern="/admin/modifyMber"

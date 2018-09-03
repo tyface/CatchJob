@@ -84,7 +84,6 @@ $(function(){
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	interviewValidation(); //인터뷰 유효성 검사 부분
-	reviewValidation()//리뷰 유효성 검사 부분
 
 	saramin(); //#section5 사람인채용정보
 // 	if(${interview} =="" || ${interview} == null){
@@ -100,8 +99,11 @@ $(function(){
 
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
+			initialRating: 1,
 	   	onSelect: function(value, text, event){
-	    	$(".starScore").text(value);
+				var target = event.target.parentNode.parentNode.parentNode.childNodes[3].childNodes[1];
+				target.innerHTML = value;
+
 	    }
 	});
 
@@ -233,33 +235,53 @@ $(function(){
 	        		/* 로그인 모달 띄우기 */
 					$("#loginModal").modal("show");
 	        	})
-		  }else{/* 로그인 상태임 */
-	    	  $.ajax({
-			  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
-			  		data:{entIndex : entIndex},
-			  		type: "post",
-			  		dataType:"json",
-			  		success: function(result){
-			  			if(result){/* 중복 */
-			  				swal({
-			  					title: "이미 등록하셨습니다.",
-			  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
-			  					type: "warning",
-			  					confirmButtonClass:"btn-warning",
-			  				})
-			  			}else{/* 중복X, 작성가능 */
-			  				$("#loginModal").modal("show");
-			  			}
-			  		}
-			  })
-		  }
-      });
+			  }else{/* 로그인 상태임 */
+		    	  $.ajax({
+				  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
+				  		data:{entIndex : entIndex},
+				  		type: "post",
+				  		dataType:"json",
+				  		success: function(result){
+				  			if(result){/* 중복 */
+				  				swal({
+				  					title: "이미 등록하셨습니다.",
+				  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
+				  					type: "warning",
+				  					confirmButtonClass:"btn-warning",
+				  				})
+				  			}else{/* 중복X, 작성가능 */
+				  				$("#loginModal").modal("show");
+				  			}
+				  		}
+				  })
+			  }
+      });/* 면접후기 작성 END */
 
+		/* 기업리뷰  등록 START */
+	 	$(".reviewForm").on("submit",function(){
+			var point = $(this)[0][3].children[0].innerHTML;
+			var statusCount = $(this)[0][6].value;
+			var contents = jQuery.trim($("#contents"+statusCount).val());/* 기업리뷰  */
 
-/* 기업리뷰  등록 START */
- 	$(".review-btn").on("click",function(){
-		var point = $(this).parent().parent().prev().children().children("div").text();
-		var statusCount = $(this).next().val();
+			if(point < 1){
+				swal({
+					title: "별점을 선택해주세요",
+				  text: "",
+				  type: "warning",
+				  confirmButtonClass: "btn-warning"
+				})
+				return false;
+			}
+			if(contents.length <10){
+				swal({
+					title: "10글자 이상 작성해주세요",
+				  text: "",
+				  type: "warning",
+				  confirmButtonClass: "btn-warning"
+				})
+				return false;
+			}
+
 			if(status == "logout"){
 				swal({
 					title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
@@ -271,41 +293,43 @@ $(function(){
 				function() {
 					$("#loginModal").modal("show");
 				})
+
 		  }else{/* 로그인 상태임 */
-			var contents = $("#contents"+statusCount).val();/* 기업리뷰  */
-			point = Number(point);
-			var questionNum = statusCount;
+				point = Number(point);
+				var questionNum = statusCount;
+
 			  $.ajax({
-				url:"${pageContext.request.contextPath}/enterprise/writeReview",
-				type:"post",
-				data:{"contents" : contents,
-							"evaluationScore" : point,
-							"questionNum" : questionNum,
-							"entIndex" : entIndex
-				},
-				dataType: "json",
-				success : function(result){
-					if(result){
-						$(".starScore").val("0");
-						swal({
-							title:"등록되었습니다!",
-							type:"success",
-							confirmButtonClass: "btn-success",
-						})
-					}else{
-						swal({
-							title: "등록 실패하였습니다.",
-							text:" 이미 등록하셨습니다.",
-							type: "warning",
-							confirmButtonClass:"btn-warning",
-						})
+					url:"${pageContext.request.contextPath}/enterprise/writeReview",
+					type:"post",
+					data:{"contents" : contents,
+								"evaluationScore" : point,
+								"questionNum" : questionNum,
+								"entIndex" : entIndex
+					},
+					dataType: "json",
+					success : function(result){
+						if(result){
+
+							swal({
+								title:"등록되었습니다!",
+								type:"success",
+								confirmButtonClass: "btn-success",
+							})
+						}else{
+							swal({
+								title: "등록 실패하였습니다.",
+								text:"이미 등록하셨습니다.",
+								type: "warning",
+								confirmButtonClass:"btn-warning",
+							})
+						}
+						getReviewList(questionNum);
 					}
-					getReviewList(questionNum);
-				}
-			});
-			 return false;
-		}
- 	});/* 기업리뷰  등록 END */
+				});
+				return false;
+			}
+	 	});/* 기업리뷰  등록 END */
+
 });/* FUNCTION END */
 
 function entInf(){
@@ -813,39 +837,7 @@ function interviewDifficultyShape(){
 
 	 }
 }
-function reviewValidation(){
-	$('.reviewForm').validate({
-// 		rules : {
 
-// 			stars:{
-// 				required : true
-// 			},
-// 			contents:{
-// 				required : true,
-// 				minlength : 10,
-// 				maxlength : 500
-// 			}
-// 		},
-
-// 		messages : {
-// 			stars:{
-// 				required : "다른 항목을 선택해주세요"
-// 			},
-// 			contents:{
-// // 				required : "필수로입력하세요",
-// 				minlength : "최소 10글자이상이어야 합니다",
-// 				maxlength : "최대 500글자까지 입력할 수 있습니다"
-// 			}
-// 		},
-	    submitHandler: function(form) {
-		    swal("등록되었습니다", "You clicked the button!", "success")
-		    .then(()=>{
-		    	form.submit();
-		    })
-	    }
-
-	});
-}
 function interviewValidation(){
 	 /* 면접후기 작성시 유효성 검사 */
 	$('#writeInterview').validate({
@@ -1277,11 +1269,10 @@ function jsonEscape(str)  {
 
 										<form class="reviewForm" name="reviewForm" >
 											<input type="hidden" name="questionNum" class="questionNum"
-												value="${question.QESTN_NO}"> <input type="hidden"
-												name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
+												value="${question.QESTN_NO}"> <input type="hidden" name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
 
 											<div>
-												<select class="stars" name="stars">
+												<select class="stars" name="stars" >
 													<option value="" >별점</option>
 													<option value="1">1</option>
 													<option value="2">2</option>
@@ -1291,14 +1282,14 @@ function jsonEscape(str)  {
 												</select>
 
 												<output for="star-input">
-													<b class="starScore">0</b>
+													<b class="starScore">1</b>
 												</output>
 											</div>
 
 											<div class="input-group input-group-sm">
 												<input type="text" 	class="form-control contents${status.count}" name="contents" id="contents${status.count}" placeholder="기업리뷰를 추가로 입력해주세요.">
 												<span class="input-group-btn">
-													<input type="button" class="btn btn-flat btn-info review-btn" value="제출">
+													<input type="submit" class="btn btn-flat btn-info review-btn" value="제출">
 													<input type="hidden" class="statusCount" value="${status.count}">
 												</span>
 											</div>

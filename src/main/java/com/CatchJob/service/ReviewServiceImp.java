@@ -1,6 +1,5 @@
 package com.CatchJob.service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +28,10 @@ public class ReviewServiceImp implements ReviewService {
 			data.put("REVW_FL", "1");
 			
 			if(duplicationCheck(data)) {
-				//System.out.println("서비스:리뷰등록 중복X");
 				reviewDao.insertReview(review);
+				reviewDao.updateEvaluationAvg(review.getEntIndex());
 				return true;
 			}else {
-				//System.out.println("서비스:리뷰등록 중복O");
 				return false;
 			}
 			
@@ -47,22 +45,12 @@ public class ReviewServiceImp implements ReviewService {
 	//리부 등록시, 중복검사
 	@Override
 	public boolean duplicationCheck(Map<String, String> data) {
-		//data.put("REVW_FL", "1");
 		int result = reviewDao.reviewDuplicationCheck(data);
 		//System.out.println("서비스:duplicationCheck:   "+result);
 		if (result > 0 ) {//글 등록할 수 없음
 			return false;
 		} else {//글 등록할 수 있음
 			return true;
-		}
-	}
-	@Override
-	public boolean updateReview(Review review) {
-		int result = reviewDao.updateReview(review);
-		if(result > 0) {
-			return true;
-		}else {			
-			return false;
 		}
 	}
 	
@@ -76,6 +64,7 @@ public class ReviewServiceImp implements ReviewService {
 		data.put("REVW_FL", "2");
 		int result = reviewDao.deleteReview(data);
 		if(result > 0) {
+			reviewDao.updateEvaluationAvg(Integer.parseInt((String.valueOf(data.get("entIndex")))));
 			return true;
 		}else {			
 			return false;
@@ -90,17 +79,6 @@ public class ReviewServiceImp implements ReviewService {
 		return reviewDao.question(data);
 	}
 	
-//	@Override
-//	public List<Review> reviewList(int entIndex) {
-//		List<Review> reviewList = reviewDao.reviewList(entIndex);
-//		return reviewList;
-//	}
-	/*//질문별로 리뷰 보기
-	@Override
-	public List<Review> reviewListByQNum(Map<String, String> data) {
-		
-		return reviewDao.reviewListByQNum(data);
-	}*/
 	//수정 삭제 페이지에 리뷰 띄우기		
 	@Override
 	public List<Review> reviewListByMember(Map<String, String> map) {
@@ -111,12 +89,11 @@ public class ReviewServiceImp implements ReviewService {
 		}
 		return result;
 	}
+	
 	//수정 할 데이터 가져오기
 	@Override
 	public Review review(Map<String, String> data) {
 		data.put("REVW_FL", "1");
-//		System.out.println("서비스 리뷰 :"+data);
-//		System.out.println("보낼 데이터: "+reviewDao.selectOneReview(data));
 		return reviewDao.selectOneReview(data);
 	}
 
@@ -225,27 +202,21 @@ public class ReviewServiceImp implements ReviewService {
 		
 		return viewData;
 	}
-	
-	public int calPageTotalCount(int totalCount, int numOfMsgPage) {
-		int pageTotalCount = 0;
-		if (totalCount != 0) {
-			pageTotalCount = (int) Math.ceil(((double) totalCount / numOfMsgPage));
-		}
-		return pageTotalCount;
-	}
 
 	@Override
 	public boolean modifyReview(Review review) {
-		int result = reviewDao.updateReviewByRevwIdx(review);
+		int result = reviewDao.updateReview(review);
 		if(result > 0) {
+			reviewDao.updateEvaluationAvg(review.getEntIndex());
 			return true;
 		}else {			
 			return false;
 		}
 	}
+	
 	// 리뷰 총 만족도 구하기
 	@Override
-	public double gettotalSatisfaction(Map<String, String> data) {
+	public double getTotalSatisfaction(Map<String, String> data) {
 		data.put("REVW_FL", "1");
 		try {
 			return reviewDao.totalSatisfactionValue(data);			
@@ -276,5 +247,14 @@ public class ReviewServiceImp implements ReviewService {
 		}
 		
 		return numOfValuesByItem;
+	}
+	
+	
+	public int calPageTotalCount(int totalCount, int numOfMsgPage) {
+		int pageTotalCount = 0;
+		if (totalCount != 0) {
+			pageTotalCount = (int) Math.ceil(((double) totalCount / numOfMsgPage));
+		}
+		return pageTotalCount;
 	}
 }

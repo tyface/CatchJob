@@ -68,7 +68,7 @@ public class ProfileController {
 	public String updateReview(Review review,Authentication authentication) {
 		int memberIndex = ((Member)authentication.getPrincipal()).getMberIndex();
 		review.setMberIndex(memberIndex);
-		reviewService.updateReview(review);
+		reviewService.modifyReview(review);
 //		System.out.println(review);		
 		return "redirect:reviews";
 	}     

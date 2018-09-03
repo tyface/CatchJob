@@ -8,11 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO REVIEW_TB (ENT_IDX,MBER_IDX,QESTN_NO,`CONTENTS`,EVALUATION,REVW_FL,REG_DT)
 		VALUES (#{entIndex},${mberIndex},#{questionNum},#{contents},#{evaluationScore},#{reviewFlag},sysdate())
 	</insert>
-	<update id="updateReview" parameterType="review">
-		UPDATE REVIEW_TB
-		SET `CONTENTS`=#{contents}, EVALUATION=#{evaluationScore}
-		WHERE ENT_IDX=#{entIndex} AND MBER_IDX=${mberIndex} AND QESTN_NO=#{questionNum}
-	</update>
+	
 	<!-- 리뷰 삭제상태로 만들기 -->
 	<update id="deleteReview" parameterType="map">
 		UPDATE REVIEW_TB
@@ -87,11 +83,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{NUM_OF_RVW_PER_PAGE}
 		OFFSET #{START_ROW}
 	 </select>
+	 
 	 <select id="selectReviewTotalRows" parameterType="map" resultType="int">
 		SELECT 	 count(*) AS TOTAL_ROWS 
 		FROM	 REVIEW_TB
 		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL = #{REVW_FL}
 	</select>
+	
 	<select id="selectCountByKeyword" resultType="int" parameterType="map">
 		SELECT COUNT(*)
 		FROM REVIEW_TB r
@@ -110,6 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	  	AND r.QESTN_NO = #{questionNumKeyword} 
 	    </if>
 	</select>
+	
 	<select id="selectReviewList" resultMap="reviewMap"	parameterType="map">
 		SELECT SQL_CALC_FOUND_ROWS *
 		FROM REVIEW_TB r
@@ -130,13 +129,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>
-
-	<update id="updateReviewByRevwIdx" parameterType="review">
+	
+<!-- 	리뷰 수정 -->
+	<update id="updateReview" parameterType="review">
 		UPDATE REVIEW_TB
-		SET ENT_IDX=#{entIndex},MBER_IDX=${mberIndex},QESTN_NO=#{questionNum},EVALUATION=#{evaluationScore},
-		CONTENTS=#{contents},REVW_FL=#{reviewFlag},REG_DT=#{regDate} 
+		SET EVALUATION=#{evaluationScore}, CONTENTS=#{contents}, REVW_FL=#{reviewFlag}
 		WHERE REVW_IDX=#{reviewIndex}
 	</update>
+	
+<!-- 	기업의 리뷰 평점 최신화  -->
+	<update id="updateEvaluationAvg" parameterType="int">
+		UPDATE 	UPDATE_ENT_INFO_TB
+		SET 	EVALUATION_AVG = (SELECT 	round(avg(EVALUATION),1) as AVG
+								  FROM   	REVIEW_TB
+								  WHERE 	ENT_IDX=#{ENT_IDX} AND REVW_FL=1 AND EVALUATION > 0)
+		WHERE 	ENT_IDX = #{ENT_IDX}
+	</update>
+	
 	<!-- 리뷰 작성시 중복 검사 -->
 	<select id="reviewDuplicationCheck" parameterType="map" resultType="int">
 		SELECT count(*) as COUNT
