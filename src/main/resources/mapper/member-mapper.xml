@@ -8,12 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		MEMBER_TB(MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT, OAUTH_ID)
 		VALUES(#{mberId},#{mberPw},'ROLE_USER',#{mberFlag},sysdate(),sysdate(),#{oauthId})
 	</insert>
+	<update id="updateMemberEntIndex" parameterType="member">
+		UPDATE MEMBER_TB 
+		SET    ENT_IDX=#{entIndex} 
+		WHERE  MBER_IDX=#{mberIndex}
+	</update>
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER_TB 
 		SET    MBER_ID=#{mberId}, MBER_PW=#{mberPw}, MBER_TYPE=#{mberType}, USE_FL=#{mberFlag}, OAUTH_ID = #{oauthId}
 		WHERE  MBER_IDX=#{mberIndex}
 	</update>
-	
 	<update id="updateOauthId" parameterType="member">
 		UPDATE MEMBER_TB SET
 		OAUTH_ID = #{oauthId}, LAST_DT=sysdate()
@@ -43,18 +47,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM MEMBER_TB WHERE MBER_IDX=#{mberIndex}
 	</select>
 	<select id="selectMemberList" parameterType="map" resultMap="memberMap">
-		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
+		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT, ENT_IDX, OAUTH_ID
 		FROM MEMBER_TB 
-		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') 
-		AND MBER_TYPE!='ROLE_ADMIN'
+		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') AND
+		(MBER_TYPE='ROLE_USER'
+		OR MBER_TYPE='ROLE_AUTHENTICATED')
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>
 	<select id="selectAdminList" parameterType="map" resultMap="memberMap">
-		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT
+		SELECT SQL_CALC_FOUND_ROWS MBER_IDX, MBER_ID, MBER_PW, MBER_TYPE, USE_FL, REG_DT, LAST_DT, ENT_IDX, OAUTH_ID
 		FROM MEMBER_TB 
 		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') 
-		AND MBER_TYPE='ROLE_ADMIN'
+		AND MBER_TYPE!='ROLE_USER'
+		AND MBER_TYPE!='ROLE_AUTHENTICATED'
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>
@@ -68,12 +74,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectMemberCount" resultType="int" parameterType="String">
 		SELECT COUNT(*)
 		FROM MEMBER_TB
-		WHERE MBER_ID like CONCAT('%',#{keyword},'%') AND MBER_TYPE!='ROLE_ADMIN';
+		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') AND (MBER_TYPE='ROLE_USER'
+		OR MBER_TYPE='ROLE_AUTHENTICATED')
 	</select>
 	<select id="selectAdminCount" resultType="int" parameterType="String">
 		SELECT COUNT(*)
 		FROM MEMBER_TB
-		WHERE MBER_ID like CONCAT('%',#{keyword},'%') AND MBER_TYPE='ROLE_ADMIN';
+		WHERE MBER_ID LIKE CONCAT('%',#{keyword},'%') AND MBER_TYPE!='ROLE_USER'
+		AND MBER_TYPE!='ROLE_AUTHENTICATED'
 	</select>
 	<resultMap type="member" id="memberMap">
 		<result property="mberIndex" column="MBER_IDX" />

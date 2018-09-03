@@ -59,47 +59,42 @@ public class UniversalDomainServiceImp implements UniversalDomainService {
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
-		Map<String, String> map = new HashMap<>();
-				
-		/* 검색 키워드 존재 시*/
-		if(data.get("keyword")!=null) {
-			
+		Map<String, Object> map = new HashMap<>();
+
+		if(data.get("keyword")!=null) {		
 			String keywordOption = (String) data.get("keywordOption");		
 			if(keywordOption.equals("domainNameKeyword")) {
 				String domainNameKeyword = (String) data.get("keyword");
 				map.put("domainNameKeyword", domainNameKeyword);
 				viewData.put("keyword", domainNameKeyword);
 				viewData.put("keywordOption", "domainNameKeyword");	
-				System.out.println("domainAddressKeyword!!!!!!!!!!!!!!!!"+ domainNameKeyword);
+				totalCount  = domainDao.selectCount(map); 
 			}else if(keywordOption.equals("domainAddressKeyword")) {
 				String domainAddressKeyword = (String) data.get("keyword");
 				map.put("domainAddressKeyword", domainAddressKeyword);
 				viewData.put("keyword", domainAddressKeyword);
 				viewData.put("keywordOption", "domainAddressKeyword");
-				System.out.println("domainAddressKeyword!!!!!!!!!!!!!!!!"+ domainAddressKeyword);
+				totalCount  = domainDao.selectCount(map); 
 			} 				
 		}		
 			
-		totalCount  = domainDao.selectCount(map); 		
-		
-		int firstRow = 0;     
-		int endRow =0;
+		totalCount  = domainDao.selectCount(map); 
+		if(totalCount==0) {
+			totalCount = 1;
+		}
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
 		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
 		int pageNumber = (int) data.get("pageNumber");
-		
-		System.out.println("ㅁ문제인 아이"+ totalCount);
 	
 		if(pageNumber > pageTotalCount) {
 			pageNumber = pageTotalCount;
 		}
+
+		int startRow = numOfMsgPage * ( pageNumber - 1 ) ;
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
+	
 		
-		firstRow = (pageNumber-1)*numOfMsgPage +1;  
-		endRow = pageNumber*numOfMsgPage;  
-
-		map.put("firstRow", String.valueOf(firstRow));
-		map.put("endRow",  String.valueOf(endRow));
-
 		viewData.put("currentPage", pageNumber);	
 		viewData.put("pageTotalCount", pageTotalCount);
 		viewData.put("startPage", getStartPage(pageNumber));

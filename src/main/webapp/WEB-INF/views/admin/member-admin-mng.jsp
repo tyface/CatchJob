@@ -87,78 +87,87 @@
 									</tr>
 								</thead>
 								<tbody>
-									 <c:forEach var="admins" items="${viewData.boardList}">
+									 <c:forEach var="admin" items="${viewData.boardList}">
 										 <tr>	
-										<td>${admins.mberIndex}</td>
-										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&num=${admins.mberIndex}									
-										">${admins.mberId}</a></td>
+										<td>${admin.mberIndex}</td>
+										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}&num=${admin.mberIndex}							
+										">${admin.mberId}</a></td>
 										<td>
-											<c:set var="name" value="${admins.mberType}"/>
-												<c:choose>
-													<c:when test="${name.equals('ROLE_ADMIN')}">Level1</c:when>
-													<c:when test="${name.equals('ROLE_MANAGER')}">Level2</c:when>	
-													<c:otherwise>Level3</c:otherwise>	
-												</c:choose>
+											<c:set var="name" value="${admin.mberType}"/>
+											<c:choose>
+												<c:when test="${name.equals('ROLE_ADMIN')}">Level1</c:when>
+												<c:when test="${name.equals('ROLE_MANAGER')}">Level2</c:when>	
+												<c:otherwise>Level3</c:otherwise>	
+											</c:choose>
 										</td> 
 										</tr> 
 									</c:forEach> 
 								</tbody>
 							</table>
 							
-						<div id="pagenation">
-								<ul class="pagination pagination-sm">
-									<c:if test="${viewData.startPage != 1}">	
-										<li class="page-item"><a class="page-link"  aria-label="Previous"
-										 	href="mngAdmin?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
-										<span aria-hidden='true'>&laquo;</span></a></li>
-									</c:if>
-									<c:forEach var="pageNum" begin="${viewData.startPage}" end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
-										<c:choose>
-											<c:when test="${pageNum == viewData.currentPage}">
-												<li class="page-item active" > <a class="page-link" 						
-												href="mngAdmin?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}<span class="sr-only">(current)</span></a>
-											</c:when>
-											<c:otherwise>
-												<li class="page-item"> <a class="page-link" href="mngAdmin?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-									<c:if test="${viewData.endPage < viewData.pageTotalCount}">
-										<li class="page-item"><a class="page-link" href="mngAdmin??page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
-										<span aria-hidden='true'>&raquo;</span></a></li>
-									</c:if>
-								</ul> 
-							</div>	
+							<div id="pagenation">
+							<ul class="pagination pagination-sm">
+								<c:if test="${viewData.startPage != 1}">	
+									<li class="page-item"><a class="page-link"  aria-label="Previous" 
+									 	href="mngAdmin?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
+									<span aria-hidden='true'>&laquo;</span></a></li>
+								</c:if>
+								<c:forEach var="pageNum" begin="${viewData.startPage}" end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
+									<c:choose>
+										<c:when test="${pageNum == viewData.currentPage}">
+											<li class="page-item active" > <a class="page-link" 					
+											href="mngAdmin?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">${pageNum}<span class="sr-only">(current)</span></a>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="mngAdmin?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}"
+											>${pageNum}</a>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${viewData.endPage < viewData.pageTotalCount}">
+									<li class="page-item"><a class="page-link" href="mngAdmin?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}">
+									<span aria-hidden='true'>&raquo;</span></a></li>
+								</c:if>
+							</ul> 
+						</div>	
 						</div>
 
 						<div class="col-md-5" id="selectOneBox">
 							<form class="form-horizontal" method="post" action="modifyAdmin">
 								<div class="form-group">
-									<label for="adminId" class="col-sm-4 control-label">아이디</label>
+									<label for="mberId" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control" name="adminId" id="adminId"
-											placeholder="아이디" value="${admin.memberId}" readonly="readonly">
+										<input type="text" class="form-control" name="mberId" id="mberId"
+											placeholder="아이디" value="${admin.mberId}" readonly="readonly">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="adminPw" class="col-sm-4 control-label">비밀번호</label>
+									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
-										<input type="password" class="form-control" id="adminPw" name="adminPw"
-											placeholder="비밀번호" value="${admin.memberPw}">
+										<input type="password" class="form-control" id="mberPw"
+											placeholder="비밀번호" >
+										<input type="hidden" name="mberPw" value="${admin.mberPw}">
 									</div>
 								</div>
 
-								<%-- <div class="form-group" style="text-align: right"> TODO
-									<label for="adminLv" class="control-label" style="margin-right: 15px">권한</label>
+								<div class="form-group" style="text-align: right">
+									<label for="mberType" class="control-label" style="margin-right: 15px">권한</label>
 									<div class="col-sm-8 pull-right">
-										<select class="form-control" style="color:gray" name="adminLv" id="adminLv">
-											<option value="${admin.mberType}" selected disabled hidden>level${admin.adminLv}</option>
-											<option value="1">level1</option>								
-											<option value="2">level2</option>
-											<option value="3">level3</option>
+										<select class="form-control" style="color:gray" id="mberType" name="mberType">
+											<option value="" selected disabled hidden>
+											<c:set var="name" value="${admin.mberType}"/>
+												<c:choose>
+													<c:when test="${name.equals('ROLE_ADMIN')}">level1</c:when>
+													<c:when test="${name.equals('ROLE_MANAGER')}">level2</c:when>
+													<c:otherwise>level3</c:otherwise>
+												</c:choose>
+											</option>
+											<option value="ROLE_ADMIN">level1</option>
+											<option value="ROLE_MANAGER">level2</option>
+											<option value="ROLE_MASTER">level3</option>
 										</select>
 									</div>
-								</div> --%>
+								</div> 
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">

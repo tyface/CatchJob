@@ -24,7 +24,6 @@ public class CustomUserDetailService implements UserDetailsService {
 
 		Member member = memberDao.selectById(mberId);
 
-		// db에 아이디가 존재하면 ROLE_USER 권한 부여
 		if (member != null) {
 			member.addAuthority(new Role(authDao.selectMemberType(mberId)));
 		}

@@ -78,7 +78,7 @@
 <div class="box box-widget widget-user">
           <!-- Add the bg color to the header using any of the bg-* classes -->
       <div class="widget-user-header bg-aqua-active">
-        <h3 class="widget-user-username">${member.mberId}</h3>
+        <h3 class="widget-user-username">${member.memberId}</h3>
 <!--         <h5 class="widget-user-desc">Founder &amp; CEO</h5> -->
       </div>
       <div class="widget-user-image">
@@ -89,7 +89,8 @@
           <div class="col-sm-3 border-right">
             <div class="description-block">
               <h5 class="description-header" onclick="location.href='${pageContext.request.contextPath}/profile/reviews'">내 기업리뷰</h5>
-              <span class="description-text">숫자</span>
+<!--               <span class="description-text">숫자</span> -->
+              <p class="description-text"></p>
             </div>
             <!-- /.description-block -->
           </div>
@@ -97,7 +98,9 @@
           <div class="col-sm-3 border-right">
             <div class="description-block">
               <h5 class="description-header" onclick="location.href='${pageContext.request.contextPath}/profile/interviews'">내 면접후기</h5>
-              <span class="description-text">숫자</span>
+<!--               <span class="description-text">숫자</span> -->
+              <p class="description-text"></p>
+              
             </div>
             <!-- /.description-block -->
           </div>
@@ -105,14 +108,16 @@
           <div class="col-sm-3">
             <div class="description-block">
               <h5 class="description-header" onclick="location.href='${pageContext.request.contextPath}/profile/follows'">팔로잉 기업</h5>
-              <span class="description-text">숫자</span>
+<!--               <span class="description-text">숫자</span> -->
+              <p class="description-text"></p>              
             </div>
             <!-- /.description-block -->
           </div>
           <div class="col-sm-3 border-right">
             <div class="description-block">
               <h5 class="description-header" onclick="location.href='${pageContext.request.contextPath}/profile/recent'">최근 본 기업</h5>
-              <span class="description-text">숫자</span>
+<!--               <span class="description-text">숫자</span> -->
+              <p class="description-text"></p>              
             </div>
             <!-- /.description-block -->
           </div>

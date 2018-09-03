@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +33,6 @@ import com.CatchJob.service.UniversalDomainService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	/*@Autowired
-	AdminService adminService;*/
 	@Autowired
 	MemberService memberService;
 	@Autowired
@@ -41,6 +41,12 @@ public class AdminController {
 	EnterpriseService enterpriseService;
 	@Autowired
 	UniversalDomainService domainService;
+	
+	/* 확인창 */
+	@RequestMapping("/result")
+	public String result() {
+		return "admin/include/result";
+	}
 	
 	/* 로그인폼 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -89,13 +95,32 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/modifyMber", method=RequestMethod.POST)
-	public String modifyMber(Model model, String mberId, String mberPw, String mberType, String regDate, String lastDate) { 
-		try {
+	public String modifyAuthenticatedMber(Model model, String mberId, String mberPw, String mberType, String regDate, String lastDate,
+			 @RequestParam(required=false, value="entIndex") int entIndex) { 
+		try {			
+			
+			System.out.println("mberId:"+mberId);
+			
+			System.out.println("mberPw"+mberPw);
+		
+			System.out.println("entIndex:"+entIndex);
+			System.out.println("regDate"+regDate);
+			
+			System.out.println("lastDate"+lastDate);
+		
+			
 			Member memberOne = memberService.getMemberById(mberId);
+			
+			System.out.println("mberType"+memberOne.getMberType());
+			System.out.println("memberOne.getMberIndex()"+memberOne.getMberIndex());	
+			
 			Member member = new Member();
 			member.setMberIndex(memberOne.getMberIndex());
 			member.setMberId(mberId);
-			member.setMberPw(mberPw);
+
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			member.setMberPw(encoder.encode(mberPw));
+
 			if(mberType==null) {
 				member.setMberType(memberOne.getMberType());
 			} else {
@@ -104,18 +129,32 @@ public class AdminController {
 			member.setMberFlag(memberOne.getMberFlag());
 			member.setRegDate(regDate);
 			member.setLastDate(lastDate);
-
-			boolean result = memberService.modify(member);
-			if(result) {
-				model.addAttribute("url", "mngMber");
-				model.addAttribute("msg", "수정 완료되었습니다");
-			} else {
-				model.addAttribute("url", "mngMber");
-				model.addAttribute("msg", "수정 실패했습니다");
+					
+			if(entIndex==0) {
+				boolean result = memberService.modify(member);
+				if(result) {				
+					model.addAttribute("msg", "수정 dasdsadasd완료되었습니다");
+				} else {
+					model.addAttribute("msg", "수정 실패했습니다");
+				}
+				
+			} else if(enterpriseService.getEnt(entIndex)==null) {
+				model.addAttribute("msg", "존재하지 않는 기업 코드입니다");
+			}else if(entIndex!=0) {
+				member.setEntIndex(entIndex);
+				memberService.entIndexmodify(member);
+				boolean result = memberService.modify(member);
+				if(result) {				
+					model.addAttribute("msg", "수정 완료되었습니다");
+				} else {
+					model.addAttribute("msg", "수정 실패했습니다");
+				}
 			}
+			model.addAttribute("url", "mngMber");
 			return "admin/include/result";
 		} catch(Exception e) {
-			model.addAttribute("url", "mngAdmin");
+			e.printStackTrace();
+			model.addAttribute("url", "mngMber");
 			model.addAttribute("msg", "수정 실패했습니다");
 			return "admin/include/result";
 		}
@@ -158,22 +197,36 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/modifyAdmin", method=RequestMethod.POST)
-	public String modifyAdmin(Model model, String adminId, String adminPw, String adminLv, String regDate, String lastDate) { 
-		try {
-			Member memberOne = memberService.getMemberById(adminId);
+	public String modifyAdmin(Model model, String mberId, String mberPw, String mberType, 
+			 @RequestParam(required=false, value="regDate")String regDate, @RequestParam(required=false, value="lastDate")String lastDate) { 
+		try {		
+
+			System.out.println("mberId:"+mberId);
+			
+			System.out.println("mberPw:"+mberPw);
+			System.out.println("mberType:"+mberType);
+			
+			System.out.println("regDate:"+regDate);
+			
+			System.out.println("lastDate:"+lastDate);
+			
+			Member memberOne = memberService.getMemberById(mberId);
 			Member member = new Member();
 			member.setMberIndex(memberOne.getMberIndex());
-			member.setMberId(adminId);
-			member.setMberPw(adminPw);
-			if(adminLv==null) {
+			member.setMberId(mberId);
+			
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			member.setMberPw(encoder.encode(mberPw));
+
+			if(mberType==null) {
 				member.setMberType(memberOne.getMberType());
 			} else {
-				member.setMberType(adminLv);
+				member.setMberType(mberType);
 			}
 			member.setMberFlag(memberOne.getMberFlag());
 			member.setRegDate(regDate);
 			member.setLastDate(lastDate);
-			
+
 			boolean result = memberService.modify(member);
 	
 			if(result) {
@@ -268,8 +321,8 @@ public class AdminController {
 		}
 	}
 	@RequestMapping(value="/modifyComment", method=RequestMethod.POST)
-	public String modifyComment(Model model, String reviewIndex, 
-			String entIndex, String mberId, String questionNum, String contents, String regDate, String evaluation) {
+	public String modifyComment(Model model, String reviewIndex, String entIndex, String mberId, 
+			String questionNum, String contents, String regDate, String evaluation) {
 			
 		try {
 			Review review = reviewService.selectReview(reviewIndex);
@@ -331,7 +384,7 @@ public class AdminController {
 		System.out.println(arrayParams);
 		boolean result=false;
 		for(int i=0; i<arrayParams.size(); i++) {
-			Enterprise ent=enterpriseService.selectEnt(Integer.parseInt(arrayParams.get(i)));
+			Enterprise ent=enterpriseService.getEnt(Integer.parseInt(arrayParams.get(i)));
 			ent.setEntFlag("1");
 			result = enterpriseService.modifyEnt(ent);
 		}
@@ -354,7 +407,7 @@ public class AdminController {
 		System.out.println(arrayParams);
 		boolean result=false;
 		for(int i=0; i<arrayParams.size(); i++) {
-			Enterprise ent= enterpriseService.selectEnt(Integer.parseInt(arrayParams.get(i)));
+			Enterprise ent= enterpriseService.getEnt(Integer.parseInt(arrayParams.get(i)));
 			ent.setEntFlag("2");
 			result = enterpriseService.modifyEnt(ent);
 		}
@@ -377,7 +430,7 @@ public class AdminController {
 			String entSubscriberFlag) {
 			
 		try {
-			Enterprise ent = enterpriseService.selectEnt(Integer.parseInt(entIndex));
+			Enterprise ent = enterpriseService.getEnt(Integer.parseInt(entIndex));
 			ent.setEntName(entName);
 			ent.setEntBizRegNum(entBizRegNum);
 			ent.setEntFlag(entFlag);
@@ -438,7 +491,7 @@ public class AdminController {
 		return "admin/domain-mng";						
 	}
 	
-	@RequestMapping(value="/registerDomain", method=RequestMethod.POST)
+	@RequestMapping(value="/registDomain", method=RequestMethod.POST)
 	public String registerDomain(Model model, String domainAddress, String domainName) {			
 		try {
 			UniversalDomain domain = new UniversalDomain();
@@ -453,6 +506,42 @@ public class AdminController {
 			} else {
 				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "등록 실패했습니다");
+			}
+			return "admin/include/result";
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			model.addAttribute("url", "mngDomain");
+			model.addAttribute("msg", "등록 실패했습니다");
+			return "admin/include/result";
+		}	
+	}
+	
+	@RequestMapping(value="/updateDomain", method=RequestMethod.POST)
+	public String updateDomain(Model model, String domainAddress, String domainName, int domainIndex) {			
+		try {
+			
+
+			System.out.println(domainAddress);
+			
+			System.out.println(domainName);
+			
+			System.out.println(domainIndex);
+			
+			
+			
+			UniversalDomain domain = new UniversalDomain();
+			domain.setDomainAddress(domainAddress);
+			domain.setDomainName(domainName);
+			domain.setDomainIndex(domainIndex);
+			boolean result = domainService.modifyDomain(domain);
+			
+			if(result) {
+				model.addAttribute("url", "mngDomain");
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("url", "mngDomain");
+				model.addAttribute("msg", "수정 실패했습니다");
 			}
 			return "admin/include/result";
 			

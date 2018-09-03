@@ -31,9 +31,9 @@ public interface EnterpriseDao {
 	public List<Enterprise> selectListEntRecent(Map<String, Integer> mapData);
 
 	//관리자 페이지 페이징 처리+검색
-	public int selectCountByKeyword(Map<String, String> map);
+	public int selectCountByKeyword(Map<String, Object> map);
 
-	public List<Enterprise> selectEntList(Map<String, String> map);
+	public List<Enterprise> selectEntList(Map<String, Object> map);
 	//기업 수정
 	public int updateEnt(Enterprise ent); 
 	//기업 하나 선택

@@ -26,31 +26,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE   DOMAIN_ADDR = #{domain}
 	</select>
 	<select id="selectListDomain" parameterType="map" resultMap="domainMap">
-		SELECT * FROM (	
-			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM,DOMAIN_IDX,DOMAIN_ADDR,DOMAIN_NM
-			  FROM  UNIVERSAL_DOMAIN,
-					(SELECT @ROWNUM := 0) ROWNUM 
-					WHERE 1=1 
-					<if test="domainNameKeyword != null"> 
-					  	AND DOMAIN_NM LIKE '%${domainNameKeyword}%'
-					</if>		
-					<if test="domainAddressKeyword != null"> 
-				  	 	 AND DOMAIN_ADDR LIKE '%${domainAddressKeyword}%'
-				    </if>			
-					) n
-			WHERE RNUM BETWEEN #{firstRow} AND #{endRow}				
+		SELECT SQL_CALC_FOUND_ROWS *
+		FROM UNIVERSAL_DOMAIN 
+		WHERE 1=1
+		<if test="domainNameKeyword != null"> 
+		  	AND DOMAIN_NM LIKE '%${domainNameKeyword}%'
+		</if>		
+		<if test="domainAddressKeyword != null"> 
+	  	 	 AND DOMAIN_ADDR LIKE '%${domainAddressKeyword}%'
+	    </if>			  	
+	   	ORDER BY DOMAIN_IDX DESC
+		LIMIT #{NUM_OF_MSG_PER_PAGE}
+		OFFSET #{START_ROW}
+					
 	</select>
 	<select id="selectCount" resultType="int" parameterType="map">
 		SELECT COUNT(*)
 		FROM UNIVERSAL_DOMAIN
 		WHERE 1=1
 		<if test="domainNameKeyword != null"> 
-		  	 	AND DOMAIN_NM LIKE '%${domainNameKeyword}%'
+		  	 AND DOMAIN_NM LIKE '%${domainNameKeyword}%'
 		</if>
 		<if test="domainAddressKeyword != null"> 
-		  	 	AND DOMAIN_ADDR LIKE '%${domainAddressKeyword}%'
+		  	 AND DOMAIN_ADDR LIKE '%${domainAddressKeyword}%'
 		</if>
-
 	</select>
 	<resultMap type="UniversalDomain" id="domainMap">
 		<result property="domainIndex" column="DOMAIN_IDX" />
