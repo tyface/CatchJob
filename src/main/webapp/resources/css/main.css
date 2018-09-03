@@ -124,12 +124,14 @@
 }
 
 article .btn:not(.nohover):hover {  
+	padding:0;
+ 	color:white;
 }
 
 article .btn{
 	background-color:#333333; 
-	height:60px;
-	font-size:28px;	
-	paddding:0;
+	height:48px;
+	font-size:30px;	
+	padding:0;
 	 color:white;
 }
