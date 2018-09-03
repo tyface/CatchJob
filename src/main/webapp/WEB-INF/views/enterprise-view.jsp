@@ -253,7 +253,7 @@ $(function(){
 			  		}
 			  })
 		  }
-      });/* 기업리뷰 작성 END */
+      });
 
 
 /* 기업리뷰  등록 START */
@@ -666,7 +666,7 @@ function reviewbarChart(){
 // 					formatter: Math.round
 				    formatter: function(value, context) {
 
-                        return Math.ceil(value/'${numOfValuesByItem}')*100+'%';
+                        return Math.ceil(value*100/'${numOfValuesByItem}')+'%';
 												//return value;
                     }
 
@@ -742,12 +742,11 @@ function interviewPieChart(){
 // 				    strokeColor : "#ffff00",
 					data: chartData,
 					backgroundColor: [
-						'rgba(255,0,0,1)',
-						'rgba(255, 94, 0, 1)',
-						'rgba(255, 187, 0, 1)',
-						'rgba(171,242,0, 1)',
-						'rgba(29,219,22, 1)',
-
+						'#1DDB16',
+						'#ABF200',
+						'#FFBB00',
+						'#FF5E00',
+						'#FF0000',
 					],
 					datalabels: {
 						color:  'white',
@@ -756,11 +755,11 @@ function interviewPieChart(){
 // 					label: 'Dataset 1'
 				}],
 				labels: [
-					"매우어려움",
-					"어려움",
-					"보통",
+					"매우쉬움",
 					"쉬움",
-					"매우쉬움"
+					"보통",
+					"어려움",
+					"매우어려움",
 				]
 			},
 			options: {
@@ -1197,7 +1196,7 @@ function jsonEscape(str)  {
 						</div>
 					</div>
 			</div>
-			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////////// -->
+			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////// -->
 
 			<div class="module">
 				<div id="section2">
