@@ -35,7 +35,10 @@ public class MainController {
 	public String slow() {
 		return "slow";
 	}
-
+	@RequestMapping(value = "/test")
+	public String test() {
+		return "searchTest";
+	}
 	
 //	@RequestMapping(value = "/interviews")
 //	public String profile() {
