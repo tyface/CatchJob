@@ -88,19 +88,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    </if>
 	</select>
 	<select id="selectEntList" resultMap="entMap" parameterType="map">
-		SELECT * FROM (		
-			SELECT @ROWNUM:=@ROWNUM+1 AS RNUM,ENT_IDX,ENT_NM,ENT_BIZR_NO,ENT_INDUTY_CD,ENT_INDUTY_NM,ENT_STLE_TYPE,ENT_SBSCRB_ST,ENT_FL,ENT_FOND_YMD 
-			  FROM ENTERPRISE_TB, 				
-				(SELECT @ROWNUM := 0) ROWNUM 
-					WHERE 1=1 
-					<if test="entIndexKeyword != null">
-				  	  AND ENT_IDX = #{entIndexKeyword} 
-				    </if>
-				    <if test="entNameKeyword != null"> 
-				  	  AND ENT_NM LIKE '%${entNameKeyword}%'
-				    </if>
-					) n
-		WHERE RNUM BETWEEN #{firstRow} AND #{endRow}
+		SELECT SQL_CALC_FOUND_ROWS ENT_IDX, ENT_NM, ENT_BIZR_NO, ENT_INDUTY_CD, ENT_INDUTY_NM, ENT_STLE_TYPE, ENT_SBSCRB_ST, ENT_FL, ENT_FOND_YMD
+		FROM ENTERPRISE_TB 
+		WHERE 1=1 
+		<if test="entIndexKeyword != null">
+			AND ENT_IDX = #{entIndexKeyword} 
+		</if>
+		<if test="entNameKeyword != null"> 
+			 AND ENT_NM LIKE '%${entNameKeyword}%'
+		</if>
+		LIMIT #{NUM_OF_MSG_PER_PAGE}
+		OFFSET #{START_ROW}
 	</select>	
 	<update id="updateEnt" parameterType="enterprise">
 		UPDATE ENTERPRISE_TB SET 

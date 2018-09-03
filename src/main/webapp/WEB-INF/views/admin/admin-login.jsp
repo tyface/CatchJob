@@ -99,13 +99,13 @@ a, a:hover, a:focus {
 			<h2 class="form-signin-heading">Please login</h2>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-				<input type="text"	class="form-control" name="adminId" placeholder="Admin ID"/>
+				<input type="text"	class="form-control" name="mberId" placeholder="Admin ID"/>
 			</div>
 		
 			<div class="input-group" style="margin-top:10px">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-lock"></i></span> <input type="password"
-					class="form-control" name="adminPw" placeholder="Admin Password"/>
+					class="form-control" name="mberPw" placeholder="Admin Password"/>
 			</div>
 			
 			<button class="btn btn-lg btn-info pull-right col-md-4" type="submit" style="margin-top:20px">login</button>

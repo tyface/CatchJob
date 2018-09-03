@@ -239,7 +239,7 @@ $(function() {
 							 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
             <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
+              <label><input id = "remember_me" name ="remember" type = "checkbox">Remember me</label>
             </div>
               <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>

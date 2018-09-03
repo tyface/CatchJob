@@ -46,7 +46,7 @@ public interface EnterpriseService {
 	//기업 수정
 	public boolean modifyEnt(Enterprise ent);
     //기업 하나 선택 TODO get으로 이름바꾸고 사용하는지 확인할거쇼
-	public Enterprise selectEnt(int entIndex);
+	public Enterprise getEnt(int entIndex);
 }	
 	
 	
