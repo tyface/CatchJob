@@ -23,7 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	       
 		
 		System.out.println("ROLE" + roles);
-		if (roles.contains("ROLE_ADMIN")) {
+		if (roles.contains("ROLE_ADMIN")||roles.contains("ROLE_MASTER")) {
             	response.sendRedirect("mngMber");
         } else {
         	response.getWriter().print("{\"result\" : \"CODE_01\"}");

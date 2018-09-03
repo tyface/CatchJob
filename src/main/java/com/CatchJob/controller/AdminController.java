@@ -3,6 +3,7 @@ package com.CatchJob.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,13 +24,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CatchJob.model.Enterprise;
+import com.CatchJob.model.IndustryCode;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.Review;
 import com.CatchJob.model.UniversalDomain;
 import com.CatchJob.service.EnterpriseService;
+import com.CatchJob.service.IndustryService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
 import com.CatchJob.service.UniversalDomainService;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
 @RequestMapping("/admin")
@@ -41,6 +47,28 @@ public class AdminController {
 	EnterpriseService enterpriseService;
 	@Autowired
 	UniversalDomainService domainService;
+	@Autowired
+	IndustryService industryService;
+	
+	
+	/* ROLE_ADMIN이 ROLE_MASTER 권한 요구할 때 */
+	@RequestMapping(value ="/403", method = {RequestMethod.GET,RequestMethod.POST})
+	public String error403(HttpServletRequest request,HttpServletResponse response,Model model) {
+		try {
+			response.setStatus(HttpStatus.OK.value());
+			System.out.println("======================");
+			System.out.println(request.getHeader("referer"));
+			System.out.println(request.getHeaderNames());
+			System.out.println(request.getRequestURL());
+			
+			response.sendRedirect(request.getHeader("referer"));	
+//			model.addAttribute("url", );
+			model.addAttribute("msg", "권한이 없습니다");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "admin/include/result";
+	}
 	
 	/* 확인창 */
 	@RequestMapping("/result")
@@ -183,16 +211,6 @@ public class AdminController {
 	public String modifyAdmin(Model model, String mberId, String mberPw, @RequestParam(required=false, value="mberType")String mberType, 
 			 @RequestParam(required=false, value="regDate")String regDate, @RequestParam(required=false, value="lastDate")String lastDate) { 
 		try {		
-
-			System.out.println("mberId:"+mberId);
-			
-			System.out.println("mberPw:"+mberPw);
-			System.out.println("mberType:"+mberType);
-			
-			System.out.println("regDate:"+regDate);
-			
-			System.out.println("lastDate:"+lastDate);
-			
 			Member memberOne = memberService.getMemberById(mberId);
 			Member member = new Member();
 			member.setMberIndex(memberOne.getMberIndex());
@@ -318,13 +336,12 @@ public class AdminController {
 			review.setEvaluationScore(Integer.parseInt(evaluation));
 			boolean result = reviewService.modifyReview(review);
 					
-			if(result) {
-				model.addAttribute("url", "mngReview");
+			if(result) {			
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngReview");
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
+			model.addAttribute("url", "mngReview");
 			return "admin/include/result";
 			
 		} catch (Exception e) {
@@ -461,14 +478,6 @@ public class AdminController {
 			data.put("keywordOption", keywordOption);
 		}
 		
-		System.out.println("**************"); //TODO 
-		System.out.println(pageNumber);
-		System.out.println(numOfMsgPage);
-		System.out.println(keyword);
-
-		System.out.println(keywordOption);
-		System.out.println("**************");
-		
 		Map<String, Object> viewData = domainService.getMessageList(data);
 		model.addAttribute("viewData", viewData);
 
@@ -504,16 +513,6 @@ public class AdminController {
 	@RequestMapping(value="/updateDomain", method=RequestMethod.POST)
 	public String updateDomain(Model model, String domainAddress, String domainName, int domainIndex) {			
 		try {
-			
-
-			System.out.println(domainAddress);
-			
-			System.out.println(domainName);
-			
-			System.out.println(domainIndex);
-			
-			
-			
 			UniversalDomain domain = new UniversalDomain();
 			domain.setDomainAddress(domainAddress);
 			domain.setDomainName(domainName);
@@ -558,21 +557,29 @@ public class AdminController {
 		}	
 	}
 	
-/*	@RequestMapping(value = "/mngInduty")
-	public String mngInduty() {
+	@RequestMapping(value="/mngInduty")
+	public String mngInduty(Model model) {
+		System.out.println(industryService);
+		System.out.println(industryService.getIndustryList());
+		List<IndustryCode> viewData = industryService.getIndustryList();
 		
+		System.out.println(viewData);
+		
+		model.addAttribute("viewData", viewData);
 		return "admin/mng-industry";
 	}
 	
-	@RequestMapping(value = "/mngMain")
-	public String mngMain() {
-		return "admin/mng-main";
+
+	@RequestMapping(value="/mngIndustryCode")
+	public String mngIndustryCode(Model model,String largeCatagory,String largeCatagoryName) {
+		Map<String, Object> data=new HashMap<>();
+/*		data.put("largeCatagory", largeCatagory);
+		data.put("largeCatagoryName", largeCatagoryName);
+		
+		Map<String, Object> viewData = industryService.getIndustryList(data);
+		model.addAttribute("viewData", viewData);
+	*/
+		return "admin/mng-industry";
 	}
-
-	@RequestMapping(value = "/mngFAQ")
-	public String mngQnA() {
-		return "admin/mng-FAQ";
-	}*/
-
 
 }

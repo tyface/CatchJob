@@ -130,10 +130,6 @@
 										</select>
 									</div>
 								</div>
-					
-<%-- 								<c:if test="${member.mberType.equals('ROLE_USER')}">
-									<input type="hidden" name="entIndex" value="0">
-								</c:if> --%>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">가입날짜</label>
 									<div class="col-sm-8">

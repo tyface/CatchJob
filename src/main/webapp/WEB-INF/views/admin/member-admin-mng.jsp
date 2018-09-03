@@ -56,12 +56,9 @@
 										<td><a href="mngAdmin?page=${viewData.currentPage}&msgPerPage=${viewData.msgPerPage}&keyword=${viewData.keyword}&num=${admin.mberIndex}							
 										">${admin.mberId}</a></td>
 										<td>
-											<c:set var="name" value="${admin.mberType}"/>
-											<c:choose>
-												<c:when test="${name.equals('ROLE_ADMIN')}">Level1</c:when>
-												<c:when test="${name.equals('ROLE_MANAGER')}">Level2</c:when>	
-												<c:otherwise>Level3</c:otherwise>	
-											</c:choose>
+											<c:set var="name" value="${admin.mberType}"/>											
+											<c:if test="${name.equals('ROLE_ADMIN')}">Level1</c:if>
+											<c:if test="${name.equals('ROLE_MASTER')}">Level2</c:if>	
 										</td> 
 										</tr> 
 									</c:forEach> 
@@ -119,15 +116,11 @@
 										<select class="form-control" style="color:gray" id="mberType" name="mberType">
 											<option value="" selected disabled hidden>
 											<c:set var="name" value="${admin.mberType}"/>
-												<c:choose>
-													<c:when test="${name.equals('ROLE_ADMIN')}">level1</c:when>
-													<c:when test="${name.equals('ROLE_MANAGER')}">level2</c:when>
-													<c:otherwise>level3</c:otherwise>
-												</c:choose>
+												<c:if test="${name.equals('ROLE_ADMIN')}">level1</c:if>
+												<c:if test="${name.equals('ROLE_MASTER')}">level2</c:if>
 											</option>
 											<option value="ROLE_ADMIN">level1</option>
-											<option value="ROLE_MANAGER">level2</option>
-											<option value="ROLE_MASTER">level3</option>
+											<option value="ROLE_MASTER">level2</option>
 										</select>
 									</div>
 								</div> 

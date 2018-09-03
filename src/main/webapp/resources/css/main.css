@@ -123,13 +123,13 @@
   z-index: -1;
 }
 
-article .btn:hover {
-  color:white;
+article .btn:not(.nohover):hover {  
 }
 
 article .btn{
 	background-color:#333333; 
-	height:48px;
+	height:60px;
 	font-size:28px;	
 	paddding:0;
+	 color:white;
 }

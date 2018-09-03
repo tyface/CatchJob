@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.CatchJob.dao.IndustryDao">
+	
+<!-- 	<insert id="insertAuthority" parameterType="map">
+		INSERT INTO 
+		AUTHORITIES_TB(MBER_IDX,MBER_ID,AUTHORITY,REG_DT)
+		VALUES(#{mberIndex},#{mberId},'ROLE_USER',sysdate())
+	</insert>
+	<update id="updateAuthority" parameterType="int">
+		UPDATE AUTHORITIES_TB 
+		SET    AUTHORITY=#{authority}
+		WHERE  MBER_IDX=#{mberIndex}
+	</update> -->
+	<select id="selectIndustryList" resultMap="industryMap"> 
+	 	SELECT LCLASS_CD, LCLASS_NM 
+		 	FROM INDUTY_CODE_TB
+			GROUP BY LCLASS_NM 
+			ORDER BY LCLASS_CD
+ 	</select>
+ 	<resultMap type="industryCode" id="industryMap">
+		<result property="INDUTY_CD" column="industryCode" />
+		<result property="LCLASS_CD" column="largeCatagory" />
+		<result property="LCLASS_NM" column="largeCatagoryName" />
+	</resultMap>
+</mapper>
