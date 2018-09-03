@@ -111,19 +111,19 @@ public class InterviewServiceImp implements InterviewService{
 		
 		for(int i = 0 ; i<interviewList.size();i++) {			
 			switch (interviewList.get(i).getIntrvwDifficulty()) {
-			case "1":
+			case "5":
 				interviewList.get(i).setIntrvwDifficulty("매우 어려움");
 				break;
-			case "2":
+			case "4":
 				interviewList.get(i).setIntrvwDifficulty("어려움");
 				break;
 			case "3":
 				interviewList.get(i).setIntrvwDifficulty("보통");
 				break;
-			case "4":
+			case "2":
 				interviewList.get(i).setIntrvwDifficulty("쉬움");
 				break;
-			case "5":
+			case "1":
 				interviewList.get(i).setIntrvwDifficulty("매우 쉬움");
 				break;
 			}
