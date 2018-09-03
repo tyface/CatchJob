@@ -1,0 +1,160 @@
+#left-nav{
+  display: none;
+}
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+	#left-nav{
+    display:block;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	#left-nav {
+    display:block;
+	}
+}
+
+#section01{
+    display: none;
+}
+@media ( min-width :768px) and (max-width:1024px) {
+  #section01{
+    display:block;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+  #section01{
+    display:block;
+	}
+}
+#intr-write-btn {
+  float: right;
+  right:60px;
+}
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+	#intr-write-btn {
+    position:absolute;
+    right:60px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	#intr-write-btn {
+    position:absolute;
+    right:60px;
+	}
+}
+
+#ent-body {
+  position: relative;
+  background-color: red;
+}
+
+.logo-small {
+  /* 	color: #2196F3; */
+	font-size: 30px;
+	color: #2196f3;
+	/* width:50px; */
+	display: block;
+}
+
+#left-nav{
+	margin-top: 70px;
+}
+#entName{
+	font-size: 30px;
+	font-style: inherit;
+}
+
+/* VIEW 페이지 그래프  START*/
+.graph-row {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.graph-btn {
+	background-color: #8041D9;
+	color: white;
+	border-radius: 5px;
+/* 	margin: 0 0 10px 40%; */
+}
+#personnel-btn, #salary-btn {
+    width: 100px;
+}
+
+/* VIEW 페이지 채용정보 색 */
+.panels {
+/* 	 min-height: 1000px; */
+     border-bottom-style:solid;
+/*      border-radius: 10px; */
+/*      border-radius:0 !important; */
+     transition: box-shadow 0.5s;
+     background-color: #fff;
+     margin-bottom: 20px;
+ }
+ @media ( min-width :768px) and (max-width:1024px) {
+	.panels{
+		 min-height: 212px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	.panels{
+		 min-height: 220px;
+	}
+}
+@media ( min-width :1200px) {
+	.panels{
+		 min-height: 186px;
+	}
+}
+ .panels:hover {
+     box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+ }
+.panels-body{
+/* 	 min-height: 139px; */
+	 padding: 15px;
+}
+ .panel-headings {
+
+     color: #fff !important;
+     background-color: #B5B2FF !important;
+     text-align: right;
+     padding: 0px 5px 0px 0px ;
+     border-bottom: 1px solid transparent;
+     border-top-left-radius: 0px;
+     border-top-right-radius: 0px;
+     border-bottom-left-radius: 0px;
+     border-bottom-right-radius: 0px;
+ }
+ .
+ .panel-footers {
+     background-color: white !important;
+ }
+/* #saramin-margin{ */
+/* 	margin: 0px 50px 0px 50px; */
+/* } */
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+	#saramin-margin{
+		margin: 0px 10px 0px 10px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	#saramin-margin{
+		margin: 0px 50px 0px 50px;
+	}
+}
+#saramin-margin .title{
+	min-height: 31px;
+}
+#saramin-margin h4{
+	display: inline-block;
+
+}
+/* VIEW 페이지 뉴스 줄 간격 */
+.news-margin {
+	margin-bottom: 15px;
+}
