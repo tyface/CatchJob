@@ -100,8 +100,9 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				viewData.put("keywordOption", "entIndexKeyword");
 				totalCount  = entDao.selectCountByKeyword(map); 
 			} 		
-		}					
-		if(totalCount==0) {
+		} 	
+
+		if(totalCount==0) {			//TODO(페이징 첫화면 문제)
 			totalCount = 1;
 		}
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
@@ -123,7 +124,14 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", entDao.selectEntList(map));
 		
-		System.out.println(entDao.selectEntList(map));
+		
+		System.out.println(pageNumber);
+		System.out.println(pageTotalCount);
+		System.out.println(getStartPage(pageNumber));
+		System.out.println(getEndPage(pageNumber));
+		System.out.println(numOfMsgPage);
+		System.out.println( entDao.selectEntList(map));
+
 		
 		return viewData;
 	}
@@ -170,7 +178,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		dataMap.putAll(entDao.selectPeerIndustryAvgInfo(entIndex));
 		dataMap.putAll(entDao.selectTotalAvgInfo());
 		return dataMap;
-	};
+	}
 
 	public int salaryCalculation(int payAmtAvg) {
 		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);

@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>	
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
+<link
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
 <script>		
 	function newPage() {	
@@ -143,29 +147,34 @@ function chkDelete(){
 			<div class="row">
 				<div class="col-sm-7">
 					<div class="btn-group" role="group">
-						 <button onclick="chkModify()" class="btn btn-default" id="chkModify">
-						 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>사용</button>
-	  					 <button onclick="chkDelete()" class="btn btn-default" id="chkDelete">
-	  					 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제</button>
-  					</div>	
-					<input type="number" min="5"
-						max="15" step="5" id="quantity" value="${viewData.msgPerPage}"
-						onclick="newPage()">&nbsp; entries			
-				</div>			
+						<button onclick="chkModify()" class="btn btn-default"
+							id="chkModify">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>사용
+						</button>
+						<button onclick="chkDelete()" class="btn btn-default"
+							id="chkDelete">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제
+						</button>
+					</div>
+					<input type="number" min="5" max="15" step="5" id="quantity"
+						value="${viewData.msgPerPage}" onclick="newPage()">&nbsp;
+					entries
+				</div>
 
 				<div class="col-sm-2">
 					<select id="mngSelect" value="${viewData.keywordOption}">
 						<option value="entNameKeyword">기업명</option>
 						<option value="entIndexKeyword">기업코드</option>
 					</select>
-				</div>	
+				</div>
 				<form action="mngEnt" class="form-inline col-sm-3" id="searchForm">
 					<div class="input-group">
 						<input type="hidden" name="page" value="${viewData.currentPage}">
-						<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
-						<input type="hidden" id="hiddenElement"/>
-						<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
-						style="height:28px" size="20" placeholder="검색어를 입력해 주세요">
+						<input type="hidden" name="msgPerPage"
+							value="${viewData.msgPerPage}"> <input type="hidden"
+							id="hiddenElement" /> <input type="text" name="keyword"
+							class="form-control" id="keyword" value="${viewData.keyword}"
+							style="height: 28px" size="20" placeholder="검색어를 입력해 주세요">
 						<div class="input-group-btn">
 							<button type="submit" class="btn" onclick="searchFunction()">
 								<span class="glyphicon glyphicon-search"></span>
@@ -174,42 +183,48 @@ function chkDelete(){
 					</div>
 				</form>
 
-			</div>	
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th style="width:2%">
-  								 <input type="checkbox" id="chk_all" name="chk_all"/>
-                            </th>
-                            <th style="width:2%"><span class="glyphicon glyphicon-check"></span></th>
-							<th style="width:7%">기업코드</th>						
-							<th style="width:20%">기업명</th>
-							<th style="width:8%">세부사항</th>
-						</tr>
-					</thead>
-					<tbody>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th style="width: 2%"><input type="checkbox" id="chk_all"
+							name="chk_all" /></th>
+						<th style="width: 2%"><span class="glyphicon glyphicon-check"></span></th>
+						<th style="width: 7%">기업코드</th>
+						<th style="width: 20%">기업명</th>
+						<th style="width: 8%">세부사항</th>
+					</tr>
+				</thead>
+				<tbody>
 					<c:forEach var="enterprise" items="${viewData.boardList}">
 						<tr>
-							<td>
-								<input type="checkbox" id="chk_list" name="chk_list" value="${enterprise.entIndex}"/>
-	                        </td>
-	                        <c:if test="${enterprise.entFlag==1}"><td><span class="glyphicon glyphicon-ok"></span></td></c:if>
-							<c:if test="${enterprise.entFlag==2}"><td><span class="glyphicon glyphicon-remove"></span></td></c:if>
+							<td><input type="checkbox" id="chk_list" name="chk_list"
+								value="${enterprise.entIndex}" /></td>
+							<c:if test="${enterprise.entFlag==1}">
+								<td><span class="glyphicon glyphicon-ok"></span></td>
+							</c:if>
+							<c:if test="${enterprise.entFlag==2}">
+								<td><span class="glyphicon glyphicon-remove"></span></td>
+							</c:if>
 							<td>${enterprise.entIndex}</td>
 							<td>${enterprise.entName}</td>
-							
-							<td>
-							<input class="btn btn-success btn-sm" type="button" data-entindex="${enterprise.entIndex}"
-							data-entname="${enterprise.entName}" data-entbizregnum="${enterprise.entBizRegNum}" 
-							data-industrycode="${enterprise.industryCode}" data-entstyletype="${enterprise.entStyleType}"
-							data-entsubscriberflag="${enterprise.entSubscriberFlag}" data-entflag="${enterprise.entFlag}" 
-							data-entfoundationdate="${enterprise.entFoundationDate}" data-industryname="${enterprise.industryName}" 
-							data-target="div.modal" value="상세보기" data-toggle="modal">
+
+							<td><input class="btn btn-success btn-sm" type="button"
+								data-entindex="${enterprise.entIndex}"
+								data-entname="${enterprise.entName}"
+								data-entbizregnum="${enterprise.entBizRegNum}"
+								data-industrycode="${enterprise.industryCode}"
+								data-entstyletype="${enterprise.entStyleType}"
+								data-entsubscriberflag="${enterprise.entSubscriberFlag}"
+								data-entflag="${enterprise.entFlag}"
+								data-entfoundationdate="${enterprise.entFoundationDate}"
+								data-industryname="${enterprise.industryName}"
+								data-target="div.modal" value="상세보기" data-toggle="modal">
 							</td>
 						</tr>
 					</c:forEach>
-					</tbody>
-				</table>
+				</tbody>
+			</table>
 			<!-- modal -->
 			<div class="modal fade" tabindex="-1" role="dialog"
 				aria-labelledby="modalLabel" id="entModal" aria-hidden="true">
@@ -224,7 +239,6 @@ function chkDelete(){
 						</div>
 						<form action="modifyEnt" method="post">
 							<div class="modal-body">
-								<!-- <input type="hidden" name="reviewIndex" id="reviewIndex"> -->
 								<div class="row form-group">
 									<div class="col-xs-3 form-group">
 										<label for="entIndex" class="control-label">기업코드</label>
@@ -319,39 +333,41 @@ function chkDelete(){
 			</div>
 
 			<div id="pagenation">
-						<ul class="pagination pagination-sm">
-							<c:if test="${viewData.startPage != 1}">
+				<ul class="pagination pagination-sm">
+					<c:if test="${viewData.startPage != 1}">
+						<li class="page-item"><a class="page-link"
+							aria-label="Previous"
+							href="mngEnt?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
+								<span aria-hidden='true'>&laquo;</span>
+						</a></li>
+					</c:if>
+					<c:forEach var="pageNum" begin="${viewData.startPage}"
+						end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
+						<c:choose>
+							<c:when test="${pageNum == viewData.currentPage}">
+								<li class="page-item active"><a class="page-link"
+									href="mngEnt?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">${pageNum}<span
+										class="sr-only">(current)</span></a>
+							</c:when>
+							<c:otherwise>
 								<li class="page-item"><a class="page-link"
-									aria-label="Previous"
-									href="mngEnt?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
-										<span aria-hidden='true'>&laquo;</span>
-								</a></li>
-							</c:if>
-							<c:forEach var="pageNum" begin="${viewData.startPage}"
-								end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
-								<c:choose>
-									<c:when test="${pageNum == viewData.currentPage}">
-										<li class="page-item active"><a class="page-link"
-											href="mngEnt?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"
-											>${pageNum}<span class="sr-only">(current)</span></a>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item"><a class="page-link" 
-										href="mngEnt?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
-										${pageNum}</a>								
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							<c:if test="${viewData.endPage < viewData.pageTotalCount}">
-								<li class="page-item"><a class="page-link"
-									href="mngEnt?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"><span aria-hidden='true'>&raquo;</span>
-								</a></li>
-							</c:if>
-						</ul>
-					</div>
-				</div>
+									href="mngEnt?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
+										${pageNum}</a>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${viewData.endPage < viewData.pageTotalCount}">
+						<li class="page-item"><a class="page-link"
+							href="mngEnt?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"><span
+								aria-hidden='true'>&raquo;</span> </a></li>
+					</c:if>
+				</ul>
 			</div>
-		</div><!--<div class="row"> end -->
-	</div><!--<div class="container-fluid"> end -->
+		</div>
+	</div>
+	</div>
+	<!--<div class="row"> end -->
+	</div>
+	<!--<div class="container-fluid"> end -->
 </body>
 </html>

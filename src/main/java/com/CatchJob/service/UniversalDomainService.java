@@ -7,7 +7,7 @@ import com.CatchJob.model.UniversalDomain;
 
 public interface UniversalDomainService {
 
-	public boolean insertDomain(UniversalDomain domain);
+	public boolean registDomain(UniversalDomain domain);
 
 	public boolean modifyDomain(UniversalDomain domain);
 

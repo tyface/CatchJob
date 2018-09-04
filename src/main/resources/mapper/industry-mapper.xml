@@ -15,14 +15,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE  MBER_IDX=#{mberIndex}
 	</update> -->
 	<select id="selectIndustryList" resultMap="industryMap"> 
-	 	SELECT LCLASS_CD, LCLASS_NM 
+		SELECT LCLASS_CD, LCLASS_NM
 		 	FROM INDUTY_CODE_TB
-			GROUP BY LCLASS_NM 
+			GROUP BY LCLASS_NM
 			ORDER BY LCLASS_CD
  	</select>
- 	<resultMap type="industryCode" id="industryMap">
-		<result property="INDUTY_CD" column="industryCode" />
-		<result property="LCLASS_CD" column="largeCatagory" />
-		<result property="LCLASS_NM" column="largeCatagoryName" />
+ 	<select id="selectIndustryCodeList" resultMap="industryMap" parameterType="int">
+ 		SELECT INDUTY_CD,LCLASS_CD
+			FROM INDUTY_CODE_TB
+			WHERE LCLASS_CD=#{largeCatagory}
+ 	</select>
+ 	<select id="selectIndustryDetails" resultMap="industryMap" parameterType="int">
+ 		SELECT INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT 
+			FROM INDUTY_CODE_TB
+			WHERE INDUTY_CD=#{industryCode}
+ 	</select>
+ 	<insult id="insertIndustry" parameterType="industryMap">
+ 		INSERT INTO INDUTY_CODE_TB(INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT)
+		VALUES (INDUTY_CD=#{industryCode},LCLASS_CD=#{largeCatagory},LCLASS_NM=#{largeCatagoryName},sysdate())
+ 	</insult>
+ 	<select id="selectIndustry" resultMap="industryMap" parameterType="int">
+ 		SELECT INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT 
+			FROM INDUTY_CODE_TB
+			WHERE INDUTY_CD=#{industryCode}
+ 	</select>
+ 	<resultMap type="industry" id="industryMap">
+		<result column="INDUTY_CD" property="industryCode" />
+		<result column="LCLASS_CD" property="largeCatagory" />
+		<result column="LCLASS_NM" property="largeCatagoryName" />
+		<result column="REG_DT" property="regDate" />
 	</resultMap>
 </mapper>

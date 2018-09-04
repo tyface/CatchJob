@@ -250,8 +250,16 @@ function chkDelete(){
 		     				     	<div class="row form-group">
 		     				     		<div class="col-xs-2">
 											<label for="evaluation" class="control-label">리뷰 점수</label></div>
-										<div class="col-xs-3">
-											<input type="text" id="evaluation" name="evaluation" class="form-control"/></div>
+										<div class="col-xs-3">	
+											<select class="form-control" style="color:gray" id="evaluation" name="evaluation">
+												<option>리뷰 점수</option>
+												<option value="1">1점</option>
+												<option value="2">2점</option>
+												<option value="3">3점</option>
+												<option value="4">4점</option>
+												<option value="5">5점</option>										
+											</select>										
+										</div>
 										<div class="col-xs-2 form-group" style="text-align:right">
 											<label for="mberId" class="control-label">작성자</label></div>
 										<div class="col-xs-5">
@@ -260,19 +268,17 @@ function chkDelete(){
 									<div class="form-group row">		
 										<div class="col-xs-2" style="text-align:right">
 											<label for="qnum" class="control-label">질문 내용 </label></div>
-											
-										<div class="col-xs-5">	
+										
+									<div class="col-xs-5">	
 										<select class="form-control" style="color:gray" id="qnum" name="questionNum">
 											<option>질문 내용</option>
 											<option value="1">1.승진 기회 및 가능성</option>
 											<option value="2">2.복지 및 급여</option>
 											<option value="3">3.업무와 삶의 균형</option>
 											<option value="4">4.사내문화</option>
-											<option value="5">5.경영진</option>
-											
-										</select>
-										
-										</div> 
+											<option value="5">5.경영진</option>										
+										</select>									
+									</div> 
 										
 									</div>
 									<div class="form-group row">
