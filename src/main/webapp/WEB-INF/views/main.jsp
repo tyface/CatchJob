@@ -13,33 +13,7 @@
 <!-- 유효성 검사 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script> --%>
-<style>
-  /* Tooltip */
-  .test + .tooltip > .tooltip-inner {
-      background-color: #73AD21; 
-      color: #FFFFFF; 
-      border: 1px solid green; 
-      padding: 15px;
-      font-size: 20px;
-      width: 50%;
-  }
-  /* Tooltip on top */
-  .test + .tooltip.top > .tooltip-arrow {
-      border-top: 5px solid green;width: 50%;
-  }
-  /* Tooltip on bottom */
-  .test + .tooltip.bottom > .tooltip-arrow {
-      border-bottom: 5px solid blue;width: 50%;
-  }
-  /* Tooltip on left */
-  .test + .tooltip.left > .tooltip-arrow {
-      border-left: 5px solid red;width: 50%;
-  }
-  /* Tooltip on right */
-  .test + .tooltip.right > .tooltip-arrow {
-      border-right: 5px solid black;width: 50%;
-  }
-  </style>
+
 <script type="text/javascript">
 //<![CDATA[
 
@@ -76,23 +50,26 @@ $(function(){
 // 		})
 	searchValidation();
 })
-	
+
 function searchValidation(){
 	/* 유효성검사  */
-		$('#main-search-form').validate({	
+		$('#main-search-form').validate({
 			/* 규칙 */
 			rules : {
 				keyword:{
 					required : true,
 					laxEmail : true,
-				},
+				}
 			},
 			/* 규칙 어길 때, 메시지 */
 			messages : {
 				keyword:{
 					required : "필수로입력하세요",
-				},
+				}
 			},
+			focusInvalid: true,
+      focusCleanup: true,
+      onkeyup: false,
 			/* 규칙 어길 때, 툴팁 띄우기  */
 			showErrors: function(errorMap, errorList) {
 		          // Clean up any tooltips for valid elements
@@ -116,18 +93,18 @@ function searchValidation(){
 		      /* 규칙 맞으면, 실행됨 */
 			 submitHandler: function(form) {
 					var $keyword = $('#main-search-bar').val();
-					$keyword = $keyword.replace(/ /gi, "");
-					$('#main-search-bar').val($keyword);
-					form.submit();
+			 		$keyword = $keyword.replace(/ /gi, "");
+			 		$('#main-search-bar').val($keyword);
+			 		form.submit();
 			}
-		});	
+		});
 		/* validate-plugin 사용시, 추가로 사용자가 사용할 메서드 선언 */
-		 jQuery.validator.addMethod("laxEmail", function(value, element) {
+			jQuery.validator.addMethod("laxEmail", function(value, element) {
 		  var result = value.replace(/ /gi, "");
-		  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test( result );
+		  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test(result);
 		 }, '올바른 언어(영어/한글)로 입력했는지 확인해 보세요.');
 }
-	
+
 </script>
 
 	<!-- CONTENTS -->
@@ -139,16 +116,15 @@ function searchValidation(){
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
-					<div class="col-xs-11">
-						<input type="text" name="keyword" class="form-control nanumpen-font test" id="main-search-bar" placeholder="  기업을 검색해 보세요 "  autocomplete=off  data-placement="bottom">
-					</div>
-					<div class="col-xs-1">
-						<div class="input-group-btn">	
-					<button class="btn" type="submit">
-			            <span class="glyphicon glyphicon-search"></span>
-				        </button>
-			</div>
-			</div>
+						<div class="col-xs-11 search-btn1">
+							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
+						</div>
+						<button type="submit" class="col-xs-1 search-btn2">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+						<%-- <div type="submit" class="col-xs-1">
+							<span class="glyphicon glyphicon-search"></span>
+						</div> --%>
 				</form>
 		</article>
 		<!--  하단 기업순위  시작 -->

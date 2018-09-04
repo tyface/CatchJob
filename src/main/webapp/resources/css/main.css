@@ -69,32 +69,32 @@
 }
 
 /* Mobile */
-#main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+#main-search-bar, .search-btn1, .search-btn2{
   padding: 0px;
   height : 45px;
   font-size: 18px;
 }
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {
-  #main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+  #main-search-bar, .search-btn1, .search-btn2 {
     height : 60px;
     font-size: 27px;
   }
 }
 /* Desktop */
 @media (min-width:1025px) {
-  #main-search-bar,#main-search-form div:first-child, #main-search-form div:last-child {
+  #main-search-bar, .search-btn1, .search-btn2 {
     height : 60px;
     font-size: 27px;
   }
 }
 
 
-#main-search-form div:last-child{
+.search-btn2{
   color: #fff;
   background-color: #333333;
   margin-left: -3px;
-  padding-top: 12px;
+  border: 0px;
   border-radius: 0px 4px 4px 0px;
 }
 
@@ -115,7 +115,7 @@
   position: absolute;
   top: 0;
   left: 0;
- background-image: url('../img/main-background1.jpg');  
+ background-image: url('../img/main-background1.jpg');
 background-size: 100%;
   background-color: white;
   width: 100%;
@@ -129,15 +129,15 @@ background-size: 100%;
   background-image: url('../img/main-background1.jpg');
   }
 
-article .btn:not(.nohover):hover {  
+article .btn:not(.nohover):hover {
 	padding:0;
  	color:white;
 }
 
 article .btn{
-	background-color:#333333; 
+	background-color:#333333;
 	height:48px;
-	font-size:30px;	
+	font-size:30px;
 	paddding:0;
 	 color:white;
 }
