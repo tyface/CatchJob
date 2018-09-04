@@ -13,7 +13,33 @@
 <!-- 유효성 검사 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script> --%>
-
+<style>
+  /* Tooltip */
+  .test + .tooltip > .tooltip-inner {
+      background-color: #73AD21; 
+      color: #FFFFFF; 
+      border: 1px solid green; 
+      padding: 15px;
+      font-size: 20px;
+      width: 50%;
+  }
+  /* Tooltip on top */
+  .test + .tooltip.top > .tooltip-arrow {
+      border-top: 5px solid green;width: 50%;
+  }
+  /* Tooltip on bottom */
+  .test + .tooltip.bottom > .tooltip-arrow {
+      border-bottom: 5px solid blue;width: 50%;
+  }
+  /* Tooltip on left */
+  .test + .tooltip.left > .tooltip-arrow {
+      border-left: 5px solid red;width: 50%;
+  }
+  /* Tooltip on right */
+  .test + .tooltip.right > .tooltip-arrow {
+      border-right: 5px solid black;width: 50%;
+  }
+  </style>
 <script type="text/javascript">
 //<![CDATA[
 
@@ -114,13 +140,14 @@ function searchValidation(){
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
 					<div class="col-xs-11">
-						<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" placeholder="  기업을 검색해 보세요 " required autocomplete=off>
+						<input type="text" name="keyword" class="form-control nanumpen-font test" id="main-search-bar" placeholder="  기업을 검색해 보세요 "  autocomplete=off  data-placement="bottom">
 					</div>
 					<div class="col-xs-1">
 						<div class="input-group-btn">	
 					<button class="btn" type="submit">
 			            <span class="glyphicon glyphicon-search"></span>
 				        </button>
+			</div>
 			</div>
 				</form>
 		</article>
