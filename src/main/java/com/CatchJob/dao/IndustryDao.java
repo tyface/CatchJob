@@ -5,16 +5,24 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.CatchJob.model.IndustryCode;
+import com.CatchJob.model.Industry;
 @Repository
 public interface IndustryDao {
 	
-	public int updateIndustry(IndustryCode industryCode);
+	/*
+	public int deleteIndustry(Industry industryCode);
 	
-	public int deleteIndustry(IndustryCode industryCode);
+	public Industry selectIndustry(String largeCatagory);
+	*/
+	public List<Map<String, Object>> selectIndustryList();
 	
-	public IndustryCode selectIndustry(int largeCatagory);
-	
-	public List<IndustryCode> selectIndustryList();
+	public List<Industry> selectIndustryCodeList(int largeCatagory);
 
+	public Map<String, Object> selectIndustryDetails(int industryCode);
+	
+	public int insertIndustry(Industry industry);
+	
+	public int updateIndustry(Industry industry);
+	
+	public Industry selectIndustry(int industryCode);
 }

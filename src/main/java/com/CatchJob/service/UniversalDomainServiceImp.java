@@ -26,7 +26,7 @@ public class UniversalDomainServiceImp implements UniversalDomainService {
 	}
 
 	@Override
-	public boolean insertDomain(UniversalDomain domain) {
+	public boolean registDomain(UniversalDomain domain) {
 		int rowCount = domainDao.insertDomain(domain);
 		if (rowCount > 0) {
 			return true;

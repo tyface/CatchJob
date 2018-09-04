@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CatchJob.model.Enterprise;
-import com.CatchJob.model.IndustryCode;
+import com.CatchJob.model.Industry;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.Review;
 import com.CatchJob.model.UniversalDomain;
@@ -33,8 +32,6 @@ import com.CatchJob.service.IndustryService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
 import com.CatchJob.service.UniversalDomainService;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
 @RequestMapping("/admin")
@@ -65,7 +62,7 @@ public class AdminController {
 	}
 	
 	/* 로그인폼 */
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping("")
 	public String loginForm() {
 		return "admin/admin-login";
 	}
@@ -80,7 +77,7 @@ public class AdminController {
 	}
 
 	/* 회원 그룹 관리 */
-	@RequestMapping("/mngMber")
+	@RequestMapping(value="/mngMber", method = RequestMethod.GET)
 	public String mngMber(Model model, String page, String msgPerPage, String num, String keyword) { 
 		int pageNumber = 1;	
 		if (page != null) {
@@ -473,13 +470,13 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/registDomain", method=RequestMethod.POST)
-	public String registerDomain(Model model, String domainAddress, String domainName) {			
+	public String registDomain(Model model, String domainAddress, String domainName) {			
 		try {
 			UniversalDomain domain = new UniversalDomain();
 			domain.setDomainAddress(domainAddress);
 			domain.setDomainName(domainName);
 			
-			boolean result = domainService.insertDomain(domain);
+			boolean result = domainService.registDomain(domain);
 			
 			if(result) {
 				model.addAttribute("url", "mngDomain");
@@ -524,7 +521,7 @@ public class AdminController {
 		}	
 	}
 	
-	@RequestMapping(value="/deleteDomain")
+	@RequestMapping("/deleteDomain")
 	public String deleteDomain(Model model, String domainIndex) {	
 		try {	
 			boolean result = domainService.deleteDomain(Integer.parseInt(domainIndex));
@@ -545,29 +542,92 @@ public class AdminController {
 		}	
 	}
 	
-	@RequestMapping(value="/mngInduty")
+	@RequestMapping("/mngInduty")
 	public String mngInduty(Model model) {
-		System.out.println(industryService);
-		System.out.println(industryService.getIndustryList());
-		List<IndustryCode> viewData = industryService.getIndustryList();
+		Map<String, Object> viewData = industryService.getIndustryList();
 		
-		System.out.println(viewData);
-		
-		model.addAttribute("viewData", viewData);
+		model.addAttribute("viewData", viewData.get("industryList"));
 		return "admin/mng-industry";
 	}
 	
 
-	@RequestMapping(value="/mngIndustryCode")
-	public String mngIndustryCode(Model model,String largeCatagory,String largeCatagoryName) {
-		Map<String, Object> data=new HashMap<>();
-/*		data.put("largeCatagory", largeCatagory);
-		data.put("largeCatagoryName", largeCatagoryName);
+	@RequestMapping("/mngIndustryCode")
+	public String mngIndustryCode(Model model,int largeCatagory) {	
+		Map<String, Object> viewData = industryService.getIndustryList();		
+		model.addAttribute("viewData", viewData.get("industryList"));
 		
-		Map<String, Object> viewData = industryService.getIndustryList(data);
-		model.addAttribute("viewData", viewData);
-	*/
+		List<Industry> data=new ArrayList<>();
+		data = industryService.getIndustryCodeList(largeCatagory);
+		model.addAttribute("industryCode", data);
+	
 		return "admin/mng-industry";
 	}
-
+	
+	@RequestMapping("/mngIndustryCodeDetails")
+	public String mngIndustryCodeDetails(Model model, int largeCatagory, int industryCode) {
+		Map<String, Object> viewData = industryService.getIndustryList();	
+		model.addAttribute("viewData", viewData.get("industryList"));
+		
+		List<Industry> data=new ArrayList<>(); 
+		data = industryService.getIndustryCodeList(largeCatagory);
+		System.out.println("data:"+data);
+		model.addAttribute("industryCode", data);
+		
+	/*	Industry industry=industryService.getIndustry(industryCode);
+		model.addAttribute("industry", industry);	*/
+		return "admin/mng-industry";
+	}
+	
+	@RequestMapping(value="/registCatagory", method=RequestMethod.POST)
+	public String registCatagory(Model model,String largeCatagory,String largeCatagoryName) {			
+		try {
+			Industry industry=new Industry();
+			industry.setLargeCatagory(largeCatagory);
+			industry.setLargeCatagoryName(largeCatagoryName);
+			
+			boolean result = industryService.registCatagory(industry);
+			
+			if(result) {
+				model.addAttribute("url", "mngInduty");
+				model.addAttribute("msg", "등록 완료되었습니다");
+			} else {
+				model.addAttribute("url", "mngInduty");
+				model.addAttribute("msg", "등록 실패했습니다");
+			}
+			return "admin/include/result";
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			model.addAttribute("url", "mngInduty");
+			model.addAttribute("msg", "등록 실패했습니다");
+			return "admin/include/result";
+		}	
+	}
+	@RequestMapping(value="/modifyInduty", method=RequestMethod.POST)
+	public String modifyInduty(Model model,String largeCatagory,String largeCatagoryName, String industryCode, String regDate) {			
+		try {
+			Industry industry=new Industry();
+			industry.setLargeCatagory(largeCatagory);
+			industry.setLargeCatagoryName(largeCatagoryName);
+			industry.setIndustryCode(industryCode);
+			industry.setRegDate(regDate);
+			
+			boolean result = industryService.registCatagory(industry);
+			
+			if(result) {
+				model.addAttribute("url", "mngInduty");
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("url", "mngInduty");
+				model.addAttribute("msg", "수정 실패했습니다");
+			}
+			return "admin/include/result";
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			model.addAttribute("url", "mngInduty");
+			model.addAttribute("msg", "수정 실패했습니다");
+			return "admin/include/result";
+		}	
+	}
 }
