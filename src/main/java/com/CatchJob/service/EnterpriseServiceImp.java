@@ -169,6 +169,9 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		dataMap.putAll(entDao.selectEntBaseInfo(entIndex));
 		dataMap.putAll(entDao.selectPeerIndustryAvgInfo(entIndex));
 		dataMap.putAll(entDao.selectTotalAvgInfo());
+		System.out.println("==============================");
+		System.out.println(entIndex);
+		System.out.println(dataMap);
 		return dataMap;
 	};
 

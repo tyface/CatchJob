@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.CatchJob.commons.Constants;
-import com.CatchJob.dao.AuthorityDao;
 import com.CatchJob.dao.MemberDao;
 import com.CatchJob.model.Member;
 

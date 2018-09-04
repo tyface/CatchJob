@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<meta charset="UTF-8">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<%@ include file="include/header.jsp"%>
+<meta charset="UTF-8">
 <security:authentication var="principal" property="principal"/>
-<jsp:include page="include/header.jsp" flush="true" />
 
 <link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/late/fontawesome-stars.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/bars-movie.css" >
@@ -53,7 +53,6 @@
 
 </style>
 <script>
-
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
 var empCount = JSON.parse('${empCount}');
@@ -263,25 +262,6 @@ $(function(){
 			var statusCount = $(this)[0][6].value;
 			var contents = jQuery.trim($("#contents"+statusCount).val());/* 기업리뷰  */
 
-			if(point < 1){
-				swal({
-					title: "별점을 선택해주세요",
-				  text: "",
-				  type: "warning",
-				  confirmButtonClass: "btn-warning"
-				})
-				return false;
-			}
-			if(contents.length <10){
-				swal({
-					title: "10글자 이상 작성해주세요",
-				  text: "",
-				  type: "warning",
-				  confirmButtonClass: "btn-warning"
-				})
-				return false;
-			}
-
 			if(status == "logout"){
 				swal({
 					title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
@@ -293,8 +273,27 @@ $(function(){
 				function() {
 					$("#loginModal").modal("show");
 				})
+				return false;
 
 		  }else{/* 로그인 상태임 */
+				if(point < 1){
+					swal({
+						title: "별점을 선택해주세요",
+					  text: "",
+					  type: "warning",
+					  confirmButtonClass: "btn-warning"
+					})
+					return false;
+				}
+				if(contents.length <10){
+					swal({
+						title: "10글자 이상 작성해주세요",
+					  text: "",
+					  type: "warning",
+					  confirmButtonClass: "btn-warning"
+					})
+					return false;
+				}
 				point = Number(point);
 				var questionNum = statusCount;
 
@@ -385,7 +384,6 @@ function chartSalary(){
 
 		type: 'bar',
 
-
 		data: {
 			labels: month,
 			datasets: [{
@@ -393,7 +391,7 @@ function chartSalary(){
 					label: '평균 급여',
 					borderColor: '#BDBDBD',
 				 	borderWidth: 2,
-				 	pointBorderColor: '#6B66FF',
+				 	pointBorderColor: mainColor,
 				 	pointBorderWidth: 3,
 					fill: false,
 					data: salary,
@@ -411,7 +409,7 @@ function chartSalary(){
 
 			 plugins: {
 				datalabels: {
-					color: '#6B66FF',
+					color: mainColor,
  					align: 'start',
  					anchor: 'start',
 
@@ -522,13 +520,13 @@ function chartPersonnel(){
 					label: '총 인원',
 					borderColor: '#BDBDBD',
 					borderWidth: 2,
-					pointBorderColor: '#6B66FF',
+					pointBorderColor: mainColor,
 					pointBorderWidth: 3,
 					fill: false,
 					data: totalPersonPerMonth,
 
 					datalabels: {
-						color:  '#6B66FF',
+						color:  mainColor,
 						align: 'start',
 						anchor: 'start',
 						display: true,
@@ -538,13 +536,13 @@ function chartPersonnel(){
 				}, {
 					type: 'bar',
 					label: '입사자',
-					backgroundColor: '#6B66FF',
+					backgroundColor: mainColor,
 					data: newPersonPerMonth,
 					borderColor: 'white',
 					borderWidth: 0,
 					datalabels: {
 						display: false,
-						color:  '#6B66FF',
+						color:  mainColor,
 // 						align: 'end',
 // 						anchor: 'start',
 					}
@@ -552,11 +550,11 @@ function chartPersonnel(){
 				}, {
 					type: 'bar',
 					label: '퇴사자',
-					backgroundColor: '#D1B2FF',//FF6B8A
+					backgroundColor: subColor,//FF6B8A
 					data: outPersonPerMonth,
 					datalabels: {
 						display: false,
-// 						color:  '#D1B2FF',
+// 						color:  subColor,
 // 						align: 'end',
 // 						anchor: 'end',
 // 						display: function(context) {
@@ -652,7 +650,6 @@ function reviewbarChart(){
 			labels: ['매우 불만족','불만족','보통','만족','매우 만족'],
 			datasets: [{
 					type: 'bar',
-// 					label: '퇴사자',
 					backgroundColor: '#FFBB00',
 					data: chartData,
 					datalabels: {
@@ -1004,6 +1001,7 @@ function jsonEscape(str)  {
 }
 </script>
 
+
 <div class="container">
 	<div class="row">
 		<nav class="col-sm-1 padding-zero" id="left-nav">
@@ -1215,7 +1213,6 @@ function jsonEscape(str)  {
 									<c:forEach begin="${reviewTotalData}" end="4" step="1">
 										<span class="stars-off"></span>
 									</c:forEach>
-<!-- 	              					<span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span><span class="stars-on"></span> -->
 	              					<p>총 만족도</p>
 				              </div>
 				              <div class="chart col-md-6" style="height: 100px; ">
@@ -1268,11 +1265,11 @@ function jsonEscape(str)  {
 										</nav>
 
 										<form class="reviewForm" name="reviewForm" >
-											<input type="hidden" name="questionNum" class="questionNum"
-												value="${question.QESTN_NO}"> <input type="hidden" name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
+											<input type="hidden" name="questionNum" class="questionNum"	value="${question.QESTN_NO}">
+											<input type="hidden" name="entIndex" class="entIndex" value="${entInfo.ENT_IDX}">
 
-											<div>
-												<select class="stars" name="stars" >
+											<div class="stars01">
+												<select class="stars" name="stars" display="inline">
 													<option value="" >별점</option>
 													<option value="1">1</option>
 													<option value="2">2</option>
@@ -1281,7 +1278,7 @@ function jsonEscape(str)  {
 													<option value="5">5</option>
 												</select>
 
-												<output for="star-input">
+												<output for="star-input" class="stars02">
 													<b class="starScore">1</b>
 												</output>
 											</div>

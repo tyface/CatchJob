@@ -74,7 +74,7 @@
     margin-bottom: 10px;
 }
 .graph-btn {
-	background-color: #8041D9;
+	background-color: var(--sub-color);
 	color: white;
 	border-radius: 5px;
 /* 	margin: 0 0 10px 40%; */

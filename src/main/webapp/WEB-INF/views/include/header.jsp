@@ -27,6 +27,10 @@
 <script type="text/javascript">
 	var contextPath = "${pageContext.request.contextPath}";
 	var member = "${principal}"
+	var mainColor = '#6B66FF'
+	var subColor = '#B5B2FF'
+
+
 	// 페이스북 리다이렉트 프래그먼트 포함 오류 해결용(임시)
 	if (window.location.hash && window.location.hash == '#_=_') {
 		if (window.history && history.pushState) {

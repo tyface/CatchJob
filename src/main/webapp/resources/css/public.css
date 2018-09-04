@@ -1,6 +1,11 @@
+:root {
+	 --main-color: #6B66FF;
+	 --sub-color: #B5B2FF;
+ }
+
 body {
 	position: relative;
-	background-color: #EAEAEA;
+	background-color: #b5b2ff47;
 }
 
 article {
@@ -9,6 +14,101 @@ article {
 	padding-top: 50px;
 	margin-bottom: 30px;
 	text-align: center;
+}
+.font-color-01{
+	color: #425bd5;
+	font-family: 'Archivo Black', sans-serif;
+}
+.navbar-inverse{
+	background-color: white;
+	border-color: white;
+	box-shadow: 0px 0px 15px 0px #bbb9f88c;
+}
+
+.navbar-brand{
+	font-family: 'Archivo Black', sans-serif;
+	font-size: 40px;
+	color: #bbb9f88c !important;
+}
+
+/* Mobile */
+.navbar-brand > span {
+	display: none;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .navbar-brand > span {
+		display: block;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .navbar-brand > span {
+		display: block;
+  }
+}
+
+.nav-logo-img{
+	width: 33px;
+	margin: -5px 0px 0px -5px;
+	float: left;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .nav-logo-img{
+		width: 40px;
+		margin: -7px 10px 0px 10px;
+		display: block;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .nav-logo-img{
+		width: 40px;
+		margin: -7px 10px 0px 10px;
+		display: block;
+  }
+}
+/* Mobile */
+.top-search-bar{
+	display:none;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	width: 220px;
+	height: 24px;
+}
+.top-search-bar > form > :first-child {
+	padding: 0px;
+	height: 30px;
+	background-color: #333333;
+	border: 0px;
+	border-radius: 4px 0px 0px 4px;
+	background-color: white;
+}
+.top-search-bar > form > :last-child {
+	padding: 0px;
+	color: #fff;
+	background-color: #333333;
+	margin-left: -3px;
+	border: 0px;
+	border-radius: 0px 4px 4px 0px;
+	height: 30px;
+	width: 30px;
+	font-size: 21px;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .top-search-bar{
+		width: 420px;
+		margin: 12px;
+    }
+}
+/* Desktop */
+@media (min-width:1025px) {
+    .top-search-bar{
+		width: 420px;
+		margin: 12px;
+    }
 }
 
 .non-padding-top {
@@ -75,12 +175,15 @@ article {
 	float: left;
 }
 
+
 .f-right {
 	float: right;
 }
-
+.myBtnLogin{
+	padding: 0px;
+}
 .nav-btn-1 {
-	width: 200px;
+	width: 65px;
 	margin-top: 15px;
 	text-decoration: none;
 	color: #9d9d9d;
@@ -107,6 +210,14 @@ article {
 	line-height: 24px;
 }
 
+.stars01 div{
+	display: inline;
+}
+.stars02{
+	display: inline;
+	padding: 3px;
+  font-size: 18px;
+}
 .stars-on::after {
 	content: '\f005';
 	color: #FFE400;

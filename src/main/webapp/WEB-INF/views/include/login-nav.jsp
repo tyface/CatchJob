@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
 <security:authentication var="principal" property="principal"/>
 <script>
+console.log(window.location.pathname)
 
 $(function() {
+	if(window.location.pathname != "/catchjob/"){
+		$(".top-search-bar").css("display","inline-block");
+	}
+	topSearchValidation()
 	$(".googleBtn").on("click",function() {
 		location.href="${pageContext.request.contextPath}/member/googleLogin";
 	});
@@ -170,52 +176,87 @@ $(function() {
 
 });
 
-// <%-- 기업인증 --%>
-// <div class="modal fade" id="entVerifyModal" role="dialog">
-// 	<div class="modal-dialog">
-//
-// 		<!-- Modal content-->
-// 		<div class="modal-content">
-// 			<div class="modal-header" style="padding: 35px 50px;">
-// 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-// 				<h4>
-// 					<span class="glyphicon glyphicon-lock"></span> 기업회원 인증하기
-// 				</h4>
-// 			</div>
-//
-// 			<div class="modal-body" style="padding: 40px 50px;">
-// 				<form role="form" method="post" id="entVerifyForm">
-// 					<h4>기업회원 인증방법</h4>
-// 					<p>1) 명함이나 재직증명서로 인증하기. 관리자이메일(catchjob33@gmail.com) </p>
-// 					<p>2) 회사 이메일로 인증하기</p>
-// 					<div class="form-group has-feedback">
-// 						<input	type="email" class="form-control" id="test" placeholder="회사 이메일로 인증하기">
-// 						<span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
-// 					</div>
-// 					<div class="form-group has-feedback">
-// 					<button type="submit" class="btn btn-success btn-block">
-// 						<span class="glyphicon glyphicon-off"></span> 인증 메일보내기
-// 					</button>
-// 				</form>
-// 			</div>
-// 		</div>
-//
-// 	</div>
-// </div>
+function topSearchValidation(){
+	/* 유효성검사  */
+		$('#top-search-form').validate({
+			/* 규칙 */
+			rules : {
+				keyword:{
+					required : true,
+					laxEmail : true,
+				}
+			},
+			/* 규칙 어길 때, 메시지 */
+			messages : {
+				keyword:{
+					required : "필수로입력하세요",
+				}
+			},
+			focusInvalid: true,
+			focusCleanup: true,
+			onkeyup: false,
+			/* 규칙 어길 때, 툴팁 띄우기  */
+			showErrors: function(errorMap, errorList) {
+							// Clean up any tooltips for valid elements
+							$.each(this.validElements(), function (index, element) {
+									var $element = $(element);
 
+									$element.data("title", "") // Clear the title - there is no error associated anymore
+											.removeClass("error")
+											.tooltip("destroy");
+							});
+							// Create new tooltips for invalid elements
+							$.each(errorList, function (index, error) {
+									var $element = $(error.element);
+
+									$element.tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
+											.data("title", error.message)
+											.addClass("error")
+											.tooltip(); // Create a new tooltip based on the error messsage we just set in the title
+							});
+				},
+					/* 규칙 맞으면, 실행됨 */
+			 submitHandler: function(form) {
+					var $keyword = $('#top-search-bar').val();
+					$keyword = $keyword.replace(/ /gi, "");
+					$('#top-search-bar').val($keyword);
+					form.submit();
+			}
+
+		});
+		/* validate-plugin 사용시, 추가로 사용자가 사용할 메서드 선언 */
+			jQuery.validator.addMethod("laxEmail", function(value, element) {
+			var result = value.replace(/ /gi, "");
+			return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test(result);
+		 }, '올바른 언어(영어/한글)로 입력했는지 확인해 보세요.');
+}
 </script>
 
 <security:authorize access="isAnonymous()">
+
 <nav class="navbar navbar-inverse">
- <div class="container-fluid">
-  <div class="f-left">
-    <a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH JOB</a>
-  </div>
-  <div class="f-right nav-btn-1">
-    <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div>
-    <div class="col-xs-6 cursorOn myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Login</div>
-  </div>
-  </div>
+	<div class="container-fluid">
+		<div class="f-left nav-logo">
+		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
+					<img src="${pageContext.request.contextPath}/resources/img/logo_02.png" alt="logo" class="nav-logo-img"/>
+					<span class="f-left">CATCT JOB</span>
+				</a>
+  	</div>
+
+		<div class="top-search-bar">
+			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
+				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10" id="top-search-bar">
+				<button type="submit" class="col-xs-1">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</form>
+		</div>
+
+	  <div class="f-right nav-btn-1">
+	    <%-- <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div> --%>
+	    <div class="cursorOn myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Sign</div>
+	  </div>
+	</div>
 </nav>
 
   <!-- 로그인 모달 -->
@@ -326,66 +367,30 @@ $(function() {
 			</div>
 		</div>
 
-		<%-- 비밀번호 찾기 모달 --%>
-		<%-- <div class="modal fade" id="findPasswordModal" role="dialog" >
-			<div class="modal-dialog">
-
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header" style="padding: 35px 50px;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4>
-							<span class="glyphicon glyphicon-lock"></span> 비밀번호 재설정하기
-						</h4>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-						<p>입력하신 메일로 비밀번호 변경하기 링크가 전송됩니다.</p><br>
-
-						<form role="form" method="post" id="findPasswordForm">
-							<div class="form-group has-feedback">
-								<input	type="email" class="form-control" name="email" placeholder="Email">
-								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-							</div><br>
-							<button type="submit" class="btn btn-success btn-block">
-								<span class="glyphicon glyphicon-off"></span> 비밀번호 재설정 메일 보내기
-							</button>
-						</form>
-					</div>
-				</div>
-
-			</div>
-		</div> --%>
-
 </security:authorize>
 <!-- 로그인 후! -->
 
 <security:authorize access="isAuthenticated()">
 	<nav class="navbar navbar-inverse">
 
-		<div class="f-left">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}">CATCH	JOB</a>
+		<div class="f-left nav-logo">
+		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
+					<img src="${pageContext.request.contextPath}/resources/img/logo_02.png" alt="logo" class="nav-logo-img"/>
+					<span class="f-left">CATCT JOB</span>
+				</a>
+  	</div>
+
+		<div class="top-search-bar">
+			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
+				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10" id="top-search-bar">
+				<button type="submit" class="col-xs-1">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</form>
 		</div>
-		
-	<div class="f-middle"> 
-		<form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/enterprise/search">
-	      <div class="input-group" style="padding:0; margin:0; width:500px;">
-	        <input type="text" class="form-control" placeholder="기업을 검색해 보세요" name="keyword" style="height:28px">
-		        <div class="input-group-btn">	
-		         <i class="glyphicon glyphicon-search">
-		          <button class="btn btn-default" style="height:28px" type="submit"> </button>
-		           </i>
-		         
-		        </div>
-	      </div>
-	 	</form>
-	</div>
-		
-		  
-	    
-		
 
 		<div class="f-right nav-btn-1">
-			<div class="dropdown col-xs-6 f-right" >
+			<div class="dropdown f-right" >
 
 				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
