@@ -30,10 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM INDUTY_CODE_TB
 			WHERE INDUTY_CD=#{industryCode}
  	</select>
- 	<insult id="insertIndustry" parameterType="industryMap">
+ 	<insert id="insertIndustry" parameterType="industry">
  		INSERT INTO INDUTY_CODE_TB(INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT)
 		VALUES (INDUTY_CD=#{industryCode},LCLASS_CD=#{largeCatagory},LCLASS_NM=#{largeCatagoryName},sysdate())
- 	</insult>
+ 	</insert>
  	<select id="selectIndustry" resultMap="industryMap" parameterType="int">
  		SELECT INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT 
 			FROM INDUTY_CODE_TB
