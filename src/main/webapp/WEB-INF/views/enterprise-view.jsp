@@ -552,7 +552,7 @@ function chartPersonnel(){
 				}, {
 					type: 'bar',
 					label: '퇴사자',
-					backgroundColor: '#D1B2FF',//FF6B8A
+					backgroundColor: '#B5B2FF',//FF6B8A
 					data: outPersonPerMonth,
 					datalabels: {
 						display: false,
