@@ -16,13 +16,13 @@ public interface IndustryDao {
 	*/
 	public List<Map<String, Object>> selectIndustryList();
 	
-	public List<Industry> selectIndustryCodeList(int largeCatagory);
+	public List<Industry> selectIndustryCodeList(String largeCatagory);
 
-	public Map<String, Object> selectIndustryDetails(int industryCode);
+	public Map<String, Object> selectIndustryDetails(String industryCode);
 	
 	public int insertIndustry(Industry industry);
 	
 	public int updateIndustry(Industry industry);
 	
-	public Industry selectIndustry(int industryCode);
+	public Industry selectIndustry(String industryCode);
 }

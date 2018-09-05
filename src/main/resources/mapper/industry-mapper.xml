@@ -3,42 +3,36 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.IndustryDao">
-	
-<!-- 	<insert id="insertAuthority" parameterType="map">
-		INSERT INTO 
-		AUTHORITIES_TB(MBER_IDX,MBER_ID,AUTHORITY,REG_DT)
-		VALUES(#{mberIndex},#{mberId},'ROLE_USER',sysdate())
-	</insert>
-	<update id="updateAuthority" parameterType="int">
-		UPDATE AUTHORITIES_TB 
-		SET    AUTHORITY=#{authority}
-		WHERE  MBER_IDX=#{mberIndex}
-	</update> -->
 	<select id="selectIndustryList" resultMap="industryMap"> 
 		SELECT LCLASS_CD, LCLASS_NM
 		 	FROM INDUTY_CODE_TB
 			GROUP BY LCLASS_NM
 			ORDER BY LCLASS_CD
  	</select>
- 	<select id="selectIndustryCodeList" resultMap="industryMap" parameterType="int">
+ 	<select id="selectIndustryCodeList" resultMap="industryMap" parameterType="String">
  		SELECT INDUTY_CD,LCLASS_CD
 			FROM INDUTY_CODE_TB
 			WHERE LCLASS_CD=#{largeCatagory}
  	</select>
- 	<select id="selectIndustryDetails" resultMap="industryMap" parameterType="int">
+ 	<select id="selectIndustryDetails" resultMap="industryMap" parameterType="String">
  		SELECT INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT 
 			FROM INDUTY_CODE_TB
 			WHERE INDUTY_CD=#{industryCode}
  	</select>
  	<insert id="insertIndustry" parameterType="industry">
  		INSERT INTO INDUTY_CODE_TB(INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT)
-		VALUES (INDUTY_CD=#{industryCode},LCLASS_CD=#{largeCatagory},LCLASS_NM=#{largeCatagoryName},sysdate())
+		VALUES (#{industryCode},#{largeCatagory},#{largeCatagoryName},sysdate())
  	</insert>
- 	<select id="selectIndustry" resultMap="industryMap" parameterType="int">
+ 	<select id="selectIndustry" resultMap="industryMap" parameterType="String">
  		SELECT INDUTY_CD,LCLASS_CD,LCLASS_NM,REG_DT 
 			FROM INDUTY_CODE_TB
 			WHERE INDUTY_CD=#{industryCode}
  	</select>
+ 	<update id="updateIndustry" parameterType="industry">
+		UPDATE INDUTY_CODE_TB 
+		SET    INDUTY_CD=#{industryCode},LCLASS_CD=#{largeCatagory},LCLASS_NM=#{largeCatagoryName},REG_DT=#{regDate} 
+		WHERE  INDUTY_CD=#{industryCode}
+	</update> 
  	<resultMap type="industry" id="industryMap">
 		<result column="INDUTY_CD" property="industryCode" />
 		<result column="LCLASS_CD" property="largeCatagory" />

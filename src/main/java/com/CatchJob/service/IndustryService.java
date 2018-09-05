@@ -7,16 +7,16 @@ import com.CatchJob.model.Industry;
 
 public interface IndustryService {
 
-	public Industry getIndustry(int largeCatagory);
+	public Industry getIndustry(String largeCatagory);
 	
-	public boolean modifyIndustry(Industry industryCode);
-
 	//largeCatagory, lclassName 출력
 	public Map<String, Object> getIndustryList();
 	//largeCatagory 선택시 induty code list를 가져와 출력
-	public List<Industry> getIndustryCodeList(int largeCatagory);
+	public List<Industry> getIndustryCodeList(String largeCatagory);
 	//industry code로 테이블 전체 출력
-	public Map<String, Object> getIndustryDetailsList(int industryCode);
-	//분류명, 분류코드 등록
-	public boolean registCatagory(Industry industry);
+	public Map<String, Object> getIndustryDetailsList(String industryCode);
+	//등록
+	public boolean registIndustry(Industry industry);
+	//수정
+	public boolean modifyIndustry(Industry industry) ;
 }
