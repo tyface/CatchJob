@@ -25,7 +25,12 @@
 <script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/public.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+
 <security:authentication var="principal" property="principal"/>
+
 
 
 <script type="text/javascript">

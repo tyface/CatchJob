@@ -244,7 +244,7 @@ function topSearchValidation(){
 
 		<div class="top-search-div">
 			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
-				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10"  data-placement="bottom" id="top-search-bar">
+				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10 jua-font"  data-placement="bottom" autocomplete="off" id="top-search-bar">
 				<button type="submit" class="col-xs-1" id="top-search-btn">
 					<span class="glyphicon glyphicon-search"></span>
 				</button>
@@ -253,7 +253,7 @@ function topSearchValidation(){
 
 	  <div class="f-right nav-btn-1">
 	    <%-- <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div> --%>
-	    <div class="cursorOn myBtnLogin"><span class="glyphicon glyphicon-log-in"></span> Sign</div>
+	    <div class="cursorOn myBtnLogin">Sign In</div>
 	  </div>
 	</div>
 </nav>
@@ -382,7 +382,7 @@ function topSearchValidation(){
 
 			<div class="top-search-div">
 				<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
-					<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10"  data-placement="bottom" id="top-search-bar">
+					<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10 jua-font"  data-placement="bottom" autocomplete="off" id="top-search-bar">
 					<button type="submit" class="col-xs-1" id="top-search-btn">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
@@ -392,15 +392,16 @@ function topSearchValidation(){
 			<div class="f-right nav-btn-1">
 				<div class="dropdown f-right" >
 					<div class="dropdown-toggle cursorOn" data-toggle="dropdown">
-						<span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
-						<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
-							<li class="dropdown-header">내 정보</li>
-							<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
-							<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
-							<li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
-						 	<li role="presentation" class="divider"></li>
-				   		<li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
-						</ul>
+						<span class="glyphicon glyphicon-menu-hamburger top-nav-right-btn1"></span>
+					</div>
+					<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+						<li class="dropdown-header">내 정보</li>
+						<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
+						<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
+						<li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
+					 	<li role="presentation" class="divider"></li>
+			   		<li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
+					</ul>
 				</div>
 
 			</div>

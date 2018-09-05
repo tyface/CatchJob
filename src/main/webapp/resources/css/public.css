@@ -6,6 +6,7 @@
 body {
 	position: relative;
 	background-color: #ffffff;
+	/* font-family: 'Jua', sans-serif; */
 }
 
 section{
@@ -87,7 +88,9 @@ article {
 		display: block;
   }
 }
-
+.br-selected:after,.br-active:after{
+	color: #FFE400 !important;
+}
 .nav-logo-img{
 	width: 33px;
 	margin: -5px 0px 0px -5px;
@@ -95,6 +98,7 @@ article {
 }
 
 #top-search-bar{
+	font-size: 16px;
 	padding: 0px;
 	padding-left: 20px;
 	height: 30px;
@@ -216,10 +220,17 @@ article {
 	z-index: 999;
 }
 
+.top-nav-right-btn1 {
+	font-size: 25px;
+	font-weight: bold;
+	color: #4c78ea;
+
+}
+
+
 .f-left {
 	float: left;
 }
-
 
 .f-right {
 	float: right;
@@ -228,11 +239,15 @@ article {
 	padding: 0px;
 }
 .nav-btn-1 {
+	font-family: 'Jua', sans-serif;
+	font-size: 20px;
+	font-weight: bold;
 	width: 65px;
-	margin-top: 15px;
-	margin-right: 15px;
+	margin-top: 12px;
+	margin-right: 12px;
 	text-decoration: none;
-	color: #9d9d9d;
+	color: #4c78ea;
+	text-align: right;
 }
 
 /* 세로줄  TODO미사용 */
@@ -359,8 +374,8 @@ article {
 	background-color: white;
 	box-sizing: border-box;
 	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
-	box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
+	-webkit-box-shadow: 1px 1px 5px 0px #a8bff9;
+	box-shadow: 1px 1px 5px 0px #a8bff9;
 }
 /* Tablet */
 @media ( min-width :768px) and (max-width:1024px) {
@@ -467,8 +482,8 @@ article {
 	padding: 20px;
 	background-color: white;
 	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
-	box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
+	-webkit-box-shadow: 1px 1px 5px 0px #a8bff9;
+	box-shadow: 1px 1px 5px 0px #a8bff9;
 }
 
 .module-main {
@@ -479,12 +494,12 @@ article {
 	padding: 20px;
 	background-color: white;
 	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
-	box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
+	-webkit-box-shadow: 1px 1px 5px 0px #a8bff9;
+	box-shadow: 1px 1px 5px 0px #a8bff9;
 }
 
 .sectionTitle {
-	color: #2196F3;
+	color: #4c78ea;
 	font-weight: bolder;
 }
 
@@ -573,8 +588,8 @@ label.error {
 	padding: 20px;
 	background-color: white;
 	border-radius: 2px;
-	-webkit-box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
-	box-shadow: 0 1px 1px 1px rgba(127, 127, 127, 0.3);
+	-webkit-box-shadow: 1px 1px 5px 0px #a8bff9;
+	box-shadow: 1px 1px 5px 0px #a8bff9;
 	margin-top: 20px;
 }
 
