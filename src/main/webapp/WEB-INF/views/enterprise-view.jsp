@@ -10,48 +10,16 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/late/bars-movie.css" >
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/enterprise.css" >
 
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/chart.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/chartjs-plugin-datalabels.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/utils.js"></script>
 
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script>
 
-<style>
-.box {
-	position: relative;
-	border-radius: 3px;
-	background: #ffffff;
-	border-top: 3px solid #d2d6de;
-	margin-bottom: 20px;
-	width: 100%;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
 
-.box.box-primary {
-	border-top-color: #3c8dbc
-}
-
-.box.box-info {
-	border-top-color: #00c0ef
-}
-
-.box.box-danger {
-	border-top-color: #dd4b39
-}
-
-.box.box-warning {
-	border-top-color: #f39c12
-}
-
-.box.box-success {
-	border-top-color: #00a65a
-}
-
-</style>
 <script>
 var following = ${entInfo.FOLLOWING}
 var entIndex = ${entInfo.ENT_IDX};
@@ -62,50 +30,49 @@ var fondDate = [industryAvgInfo.ENT_FOND_YMD,industryAvgInfo.PEER_ENT_FOND_YMD_A
 var newPerson = [industryAvgInfo.NPN_NW_SBSCRBER_CNT, industryAvgInfo.PEER_NPN_NW_SBSCRBER_AVG.toFixed(0),industryAvgInfo.TOTAL_NPN_NW_SBSCRBER_AVG.toFixed(0)];
 var outPerson = [industryAvgInfo.NPN_SCBT_CNT,industryAvgInfo.PEER_NPN_SCBT_AVG.toFixed(0),industryAvgInfo.TOTAL_NPN_SCBT_AVG.toFixed(0)];
 
-//$(document).ready(function(){
-var status = "logout";
-
-var month = new Array(); //월
-var salary = new Array(); //연금정보
-var viewSalary = new Array();
-var totalPersonPerMonth = new Array(); //총 인원
-var newPersonPerMonth = new Array();
-var outPersonPerMonth = new Array();
 
 
 
 $(function(){
-
+	
 	entInf();
 	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
+	
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
+	
+	
+	stars(); //별
 	interviewValidation(); //인터뷰 유효성 검사 부분
-
 	saramin(); //#section5 사람인채용정보
-// 	if(${interview} =="" || ${interview} == null){
-// 		alert(333)
-// 		interviewNull
-// 		var interviewNullMent = $("<div class='well well-lg'>등록된 면접후기가 없습니다.</div>")
-// 		interviewNullMent.appendTo(interviewNull);
-// 	}
+	followCheck();//팔로잉 기업인지 확인
+	
+	/* member session 존재여부 확인 */
 	if(member == 'anonymousUser'){
 	}else{
 		status = "login";
 	}
+	
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 500) {
+            $('.move-top').fadeIn();
+        } else {
+            $('.move-top').fadeOut();
+        }
+    });
 
-	$('.stars').barrating({
-	    theme: 'fontawesome-stars',
-			initialRating: 1,
-	   	onSelect: function(value, text, event){
-				var target = event.target.parentNode.parentNode.parentNode.childNodes[3].childNodes[1];
-				target.innerHTML = value;
+    $(".move-top").click(function() {
+        $('html, body').animate({
+            scrollTop : 0
+        }, 400);
+        return false;
+    });
 
-	    }
-	});
-
+	
+	
+	/* 그래프 내용들 배열로 저장 */
 	for(var i in empCount){
 		 var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
 		 month.push(empCount[i]['PAY_YM']) ;
@@ -115,32 +82,9 @@ $(function(){
 		 newPersonPerMonth.push(empCount[i]['NPN_NW_SBSCRBER_CNT']) ;
 		 outPersonPerMonth.push(empCount[i]['NPN_SCBT_CNT']) ;
 	}
-
-	chartPersonnel();
-
-	$("#salary-btn").on("click", function(){
-		$("canvas#comboBarLineChart").remove();
-		$("div.chartreport").append('<canvas id="lineChart"></canvas>');
-		chartSalary();
-
-		$("#personnel-btn").attr('disabled', false);
-		$("#salary-btn").attr('disabled', true);
-	});
-	$("#personnel-btn").on("click", function(){
-		$("canvas#lineChart").remove();
-		$("div.chartreport").append('<canvas id="comboBarLineChart"></canvas>');
-		chartPersonnel();
-		$("#personnel-btn").attr('disabled', true);
-		$("#salary-btn").attr('disabled', false);
-	});
-
-
-	/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
-	if(following == 1){
-		$("#follow").toggleClass("fa-heart-o");
-		$("#follow").toggleClass("fa-heart");
-	}
-/* 기업 팔로잉 START */
+	chartPersonnel(); //월별그래프 인원
+	
+	/* 기업 팔로잉 START */
 	$(".follow-btn").click(function (e) {
         var $this = $(this).find("i");
         var fa = $this.hasClass("fa");
@@ -219,433 +163,134 @@ $(function(){
 
    });/* 기업 팔로잉 END */
 
- /* 면접후기 작성 START */
-      $("#intr-write-btn").click(function(){
-    	  if(status == "logout"){
 
-    		  swal({
-	        	  title: "로그인 하시겠습니까?",
-	        	  text: "면접후기 작성은 로그인 후에 이용 가능합니다.",
-	        	  type: "info",
-	        	  showCancelButton: true,
-	        	  confirmButtonClass: "btn-info",
-	        	},
-	        	function(){
-	        		/* 로그인 모달 띄우기 */
-					$("#loginModal").modal("show");
-	        	})
-			  }else{/* 로그인 상태임 */
-		    	  $.ajax({
-				  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
-				  		data:{entIndex : entIndex},
-				  		type: "post",
-				  		dataType:"json",
-				  		success: function(result){
-				  			if(result){/* 중복 */
-				  				swal({
-				  					title: "이미 등록하셨습니다.",
-				  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
-				  					type: "warning",
-				  					confirmButtonClass:"btn-warning",
-				  				})
-				  			}else{/* 중복X, 작성가능 */
-				  				$("#loginModal").modal("show");
-				  			}
-				  		}
-				  })
-			  }
-      });/* 면접후기 작성 END */
+	/* 기업리뷰  등록 START */
+ 	$(".reviewForm").on("submit",function(){
+		var point = $(this)[0][3].children[0].innerHTML;
+		var statusCount = $(this)[0][6].value;
+		var contents = jQuery.trim($("#contents"+statusCount).val());/* 기업리뷰  */
 
-		/* 기업리뷰  등록 START */
-	 	$(".reviewForm").on("submit",function(){
-			var point = $(this)[0][3].children[0].innerHTML;
-			var statusCount = $(this)[0][6].value;
-			var contents = jQuery.trim($("#contents"+statusCount).val());/* 기업리뷰  */
+		if(status == "logout"){
+			swal({
+				title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
+			  text: "",
+			  type: "info",
+			  showCancelButton: true,
+			  confirmButtonClass: "btn-info"
+			},
+			function() {
+				$("#loginModal").modal("show");
+			})
+			return false;
 
-			if(status == "logout"){
+	  }else{/* 로그인 상태임 */
+			if(point < 1){
 				swal({
-					title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
+					title: "별점을 선택해주세요",
 				  text: "",
-				  type: "info",
-				  showCancelButton: true,
-				  confirmButtonClass: "btn-info"
-				},
-				function() {
-					$("#loginModal").modal("show");
+				  type: "warning",
+				  confirmButtonClass: "btn-warning"
 				})
 				return false;
-
-		  }else{/* 로그인 상태임 */
-				if(point < 1){
-					swal({
-						title: "별점을 선택해주세요",
-					  text: "",
-					  type: "warning",
-					  confirmButtonClass: "btn-warning"
-					})
-					return false;
-				}
-				if(contents.length <10){
-					swal({
-						title: "10글자 이상 작성해주세요",
-					  text: "",
-					  type: "warning",
-					  confirmButtonClass: "btn-warning"
-					})
-					return false;
-				}
-				point = Number(point);
-				var questionNum = statusCount;
-
-			  $.ajax({
-					url:"${pageContext.request.contextPath}/enterprise/writeReview",
-					type:"post",
-					data:{"contents" : contents,
-								"evaluationScore" : point,
-								"questionNum" : questionNum,
-								"entIndex" : entIndex
-					},
-					dataType: "json",
-					success : function(result){
-						if(result){
-
-							swal({
-								title:"등록되었습니다!",
-								type:"success",
-								confirmButtonClass: "btn-success",
-							})
-						}else{
-							swal({
-								title: "등록 실패하였습니다.",
-								text:"이미 등록하셨습니다.",
-								type: "warning",
-								confirmButtonClass:"btn-warning",
-							})
-						}
-						getReviewList(questionNum);
-					}
-				});
+			}
+			if(contents.length <10){
+				swal({
+					title: "10글자 이상 작성해주세요",
+				  text: "",
+				  type: "warning",
+				  confirmButtonClass: "btn-warning"
+				})
 				return false;
 			}
-	 	});/* 기업리뷰  등록 END */
+			point = Number(point);
+			var questionNum = statusCount;
+
+		  $.ajax({
+				url:"${pageContext.request.contextPath}/enterprise/writeReview",
+				type:"post",
+				data:{"contents" : contents,
+							"evaluationScore" : point,
+							"questionNum" : questionNum,
+							"entIndex" : entIndex
+				},
+				dataType: "json",
+				success : function(result){
+					if(result){
+
+						swal({
+							title:"등록되었습니다!",
+							type:"success",
+							confirmButtonClass: "btn-success",
+						})
+					}else{
+						swal({
+							title: "등록 실패하였습니다.",
+							text:"이미 등록하셨습니다.",
+							type: "warning",
+							confirmButtonClass:"btn-warning",
+						})
+					}
+					getReviewList(questionNum);
+				}
+			});
+			return false;
+		}
+ 	});/* 기업리뷰  등록 END */
 
 });/* FUNCTION END */
 
-function entInf(){
-	$("#person").text(totalPerson[0]);
-	$("#fondDate").text(fondDate[0]);
-	$("#newPerson").text(newPerson[0]);
-	$("#outPerson").text(outPerson[0]);
-	$("#newPersonPercent").text(parseFloat((newPerson[0]/totalPerson[0])*100).toFixed(1));
- 	$("#outPersonPercent").text(parseFloat((outPerson[0]/totalPerson[0])*100).toFixed(1));
 
+
+/* 면접후기 작성 버튼 이벤트 START */
+function intrWriteBtn(){
+	 if(status == "logout"){
+		  swal({ 
+      	  title: "로그인 하시겠습니까?",
+      	  text: "면접후기 작성은 로그인 후에 이용 가능합니다.",
+      	  type: "info",
+      	  showCancelButton: true,
+      	  confirmButtonClass: "btn-info",
+      	  },
+	      function(){
+	       	/* 로그인 모달 띄우기 */
+	 			$("#loginModal").modal("show");
+	      })
+	  }else{/* 로그인 상태임 */
+   	  $.ajax({
+		  		url:"${pageContext.request.contextPath}/enterprise/itvwDuplicationCheck",
+		  		data:{entIndex : entIndex},
+		  		type: "post",
+		  		dataType:"json",
+		  		success: function(result){
+		  			if(result){/* 중복 */
+		  				swal({
+		  					title: "이미 등록하셨습니다.",
+		  					text: "[마이페이지 > 기업리뷰 작성]을 확인하세요",
+		  					type: "warning",
+		  					confirmButtonClass:"btn-warning",
+		  				})
+		  			}else{/* 중복X, 작성가능 */
+		  				$("#loginModal").modal("show");
+		  			}
+		  		}
+		  })
+	  }
 }
 
-//select1 그래프
-function changeAvgInfo(e){
-	var arr;
-	switch (e) {
-		case '인원':
-			arr = totalPerson;
-			break;
-		case '업력':
-			arr = fondDate;
-			break;
-		case '입사':
-			arr = newPerson;
-			break;
-		case '퇴사':
-			arr = outPerson;
-			break;
-	}
 
 
-
-	var max = Math.max.apply(null, arr);
-
-	$("#select").text(e);
-	$("#numOfEnt").text(arr[0]);
-	$("#numOfInd").text(arr[1]);
-	$("#numOfTotEnt").text(arr[2]);
-
-	$("#entPer").css('width', arr[0]/max*100+'%');
-	$("#indPer").css('width', arr[1]/max*100+'%');
-	$("#toEntPer").css('width', arr[2]/max*100+'%');
-
-
-}
-
-/* section4 월별그래프-평균급여 */
-function chartSalary(){
-
-	var ctx1 = document.getElementById("lineChart").getContext('2d');
-	var lineChart = new Chart(ctx1, {
-
-
-		type: 'bar',
-
-		data: {
-			labels: month,
-			datasets: [{
-					type: 'line',
-					label: '평균 급여',
-					borderColor: '#BDBDBD',
-				 	borderWidth: 2,
-				 	pointBorderColor: mainColor,
-				 	pointBorderWidth: 3,
-					fill: false,
-					data: salary,
-// 					fillColor : "rgba(151,187,205,0.5)",
-// 	                strokeColor : "rgba(151,187,205,1)",
-// 	                pointColor : "rgba(151,187,205,1)",
-// 	                pointStrokeColor : "#fff",
-				},
-
-			],
-
-				borderWidth: 1
-		},
-		 options: {
-
-			 plugins: {
-				datalabels: {
-					color: mainColor,
- 					align: 'start',
- 					anchor: 'start',
-
-					display: function(context) {
-						return context.dataset.data[context.dataIndex] ;
-					},
-					font: {
-						weight: 'bold'
-					},
- 					//formatter: Math.round
- 					formatter: function(value, context){
- 						return Math.round(value/10000)
- 					}
-				}
-			},
-
-
-// 			 plugins: {//chartjs-plugin
-// 					datalabels: {
-// 						enabled: false,
-// 						color: 'black',
-// 						display: function(context) {
-// 							return context.dataset.data[context.dataIndex];
-// 						},
-// 						font: {
-// 							weight: 'bold'
-// 						},
-
-//  						formatter: Math.round
-// 					}
-// 				},
-// 				events: ['click']
-// 				,
-		        elements: {
-		            line: {
-		                tension: 0, // disables bezier curves
-		            }
-		        },
-		        scales: {
-                    yAxes: [{
-
-                    	 scaleLabel: {
-                             display: true,
-                             labelString: '(만원)',
-                          },
-                          ticks: {
-
-                          	  min:0,
-                              callback: function(value, index, values) {
-                                  return Math.round(value/10000);
-                              },
-                           },
-//                          type: 'linear',
-//                          position: 'bottom',
-                    }],
-                    xAxes: [{
-                          ticks: {
-                              callback: function(value, index, values) {
-                              	  var month = '';
-                              	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
-                                  return '\''+value.substring(2,4)+' '+month+'월';
-                              },
-                           },
-                   }]
-                },
-
-                tooltips: {
-                    enabled: true,
-                    mode: 'index',
-                    axis: 'y',
-                    callbacks: {
-                        label: function(tooltipItems, data) {
-                        	/* 컴마찍는 부분 */
-                        	var value = data.datasets[0].data[tooltipItems.index];
-                        	 if(parseInt(value) >= 1000){
-                        		 value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                              } else {
-                            	 value = value;
-                              }
-                        	return data.datasets[tooltipItems.datasetIndex].label +': ' + value + ' 원';
-                        }
-                    }
-                },
-//                 legend: {
-//                     labels: {
-//                        usePointStyle: true,
-//                        pointColor: 'red',
-//                     }
-//                  },
-
-		    }
-
-	});
-
-}
-
-/* #section4 월별그래프-인원*/
-function chartPersonnel(){
-	// comboBarLineChart
-	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
-	var comboBarLineChart = new Chart(ctx2, {
-		type: 'bar',
-		scaleOverride: false,
-		data: {
-			labels: month,
-			datasets: [{
-					type: 'line',
-					label: '총 인원',
-					borderColor: '#BDBDBD',
-					borderWidth: 2,
-					pointBorderColor: mainColor,
-					pointBorderWidth: 3,
-					fill: false,
-					data: totalPersonPerMonth,
-
-					datalabels: {
-						color:  mainColor,
-						align: 'start',
-						anchor: 'start',
-						display: true,
-					},
-
-
-				}, {
-					type: 'bar',
-					label: '입사자',
-					backgroundColor: mainColor,
-					data: newPersonPerMonth,
-					borderColor: 'white',
-					borderWidth: 0,
-					datalabels: {
-						display: false,
-						color:  mainColor,
-// 						align: 'end',
-// 						anchor: 'start',
-					}
-
-				}, {
-					type: 'bar',
-					label: '퇴사자',
-					backgroundColor: subColor,//FF6B8A
-					data: outPersonPerMonth,
-					datalabels: {
-						display: false,
-// 						color:  subColor,
-// 						align: 'end',
-// 						anchor: 'end',
-// 						display: function(context) {
-// 							return context.dataset.data[context.dataIndex]==1;
-// 						},
-					}
-
-
-				}],
-				borderWidth: 1
-		},
-		options: {
-
-			plugins: {
-				datalabels: {
-// 					align: 'end',
-// 					anchor: 'end',
-
-// 					display: function(context) {
-// 						return context.dataset.data[context.dataIndex] > 0;
-// 					},
-					font: {
-						weight: 'bold'
-					},
-// 					formatter: Math.round
-				}
-			},
-
-
-
-	        elements: {
-	            line: {
-	                tension: 0, // disables bezier curves
-	            }
-	        },
-
-// 	        layout: {
-// 	            padding: {
-// 	                left: 0,
-// 	                right: 0,
-// 	                top: 10,
-// 	                bottom: 0
-// 	            }
-// 	        },
-	        tooltips: {
-                enabled: true,
-                mode: 'index',
-                axis: 'y',
-                callbacks: {
-                    label: function(tooltipItems, data) {
-                    	 return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel + ' 명';
-                    }
-                }
-            },
-            scales: {
-                yAxes: [{
-
-                	 scaleLabel: {
-                         display: true,
-                         labelString: '(명)',
-                      },
-                }],
-                xAxes: [{
-                      ticks: {
-                          callback: function(value, index, values) {
-                          	  var month = '';
-                          	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
-                              return '\''+value.substring(2,4)+' '+month+'월';
-                          },
-                       },
-               }]
-            },
-
-	    }
-
-	});
-}
 /* #section2 리뷰코멘트 - 만족도 */
 function reviewbarChart(){
-	//var i=0;
 	var reviewValuesByItem = JSON.parse('${reviewValuesByItem}');
 	var chartData = new Array(0,0,0,0,0);
 
-	  for( var i in reviewValuesByItem){
+	for( var i in reviewValuesByItem){
 		  chartData[i]= reviewValuesByItem[i].COUNT;
-	 }
-//	alert("chartData: "+chartData)
+	}
 	var ctx4 = document.getElementById("reviewbarChart").getContext('2d');
-	//ctx4.height = 100;
 	var comboBarLineChart = new Chart(ctx4, {
 		type: 'bar',
+		/* 데이터 start */
 		data: {
 			labels: ['매우 불만족','불만족','보통','만족','매우 만족'],
 			datasets: [{
@@ -655,12 +300,11 @@ function reviewbarChart(){
 					datalabels: {
 						color:  '#abaaaa',
 					},
-
-
 				}],
 				borderWidth: 1
-		},
-		options: {
+		},/* 데이터 end */
+		/* 옵션 start */
+		options: { 
 
 			layout:{
 				padding:{
@@ -670,10 +314,8 @@ function reviewbarChart(){
 			legend: {
 		        display: false
 		    },
-
 			responsive: true,
 			maintainAspectRatio: false,
-
 			plugins: {
 				datalabels: {
 					align: 'end',
@@ -684,23 +326,14 @@ function reviewbarChart(){
 					font: {
 						weight: 'bold'
 					},
-// 					formatter: Math.round
 				    formatter: function(value, context) {
-
                         return Math.ceil(value*100/'${numOfValuesByItem}')+'%';
-												//return value;
                     }
-
 				}
 			},
 			scales: {
-// 				gridLines: [{
-//                     display: false,
-// 				}],
-
 				xAxes: [{
-
-					barPercentage: 0.75,//차트 width 폭 줄이기
+					barPercentage: 0.75,//차트 width 줄이기
                     display: true,
                     offset: true,
 
@@ -709,7 +342,6 @@ function reviewbarChart(){
 		            }
 				}],
 				yAxes: [{
-
 					display: false,
                     ticks: {
                     	display: false,
@@ -720,17 +352,10 @@ function reviewbarChart(){
 		            }
 				}]
 			},
-
-	        elements: {
-	            line: {
-	                //tension: 0, // disables bezier curves
-	            }
-	        }
-	    }
-
+	    }/* 옵션 end */
 	});
+}/* #section2 리뷰코멘트 - 만족도  end*/
 
-}
 /* #section3 면접후기 면접난이도 */
 function interviewPieChart(){
 	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
@@ -758,9 +383,6 @@ function interviewPieChart(){
 		type: 'pie',
 		data: {
 				datasets: [{
-
-// 					fillColor : "#ffff00",
-// 				    strokeColor : "#ffff00",
 					data: chartData,
 					backgroundColor: [
 						'#1DDB16',
@@ -772,8 +394,6 @@ function interviewPieChart(){
 					datalabels: {
 						color:  'white',
 					},
-
-// 					label: 'Dataset 1'
 				}],
 				labels: [
 					"매우쉬움",
@@ -803,7 +423,6 @@ function interviewPieChart(){
 						font: {
 							weight: 'bold'
 						},
-//	 					formatter: Math.round
 					}
 				},
 
@@ -812,14 +431,10 @@ function interviewPieChart(){
 	});
 
 }
-
+/* section3 면접 난이도  클래스 추가 */
 function interviewDifficultyShape(){
-//	 var interviewJson = JSON.parse('${interviewJson}');
-    var interviewJson = JSON.parse(jsonEscape('${interviewList}'));
-
+	var interviewJson = JSON.parse(jsonEscape('${interviewList}'));//jsonEscape:줄바꿈처리 함수
 	 for(var i in interviewJson){
-		//progress class 요소의 하위요소인 div 선택해서 intrvw class 추가
-
 		 if(interviewJson[i]['intrvwDifficulty'] == '매우 어려움'){
 			$("#difficulty"+i).addClass("intrvwlv5");
 		} else if(interviewJson[i]['intrvwDifficulty'] == '어려움'){
@@ -831,110 +446,18 @@ function interviewDifficultyShape(){
 		}else if(interviewJson[i]['intrvwDifficulty'] == '매우 쉬움'){
 			$("#difficulty"+i).addClass("intrvwlv1");
 		}
-
 	 }
-}
-
-function interviewValidation(){
-	 /* 면접후기 작성시 유효성 검사 */
-	$('#writeInterview').validate({
-		rules : {
-
-			intrvwDifficulty:{
-				required : true
-			},
-			intrvwDate:{
-				required : true,
-				date: true
-			},
-			intrvwRoute:{
-				required : true
-			},
-			intrvwReview:{
-				required : true,
-				minlength : 10,
-				maxlength : 500
-			},
-			intrvwQuestion:{
-				required : true,
-				minlength : 10,
-				maxlength : 500
-			},
-			intrvwAnswer:{
-				required : true,
-				minlength : 10,
-				maxlength : 500
-			},
-			presentationDate:{
-				digits: true
-			}
-		},
-
-		messages : {
-
-			intrvwDifficulty:{
-				required : "다른 항목을 선택해주세요"
-			},
-			intrvwDate:{
-// 				required : "필수로입력하세요"
-			},
-			intrvwRoute:{
-				required : "다른 항목을 선택해주세요"
-			},
-			intrvwReview:{
-// 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다",
-				maxlength : "최대 500글자까지 입력할 수 있습니다"
-			},
-			intrvwQuestion:{
-// 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다"	,
-				maxlength : "최대 500글자까지 입력할 수 있습니다"
-			},
-			intrvwAnswer:{
-// 				required : "필수로입력하세요",
-				minlength : "최소 10글자이상이어야 합니다"	,
-				maxlength : "최대 500글자까지 입력할 수 있습니다"
-			}
-		}
-// 		,
-// 	    submitHandler: function(form) {
-// 		    swal("등록되었습니다", "You clicked the button!", "success")
-// 		    .then(()=>{
-// 		    	form.submit();
-// 		    })
-// 	    }
-		,
-		submitHandler: function(form) {
-			swal({
-				title:"등록",
-				text: "You clicked the button!",
-				type: "success",
-				confirmButtonClass: "btn-success",
-
-			},
-			function(){
-				form.submit();
-			})
-
-		}
-
-	});
 }
 
 
 /* VIEW 페이지 채용정보  */
 function saramin(){
-
-	//alert(1)
 	var saraminList = JSON.parse('${saraminList}');
 	if(saraminList == ""){
-		//alert(333)
 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
 		img.appendTo(saraminRow1);
 	}else{
 		for(var i in saraminList){
-			//alert(3)
 			var url 					= saraminList[i].url
 			var name 					= saraminList[i].name
 			var expirationTimestamp 	= saraminList[i].expirationTimestamp
@@ -962,43 +485,10 @@ function saramin(){
 				var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
 				data.appendTo(saraminRow3);
 			}
-
 		}
 	}
 }
-/* 뉴스 */
-// function news(){
-// 	var newsList = JSON.parse('${newsList}');
-// 	if(newsList == ""){
-// 		alert(333)
-// 		var img = $(" <div class='well well-lg'>채용정보가 없습니다</div>")
-// 		img.appendTo(news);
-// 	}
-// 	else{
-// 		alert(444)
-// 		for(var i in newsList){
-// 			var title	 = newsList[i].title
-// 			var pubDate	 = newsList[i].pubDate
-// 			var link 	 = newsList[i].link
-// 			alert(i+" link: "+link)
-//  			//var data = $("<span class='col-xs-8 f-left text-left blue-font'>제목</span><span class='col-xs-4 f-right text-right'>출판일</span>")
-// 			var data = $("<span>미친</span>");
 
-// 			//alert("dddd: "+$('#news').text()+data)
-// 			//data.appendTo(news);
-// 		}
-// 	}
-
-// }
-/* 숫자에 컴마 찍는 함수 */
-function addComma(num) {
-   var regexp = /\B(?=(\d{3})+(?!\d))/g;
-   return num.toString().replace(regexp, ',');
-}
-/* JSON 에서 줄 바꿈 처리  */
-function jsonEscape(str)  {
-    return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
-}
 </script>
 
 
@@ -1062,10 +552,8 @@ function jsonEscape(str)  {
 				</div>
 
 			</div>
-			<!-- 기업정보//////////////////////////////////////////////////////////////////////////////// -->
+			<!-- section 1 기업정보-->
 			<div class="module">
-
-<!-- 				<div id="section1"> -->
 					<h3  class="sectionTitle">기업정보</h3>
 
 					<div class="panel panel-default">
@@ -1129,7 +617,6 @@ function jsonEscape(str)  {
 							<br> <br>
 
 							<div class="row"  id="section01">
-<!-- 								<div class="col-md-2"></div> -->
 								<div class="col-md-12">
 
 									<div class="box box-primary">
@@ -1179,48 +666,33 @@ function jsonEscape(str)  {
 									<!-- /.box -->
 								</div>
 							</div>
-
-							<br>
-
-
 						</div>
 					</div>
-			</div>
-			<!-- 리뷰코멘트//////////////////////////////////////////////////////////////////////////// -->
-
+			</div><!-- section 1 기업정보 END-->
+			
+			<!-- section2 리뷰코멘트-->
 			<div class="module">
 				<div id="section2">
 					<h3 class="sectionTitle">리뷰코멘트</h3>
 					<div class="panel-group " id="accordion">
-
-					 <!-- BAR CHART 0826-->
-			          <div class="box box-warning">
-<!-- 			            <div class="box-header with-border"> -->
-<!-- 			              <h3 class="box-title">Bar Chart</h3> -->
-
-<!-- 			              <div class="box-tools pull-right"> -->
-<!-- 			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> -->
-<!-- 			                </button> -->
-<!-- 			                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
-<!-- 			              </div> -->
-<!-- 			            </div> -->
-			            <div class="box-body row">
-				              <div class="chart col-md-6" style="text-align: center" >
-				               		<h1 >${reviewTotalData}</h1>
-				               		<c:forEach begin="1" end="${reviewTotalData}" step="1">
-										<span class="stars-on"></span>
-									</c:forEach>
-									<c:forEach begin="${reviewTotalData}" end="4" step="1">
-										<span class="stars-off"></span>
-									</c:forEach>
-	              					<p>총 만족도</p>
-				              </div>
-				              <div class="chart col-md-6" style="height: 100px; ">
-				                <canvas id="reviewbarChart"></canvas>
-				              </div>
-			            </div>
+			        	<div class="box box-warning">
+				            <div class="box-body row">
+					              <div class="chart col-md-6" style="text-align: center" >
+					               		<h1 >${reviewTotalData}</h1>
+					               		<c:forEach begin="1" end="${reviewTotalData}" step="1">
+											<span class="stars-on"></span>
+										</c:forEach>
+										<c:forEach begin="${reviewTotalData}" end="4" step="1">
+											<span class="stars-off"></span>
+										</c:forEach>
+		              					<p>총 만족도</p>
+					              </div>
+					              <div class="chart col-md-6" style="height: 100px; ">
+					                <canvas id="reviewbarChart"></canvas>
+					              </div>
+				            </div>
 			            <!-- /.box-body -->
-			          </div>
+			        	</div>
 
 						<c:forEach begin="0" end="5" varStatus="status"
 							items="${questionList}" var="question">
@@ -1244,9 +716,7 @@ function jsonEscape(str)  {
 										</a>
 									</h4>
 								</div>
-
 								<div id="collapse${status.count}"	class="panel-collapse collapse">
-									<!-- in -->
 									<div class="panel-body" style="color: black">
 										<table class="table">
 											<thead>
@@ -1257,7 +727,6 @@ function jsonEscape(str)  {
 											<tbody id="reviews">
 											</tbody>
 										</table>
-
 										<!-- 페이징처리-리뷰 코멘트 -->
 										<nav style="text-align: center">
 											<ul class="pagination revw-pagination">
@@ -1297,51 +766,45 @@ function jsonEscape(str)  {
 						</c:forEach>
 					</div>
 				</div>
-			</div>
+			</div><!-- section2 리뷰코멘트 END-->
 
-			<!-- 면접후기//////////////////////////////////////////////////////////////////////////////// -->
+			<!-- section3 면접후기 -->
 			<div class="module">
 				<div id="section3">
 					<h3 class="sectionTitle">면접후기</h3>
-					<%-- <button type="button" class="btn btn-info " id="myBtn">면접후기작성</button> --%>
 					<div class="panel-group" >
-								<div class="box box-danger">
-									<div class="box-body row">
-											<div class="chart col-md-3" >
-												<h3 class="box-title">면접 난이도</h3>
-											</div>
-											<div class="chart col-md-6" >
-
-												<canvas id="pieChart" ></canvas>
-											</div>
-									</div>
-
+						<div class="box box-danger">
+							<div class="box-body row">
+								<div class="chart col-md-3" >
+									<h3 class="box-title">면접 난이도</h3>
 								</div>
-
+								<div class="chart col-md-6" >
+									<canvas id="pieChart" ></canvas>
+								</div>
+							</div>
+						</div>
 						<div class="interviewList">
-						<!-- 면접후기1 -->
-
+						<!-- 면접후기 -->
 						</div>
 					</div>
-
 					<!-- 면접 페이징 처리  -->
-
-					<button type="button" class="btn btn-info" id="intr-write-btn" >면접후기작성</button>
+					<button type="button" class="btn btn-info" id="intr-write-btn" onclick="intrWriteBtn()">면접후기작성</button>
 					<nav style="text-align: center">
 						<ul class="pagination intvw-pagination">
 						</ul>
 					</nav>
 				</div>
-
-			</div>
-			<!-- 그래프 바뀔것 -->
+			</div><!-- section3 면접후기  END-->
+			
+			<!-- section4 그래프-->
 			<div class="module">
 				<div id="section4">
 					<h3 class="sectionTitle">월별그래프</h3>
+					<!-- 버튼 -->
 					<div class="row graph-row">
 						<div class="btn-group graph-btn" >
-							<button class="btn btn-default " id="personnel-btn" disabled="">인원</button>
-							<button class="btn btn-default " id="salary-btn">평균 급여</button>
+							<button class="btn btn-default " id="personnel-btn" disabled="" onclick="personnelBtn()">인원</button>
+							<button class="btn btn-default " id="salary-btn" onclick="salaryBtn()">평균 급여</button>
 						</div>
 					</div>
 					<!-- 그래프 -->
@@ -1353,15 +816,13 @@ function jsonEscape(str)  {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div><!-- section4 그래프 END-->
+			
 			<!-- SECTION 5- 채용정보 -->
 			<div class="module">
 
 				<div id="section5">
 					<h3  class="sectionTitle">채용정보</h3>
-
-<!-- 					<div class="panel panel-default"> -->
-<!-- 						<div class="panel-body" > -->
 						<div id="saramin-margin">
 							<div class="row" id="saraminRow1">
 							</div>
@@ -1370,13 +831,11 @@ function jsonEscape(str)  {
 							<div class="row" id="saraminRow3">
 							</div>
 						</div>
-<!-- 						</div> -->
-<!-- 					</div> -->
 				</div>
-			</div>
+			</div><!-- SECTION 5- 채용정보 end -->
+			
 			<!-- SECTION 6- 뉴스 -->
 			<div class="module">
-
 				<div id="section6">
 					<h3  class="sectionTitle" >뉴스</h3>
 					<c:choose>
@@ -1397,7 +856,7 @@ function jsonEscape(str)  {
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
+			</div><!-- SECTION 6- 뉴스  end-->
 
 		</div>
 	</div>
@@ -1534,7 +993,7 @@ function jsonEscape(str)  {
 							</div>
 						</div>
 					</div>
-					<!-- 면접경험 radio...........intrvwExperience-->
+					<!-- 면접경험 radio.-->
 					<div class="row form-group">
 						<div class="col-xs-3">
 							<label>면접 경험 </label>
@@ -1570,20 +1029,5 @@ function jsonEscape(str)  {
 
 	</div>
 </div>
- <script>
-$(document).ready(function(){
 
-  $(window).scroll(function() {
-    $(".slideanim").each(function(){
-      var pos = $(this).offset().top;
-
-      var winTop = $(window).scrollTop();
-        if (pos < winTop + 600) {
-          $(this).addClass("slide");
-        }
-    });
-  });
-});
-</script>
-
-<jsp:include page="include/footer.jsp" flush="true" />
+<%@ include file="include/footer.jsp"%>

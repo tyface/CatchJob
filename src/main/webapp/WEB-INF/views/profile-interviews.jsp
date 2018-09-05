@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="include/header.jsp" flush="true" />
+<%@ include file="include/header.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/enterprise.css" rel="stylesheet">
 <!-- jQuery Validation 플러그인을 이용하여 손쉽게 검증하기 -->
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/dist/additional-methods.min.js"></script> --%>
@@ -427,4 +427,4 @@ function interviewValidation(){
 	</div>
 </div>
 
-<jsp:include page="include/footer.jsp" flush="true" />
+<%@ include file="include/footer.jsp"%>

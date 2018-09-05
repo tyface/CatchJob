@@ -35,28 +35,5 @@ public class MainController {
 	public String slow() {
 		return "slow";
 	}
-	@RequestMapping(value = "/test")
-	public String test() {
-		return "searchTest";
-	}
-	
-//	@RequestMapping(value = "/interviews")
-//	public String profile() {
-//		return "forward:profile/interviews";
-//	}
-//	@RequestMapping(value = "/profile")
-//	public String profile(Model model, HttpSession session) {
-//		Map<String, Object> data = new HashMap<String,Object>();
-//		data.put("mberIndex", (int)(session.getAttribute("mberIndex")));
-//		data.put("entIndex", 40263);
-//		
-//		//entService.updateInterview(interview);
-//		System.out.println(data+"data-------------");
-//		model.addAttribute("originalData", entService.selectListByIndex(data));
-//		model.addAttribute("originalDataJson", new Gson().toJson(entService.selectListByIndex(data)));
-//		
-//		return "profile-interviews";
-//	}
-
 	
 }

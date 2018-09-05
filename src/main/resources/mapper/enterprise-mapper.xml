@@ -110,34 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM ENTERPRISE_TB 
 		WHERE ENT_IDX=#{entIndex}
 	</select>
-		<!-- 팔루우 기업 리스트 보기 profile-follows.jsp -->
-	<select id="selectListEntByMember" parameterType="int" resultMap="entMap">
-		SELECT fol.MBER_IDX ,ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
-					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,revw.REVW_CNT,intrvw.INTRVW_CNT
-		FROM  		FOLLOWING_TB fol
-		LEFT JOIN	ENTERPRISE_TB ent 
-		ON 			fol.ENT_IDX=ent.ENT_IDX
-		LEFT JOIN 	(SELECT ENT_IDX, COUNT(*) AS REVW_CNT 
-					 FROM REVIEW_TB 
-					 WHERE REVW_FL = 1 
-					 GROUP BY ENT_IDX
-					 ) revw 
-		ON 			ent.ENT_IDX = revw.ENT_IDX
-		LEFT JOIN 	(SELECT ENT_IDX, COUNT(*) AS INTRVW_CNT 
-					 FROM INTERVIEW_TB 
-					 WHERE INTRVW_FL = 1 
-					 GROUP BY ENT_IDX
-					 ) intrvw 
-		ON 			ent.ENT_IDX = intrvw.ENT_IDX
-		LEFT JOIN 	UPDATE_ENT_INFO_TB up
-		ON 			ent.ENT_IDX = up.ENT_IDX
-		LEFT JOIN 	LEGAL_DONG_TB ld 
-		ON 			ent.ADDR_BCITY_CD = ld.ADDR_BCITY_CD 
-		AND 			ent.ADDR_SIGNGU_CD = ld.ADDR_SIGNGU_CD
-		AND 			ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
-		WHERE 	   	fol.MBER_IDX=#{MBER_IDX}
-		GROUP BY 	ent.ENT_IDX
-	</select>
+	
 	<!-- 최근본 기업 보기  profile-recent.jsp-->
 	<select id="selectListEntRecent" parameterType="map" resultMap="entMap">
 		SELECT SQL_CALC_FOUND_ROWS

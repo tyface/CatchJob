@@ -26,8 +26,7 @@ public interface EnterpriseService {
 	public List<Map<String, String>> getEmpCntList();
 	
 	
-	//팔로잉 기업 보기
-	public List<Enterprise> getFollowsEntList(int memberIndex);
+
 	
 //	 최근 본 기업 보기 //RecentSercive
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData);

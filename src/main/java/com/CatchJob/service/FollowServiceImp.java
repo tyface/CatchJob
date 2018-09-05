@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.FollowDao;
+import com.CatchJob.model.Enterprise;
 
 @Service
 public class FollowServiceImp implements FollowService{
@@ -18,65 +19,55 @@ public class FollowServiceImp implements FollowService{
 	/* 팔로우 기업 등록하기 */
 	@Override
 	public boolean regFollowEnt(Map<String, String> mapData) {
+		boolean result = false;
+		int confirm = Integer.parseInt(mapData.get("MBER_IDX"));
 		try {
-			int confirm = Integer.parseInt(mapData.get("MBER_IDX"));
-			//System.out.println(confirm);
 			if(getCount(confirm)) {
 				followDao.insertFollows(mapData);	
-				return true;
-			}else {
-				return false;				
+				result =  true;
 			}
-
 		}catch(Exception e) {
-			System.out.println(e);
-			return false;
+			e.printStackTrace();
 		}
+		return result;
 	}
 	/* 팔로우 기업 회원당 최대 10개 (Constants.Follow.LIMIT_NUMBER_OF_FOLLOW)*/ 
 	@Override
 	public boolean getCount(int memberIndex) {
+		boolean result = false;
 		int range = Constants.Follow.LIMIT_NUMBER_OF_FOLLOW;
 		int  count = followDao.selectFollowsCount(memberIndex);
-//		System.out.println("123123:  " + count);
-		
-		//System.out.println("범위: "+range);
-		//long count =  followDao.selectFollowsCount(memberIndex).get("COUNT");
-		
-		
 		if( count  <  range ) {
-			return true;
-		}else {
-			return false;
+			result =  true;
 		}
-		
+		return result;
 	}
 	/* 팔로우 기업 해지 */
 	@Override
 	public boolean revFollowEnt(Map<String, String> mapData) {
+		boolean result = false;
 		if (followDao.deleteFollows(mapData) > 0) {
-			return true;
-		} else {
-			return false;
-		}
+			result =  true;
+		} 
+		return result;
 	}
 	/* 팔로우 기업 출력 */
 	@Override
 	public List<Map<String, String>> getFollowsEnt(int memberIndex) {
-		//System.out.println("서비스: 팔로우 기업"+ memberIndex);
 		return followDao.selectFollowsByMember(memberIndex);
 	}
-	
-//	@Override
-//	public List<Map<String, String>> getFollowsEntList(int memberIndex) {
-//		
-//		return followDao.selectListEntByMember(memberIndex);
-//	}
 	@Override
-	public int confirmFollowEnt(Map<String, String> data) {
+	public List<Enterprise> getFollowsEntList(int memberIndex) {
 		
-		return followDao.confirmFollowEnt(data);
+		List<Enterprise> entList = followDao.selectListEntByMember(memberIndex);
+
+		for (Enterprise ent : entList) {
+			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
+		}
+		return entList;
 	}
-	
+	public int salaryCalculation(int payAmtAvg) {
+		return (int) (payAmtAvg / Constants.Config.NPN_PERCENT * 12 / 10000);
+	}
 
 }

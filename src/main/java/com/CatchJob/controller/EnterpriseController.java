@@ -50,9 +50,9 @@ public class EnterpriseController {
 	@Autowired
 	private FollowService followService;
 	@Autowired
-	SaraminService saraminService;
+	private SaraminService saraminService;
 	@Autowired
-	NaverNewsService naverNewsService;
+	private NaverNewsService naverNewsService;
 
 	@RequestMapping(value = "/EnterpriseService", method = RequestMethod.GET)
 	public String entListForm() {
@@ -67,6 +67,7 @@ public class EnterpriseController {
 		try {
 			data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));		
 		}catch(NullPointerException e) {
+			e.printStackTrace();
 		}		
 		
 		Gson gson = new GsonBuilder().create();
@@ -114,8 +115,6 @@ public class EnterpriseController {
 		List<Map<String, String>> reviewValuesByItem =  reviewService.valuesByItem(mapData);
 		model.addAttribute("reviewValuesByItem",new Gson().toJson( reviewValuesByItem));
 		model.addAttribute("numOfValuesByItem",reviewService.numOfValuesByItem(reviewValuesByItem));
-		System.out.println("numOfValuesByItem:::"+reviewService.numOfValuesByItem(reviewValuesByItem));
-		//System.out.println("reviewValuesByItem: "+reviewService.numOfValuesByItem(reviewValuesByItem));
 		return "enterprise-view";
 	}
 	
@@ -127,6 +126,7 @@ public class EnterpriseController {
 		mapData.put("ENT_IDX", entIndex );	
 		return followService.regFollowEnt(mapData);
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/revFollow")
 	public boolean revFollow (String entIndex, Authentication authentication) {
@@ -138,7 +138,6 @@ public class EnterpriseController {
 	
 	@RequestMapping(value = "/reviewList")
 	public void list( int entIndex, @RequestParam(defaultValue = "1")int questionNum, @RequestParam(defaultValue = "1")int pageNum, Model model, HttpServletResponse resp){
-		//req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
 		Map<String, Integer> dataRvw = new HashMap<String, Integer>();
 		int currentPage= pageNum;		
@@ -187,16 +186,11 @@ public class EnterpriseController {
 	@ResponseBody
 	@RequestMapping(value = "/writeReview", method = RequestMethod.POST)
 	public boolean writeReview(Review review, Authentication authentication) throws IOException {
-	//	System.out.println(review);
 		review.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
-
 		boolean result = reviewService.insertReview(review);
-		
 		if(result) {
-			//System.out.println("컨트롤러: 리뷰 등록 성공"+result);
 			return true;
 		}else {
-			//System.out.println("컨트롤러: 리뷰 등록 실패"+result);
 			return false;			
 		}				
 	}
@@ -210,20 +204,9 @@ public class EnterpriseController {
 		return itvwService.interviewDuplicationCheck(data);
 	}
 	
-	//@ResponseBody
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview,Authentication authentication) {
 		interview.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
-//		// boolean result = entService.insertInterview(interview);
-		System.out.println(itvwService.insertInterview(interview));
-	//	itvwService.insertInterview(interview);
-//		if(result) {
-//			System.out.println("컨트롤러: 리뷰 등록 성공"+result);
-//			return true;
-//		}else {
-//			System.out.println("컨트롤러: 리뷰 등록 실패"+result);
-//			return false;			
-//		}	
 		return "redirect:view?entIndex="+interview.getEntIndex()+"#section3";
 	}
 	

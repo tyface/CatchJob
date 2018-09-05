@@ -34,19 +34,15 @@ public class ReviewServiceImp implements ReviewService {
 			}else {
 				return false;
 			}
-			
-			
 		}catch(Exception  e) {
 			e.printStackTrace();
 			return false;
 		}
-		
 	}
 	//리부 등록시, 중복검사
 	@Override
 	public boolean duplicationCheck(Map<String, String> data) {
 		int result = reviewDao.reviewDuplicationCheck(data);
-		//System.out.println("서비스:duplicationCheck:   "+result);
 		if (result > 0 ) {//글 등록할 수 없음
 			return false;
 		} else {//글 등록할 수 있음
@@ -89,14 +85,12 @@ public class ReviewServiceImp implements ReviewService {
 		}
 		return result;
 	}
-	
 	//수정 할 데이터 가져오기
 	@Override
 	public Review review(Map<String, String> data) {
 		data.put("REVW_FL", "1");
 		return reviewDao.selectOneReview(data);
 	}
-
 	//리뷰코멘트 VIEW 페이지에서 페이징처리
 	@Override
 	public List<Review> getReviewsList(Map<String, Integer> dataRvw) {
@@ -132,7 +126,6 @@ public class ReviewServiceImp implements ReviewService {
 		}
 		return pageTotalCount;
 	}
-	
 
 	public int getReviewStartPage(int pageNum) {
 		int startPage = ((pageNum - 1) / Constants.Review.NUM_OF_NAVI_PAGE) * Constants.Review.NUM_OF_NAVI_PAGE + 1;
@@ -143,8 +136,6 @@ public class ReviewServiceImp implements ReviewService {
 		int endPage = (((pageNum - 1) / Constants.Review.NUM_OF_NAVI_PAGE) + 1) * Constants.Review.NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
-
-	
 	/* 관리자 페이징 처리 */
 	public Map<String, Object> getMessageList(Map<String, Object> data) {
 		Map<String, Object> viewData = new HashMap<String,Object>();
@@ -173,8 +164,12 @@ public class ReviewServiceImp implements ReviewService {
 				viewData.put("keyword", questionNumKeyword);
 				viewData.put("keywordOption", "questionNumKeyword");
 				totalCount  = reviewDao.selectCountByKeyword(map); 	
+			}else if(keywordOption.equals("")) {
+				totalCount  = reviewDao.selectCountByKeyword(map); 	
 			}				
-		}		
+		} else {
+			totalCount  = reviewDao.selectCountByKeyword(map); 	
+		}	
 		if(totalCount==0) {
 			totalCount = 1;
 		}
@@ -213,14 +208,14 @@ public class ReviewServiceImp implements ReviewService {
 			return false;
 		}
 	}
-	
 	// 리뷰 총 만족도 구하기
 	@Override
 	public double getTotalSatisfaction(Map<String, String> data) {
 		data.put("REVW_FL", "1");
 		try {
-			return reviewDao.totalSatisfactionValue(data);			
+			return reviewDao.totalSatisfactionValue(data);
 		}catch(Exception e) {
+			
 			return 0.0;
 		}
 	}
@@ -229,26 +224,17 @@ public class ReviewServiceImp implements ReviewService {
 	public List<Map<String, String>> valuesByItem(Map<String, String> data) {
 		data.put("REVW_FL", "1");
 		List<Map<String, String>> valuesByItem = reviewDao.valuesByItem(data);
-	//	Map<String, String> test =  valuesByItem.get(0);
-		
-	//	System.out.println("fff: "+ String.valueOf(test.get("COUNT")));
-		
-		//valuesByItem.add(numOfValuesByItem(valuesByItem));
 		return valuesByItem;
 	}
 	//기업별 , 리뷰 항목 수
 	@Override
 	public int numOfValuesByItem(List<Map<String, String>> data){
-		//data.get(0).get("EVALUATION_NUM");
-		System.out.println("서비스 평가 점수 떠야함 0점  : "+String.valueOf(data.get(0).get("COUNT")));
 		int numOfValuesByItem = 0;
 		for(Map<String, String> map : data) {
 			numOfValuesByItem += Integer.parseInt(String.valueOf(map.get("COUNT")));
 		}
-		
 		return numOfValuesByItem;
 	}
-	
 	
 	public int calPageTotalCount(int totalCount, int numOfMsgPage) {
 		int pageTotalCount = 0;

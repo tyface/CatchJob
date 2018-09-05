@@ -43,7 +43,6 @@ $(function(){
 		}
 	}	 
 	
-	//모달
 	 $('#modifyDomainModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget);
 		  var modal = $(this)	  
@@ -70,7 +69,7 @@ $(function(){
 				</div>
 			 	<div class="col-sm-2">
 					<select id="mngSelect" value="${viewData.keywordOption}">
-						<option value="domainNameKeyword">도메인명</option><!-- TODO -->
+						<option value="domainNameKeyword">도메인명</option>
 						<option value="domainAddressKeyword">도메인 주소</option>
 					</select>
 				</div>

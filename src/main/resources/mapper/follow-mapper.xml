@@ -25,17 +25,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM FOLLOWING_TB
 		WHERE MBER_IDX = #{MBER_IDX}
 	</select>
-<!-- 	<select id="selectListEntByMember" parameterType="int" resultType="map">
-		SELECT fol.MBER_IDX, ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
-					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,COUNT(revw.ENT_IDX) as REVW_CNT,COUNT(intvw.ENT_IDX) as INTVW_CNT
+
+<!-- 	<select id="confirmFollowEnt" parameterType="map" resultType="int"> -->
+<!-- 		SELECT count(*) AS COUNT -->
+<!-- 		FROM FOLLOWING_TB -->
+<!-- 		WHERE MBER_IDX=#{MBER_IDX} AND ENT_IDX=#{ENT_IDX} -->
+<!-- 	</select> -->
+
+	<!-- 팔루우 기업 리스트 보기 profile-follows.jsp -->
+	<select id="selectListEntByMember" parameterType="int" resultMap="entMap">
+		SELECT fol.MBER_IDX ,ent.ENT_IDX, ent.ENT_NM, ent.ENT_INDUTY_NM,up.EVALUATION_AVG,up.PAY_AMT_AVG, up.NPN_SBSCRBER_CNT, 
+					ld.ADDR_BCITY_NM, ld.ADDR_SIGNGU_NM,revw.REVW_CNT,intrvw.INTRVW_CNT
 		FROM  		FOLLOWING_TB fol
 		LEFT JOIN	ENTERPRISE_TB ent 
 		ON 			fol.ENT_IDX=ent.ENT_IDX
-		
-		LEFT JOIN 	REVIEW_TB revw 
+		LEFT JOIN 	(SELECT ENT_IDX, COUNT(*) AS REVW_CNT 
+					 FROM REVIEW_TB 
+					 WHERE REVW_FL = 1 
+					 GROUP BY ENT_IDX
+					 ) revw 
 		ON 			ent.ENT_IDX = revw.ENT_IDX
-		LEFT JOIN 	INTERVIEW_TB intvw 
-		ON 			ent.ENT_IDX = intvw.ENT_IDX
+		LEFT JOIN 	(SELECT ENT_IDX, COUNT(*) AS INTRVW_CNT 
+					 FROM INTERVIEW_TB 
+					 WHERE INTRVW_FL = 1 
+					 GROUP BY ENT_IDX
+					 ) intrvw 
+		ON 			ent.ENT_IDX = intrvw.ENT_IDX
 		LEFT JOIN 	UPDATE_ENT_INFO_TB up
 		ON 			ent.ENT_IDX = up.ENT_IDX
 		LEFT JOIN 	LEGAL_DONG_TB ld 
@@ -44,13 +59,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND 			ld.ADDR_EMD_CD = IF(ent.ADDR_EMD_CD = ld.ADDR_EMD_CD,ent.ADDR_EMD_CD,0 )
 		WHERE 	   	fol.MBER_IDX=#{MBER_IDX}
 		GROUP BY 	ent.ENT_IDX
-	</select> -->
-	
-	<select id="confirmFollowEnt" parameterType="map" resultType="int">
-		SELECT count(*) AS COUNT
-		FROM FOLLOWING_TB
-		WHERE MBER_IDX=#{MBER_IDX} AND ENT_IDX=#{ENT_IDX}
 	</select>
-
 	
+	<resultMap type="enterprise" id="entMap">
+		<result property="entIndex" column="ENT_IDX" />
+		<result property="entName" column="ENT_NM" />
+		<result property="entBizRegNum" column="ENT_BIZR_NO" />
+		<result property="industryCode" column="ENT_INDUTY_CD" />
+		<result property="industryName" column="ENT_INDUTY_NM" />
+		<result property="entStyleType" column="ENT_STLE_TYPE" />
+		<result property="entSubscriberFlag" column="ENT_SBSCRB_ST" />
+		<result property="entFlag" column="ENT_FL" />
+		<result property="entFoundationDate" column="ENT_FOND_YMD" />		
+		<result property="following" column="FOLLOWING"/>						
+		<result property="bcityName" column="ADDR_BCITY_NM" />
+		<result property="signguName" column="ADDR_SIGNGU_NM" />
+		<result property="employeeCount" column="ENT_EMPLOYEE_CNT" />
+		<result property="entranceCount" column="NPN_NW_SBSCRBER_CNT" />
+		<result property="retirementCount" column="NPN_SCBT_CNT" />
+		<result property="evaluationAvg" column="EVALUATION_AVG" />
+		<result property="salaryAvg" column="PAY_AMT_AVG" />
+		<result property="reviewCount" column="REVW_CNT" />
+		<result property="interviewCount" column="INTRVW_CNT" />
+	</resultMap>
 </mapper>

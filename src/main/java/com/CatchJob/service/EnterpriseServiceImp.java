@@ -56,16 +56,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entDao.selectListEmpCntRank(Constants.Config.RANK_VIEW_COUNT);
 	}
 
-	@Override
-	public List<Enterprise> getFollowsEntList(int memberIndex) {
-		
-		List<Enterprise> entList = entDao.selectListEntByMember(memberIndex);
-
-		for (Enterprise ent : entList) {
-			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
-		}
-		return entList;
-	}
+	
 	//최근 기업 정보 보기 
 	@Override
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData) {
@@ -86,9 +77,12 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
+			
+			System.out.println("키워드 존재!!!");		
 			String keywordOption = (String) data.get("keywordOption");	
 			if(keywordOption.equals("entNameKeyword")) {
 				String entNameKeyword = (String) data.get("keyword");
+				
 				map.put("entNameKeyword", entNameKeyword);
 				viewData.put("keyword", entNameKeyword);
 				viewData.put("keywordOption", "entNameKeyword");
@@ -99,10 +93,14 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				viewData.put("keyword", entIndexKeyword);
 				viewData.put("keywordOption", "entIndexKeyword");
 				totalCount  = entDao.selectCountByKeyword(map); 
-			} 		
-		} 	
+			}else if(keywordOption.equals("")) {
+				totalCount  = entDao.selectCountByKeyword(map);
+			}
+		} else {
+			totalCount  = entDao.selectCountByKeyword(map);
+		}
 
-		if(totalCount==0) {			//TODO(페이징 첫화면 문제)
+		if(totalCount==0) {			
 			totalCount = 1;
 		}
 		int numOfMsgPage = (int) data.get("numOfMsgPage");
@@ -177,9 +175,6 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		dataMap.putAll(entDao.selectEntBaseInfo(entIndex));
 		dataMap.putAll(entDao.selectPeerIndustryAvgInfo(entIndex));
 		dataMap.putAll(entDao.selectTotalAvgInfo());
-		System.out.println("==============================");
-		System.out.println(entIndex);
-		System.out.println(dataMap);
 		return dataMap;
 	}
 

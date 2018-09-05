@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="include/header.jsp" flush="true" />
+<%@ include file="include/header.jsp" %>
   <style>
   /* Icon when the collapsible content is shown */
   .collapsed-evt:after {
@@ -22,7 +22,6 @@
 		<div class="contents-wrap">
 		<h1 id="title">FAQ</h1>
 		<!--   <h2>연봉 정보</h2> -->
-		 <a href='https://onlinelogomaker.com' title='Online Logo Maker'> onlinelogomaker.com </a>
 		    <div class="panel-group" id="accordion">
 		 	   <h2><small><b>연봉 정보</b></small></h2>
 			   <div class="panel panel-default">
