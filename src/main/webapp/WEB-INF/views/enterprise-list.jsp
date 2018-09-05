@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
-<jsp:include page="include/header.jsp" flush="true" />
-<script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
+<%@ include file="include/header.jsp" %>
+
 <link rel="stylesheet" href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 
 
@@ -40,4 +40,5 @@ $(function() {
 	<button type="button" class="btn btn-default move-top" >
 		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
 	</button>
-<jsp:include page="include/footer.jsp" flush="true" />
+<%@ include file="include/footer.jsp" %>
+

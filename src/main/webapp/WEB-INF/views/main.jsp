@@ -11,7 +11,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 
 <!-- 유효성 검사 -->
-<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script> --%>
 
 <script type="text/javascript">

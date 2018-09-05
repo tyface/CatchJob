@@ -20,6 +20,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/enterprise.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/public.js"></script>
 <security:authentication var="principal" property="principal"/>
 

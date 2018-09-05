@@ -1,4 +1,11 @@
+var status = "logout";
 
+var month = new Array(); //월
+var salary = new Array(); //연금정보
+var viewSalary = new Array();
+var totalPersonPerMonth = new Array(); //총 인원
+var newPersonPerMonth = new Array(); //입사자
+var outPersonPerMonth = new Array();//퇴사자
 
 
 /* 무한 스크롤 페이징*/
@@ -399,22 +406,355 @@ function followAction(entIndex,e){
     }
   });
 }
+//
+function entInf(){
+	$("#person").text(totalPerson[0]);
+	$("#fondDate").text(fondDate[0]);
+	$("#newPerson").text(newPerson[0]);
+	$("#outPerson").text(outPerson[0]);
+	$("#newPersonPercent").text(parseFloat((newPerson[0]/totalPerson[0])*100).toFixed(1));
+ 	$("#outPersonPercent").text(parseFloat((outPerson[0]/totalPerson[0])*100).toFixed(1));
 
-$(function(){
+}
 
-    $(window).scroll(function() {
-        if ($(this).scrollTop() > 500) {
-            $('.move-top').fadeIn();
-        } else {
-            $('.move-top').fadeOut();
-        }
-    });
+//select1 그래프
+function changeAvgInfo(e){
+	var arr;
+	switch (e) {
+		case '인원':
+			arr = totalPerson;
+			break;
+		case '업력':
+			arr = fondDate;
+			break;
+		case '입사':
+			arr = newPerson;
+			break;
+		case '퇴사':
+			arr = outPerson;
+			break;
+	}
+	var max = Math.max.apply(null, arr);
 
-    $(".move-top").click(function() {
-        $('html, body').animate({
-            scrollTop : 0
-        }, 400);
-        return false;
-    });
+	$("#select").text(e);
+	$("#numOfEnt").text(arr[0]);
+	$("#numOfInd").text(arr[1]);
+	$("#numOfTotEnt").text(arr[2]);
 
-});
+	$("#entPer").css('width', arr[0]/max*100+'%');
+	$("#indPer").css('width', arr[1]/max*100+'%');
+	$("#toEntPer").css('width', arr[2]/max*100+'%');
+}
+
+/* section4 월별그래프-평균급여 */
+function chartSalary(){
+
+	var ctx1 = document.getElementById("lineChart").getContext('2d');
+	var lineChart = new Chart(ctx1, {
+
+		type: 'bar',
+		/* 데이터 start */
+		data: {
+			labels: month,
+			datasets: [{
+					type: 'line',
+					label: '평균 급여',
+					borderColor: '#BDBDBD',
+				 	borderWidth: 2,
+				 	pointBorderColor: mainColor,
+				 	pointBorderWidth: 3,
+					fill: false,
+					data: salary,
+				},
+			],
+				borderWidth: 1
+		}, /* 데이터 end */
+		/* 옵션 start */
+		 options: {
+			 plugins: {
+				datalabels: {
+					color: mainColor,
+ 					align: 'start',
+ 					anchor: 'start',
+					display: function(context) {
+						return context.dataset.data[context.dataIndex] ;
+					},
+					font: {
+						weight: 'bold'
+					},
+ 					formatter: function(value, context){
+ 						return Math.round(value/10000)
+ 					}
+				}
+			},
+	        elements: {
+	            line: {
+	                tension: 0, // disables bezier curves
+	            }
+	        },
+	        scales: {								
+                   yAxes: [{
+                	    gridLines: {
+   							display: false,
+   		            	},
+                   		scaleLabel: {
+                            display: true,
+                            labelString: '(만원)',
+                        },
+                        ticks: {
+                        	 min:0,
+                             callback: function(value, index, values) {
+                                 return Math.round(value/10000);
+                            },
+                        },
+                   }],
+                   xAxes: [{
+                	   gridLines: {
+   							display: false,
+   		            	},  
+                	    ticks: {
+                             callback: function(value, index, values) {
+                             	  var month = '';
+                             	  (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
+                                 return '\''+value.substring(2,4)+' '+month+'월';
+                             },
+                          },
+                	  }]
+               },	
+                tooltips: {
+                    enabled: true,
+                    mode: 'index',
+                    axis: 'y',
+                    callbacks: {
+                        label: function(tooltipItems, data) {
+                        	/* 컴마찍는 부분 */
+                        	var value = data.datasets[0].data[tooltipItems.index];
+                        	 if(parseInt(value) >= 1000){
+                        		 value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                              } else {
+                            	 value = value;
+                              }
+                        	return data.datasets[tooltipItems.datasetIndex].label +': ' + value + ' 원';
+                        }
+                    }
+                },
+		    }/* 옵션 end */
+	});
+}/* section4 월별그래프-평균급여 end */
+
+/* #section4 월별그래프-인원*/
+function chartPersonnel(){
+	var ctx2 = document.getElementById("comboBarLineChart").getContext('2d');
+	var comboBarLineChart = new Chart(ctx2, {
+		type: 'bar',
+		scaleOverride: false,
+		/* 데이터 start */
+		data: {
+			labels: month,
+			datasets: [{/* 총 인원 datasets */
+					type: 'line',
+					label: '총 인원',
+					borderColor: '#BDBDBD',
+					borderWidth: 2,
+					pointBorderColor: mainColor,
+					pointBorderWidth: 3,
+					fill: false,
+					data: totalPersonPerMonth,
+
+					datalabels: {
+						color:  mainColor,
+						align: 'start',
+						anchor: 'start',
+						display: true,
+					},
+				}, { /* 입사자 datasets */
+					type: 'bar',
+					label: '입사자',
+					backgroundColor: mainColor,
+					data: newPersonPerMonth,
+					borderColor: 'white',
+					borderWidth: 0,
+					datalabels: {
+						display: false,
+					}
+				}, { /* 퇴사자 datasets */
+					type: 'bar',
+					label: '퇴사자',
+					backgroundColor: subColor,
+					data: outPersonPerMonth,
+					datalabels: {
+						display: false,
+					}
+				}],
+				borderWidth: 1
+		},/* 데이터 end */
+		/* 옵션 start */
+		options: {
+			plugins: {
+				datalabels: {
+					font: {
+						weight: 'bold'
+					},
+				}
+			},
+	        elements: {
+	            line: {
+	                tension: 0, // disables bezier curves
+	            }
+	        },
+	        tooltips: {
+                enabled: true,
+                mode: 'index',
+                axis: 'y',
+                callbacks: {
+                    label: function(tooltipItems, data) {
+                    	 return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel + ' 명';
+                    }
+                }
+            },
+            scales: {
+                yAxes: [{
+                	gridLines: {
+						display: false,
+		            },
+                	scaleLabel: {
+                        display: true,
+                        labelString: '(명)',
+                    },
+                }],
+                xAxes: [{
+                	
+                	gridLines: {
+						display: false,
+		            },
+                    ticks: {
+                        callback: function(value, index, values) {
+                        	 var month = '';
+                          	 (value.substring(4,5)==0) ? month = value.substring(5,6) : month = value.substring(4,6);
+                             return '\''+value.substring(2,4)+' '+month+'월';
+                          },
+                       },
+              	 }]
+            },
+	    }/* 옵션 end */
+
+	});
+}/* #section4 월별그래프-인원 end */
+
+/* 면접후기 작성시 유효성 검사 */
+function interviewValidation(){
+	$('#writeInterview').validate({
+		/* 규칙 */
+		rules : {
+			intrvwDifficulty:{
+				required : true
+			},
+			intrvwDate:{
+				required : true,
+				date: true
+			},
+			intrvwRoute:{
+				required : true
+			},
+			intrvwReview:{
+				required : true,
+				minlength : 10,
+				maxlength : 500
+			},
+			intrvwQuestion:{
+				required : true,
+				minlength : 10,
+				maxlength : 500
+			},
+			intrvwAnswer:{
+				required : true,
+				minlength : 10,
+				maxlength : 500
+			},
+			presentationDate:{
+				digits: true
+			}
+		},
+		/* 메세지 */
+		messages : {
+			intrvwDifficulty:{
+				required : "다른 항목을 선택해주세요"
+			},
+			intrvwDate:{
+			},
+			intrvwRoute:{
+				required : "다른 항목을 선택해주세요"
+			},
+			intrvwReview:{
+				minlength : "최소 10글자이상이어야 합니다",
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
+			},
+			intrvwQuestion:{
+				minlength : "최소 10글자이상이어야 합니다"	,
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
+			},
+			intrvwAnswer:{
+				minlength : "최소 10글자이상이어야 합니다"	,
+				maxlength : "최대 500글자까지 입력할 수 있습니다"
+			}
+		},
+		/* submit행들러 */
+		submitHandler: function(form) {
+			swal({
+				title:"등록",
+				text: "You clicked the button!",
+				type: "success",
+				confirmButtonClass: "btn-success",
+			},
+			function(){
+				form.submit();
+			})
+		}
+	});
+}
+
+/* 숫자에 컴마 찍는 함수 */
+function addComma(num) {
+   var regexp = /\B(?=(\d{3})+(?!\d))/g;
+   return num.toString().replace(regexp, ',');
+}
+/* JSON 에서 줄 바꿈 처리  */
+function jsonEscape(str)  {
+    return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
+}
+/* 별 */
+function stars(){
+	$('.stars').barrating({
+	    theme: 'fontawesome-stars',initialRating: 1,
+	   	onSelect: function(value, text, event){
+				var target = event.target.parentNode.parentNode.parentNode.childNodes[3].childNodes[1];
+				target.innerHTML = value;
+	    }
+	});
+}
+/* 팔로잉 된 기업이면 꽉찬하트 로 바꾸기 . 기본은 빈 하트*/
+function followCheck(){
+	if(following == 1){
+		$("#follow").toggleClass("fa-heart-o");
+		$("#follow").toggleClass("fa-heart");
+	}
+}
+//section4 - 평균급여 버튼 클릭 이벤트
+function salaryBtn(){
+	$("canvas#comboBarLineChart").remove();
+	$("div.chartreport").append('<canvas id="lineChart"></canvas>');
+	chartSalary();
+	$("#personnel-btn").attr('disabled', false);
+	$("#salary-btn").attr('disabled', true);
+}
+//section4 - 인원 버튼 클릭 이벤트
+function personnelBtn(){
+	$("canvas#lineChart").remove();
+	$("div.chartreport").append('<canvas id="comboBarLineChart"></canvas>');
+	chartPersonnel();
+	$("#personnel-btn").attr('disabled', true);
+	$("#salary-btn").attr('disabled', false);
+}
+
+
+

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.InterviewDao;
 import com.CatchJob.model.Interview;
-import com.CatchJob.model.Review;
 
 @Service
 public class InterviewServiceImp implements InterviewService{
@@ -21,17 +20,11 @@ public class InterviewServiceImp implements InterviewService{
 	@Override
 	public boolean insertInterview(Interview interview) {
 		interview.setIntrvwFlag("1");
-//		int result = itvwDao.insertInterview(interview);
-//		if (result > 0) {
-//			return true;
-//		} else {
-//			return false;
-//		}
 		try{
 			itvwDao.insertInterview(interview);
 			return true;
 		}catch(Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -55,7 +48,6 @@ public class InterviewServiceImp implements InterviewService{
 			return false;
 		}
 	}
-
 	// 면접정보 가져오기- 회원이 면접후기 수정할 때 필요 
 	@Override
 	public Interview selectListByIndex(Map<String, String> data) {  
@@ -64,15 +56,12 @@ public class InterviewServiceImp implements InterviewService{
 		return itvwDao.selectListByIndex(data);
 	}
 
-
 	@Override
 	public List<Map<String,String>> interviewPieChart(Map<String, String> data) {	
 		data.put("INTRVW_FL", "1");
 		return itvwDao.interviewPieChart(data);
 	}
 
-	
-	
 	@Override
 	public List<Interview> selectListByMemberIdx(Map<String, String> data) {
 		data.put("INTRVW_FL", "1");
@@ -82,7 +71,6 @@ public class InterviewServiceImp implements InterviewService{
 		}
 		return result;
 	}
-
 	//면접 후기 작성시, 중복확인 메서드 
 	@Override
 	public boolean interviewDuplicationCheck(Map<String, String> data) {
@@ -95,13 +83,9 @@ public class InterviewServiceImp implements InterviewService{
 		}
 		
 	}
-
 	//view page, 면접후기 리스트 페이징처리
 	@Override
 	public List<Interview> getInterviewList(Map<String, Integer> dataItvw) {
-		//받아온 페이지 ...
-		//Constants.Config.RANK_VIEW_COUNT //화면에 표시할 row 수
-		//dataItvw.put("ENT_IDX", entIndex);
 		dataItvw.put("INTRVW_FL", 1);
 		int PAGE_NUM = dataItvw.get("PAGE_NUM");
 		int START_ROW = Constants.Interview.NUM_OF_ITVW_PER_PAGE * ( PAGE_NUM - 1 ) ;
@@ -149,8 +133,6 @@ public class InterviewServiceImp implements InterviewService{
 			case "6":
 				interviewList.get(i).setIntrvwRoute("기타");
 				break;	
-			//default : interviewList.get(i).setIntrvwRoute("기타");;
-			//break;
 			}
 		}
 		/* 면접 결과 */		
@@ -171,8 +153,7 @@ public class InterviewServiceImp implements InterviewService{
 					break;
 				}
 			}catch(NullPointerException e) {
-				System.out.println("널값임..");
-				//interviewList.get(i).setIntrvwRoute("0");
+				e.printStackTrace();
 			}
 		}
 		/* 면접  경험*/		
@@ -188,16 +169,11 @@ public class InterviewServiceImp implements InterviewService{
 				case "3":
 					interviewList.get(i).setIntrvwExperience("긍정적");
 					break;	
-				//default : interviewList.get(i).setIntrvwExperience("긍정적");;
-				//break;
 				}
 			}catch(NullPointerException e) {
-				System.out.println("널값임..");
-				//interviewList.get(i).setIntrvwExperience("0");
+				e.printStackTrace();
 			}
 		}
-		
-		//System.out.println("인터뷰 서비스: "+interviewList);
 		return interviewList;
 	}
 	@Override
@@ -224,6 +200,7 @@ public class InterviewServiceImp implements InterviewService{
 		return pageTotalCount;
 		
 	}
+	
 	public int getInterviewStartPage(int pageNum) {
 		int startPage = ((pageNum - 1) / Constants.Interview.NUM_OF_NAVI_PAGE) * Constants.Interview.NUM_OF_NAVI_PAGE + 1;
 		return startPage;

@@ -25,9 +25,8 @@ public interface EnterpriseDao {
 	public  List<Map<String,String>>  selectGraphInfo(int entIndex);
 	
 	
-	//팔로잉 기업 보기
-	public List<Enterprise> selectListEntByMember(int memberIndex);
-	//	//TODO 최근 본 기업 보기 
+	
+	// 최근 본 기업 보기 
 	public List<Enterprise> selectListEntRecent(Map<String, Integer> mapData);
 
 	//관리자 페이지 페이징 처리+검색

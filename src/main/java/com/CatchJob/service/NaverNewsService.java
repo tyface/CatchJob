@@ -20,10 +20,10 @@ public class NaverNewsService {
 
 	private static final String CLIENT_ID = "B6T6LLj5_TTgOXd1wlgN";
 	private static final String CLIENT_Secret = "b2ZjsJWAg6";
-
+	//네이버 뉴스 api 
 	public List<News> searchNews(String keyword) throws Exception {
 		List<News> newsList = new ArrayList<News>();
-		String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
+		String encodedKeyword = URLEncoder.encode(keyword, "UTF-8"); 
 		String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + encodedKeyword;
 		URL url = new URL(apiURL);
 		HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -46,9 +46,8 @@ public class NaverNewsService {
 		}
 		br.close();
 		
-		System.out.println("네이버가 응답한 데이터 뉴스 : " + sb.toString());
 		JSONObject jsonObject = new JSONObject(sb.toString());
-		if(jsonObject.has("errorCode")) { //TODO 에러잡기
+		if(jsonObject.has("errorCode")) { 
 			if(jsonObject.get("errorCode").equals("080")) {
 				return null;
 			}
@@ -82,9 +81,6 @@ public class NaverNewsService {
 				news.setPubDate(standardDate);
 				news.setTitle(item.getString("title"));
 				newsList.add(news);
-			}
-			for (News news : newsList) {
-				System.out.println(news);
 			}
 		}
 		

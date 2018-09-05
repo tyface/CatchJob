@@ -9,22 +9,16 @@ public interface ReviewService {
 
 	// 리뷰 등록
 	public boolean insertReview(Review review);
-	
 	// 리뷰 하나보기
 	public Review selectReview(String reviewIndex);
 	//리뷰 삭제
 	public boolean deleteReview(Map<String, String> data);
 	//질문출력
 	List<Map<String, String>> question(Map<String, String> data);
-	
-	//리뷰 보기
-//	public List<Review> reviewList(int entIndex);
 	//수정 삭제 페이지에 리뷰 띄우기	
 	public List<Review> reviewListByMember(Map<String, String> map);
 	//수정 할 데이터 가져오기
 	public Review review(Map<String, String> data);
-/*	//질문별로 리뷰 보기
-	public List<Review> reviewListByQNum(Map<String, String> data);*/
 	/* 관리자 페이지 */
 	public int calPageTotalCount(int totalCount, int numOfMsgPage);
 
@@ -35,7 +29,7 @@ public interface ReviewService {
 	public Map<String, Object> getMessageList(Map<String, Object> data);
 	//리뷰 수정
 	public boolean modifyReview(Review review);
-//	리뷰코멘트 VIEW 페이지에서 페이징처리
+	//리뷰코멘트 VIEW 페이지에서 페이징처리
 	public List<Review> getReviewsList(Map<String, Integer> data);
 	//Review page data
 	public Map<String, Integer> reviewPageData (int currentPage, int entIndex, int questionNum );

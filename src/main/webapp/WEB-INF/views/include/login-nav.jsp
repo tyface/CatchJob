@@ -4,7 +4,6 @@
 <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
 <security:authentication var="principal" property="principal"/>
 <script>
-console.log(window.location.pathname)
 
 $(function() {
 	if(window.location.pathname != "/catchjob/"){

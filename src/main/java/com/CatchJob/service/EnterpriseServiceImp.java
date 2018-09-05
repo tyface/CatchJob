@@ -56,16 +56,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		return entDao.selectListEmpCntRank(Constants.Config.RANK_VIEW_COUNT);
 	}
 
-	@Override
-	public List<Enterprise> getFollowsEntList(int memberIndex) {
-		
-		List<Enterprise> entList = entDao.selectListEntByMember(memberIndex);
-
-		for (Enterprise ent : entList) {
-			ent.setSalaryAvg(salaryCalculation(ent.getSalaryAvg()));
-		}
-		return entList;
-	}
+	
 	//최근 기업 정보 보기 
 	@Override
 	public List<Enterprise> getRecentEntList(Map<String, Integer> mapData) {
@@ -177,9 +168,6 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		dataMap.putAll(entDao.selectEntBaseInfo(entIndex));
 		dataMap.putAll(entDao.selectPeerIndustryAvgInfo(entIndex));
 		dataMap.putAll(entDao.selectTotalAvgInfo());
-		System.out.println("==============================");
-		System.out.println(entIndex);
-		System.out.println(dataMap);
 		return dataMap;
 	}
 
