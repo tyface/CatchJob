@@ -4,14 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/admin.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
 <script>		
 	function newPage() {	
@@ -50,10 +47,8 @@ $(function(){
 		}else if(getParameterByName('keywordOption')=='questionNumKeyword'){
 			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}
-
 	} 
 	
-		//모달
 	 $('div.modal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget);
 		  var modal = $(this)
@@ -66,10 +61,8 @@ $(function(){
 		  modal.find('.modal-body #entIndex').val(button.data('entindex'))
 		  
 		  var qNum = button.data('qnum')
-		  modal.find('.modal-body #qnum').val(qNum)
-		
+		  modal.find('.modal-body #qnum').val(qNum)		
 	});
-	 	//체크박스
 	  $("input[name='chk_all']").click(function () {
 	        var chk_listArr = $("input[name='chk_list']");
 	        for (var i=0; i < chk_listArr.length; i++) {
@@ -77,21 +70,21 @@ $(function(){
 	        }
 	    });
 	    
-	    $("input[name='chk_list']").click(function () { //리스트 항목이 모두 선택되면 전체 선택 체크
+	    $("input[name='chk_list']").click(function () { 
 	        if ($("input[name='chk_list']:checked").length == 5) {
 	            $("input[name='chk_all']")[0].checked = true;
-	        } else  {          //리스트 항목 선택 시 전체 선택 체크를 해제함
+	        } else  {      
 	            $("input[name='chk_all']")[0].checked = false; 
 	        }
 	    });    
 	          
 });
-	//체크박스 사용
+
 function chkModify(){
     var valueArr = new Array();
     var list = $("input[name='chk_list']");
     for(var i = 0; i < list.length; i++){
-        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+        if(list[i].checked){ 
             valueArr.push(list[i].value);
         }          
     }
@@ -114,12 +107,12 @@ function chkModify(){
 			} 
 		});  
 }
-	//체크박스 삭제
+
 function chkDelete(){
     var valueArr = new Array();
     var list = $("input[name='chk_list']");
     for(var i = 0; i < list.length; i++){
-        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+        if(list[i].checked){ 
             var chkedList = valueArr.push(list[i].value);
         }
     }
@@ -142,7 +135,6 @@ function chkDelete(){
 		} 
 	});  
 }
-
 </script>
 </head>
 <body>
@@ -154,18 +146,15 @@ function chkDelete(){
 			<div class="row">
 				<div class="col-sm-7">
 					<div class="btn-group" role="group">
-						<button onclick="chkModify()" class="btn btn-default"
-							id="chkModify">
+						<button onclick="chkModify()" class="btn btn-default" id="chkModify">
 							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>사용
 						</button>
-						<button onclick="chkDelete()" class="btn btn-default"
-							id="chkDelete">
+						<button onclick="chkDelete()" class="btn btn-default" id="chkDelete">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제
 						</button>
 					</div>
 					<input type="number" min="5" max="15" step="5" id="quantity"
-						value="${viewData.msgPerPage}" onclick="newPage()">&nbsp;
-					entries
+						value="${viewData.msgPerPage}" onclick="newPage()">&nbsp; entries
 				</div>
 				<div class="col-sm-2">
 					<select id="mngSelect" value="${viewData.keywordOption}">
@@ -183,7 +172,7 @@ function chkDelete(){
 							value="${viewData.msgPerPage}"> <input type="hidden"
 							id="hiddenElement" /> <input type="text" name="keyword"
 							class="form-control" id="keyword" value="${viewData.keyword}"
-							style="height: 28px" size="20" placeholder="검색어를 입력해 주세요">
+							 size="20" placeholder="검색어를 입력해 주세요">
 						<div class="input-group-btn">
 							<button type="submit" class="btn" onclick="searchFunction()">
 								<span class="glyphicon glyphicon-search"></span>
@@ -235,8 +224,6 @@ function chkDelete(){
 					</c:forEach>
 				</tbody>
 			</table>
-
-			<!-- modal -->
 			<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
 				aria-labelledby="modalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -266,7 +253,6 @@ function chkDelete(){
 										<input type="text" readOnly="readOnly" id="regDate"
 											name="regDate" class="form-control">
 									</div>
-
 								</div>
 								<div class="row form-group">
 									<div class="col-xs-2">
@@ -295,10 +281,8 @@ function chkDelete(){
 									<div class="col-xs-2" style="text-align: right">
 										<label for="qnum" class="control-label">질문 내용 </label>
 									</div>
-
 									<div class="col-xs-5">
-										<select class="form-control" style="color: gray" id="qnum"
-											name="questionNum">
+										<select class="form-control" id="qnum" name="questionNum">
 											<option>질문 내용</option>
 											<option value="1">1.승진 기회 및 가능성</option>
 											<option value="2">2.복지 및 급여</option>
@@ -326,7 +310,6 @@ function chkDelete(){
 							</div>
 						</form>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -362,10 +345,8 @@ function chkDelete(){
 			</ul>
 		</div>
 	</div>
-	</div>
-	</div>
-	<!--<div class="row"> end -->
-	</div>
-	<!--<div class="container-fluid"> end -->
+</div>
+</div>
+</div>
 </body>
 </html>

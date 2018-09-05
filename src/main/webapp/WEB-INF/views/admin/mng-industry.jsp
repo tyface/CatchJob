@@ -2,63 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-
 <html>
 <head>
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-<link rel="stylesheet"
-	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Admin Page</title>
-<style>
-.row {
-	padding: 15px;
-}
-
-.page-header {
-	text-align: center;
-	font-weight: bold;
-	margin-bottom: 50px;
-}
-
-#keyword {
-	height: 28px;
-}
-
-#indutyBox {
-	height: 500px;
-	overflow: scroll;
-	background-color: rgb(235, 232, 232);
-	border: 1px solid gray;
-	padding: 20px;
-	border-radius: 4px;
-}
-
-#indutyForm {
-	margin-top: 50px;
-}
-
-#indutyForm label {
-	font-size: 15px;
-}
-
-#indutyDiv {
-	text-align: center;
-	border-bottom: 1px dotted black;
-	margin-bottom: 20px;
-	font-size: 17px;
-}
-
-#industryBtns {
-	text-align: center;
-}
-</style>
 <script>
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -72,12 +23,6 @@ $(function(){
  		$("input:radio[name='catagory']:radio[value='"+getParameterByName('largeCatagory')+"']").prop('checked',true)
 		 if(getParameterByName('industryCode')!=null){	
 			$("input:radio[name='code']:radio[value='"+getParameterByName('industryCode')+"']").prop('checked',true)
-			  var test = $("input:radio[name='code']:radio[value='"+getParameterByName('industryCode')+"']")
-			 test.prop('checked',true)
-			 
-			 console.log($("input:radio[name='code']:radio[value='"+getParameterByName('industryCode')+"']"));
-			 console.log($("input:radio[name='catagory']:radio[value='"+getParameterByName('largeCatagory')+"']"));
-			  
 		}	 
 	}	  	 
 });

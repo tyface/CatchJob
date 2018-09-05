@@ -12,7 +12,6 @@
 				+"&keyword="+$("#keyword").val();		
 		window.location=url;
 	}
-	
 </script>
 <body>
 	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%> 
@@ -26,7 +25,6 @@
 									<input type="number" min="5" max="15" step="5" id="quantity" value="${viewData.msgPerPage}" 
 									 onclick="newPage()">
 									&nbsp; entries</label></div> 	
-
 								<form action="mngAdmin" class="form-inline pull-right">
 									<div class="input-group">
 										<input type="hidden" name="page" value="${viewData.currentPage}">
@@ -63,8 +61,7 @@
 										</tr> 
 									</c:forEach> 
 								</tbody>
-							</table>
-							
+							</table>				
 							<div id="pagenation">
 							<ul class="pagination pagination-sm">
 								<c:if test="${viewData.startPage != 1}">	
@@ -91,7 +88,6 @@
 							</ul> 
 						</div>	
 						</div>
-
 						<div class="col-md-5" id="selectOneBox">
 							<form class="form-horizontal" method="post" action="modifyAdmin">
 								<div class="form-group">
@@ -109,11 +105,10 @@
 										<input type="hidden" name="mberPw" value="${admin.mberPw}">
 									</div>
 								</div>
-
 								<div class="form-group" style="text-align: right">
-									<label for="mberType" class="control-label" style="margin-right: 15px">권한</label>
+									<label for="mberType" class="control-label" style="margin-right:15px">권한</label>
 									<div class="col-sm-8 pull-right">
-										<select class="form-control" style="color:gray" id="mberType" name="mberType">
+										<select class="form-control" id="mberType" name="mberType">
 											<option value="" selected disabled hidden>
 											<c:set var="name" value="${admin.mberType}"/>
 												<c:if test="${name.equals('ROLE_ADMIN')}">level1</c:if>

@@ -1,62 +1,250 @@
-	.col-sm-2 #mngSelect{
-		width: 190px;
-		height:27px;
-		border-radius:4px;	
-	}
-	
-	.col-sm-5 select{
-		height:27px;
-		border-radius:4px;
-		border-line: 1px solid #ccc;
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	}
-	
-	.row{
-		padding:15px;
-	}
-	.page-header{
-		text-align: center; 
-		font-weight: bold;
-		margin-bottom: 50px;
-	}
-	#quantity{
-		width: 90px; 
-		height: 25px;
-		border-radius:4px;
-		border-line: 1px solid #ccc;
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	}
-	
-	#keyword{
-		height:28px;
-	}
-	#pagenation{
-		text-align:center;
-	}
-	#selectOneBox{
-		margin-top:15px;
-	}
-	#btnForm{
-		padding:20px;
-	}
-	table {
-        table-layout: fixed;
-        word-wrap: break-word;
-    }
+.col-sm-2 #mngSelect {
+	width: 190px;
+	height: 27px;
+	border-radius: 4px;
+}
 
-    table th, table td {
-        overflow: hidden;
-    }
-    #chkDelete{		
-		margin-right:10px;
+.col-sm-5 select {
+	height: 27px;
+	border-radius: 4px;
+	border-line: 1px solid #ccc;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.row {
+	padding: 15px;
+}
+
+.page-header {
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 50px;
+}
+
+#quantity {
+	width: 90px;
+	height: 25px;
+	border-radius: 4px;
+	border-line: 1px solid #ccc;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+#keyword {
+	height: 28px;
+}
+
+#pagenation {
+	text-align: center;
+}
+
+#selectOneBox {
+	margin-top: 15px;
+}
+
+#btnForm {
+	padding: 20px;
+}
+
+table {
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+table th, table td {
+	overflow: hidden;
+}
+
+#chkDelete {
+	margin-right: 10px;
+}
+
+.glyphicon-ok {
+	color: green;
+}
+
+.glyphicon-remove {
+	color: darkRed;
+}
+
+.row.form-group {
+	padding: 0;
+}
+
+/* admin-nav-sidebar */
+.form-horizontal {
+	font-size: 18px;
+}
+
+.wrapper {
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+#sidebar {
+	min-width: 300px;
+	max-width: 250px;
+	min-height: 100vh;
+	border-right: 1px solid gray;
+	transition: all 0.3s;
+	color: gray;
+}
+
+#sidebar.active {
+	margin-left: -250px;
+}
+
+a[data-toggle="collapse"] {
+	position: relative;
+	height: 50px;
+}
+
+.dropdown-toggle::after {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+@media ( max-width : 768px) {
+	#sidebar {
+		margin-left: -250px;
 	}
-	.glyphicon-ok{
-		color:green;
+	#sidebar.active {
+		margin-left: 0;
 	}
-	.glyphicon-remove{
-		color:darkRed;
+}
+
+a, a:hover, a:focus {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+}
+
+#sidebar ul {
+	padding: 15px 0;
+}
+
+#sidebar ul p {
+	color: #ccc;
+	padding: 10px;
+}
+
+#sidebar ul li a {
+	padding: 3px;
+	font-size: 1.5em;
+	display: block;
+}
+
+#sidebar ul li a:hover {
+	color: black;
+	background: #fff;
+}
+
+#sidebar ul li.active>a, a[aria-expanded="true"] {
+	color: #ccc;
+	background: #fff;
+}
+
+ul ul a {
+	font-size: 1.1em !important;
+	padding-left: 30px !important;
+}
+
+/* admin login */
+.form-signin {
+	max-width: 380px;
+	padding: 15px 35px 45px;
+	margin: 0 auto;
+	background-color: #fff;
+	height: 400px;
+}
+
+a[data-toggle="collapse"] {
+	position: relative;
+	height: 50px;
+}
+
+@media ( max-width : 768px) {
+	#sidebar {
+		margin-left: -250px;
 	}
-	.row.form-group{
-		padding:0;
+	#sidebar.active {
+		margin-left: 0;
 	}
-	
+}
+
+a, a:hover, a:focus {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+}
+
+.form-signin-heading, .checkbox {
+	margin-bottom: 30px;
+}
+
+.checkbox {
+	font-weight: normal;
+}
+
+.form-control {
+	position: relative;
+	font-size: 16px;
+	height: auto;
+	padding: 10px;
+}
+
+input[type="text"] {
+	margin-bottom: -1px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+input[type="password"] {
+	margin-bottom: 20px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+#loginContainer{
+	margin-top: 200px;
+}
+
+#adminLoginPw{
+	margin-top: 10px;
+}
+
+#adminLoginBtn{
+	margin-top:20px;
+}
+
+
+#indutyBox {
+	height: 500px;
+	overflow: scroll;
+	background-color: rgb(235, 232, 232);
+	border: 1px solid gray;
+	padding: 20px;
+	border-radius: 4px;
+}
+
+#indutyForm {
+	margin-top: 50px;
+}
+
+#indutyForm label {
+	font-size: 15px;
+}
+
+#indutyDiv {
+	text-align: center;
+	border-bottom: 1px dotted black;
+	margin-bottom: 20px;
+	font-size: 17px;
+}
+
+#industryBtns {
+	text-align: center;
+}
