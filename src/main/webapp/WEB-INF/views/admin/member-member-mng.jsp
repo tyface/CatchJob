@@ -113,10 +113,10 @@
 									</div>
 								</div>
 								<div class="form-group" style="text-align:right">
-									<label for="mberType" class="control-label"
+									<label for="mberType" class="type control-label" 
 										style="margin-right: 15px">구분</label>
 									<div class="col-sm-8 pull-right">
-										<select class="form-control" style="color:gray" id="mberType" name="mberType">
+										<select class="form-control" id="mberType" name="mberType">
 											<option value="" selected disabled hidden>
 											<c:set var="name" value="${member.mberType}"/>
 												<c:choose>

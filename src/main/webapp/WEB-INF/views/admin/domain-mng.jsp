@@ -6,7 +6,6 @@
 <head>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
 <script>
 	function newPage() {	
@@ -152,7 +151,6 @@ $(function(){
 					<input class="btn btn-primary" type="button" data-target="#regDomainModal" value="등록하기" data-toggle="modal">
 				</div>
 			</div>
-				<!-- 수정하기 modal  -->
 			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" id="modifyDomainModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -194,7 +192,6 @@ $(function(){
 						</form>
 					</div>
 				</div>  
-		<!-- 등록하기 modal -->
 			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" id="regDomainModal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -236,9 +233,7 @@ $(function(){
 				</div>
 			</div>
 		</div>
-	</div><!--<div class="row"> end -->
+	</div>
 </div>
-	<!--<div class="container-fluid"> end -->
-
 </body>
 </html>

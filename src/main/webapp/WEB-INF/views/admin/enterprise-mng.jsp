@@ -5,13 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/admin.css">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
 <script>		
 	function newPage() {	
@@ -19,20 +15,16 @@
 			"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val();		
 		window.location=url;
 	}
-		//서치
 	function searchFunction(){
 		  $("#hiddenElement").attr("name", "keywordOption");	  
 		if($("#mngSelect option:selected").text()=='기업명'){
-		     $("#hiddenElement").attr("value", "entNameKeyword");
-		
+		     $("#hiddenElement").attr("value", "entNameKeyword");		
 		} else if($("#mngSelect option:selected").text()=='기업코드'){
-			 $("#hiddenElement").attr("value", "entIndexKeyword");
-		      
+			 $("#hiddenElement").attr("value", "entIndexKeyword");	      
 		} 
 		$("#hiddenElement").appendChild($("#searchForm"));	
 	}
-	
-		
+			
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -41,7 +33,6 @@
 	} 
 	
 $(function(){
-
 	if(getParameterByName('keywordOption')!=null){
 		if(getParameterByName('keywordOption')=='entNameKeyword'){	
 			$("#mngSelect").val(getParameterByName('keywordOption'))
@@ -49,7 +40,6 @@ $(function(){
 			$("#mngSelect").val(getParameterByName('keywordOption'))
 		}
 	}	
-		//모달
 	 $('div.modal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget);
 		  var modal = $(this)		  
@@ -61,31 +51,27 @@ $(function(){
 		  modal.find('.modal-body #entSubscriberFlag').val(button.data('entsubscriberflag'))
 		  modal.find('.modal-body #entFlag').val(button.data('entflag'))
 		  modal.find('.modal-body #entFoundationDate').val(button.data('entfoundationdate'))
-		  modal.find('.modal-body #industryName').val(button.data('industryname'))
-		  
+		  modal.find('.modal-body #industryName').val(button.data('industryname'))		  
 	});
-	 	//체크박스
 	  $("input[name='chk_all']").click(function () {
 	        var chk_listArr = $("input[name='chk_list']");
 	        for (var i=0; i < chk_listArr.length; i++) {
 	            chk_listArr[i].checked = this.checked;
 	        }
 	    });	    
-	  $("input[name='chk_list']").click(function () { //리스트 항목이 모두 선택되면 전체 선택 체크
+	  $("input[name='chk_list']").click(function () { 
 	        if ($("input[name='chk_list']:checked").length == 5) {
 	            $("input[name='chk_all']")[0].checked = true;
-	        } else {          //리스트 항목 선택 시 전체 선택 체크를 해제함
+	        } else {       
 	            $("input[name='chk_all']")[0].checked = false; 
 	        }
-	   });    
-	          
+	   });           
 });
-	//체크박스
 function chkModify(){
     var valueArr = new Array();
     var list = $("input[name='chk_list']");
     for(var i = 0; i < list.length; i++){
-        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+        if(list[i].checked){
             valueArr.push(list[i].value);
         }          
     }
@@ -108,12 +94,11 @@ function chkModify(){
 		} 
 	});  
 }
-
 function chkDelete(){
     var valueArr = new Array();
     var list = $("input[name='chk_list']");
     for(var i = 0; i < list.length; i++){
-        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+        if(list[i].checked){ 
             var chkedList = valueArr.push(list[i].value);
         }
     }
@@ -182,7 +167,6 @@ function chkDelete(){
 						</div>
 					</div>
 				</form>
-
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
@@ -225,7 +209,6 @@ function chkDelete(){
 					</c:forEach>
 				</tbody>
 			</table>
-			<!-- modal -->
 			<div class="modal fade" tabindex="-1" role="dialog"
 				aria-labelledby="modalLabel" id="entModal" aria-hidden="true">
 				<div class="modal-dialog">
@@ -327,11 +310,10 @@ function chkDelete(){
 								<button type="submit" class="btn btn-primary">수정하기</button>
 								<button type="reset" class="btn btn-warning">초기화</button>
 							</div>
-					</div>
+						</div>
 					</form>
 				</div>
 			</div>
-
 			<div id="pagenation">
 				<ul class="pagination pagination-sm">
 					<c:if test="${viewData.startPage != 1}">
@@ -365,9 +347,7 @@ function chkDelete(){
 			</div>
 		</div>
 	</div>
-	</div>
-	<!--<div class="row"> end -->
-	</div>
-	<!--<div class="container-fluid"> end -->
+</div>
+</div>
 </body>
 </html>
