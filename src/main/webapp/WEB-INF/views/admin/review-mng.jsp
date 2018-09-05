@@ -4,10 +4,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>			
+<link
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
 <script>		
 	function newPage() {	
@@ -150,29 +154,36 @@ function chkDelete(){
 			<div class="row">
 				<div class="col-sm-7">
 					<div class="btn-group" role="group">
-						 <button onclick="chkModify()" class="btn btn-default" id="chkModify">
-						 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>사용</button>
-	  					 <button onclick="chkDelete()" class="btn btn-default" id="chkDelete">
-	  					 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제</button>
-  					</div>	
-					<input type="number" min="5" max="15" step="5" id="quantity" 
-					value="${viewData.msgPerPage}" onclick="newPage()">&nbsp; entries			
-				</div>			
+						<button onclick="chkModify()" class="btn btn-default"
+							id="chkModify">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>사용
+						</button>
+						<button onclick="chkDelete()" class="btn btn-default"
+							id="chkDelete">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>삭제
+						</button>
+					</div>
+					<input type="number" min="5" max="15" step="5" id="quantity"
+						value="${viewData.msgPerPage}" onclick="newPage()">&nbsp;
+					entries
+				</div>
 				<div class="col-sm-2">
 					<select id="mngSelect" value="${viewData.keywordOption}">
 						<option value="entNameKeyword">기업명</option>
 						<option value="entIndexKeyword">기업코드</option>
 						<option value="questionNumKeyword">질문번호</option>
 					</select>
-					
+
 				</div>
-				<form action="mngReview" class="form-inline col-sm-3" id="searchForm">
+				<form action="mngReview" class="form-inline col-sm-3"
+					id="searchForm">
 					<div class="input-group">
 						<input type="hidden" name="page" value="${viewData.currentPage}">
-						<input type="hidden" name="msgPerPage" value="${viewData.msgPerPage}">
-						<input type="hidden" id="hiddenElement"/>
-						<input type="text" name="keyword" class="form-control" id="keyword" value="${viewData.keyword}"
-						style="height:28px" size="20" placeholder="검색어를 입력해 주세요">
+						<input type="hidden" name="msgPerPage"
+							value="${viewData.msgPerPage}"> <input type="hidden"
+							id="hiddenElement" /> <input type="text" name="keyword"
+							class="form-control" id="keyword" value="${viewData.keyword}"
+							style="height: 28px" size="20" placeholder="검색어를 입력해 주세요">
 						<div class="input-group-btn">
 							<button type="submit" class="btn" onclick="searchFunction()">
 								<span class="glyphicon glyphicon-search"></span>
@@ -180,46 +191,50 @@ function chkDelete(){
 						</div>
 					</div>
 				</form>
-			</div>	
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th style="width:2%;">
-  								 <input type="checkbox" id="chk_all" name="chk_all"/>
-                            </th>
-                            <th style="width:2%"><span class="glyphicon glyphicon-check"></span></th>
-							<th style="width:5%">NO</th>
-							<th style="width:11%">작성자</th>
-							<th style="width:10%">기업명</th>
-							<th style="width:6%">기업코드</th>
-							<th style="width:6%">질문번호</th>
-							<th style="width:8%">세부사항</th>
-						</tr>
-					</thead>
-					<tbody>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th style="width: 2%;"><input type="checkbox" id="chk_all"
+							name="chk_all" /></th>
+						<th style="width: 2%"><span class="glyphicon glyphicon-check"></span></th>
+						<th style="width: 5%">NO</th>
+						<th style="width: 11%">작성자</th>
+						<th style="width: 10%">기업명</th>
+						<th style="width: 6%">기업코드</th>
+						<th style="width: 6%">질문번호</th>
+						<th style="width: 8%">세부사항</th>
+					</tr>
+				</thead>
+				<tbody>
 					<c:forEach var="reviews" items="${viewData.boardList}">
 						<tr>
-							<td>
-								<input type="checkbox" id="chk_list" name="chk_list" value="${reviews.reviewIndex}"/>
-                            </td>
-                            <c:if test="${reviews.reviewFlag==1}"><td><span class="glyphicon glyphicon-ok"></span></td></c:if>
-							<c:if test="${reviews.reviewFlag==2}"><td><span class="glyphicon glyphicon-remove"></span></td></c:if>
+							<td><input type="checkbox" id="chk_list" name="chk_list"
+								value="${reviews.reviewIndex}" /></td>
+							<c:if test="${reviews.reviewFlag==1}">
+								<td><span class="glyphicon glyphicon-ok"></span></td>
+							</c:if>
+							<c:if test="${reviews.reviewFlag==2}">
+								<td><span class="glyphicon glyphicon-remove"></span></td>
+							</c:if>
 							<td>${reviews.reviewIndex}</td>
-							<td>${reviews.mberId}</td> 
+							<td>${reviews.mberId}</td>
 							<td>${reviews.entName}</td>
 							<td>${reviews.entIndex}</td>
 							<td>${reviews.questionNum}</td>
-							<td>
-								<input class="btn btn-info btn-sm" type="button" data-reviewindex="${reviews.reviewIndex}"
-								data-contents="${reviews.contents}" data-qnum="${reviews.questionNum}" 
-								data-evaluation="${reviews.evaluationScore}" data-toggle="modal" 
-								data-mberid="${reviews.mberId}" data-entindex="${reviews.entIndex}" 
-								data-regdate="${reviews.regDate}" data-target="div.modal" value="수정하기">
-							</td>							
+							<td><input class="btn btn-info btn-sm" type="button"
+								data-reviewindex="${reviews.reviewIndex}"
+								data-contents="${reviews.contents}"
+								data-qnum="${reviews.questionNum}"
+								data-evaluation="${reviews.evaluationScore}" data-toggle="modal"
+								data-mberid="${reviews.mberId}"
+								data-entindex="${reviews.entIndex}"
+								data-regdate="${reviews.regDate}" data-target="div.modal"
+								value="수정하기"></td>
 						</tr>
 					</c:forEach>
-					</tbody>
-				</table>
+				</tbody>
+			</table>
 
 			<!-- modal -->
 			<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog"
@@ -227,115 +242,130 @@ function chkDelete(){
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="modalLabel">리뷰 코멘트</h4>							
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="modalLabel">리뷰 코멘트</h4>
 						</div>
 						<form action="modifyComment" method="post">
 							<div class="modal-body">
 								<input type="hidden" name="reviewIndex" id="reviewIndex">
-									<div class="row form-group">
-										<div class="col-xs-2 form-group">
-											<label for="entIndex" class="control-label">기업코드</label></div>
-										<div class="col-xs-3">	
-											<input type="text" id="entIndex" name="entIndex" class="form-control">
-										</div> 
-										<div class="col-xs-2  form-group" style="text-align:right">
-											<label for="regDate" class="control-label">등록일 </label></div>
-										<div class="col-xs-5">	
-											<input type="text" readOnly="readOnly" id="regDate" name="regDate" class="form-control">
-										</div> 
-		     				     		
-									</div>								
-		     				     	<div class="row form-group">
-		     				     		<div class="col-xs-2">
-											<label for="evaluation" class="control-label">리뷰 점수</label></div>
-										<div class="col-xs-3">	
-											<select class="form-control" style="color:gray" id="evaluation" name="evaluation">
-												<option>리뷰 점수</option>
-												<option value="1">1점</option>
-												<option value="2">2점</option>
-												<option value="3">3점</option>
-												<option value="4">4점</option>
-												<option value="5">5점</option>										
-											</select>										
-										</div>
-										<div class="col-xs-2 form-group" style="text-align:right">
-											<label for="mberId" class="control-label">작성자</label></div>
-										<div class="col-xs-5">
-											<input type="text" id="mberId" name="mberId" class="form-control"/></div>
+								<div class="row form-group">
+									<div class="col-xs-2 form-group">
+										<label for="entIndex" class="control-label">기업코드</label>
 									</div>
-									<div class="form-group row">		
-										<div class="col-xs-2" style="text-align:right">
-											<label for="qnum" class="control-label">질문 내용 </label></div>
-										
-									<div class="col-xs-5">	
-										<select class="form-control" style="color:gray" id="qnum" name="questionNum">
+									<div class="col-xs-3">
+										<input type="text" id="entIndex" name="entIndex"
+											class="form-control">
+									</div>
+									<div class="col-xs-2  form-group" style="text-align: right">
+										<label for="regDate" class="control-label">등록일 </label>
+									</div>
+									<div class="col-xs-5">
+										<input type="text" readOnly="readOnly" id="regDate"
+											name="regDate" class="form-control">
+									</div>
+
+								</div>
+								<div class="row form-group">
+									<div class="col-xs-2">
+										<label for="evaluation" class="control-label">리뷰 점수</label>
+									</div>
+									<div class="col-xs-3">
+										<select class="form-control" style="color: gray"
+											id="evaluation" name="evaluation">
+											<option>리뷰 점수</option>
+											<option value="1">1점</option>
+											<option value="2">2점</option>
+											<option value="3">3점</option>
+											<option value="4">4점</option>
+											<option value="5">5점</option>
+										</select>
+									</div>
+									<div class="col-xs-2 form-group" style="text-align: right">
+										<label for="mberId" class="control-label">작성자</label>
+									</div>
+									<div class="col-xs-5">
+										<input type="text" id="mberId" name="mberId"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-xs-2" style="text-align: right">
+										<label for="qnum" class="control-label">질문 내용 </label>
+									</div>
+
+									<div class="col-xs-5">
+										<select class="form-control" style="color: gray" id="qnum"
+											name="questionNum">
 											<option>질문 내용</option>
 											<option value="1">1.승진 기회 및 가능성</option>
 											<option value="2">2.복지 및 급여</option>
 											<option value="3">3.업무와 삶의 균형</option>
 											<option value="4">4.사내문화</option>
-											<option value="5">5.경영진</option>										
-										</select>									
-									</div> 
-										
+											<option value="5">5.경영진</option>
+										</select>
 									</div>
-									<div class="form-group row">
-										<div class="col-xs-2">
-											<label for="contents" class="control-label">코멘트<br>내용</label>
-										</div>
-										<div class="col-xs-10">
-											<textarea class="form-control" name="contents" id="contents" rows="6" cols="50"></textarea>
-										</div>
-									</div>
-							</div>
-							 <div class="modal-footer">
-							 	
-						        <button type="submit" class="btn btn-primary">수정하기 </button>
-						        <button type="reset" class="btn btn-warning">초기화</button>							
-						      </div>
-						     </form>  
-						    </div>  
-						  
-					</div>
-				</div>
-			</div>
 
-				<div id="pagenation">
-						<ul class="pagination pagination-sm">
-							<c:if test="${viewData.startPage != 1}">
-								<li class="page-item"><a class="page-link"
-									aria-label="Previous"
-									href="mngReview?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
-										<span aria-hidden='true'>&laquo;</span>
-								</a></li>
-							</c:if>
-							<c:forEach var="pageNum" begin="${viewData.startPage}"
-								end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
-								<c:choose>
-									<c:when test="${pageNum == viewData.currentPage}">
-										<li class="page-item active"><a class="page-link"
-											href="mngReview?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"
-											>${pageNum}<span class="sr-only">(current)</span></a>
-									</c:when>
-									<c:otherwise>
-										<li class="page-item"><a class="page-link" 
-										href="mngReview?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
-										${pageNum}</a>								
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-							<c:if test="${viewData.endPage < viewData.pageTotalCount}">
-								<li class="page-item"><a class="page-link"
-									href="mngReview?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"><span aria-hidden='true'>&raquo;</span>
-								</a></li>
-							</c:if>
-						</ul>
+								</div>
+								<div class="form-group row">
+									<div class="col-xs-2">
+										<label for="contents" class="control-label">코멘트<br>내용
+										</label>
+									</div>
+									<div class="col-xs-10">
+										<textarea class="form-control" name="contents" id="contents"
+											rows="6" cols="50"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">수정하기</button>
+								<button type="reset" class="btn btn-warning">초기화</button>
+							</div>
+						</form>
 					</div>
+
 				</div>
 			</div>
-		</div><!--<div class="row"> end -->
-	</div><!--<div class="container-fluid"> end -->
+		</div>
+		<div id="pagenation">
+			<ul class="pagination pagination-sm">
+				<c:if test="${viewData.startPage != 1}">
+					<li class="page-item"><a class="page-link"
+						aria-label="Previous"
+						href="mngReview?page=${viewData.startPage-1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
+							<span aria-hidden='true'>&laquo;</span>
+					</a></li>
+				</c:if>
+				<c:forEach var="pageNum" begin="${viewData.startPage}"
+					end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
+					<c:choose>
+						<c:when test="${pageNum == viewData.currentPage}">
+							<li class="page-item active"><a class="page-link"
+								href="mngReview?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">${pageNum}<span
+									class="sr-only">(current)</span></a>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link"
+								href="mngReview?page=${pageNum}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}">
+									${pageNum}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${viewData.endPage < viewData.pageTotalCount}">
+					<li class="page-item"><a class="page-link"
+						href="mngReview?page=${viewData.endPage+1}&msgPerPage=${viewData.msgPerPage}&keywordOption=${viewData.keywordOption}&keyword=${viewData.keyword}"><span
+							aria-hidden='true'>&raquo;</span> </a></li>
+				</c:if>
+			</ul>
+		</div>
+	</div>
+	</div>
+	</div>
+	<!--<div class="row"> end -->
+	</div>
+	<!--<div class="container-fluid"> end -->
 </body>
 </html>

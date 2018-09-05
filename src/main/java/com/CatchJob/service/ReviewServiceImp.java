@@ -173,8 +173,12 @@ public class ReviewServiceImp implements ReviewService {
 				viewData.put("keyword", questionNumKeyword);
 				viewData.put("keywordOption", "questionNumKeyword");
 				totalCount  = reviewDao.selectCountByKeyword(map); 	
+			}else if(keywordOption.equals("")) {
+				totalCount  = reviewDao.selectCountByKeyword(map); 	
 			}				
-		}		
+		} else {
+			totalCount  = reviewDao.selectCountByKeyword(map); 	
+		}	
 		if(totalCount==0) {
 			totalCount = 1;
 		}

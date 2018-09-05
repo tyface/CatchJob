@@ -48,7 +48,7 @@
 	font-size: 15px;
 }
 
-#indutyName {
+#indutyDiv {
 	text-align: center;
 	border-bottom: 1px dotted black;
 	margin-bottom: 20px;
@@ -68,30 +68,19 @@ function getParameterByName(name) {
 }
 
 $(function(){
-	if(getParameterByName('largeCatagory')!=null){
-		$("#catagory").prop("checked", true)
-		if(getParameterByName('industryCode')!=null){	
-			$("#industryCode").prop("checked", true)
-		}	
-	}	 
+ 	if(getParameterByName('largeCatagory')!=null){
+ 		$("input:radio[name='catagory']:radio[value='"+getParameterByName('largeCatagory')+"']").prop('checked',true)
+		 if(getParameterByName('industryCode')!=null){	
+			$("input:radio[name='code']:radio[value='"+getParameterByName('industryCode')+"']").prop('checked',true)
+			  var test = $("input:radio[name='code']:radio[value='"+getParameterByName('industryCode')+"']")
+			 test.prop('checked',true)
+			 
+			 console.log($("input:radio[name='code']:radio[value='"+getParameterByName('industryCode')+"']"));
+			 console.log($("input:radio[name='catagory']:radio[value='"+getParameterByName('largeCatagory')+"']"));
+			  
+		}	 
+	}	  	 
 });
-function lclassFunc() {
-
-	
-	/* $(this).attr("checked", true)
-	if ($(this).attr("checked")=="checked") {
-		$("#indutyCodeBox").css("display", "none");
-	} else {
-		$("#indutyCodeBox").css("display", "block");
-	} */
-}
-function constructFunc() {
-	if ($(this).attr("checked", true)) {
-		$("#constructionBox").css("display", "block");
-	} else {
-		$("#constructionBox").css("display", "none");
-	}
-}
 </script>
 <body>
 	<%@ include file="/WEB-INF/views/admin/include/admin-nav-sidebar.jsp"%>
@@ -103,40 +92,31 @@ function constructFunc() {
 				<div class="row">
 					<div class="col-md-4">
 						<div id="indutyBox">
-							<div id="indutyName">분류명</div>
+							<div id="indutyDiv">분류명</div>
 							<c:forEach var="industry" items="${viewData}">
 								<div>
+									<label>
 									<input type="radio" id="catagory" name="catagory"
-										onclick="window.location.href='mngIndustryCode?largeCatagory=${industry.largeCatagory}'" />
-									<label for="class"> ${industry.largeCatagory}.
-										${industry.largeCatagoryName}</label>
+										onclick="window.location.href='mngIndustryCode?largeCatagory=${industry.largeCatagory}'" 
+										value="${industry.largeCatagory}"/>
+									${industry.largeCatagory}.${industry.largeCatagoryName}</label>
 								</div>
 							</c:forEach>
 						</div>
-						<!-- <div class="row" id="industryBtns">
-							<input type="button" class="btn btn-info" data-toggle="modal" data-target="#registCatagoryModal" value="분류 추가">
-							<input type="button" class="btn btn-warning" value="선택 미사용">
-						</div> -->
 					</div>
 					<div class="col-md-4">
 						<div id="indutyBox">
-							<div id="indutyName">업종 코드</div>
-							<div id="indutyCodeBox">
+							<div id="indutyDiv">업종 코드</div>
 								<c:forEach var="industryCode" items="${industryCode}">
-									<input type="radio" id="industryCode" name="industryCode"
-										onclick="window.location.href='mngIndustryCodeDetails?largeCatagory=${industryCode.largeCatagory}&industryCode=${industryCode.industryCode}'" />
-									<label for="industryCode">${industryCode.industryCode}</label>
-									<br>
+									<div>
+										<label>
+										<input type="radio" id="code" name="code" value="${industryCode.industryCode}"
+											onclick="window.location.href='mngIndustryCodeDetails?largeCatagory=${industryCode.largeCatagory}&industryCode=${industryCode.industryCode}'"/>
+										${industryCode.industryCode}</label>
+									</div>					
 								</c:forEach>
-							</div>
 						</div>
-						<!-- <div class="row" id="industryBtns">
-							<input type="button" class="btn btn-info" data-toggle="modal" data-target="#registCodeModal" value="코드 추가">
-							<input type="button" class="btn btn-warning" value="선택 미사용">
-						</div> -->
 					</div>
-
-
 					<div class="col-md-4">
 						<div id="indutyForm">
 							<form class="form-horizontal" action="modifyInduty" method="post">
@@ -145,38 +125,37 @@ function constructFunc() {
 									</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="largeCatagory"
-											placeholder="분류코드"<%-- value="${industryDetails.largeCatagory}" --%>>
+											placeholder="2자리 수를 입력해 주세요" value="${industryDetails.largeCatagory}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="largeCatagoryName" class="col-sm-4 control-label">분류명
 									</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control"
-											name="largeCatagoryName" placeholder="분류명"<%--  value="${industryDetails.largeCatagoryName}" --%>>
+										<textarea class="form-control" rows="3" cols="50" name="largeCatagoryName" 
+										placeholder="분류명">${industryDetails.largeCatagoryName}</textarea>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="industryCode" class="col-sm-4 control-label">업종코드</label>
 									<div class="col-sm-8">
-										<input type="password" class="form-control"
-											name="industryCode" placeholder="업종코드"<%-- value="${industryDetails.industryCode}" --%>>
+										<input type="text" class="form-control" readOnly="readOnly"
+											name="industryCode" placeholder="업종코드" value="${industryDetails.industryCode}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="regDate" class="col-sm-4 control-label">등록일자</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="regDate"
-											placeholder="등록일자"<%--  value="${industryDetails.regDate}" --%>>
+											placeholder="등록일자" value="${industryDetails.regDate}">
 									</div>
 								</div>
-							</form>
 							<br>
 							<div class="pull-right">
 								<input type="submit" class="btn btn-info" value="수정하기">
 								<input type="button" class="btn btn-primary" value="추가하기" data-toggle="modal" data-target="#registIndutyModal">
-								<input type="button" class="btn btn-danger" value="선택 미사용">
 							</div>
+							</form>
 						</div>
 					</div>
 
@@ -192,7 +171,7 @@ function constructFunc() {
 									</button>
 									<h4 class="modal-title" id="modalLabel">등록하기</h4>
 								</div>
-								<form action="registCatagory" method="post">
+								<form action="registIndustry" method="post">
 									<div class="modal-body">
 										<div class="row form-group">
 											<div class="col-xs-3 form-group">
@@ -200,7 +179,7 @@ function constructFunc() {
 											</div>
 											<div class="col-xs-9">
 												<input type="text" id="largeCatagory" name="largeCatagory"
-													class="form-control" placeholder="2자리 수로 입력해 주세요">
+													class="form-control" placeholder="2자리 수를 입력해 주세요">
 											</div>
 										</div>
 										<div class="row form-group">
@@ -218,16 +197,7 @@ function constructFunc() {
 											</div>
 											<div class="col-xs-9">
 												<input type="text" id="industryCode" name="industryCode"
-													class="form-control" placeholder="업종코드를 입력해 주세요"/>
-											</div>
-										</div>
-										<div class="row form-group">
-											<div class="col-xs-3">
-												<label for="regDate" class="control-label">등록일자</label>
-											</div>
-											<div class="col-xs-9">
-												<input type="text" id="regDate" name="regDate"
-													class="form-control" placeholder="등록일자를 입력해 주세요"/>
+													class="form-control" placeholder="6자리 수를 입력해 주세요"/>
 											</div>
 										</div>
 									</div>

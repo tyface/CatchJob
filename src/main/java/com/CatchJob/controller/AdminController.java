@@ -33,6 +33,8 @@ import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
 import com.CatchJob.service.UniversalDomainService;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -52,7 +54,7 @@ public class AdminController {
 	@RequestMapping(value ="/403", method = {RequestMethod.GET,RequestMethod.POST})
 	public String error403(HttpServletRequest request,HttpServletResponse response,Model model) {
 		model.addAttribute("msg", "권한이 없습니다");
-		return "admin/include/historyBack";
+		return "admin/include/historyBack403";
 	}
 	
 	/* 확인창 */
@@ -541,7 +543,7 @@ public class AdminController {
 			return "admin/include/result";
 		}	
 	}
-	
+	//산업군 관리 페이지
 	@RequestMapping("/mngInduty")
 	public String mngInduty(Model model) {
 		Map<String, Object> viewData = industryService.getIndustryList();
@@ -552,7 +554,8 @@ public class AdminController {
 	
 
 	@RequestMapping("/mngIndustryCode")
-	public String mngIndustryCode(Model model,int largeCatagory) {	
+	public String mngIndustryCode(Model model,String largeCatagory) {	
+		System.out.println(largeCatagory);
 		Map<String, Object> viewData = industryService.getIndustryList();		
 		model.addAttribute("viewData", viewData.get("industryList"));
 		
@@ -564,7 +567,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/mngIndustryCodeDetails")
-	public String mngIndustryCodeDetails(Model model, int largeCatagory, int industryCode) {
+	public String mngIndustryCodeDetails(Model model, String largeCatagory, String industryCode) {
 		Map<String, Object> viewData = industryService.getIndustryList();	
 		model.addAttribute("viewData", viewData.get("industryList"));
 		
@@ -573,25 +576,24 @@ public class AdminController {
 		System.out.println("data:"+data);
 		model.addAttribute("industryCode", data);
 		
-	/*	Industry industry=industryService.getIndustry(industryCode);
-		model.addAttribute("industry", industry);	*/
+		Industry industry=industryService.getIndustry(industryCode);
+		model.addAttribute("industryDetails", industry);	
 		return "admin/mng-industry";
 	}
 	
-	@RequestMapping(value="/registCatagory", method=RequestMethod.POST)
-	public String registCatagory(Model model,String largeCatagory,String largeCatagoryName) {			
-		try {
+	@RequestMapping(value="/registIndustry", method=RequestMethod.POST)
+	public String registIndustry(Model model,String largeCatagory,String largeCatagoryName,String industryCode) {			
+		try {		
 			Industry industry=new Industry();
 			industry.setLargeCatagory(largeCatagory);
 			industry.setLargeCatagoryName(largeCatagoryName);
-			
-			boolean result = industryService.registCatagory(industry);
-			
+			industry.setIndustryCode(industryCode);			
+
+			boolean result = industryService.registIndustry(industry);
+
 			if(result) {
-				model.addAttribute("url", "mngInduty");
 				model.addAttribute("msg", "등록 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngInduty");
 				model.addAttribute("msg", "등록 실패했습니다");
 			}
 			return "admin/include/result";
@@ -600,27 +602,25 @@ public class AdminController {
 			System.out.println(e);
 			model.addAttribute("url", "mngInduty");
 			model.addAttribute("msg", "등록 실패했습니다");
-			return "admin/include/result";
+			return "admin/include/historyBack";
 		}	
 	}
 	@RequestMapping(value="/modifyInduty", method=RequestMethod.POST)
-	public String modifyInduty(Model model,String largeCatagory,String largeCatagoryName, String industryCode, String regDate) {			
+	public String modifyInduty(Model model,String largeCatagory,String largeCatagoryName,String industryCode,String regDate) {			
 		try {
 			Industry industry=new Industry();
 			industry.setLargeCatagory(largeCatagory);
 			industry.setLargeCatagoryName(largeCatagoryName);
 			industry.setIndustryCode(industryCode);
 			industry.setRegDate(regDate);
-			
-			boolean result = industryService.registCatagory(industry);
+			boolean result = industryService.modifyIndustry(industry);
 			
 			if(result) {
-				model.addAttribute("url", "mngInduty");
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngInduty");
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
+			model.addAttribute("url", "mngInduty");
 			return "admin/include/result";
 			
 		} catch (Exception e) {
