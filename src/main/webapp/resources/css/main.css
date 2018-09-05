@@ -8,22 +8,23 @@
 }
 
 /* Mobile */
-#h1-main {
+.main-font {
+	font-family: 'Jua', sans-serif;
+  color: #4c78ea;
   margin-top: 50px;
   margin-bottom: 30px;
-	font-size: 27px;
-  font-weight: bold;
+  font-size: 32px;
 }
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {
-  #h1-main  {
-    font-size: 96px;
+  .main-font {
+    font-size: 80px;
   }
 }
 /* Desktop */
 @media (min-width:1025px) {
-  #h1-main  {
-    font-size: 100px;
+  .main-font {
+    font-size: 85px;
     margin-bottom: 60px;
   }
 }
@@ -98,7 +99,7 @@
 #main-center {
   position: relative;
   height: 100%;
-  padding: 120px 30px 120px 30px;
+  padding: 100px 30px 100px 30px;
   color: #4c78ea !important;
   font-size: 10px;
 }

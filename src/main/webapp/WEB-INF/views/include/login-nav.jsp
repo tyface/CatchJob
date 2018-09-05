@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
-<link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Chango" rel="stylesheet">
 <security:authentication var="principal" property="principal"/>
 <script>
 
 $(function() {
 	if(window.location.pathname != "/catchjob/"){
-		$(".top-search-bar").css("display","inline-block");
+		$(".top-search-div").css("display","inline-block");
 	}
 	topSearchValidation()
 	$(".googleBtn").on("click",function() {
@@ -242,10 +242,10 @@ function topSearchValidation(){
 				</a>
   	</div>
 
-		<div class="top-search-bar">
+		<div class="top-search-div">
 			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
-				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10" id="top-search-bar">
-				<button type="submit" class="col-xs-1">
+				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10"  data-placement="bottom" id="top-search-bar">
+				<button type="submit" class="col-xs-1" id="top-search-btn">
 					<span class="glyphicon glyphicon-search"></span>
 				</button>
 			</form>
@@ -371,49 +371,41 @@ function topSearchValidation(){
 
 <security:authorize access="isAuthenticated()">
 	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
 
-		<div class="f-left nav-logo">
+			<div class="f-left nav-logo">
 		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
-					<img src="${pageContext.request.contextPath}/resources/img/logo_02.png" alt="logo" class="nav-logo-img"/>
+					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
 					<span class="f-left">CATCH JOB</span>
 				</a>
-  	</div>
+	  	</div>
 
-		<div class="top-search-bar">
-			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
-				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10" id="top-search-bar">
-				<button type="submit" class="col-xs-1">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-			</form>
-		</div>
-
-		<div class="f-right nav-btn-1">
-			<div class="dropdown f-right" >
-
-				<div class="dropdown-toggle cursorOn" data-toggle="dropdown">
-					<span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
-				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
-					<li class="dropdown-header">내 정보</li>
-					<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
-					<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
-					<li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
-<!-- 					<li role="presentation" class="divider"></li> -->
-<!-- 					<li class="dropdown-header">활동내역</li> -->
-<%-- <li><a href="${pageContext.request.contextPath}/profile/reviews">기업리뷰 작성</a></li> --%>
-<%-- 					<li><a href="${pageContext.request.contextPath}/profile/interviews">면접후기 작성</a></li> --%>
-<!-- 					<li role="presentation" class="divider"></li> -->
-<!-- 					<li class="dropdown-header">관심정보</li> -->
-<%-- 					<li><a href="${pageContext.request.contextPath}/profile/follows">팔로잉 기업</a></li> --%>
-<%-- 					<li><a href="${pageContext.request.contextPath}/profile/recent">최근 본 기업</a></li> --%>
-					 <li role="presentation" class="divider"></li>
-				   <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
-				</ul>
+			<div class="top-search-div">
+				<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
+					<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10"  data-placement="bottom" id="top-search-bar">
+					<button type="submit" class="col-xs-1" id="top-search-btn">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</form>
 			</div>
 
-		</div>
+			<div class="f-right nav-btn-1">
+				<div class="dropdown f-right" >
+					<div class="dropdown-toggle cursorOn" data-toggle="dropdown">
+						<span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
+						<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+							<li class="dropdown-header">내 정보</li>
+							<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
+							<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
+							<li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
+						 	<li role="presentation" class="divider"></li>
+				   		<li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
+						</ul>
+				</div>
 
-	</nav>
+			</div>
+	</div>
+</nav>
 
 	<%-- 비밀번호 수정 모달 --%>
 	<div class="modal fade" id="pwModifyModal" role="dialog">

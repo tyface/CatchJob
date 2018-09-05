@@ -1,14 +1,12 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
-
 <%@ include file="include/header.jsp" %>
 <%-- <jsp:include page="include/header.jsp" flush="true"/> --%>
 
 <%-- 구글 폰트 --%>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 <!-- 유효성 검사 -->
 
@@ -80,12 +78,12 @@ function searchValidation(){
 	<section>
 		<article id="main-center">
 				<!-- 			슬로건 -->
-				<h1 class="archivo-font" id="h1-main">숨은기업, 알짜정보 찾기</h1>
+				<p class="jua-font main-font">숨은기업, 알짜정보 찾기</p>
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
 						<div class="col-xs-11" id="main-search-div">
-							<input type="text" name="keyword" class="form-control jua-font" id="main-search-bar" size="70"  placeholder="기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
+							<input type="text" name="keyword" class="form-control jua-font" id="main-search-bar" size="70"  placeholder=" 기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
 						</div>
 						<button type="submit" class="col-xs-1" id="search-btn2">
 							<span class="glyphicon glyphicon-search"></span>
