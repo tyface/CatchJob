@@ -238,8 +238,8 @@ function topSearchValidation(){
 	<div class="container-fluid">
 		<div class="f-left nav-logo">
 		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
-					<img src="${pageContext.request.contextPath}/resources/img/logo_02.png" alt="logo" class="nav-logo-img"/>
-					<span class="f-left">CATCT JOB</span>
+					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
+					<span class="f-left">CATCH JOB</span>
 				</a>
   	</div>
 
@@ -376,7 +376,7 @@ function topSearchValidation(){
 		<div class="f-left nav-logo">
 		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
 					<img src="${pageContext.request.contextPath}/resources/img/logo_02.png" alt="logo" class="nav-logo-img"/>
-					<span class="f-left">CATCT JOB</span>
+					<span class="f-left">CATCH JOB</span>
 				</a>
   	</div>
 
@@ -392,7 +392,8 @@ function topSearchValidation(){
 		<div class="f-right nav-btn-1">
 			<div class="dropdown f-right" >
 
-				<div class="dropdown-toggle cursorOn" data-toggle="dropdown"> <span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
+				<div class="dropdown-toggle cursorOn" data-toggle="dropdown">
+					<span	class="glyphicon glyphicon-user"></span> User <span class="caret"></span></div>
 				<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
 					<li class="dropdown-header">내 정보</li>
 					<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>

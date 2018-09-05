@@ -102,7 +102,7 @@ function deleteReview(entIndex,questionNum){
 
 }
 function reviewValidation(){
-	$('.writeForm').validate({		
+	$('.writeForm').validate({
 		rules : {
 
 			stars:{

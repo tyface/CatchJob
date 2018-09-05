@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="include/header.jsp" flush="true" />
+<%@ include file="include/header.jsp" %>
 <script>
 // var entIndex = ${followView[0].entIndex}
 $(function(){
 	//alert("실행됨");
-	
+
 	 $(".follow-btn").click(function (e) {
 	      var $this = $(this).find("i");
 	      var fa = $this.hasClass("fa");
-	      
+
 		  var entIndex = $this.next().val();
 		  //alert(entIndex);
-	      
+
 // 		  if(confirm("팔로잉을 중단하시겠습니까?") != 0 ){
 // 			  /* 팔로잉 기업 해지  */
 // 			  $.ajax({
-// 			  		url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
+// 			  		url:"${pageContext.request.contextPath}/enterprise/revFollow",
 // 			  		data:{entIndex : entIndex},
 // 			  		type: "post",
 // 			  		dataType:"json",
@@ -27,8 +27,8 @@ $(function(){
 // 						 $this.toggleClass("fa-heart");
 // 						 $this.toggleClass("fa-heart-o");
 // 						 window.location.reload();
-// 			  		}					  		
-// 			  })					 
+// 			  		}
+// 			  })
 // 		  }
 		  if($this.hasClass("fa-heart-o")){
 			  /* 팔로잉 기업 추가  */
@@ -40,28 +40,28 @@ $(function(){
 			  		  success: function(result){
 			  			/* 성공 */
 			  			  if(result){
-			  				  
+
 			  				swal({
 			  				  title: "팔로잉되었습니다!",
 			  				  text: "팔로잉 기업은 [마이페이지 > 팔로잉 기업]에서 확인할 수 있습니다.",
 			  				  type: "success",
 			  			      confirmButtonClass: "btn-success",
-			  				
-			  				  //button: false 
+
+			  				  //button: false
 			  				});
 				    	      $this.toggleClass("fa-heart-o");
-				    	      $this.toggleClass("fa-heart");				  				
+				    	      $this.toggleClass("fa-heart");
 			  			  }else{
 			  				  swal({
 				  				  title: "팔로잉 할 수 없습니다.",
 				  				  text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 				  				  type: "error",
 				  				  confirmButtonClass: "btn-error",
-				  				  //button: false 
+				  				  //button: false
 				  				  //dangerMode:true
 				  			  });
 			  			  }
-			  		  }	  		
+			  		  }
 			    })
 		    }else{
 				  swal({
@@ -76,7 +76,7 @@ $(function(){
 		    		},
 		    		function(){
 		    			 $.ajax({
-		    				 url:"${pageContext.request.contextPath}/enterprise/revFollow",				  		
+		    				 url:"${pageContext.request.contextPath}/enterprise/revFollow",
 		    			  	  data:{entIndex : entIndex},
 					  		  type: "post",
 					  		  dataType:"json",
@@ -87,18 +87,18 @@ $(function(){
 					  				    //text: "팔로잉 기업은 최대 10개 까지 가능합니다",
 					  				    type: "success",
 					  				    confirmButtonClass: "btn-success",
-					  				    //button: false 
+					  				    //button: false
 					  				    //dangerMode:true
 					  			    });
 								   $this.toggleClass("fa-heart");
 								   $this.toggleClass("fa-heart-o");
 					  		  }
-					    })	
+					    })
 		    		})
-    		
+
 		    }
 	});
-	
+
 });
 
 </script>
@@ -108,13 +108,13 @@ $(function(){
 		<h2>팔로잉 기업</h2>
 		<c:forEach begin="0" varStatus="status" end="9" var="follow" items="${followView}">
 			<div class="row ent-list">
-	
+
 				<div class="col-sm-8">
 					<div class="row">
 						<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${follow.entIndex}" class="p25">${follow.entName}</a>
 						<a href="#" class="follow follow-btn follow">
 							<i class="fa fa-heart follow" id="follow"></i><!-- 123 -->
-							<input type="hidden" value="${follow.entIndex}">							
+							<input type="hidden" value="${follow.entIndex}">
 						</a>
 					</div>
 					<div class="row visible-lg visible-md visible-sm">
@@ -124,7 +124,7 @@ $(function(){
 						<p class="p-1">평균연봉 ${follow.salaryAvg} 만원 </p>
 					</div>
 				</div>
-	
+
 				<div class="col-sm-4">
 					<div class="row text-center">
 						<c:forEach begin="1" end="${follow.evaluationAvg}" step="1">
@@ -146,13 +146,12 @@ $(function(){
 						</div>
 					</div>
 				</div>
-	
+
 			</div>
-		</c:forEach>	 
+		</c:forEach>
 
 
 	</div>
 </article>
 
-   
-<jsp:include page="include/footer.jsp" flush="true" />
+<%@ include file="include/footer.jsp" %>

@@ -3,7 +3,7 @@
 
 <footer class="main-footer">
 	<div class="footer-nav col-md-offset-1 col-md-10">
-		<div class="footer-nav-left" style="border-top:1px dotted gray; margin-top:20px; padding:10px; font-size: 15px; font-weight: bold;">
+		<div class="footer-nav-left" style="font-size: 15px; font-weight: bold;">
 			<div class="footer-nav-left-item col-md-offset-1">
 				<a href="faq">FAQ</a>
 			</div>

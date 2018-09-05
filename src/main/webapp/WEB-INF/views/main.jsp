@@ -7,9 +7,9 @@
 <%-- <jsp:include page="include/header.jsp" flush="true"/> --%>
 
 <%-- 구글 폰트 --%>
-<link href="https://fonts.googleapis.com/css?family=Frijole|Nanum+Pen+Script" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Pen+Script" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
-
 <!-- 유효성 검사 -->
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script> --%>
@@ -80,15 +80,14 @@ function searchValidation(){
 	<section>
 		<article id="main-center">
 				<!-- 			슬로건 -->
-				<p class="frijole-font" >Find The Job That Fits Your Life</p>
-				<h1 class="frijole-font" id="h1-main">Catch!! <br>JOB.</h1>
+				<h1 class="archivo-font" id="h1-main">숨은기업, 알짜정보 찾기</h1>
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
-						<div class="col-xs-11 search-btn1">
-							<input type="text" name="keyword" class="form-control nanumpen-font" id="main-search-bar" size="70"  placeholder="  기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
+						<div class="col-xs-11" id="main-search-div">
+							<input type="text" name="keyword" class="form-control jua-font" id="main-search-bar" size="70"  placeholder="기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
 						</div>
-						<button type="submit" class="col-xs-1 search-btn2">
+						<button type="submit" class="col-xs-1" id="search-btn2">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 						<%-- <div type="submit" class="col-xs-1">
@@ -109,7 +108,7 @@ function searchValidation(){
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
 						<div class="item">
-							<h3 class="font-color-01">인기검색회사</h3>
+							<p class="p-01 jua-font">인기검색회사</p>
 							<c:forEach var="popularRank" items="${popularSearcheList}">
 							<a href="enterprise/view?entIndex=${popularRank.ENT_IDX}">${popularRank.ENT_NM}</a><br>
 						</c:forEach>
@@ -117,14 +116,14 @@ function searchValidation(){
 						</div>
 					</div>
 					<div class="item">
-						<h3 class="font-color-01">연봉이 높은 회사</h3>
+						<p class="p-01 jua-font">연봉이 높은 회사</p>
 						<c:forEach var="salaryRank" items="${salaryRankList}">
 							<a href="enterprise/view?entIndex=${salaryRank.ENT_IDX}">${salaryRank.ENT_NM}</a><br>
 						</c:forEach>
 						<h4></h4>
 					</div>
 					<div class="item">
-						<h3 class="font-color-01">사원수가 많은 회사</h3>
+						<p class="p-01 jua-font">사원수가 많은 회사</p>
 						<c:forEach var="empCntRank" items="${empCntRankList}">
 							<a href="enterprise/view?entIndex=${empCntRank.ENT_IDX}">${empCntRank.ENT_NM}</a><br>
 						</c:forEach>
