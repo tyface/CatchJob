@@ -11,7 +11,7 @@
 			<div class="footer-infos pull-right">
 				<div class="footer-info">
 					<strong>Copyright &copy;<a href="https://github.com/tyface/CatchJob" target="_blank">Catch Job</a></strong> All
-					rights reserved. 
+					rights reserved.
 				</div>
 			</div>
 

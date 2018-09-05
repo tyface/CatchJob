@@ -1,12 +1,13 @@
-:root {
+/* :root {
 	 --main-color: #6B66FF;
 	 --sub-color: #B5B2FF;
- }
+ } */
 
 body {
 	position: relative;
-	background-color: #b5b2ff47;
+	background-color: #fff;
 }
+
 
 article {
 	width: 100%;

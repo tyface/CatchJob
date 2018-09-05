@@ -91,11 +91,11 @@
 
 
 .search-btn2{
-  color: var(--sub-color);
+  color: #B5B2FF;
   background-color: #fff;
   margin-left: -3px;
   border: 0px;
-  border-bottom: var(--sub-color) solid 2px;
+  border-bottom: #B5B2FF solid 2px;
   border-radius: 0px 4px 4px 0px;
 }
 
@@ -103,14 +103,14 @@
   box-shadow: none;
   width: 100%;
   border: 0px;
-  border-bottom: var(--sub-color) solid 2px;
+  border-bottom: #B5B2FF solid 2px;
 }
 
 #main-center {
   position: relative;
   height: 100%;
   padding: 100px 25px;
-  color: var(--sub-color) !important;
+  color: #B5B2FF !important;
 }
 
 #main-center:after {
