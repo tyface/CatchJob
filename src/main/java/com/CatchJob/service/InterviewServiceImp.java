@@ -57,9 +57,29 @@ public class InterviewServiceImp implements InterviewService{
 	}
 
 	@Override
-	public List<Map<String,String>> interviewPieChart(Map<String, String> data) {	
+	public double getDiffChart(Map<String, String> data) {
 		data.put("INTRVW_FL", "1");
-		return itvwDao.interviewPieChart(data);
+		double result = 0;
+		try {
+			result = itvwDao.interviewDiffChart(data);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Map<String, String>> getResultChart(Map<String, String> data) {
+		// 면접후기 면접결과 chart
+		data.put("INTRVW_FL", "1");
+		return itvwDao.interviewResultChart(data);
+	}
+
+	@Override
+	public List<Map<String, String>> getExperienceChart(Map<String, String> data) {
+		// 면접후기 면접경험 chart
+		data.put("INTRVW_FL", "1");
+		return itvwDao.interviewExperienceChart(data);
 	}
 
 	@Override
@@ -210,5 +230,8 @@ public class InterviewServiceImp implements InterviewService{
 		int endPage = (((pageNum - 1) / Constants.Interview.NUM_OF_NAVI_PAGE) + 1) * Constants.Interview.NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+
+
+	
 
 }

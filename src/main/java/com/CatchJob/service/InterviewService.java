@@ -16,8 +16,12 @@ public interface InterviewService {
 	public Interview selectListByIndex(Map<String, String> data);
 	//계정에서 인터뷰 정보 출력할때 필요..
 	public List<Interview>  selectListByMemberIdx(Map<String, String> data);
-	// 면접후기 Pie Chart
-	public List<Map<String,String>> interviewPieChart (Map<String, String> data);
+	//바 형태의 면접후기 모양.
+	public double getDiffChart (Map<String, String> data);
+	// 면접후기 면접결과 chart
+	public List<Map<String,String>> getResultChart (Map<String, String> data);
+	// 면접후기 면접경험 chart
+	public List<Map<String,String>> getExperienceChart (Map<String, String> data);
 	//면접후기 작성버튼 클릭시에 이미 작성했는지 검사
 	public boolean interviewDuplicationCheck(Map<String, String> data);
 	//view page, 면접후기 리스트 페이징처리

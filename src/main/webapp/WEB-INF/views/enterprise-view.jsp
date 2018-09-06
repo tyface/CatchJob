@@ -39,8 +39,8 @@ $(function(){
 	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
-	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
-	
+	interviewExperienceChart() // 면접 경험 차트
+	interviewResultChart() // 면접 결과 차트
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
 	
 	
@@ -356,29 +356,94 @@ function reviewbarChart(){
 	});
 }/* #section2 리뷰코멘트 - 만족도  end*/
 
-/* #section3 면접후기 면접난이도 */
-function interviewPieChart(){
-	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
+/* #section3 면접후기 면접경험 */
+function interviewExperienceChart(){
+	 var interviewExperienceChart = JSON.parse('${interviewExperienceChart}');
 
-	 var chartData = new Array(0,0,0,0,0);
+	 var chartData = new Array(0,0,0);
 
-  	  for(var i in interviewPieChartJson){
+  	  for(var i in interviewExperienceChart){
 
-	     if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '1'){
-	    	 chartData[0]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '2'){
-	    	 chartData[1]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '3'){
-	    	 chartData[2]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '4'){
-	    	 chartData[3]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '5'){
-	    	 chartData[4]=interviewPieChartJson[i]['count'];
+	     if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '1'){
+	    	 chartData[0]=interviewExperienceChart[i]['COUNT'];
+	     }else if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '2'){
+	    	 chartData[1]=interviewExperienceChart[i]['COUNT'];
+	     }else if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '3'){
+	    	 chartData[2]=interviewExperienceChart[i]['COUNT'];
 	     }
+	    
   	 }
 
 	// pieChart
-	var ctx3 = document.getElementById("pieChart").getContext('2d');
+	var ctx3 = document.getElementById("pieChartExperience").getContext('2d');
+	var pieChart = new Chart(ctx3, {
+		type: 'pie',
+		data: {
+				datasets: [{
+					data: chartData,
+					backgroundColor: [
+						'#FF0000',
+						'#FFBB00',
+						'#1DDB16',
+					],
+					datalabels: {
+						color:  'white',
+					},
+				}],
+				labels: [
+					"부정적",
+					"보통",
+					"긍정적",
+				]
+			},
+			options: {
+				responsive: true,
+				layout:{
+					padding:{
+						top:20,
+						bottom:20,
+					}
+				},
+				legend: {
+			        display: true,
+			        position: 'right'
+			    },
+			    plugins: {
+					datalabels: {
+						display: function(context) {
+							return context.dataset.data[context.dataIndex] > 0;
+						},
+						font: {
+							weight: 'bold'
+						},
+					}
+				},
+
+			}
+
+	});
+
+}
+/* #section3 면접결과 면접경험 */
+function interviewResultChart(){
+	 var interviewResultChart = JSON.parse('${interviewResultChart}');
+
+	 var chartData = new Array(0,0,0);
+
+  	  for(var i in interviewResultChart){
+
+	     if(interviewResultChart[i]['INTRVW_RESULT'] == '1'){
+	    	 chartData[0]=interviewResultChart[i]['COUNT'];
+	     }else if(interviewResultChart[i]['INTRVW_RESULT'] == '2'){
+	    	 chartData[1]=interviewResultChart[i]['COUNT'];
+	     }else if(interviewResultChart[i]['INTRVW_RESULT'] == '3'){
+	    	 chartData[2]=interviewResultChart[i]['COUNT'];
+	     }
+	    
+  	 }
+
+	// pieChart
+	var ctx3 = document.getElementById("pieChartResult").getContext('2d');
 	var pieChart = new Chart(ctx3, {
 		type: 'pie',
 		data: {
@@ -386,21 +451,17 @@ function interviewPieChart(){
 					data: chartData,
 					backgroundColor: [
 						'#1DDB16',
-						'#ABF200',
-						'#FFBB00',
-						'#FF5E00',
 						'#FF0000',
+						'#FFBB00',
 					],
 					datalabels: {
 						color:  'white',
 					},
 				}],
 				labels: [
-					"매우쉬움",
-					"쉬움",
-					"보통",
-					"어려움",
-					"매우어려움",
+					"합격",
+					"불합격",
+					"대기중",
 				]
 			},
 			options: {
@@ -774,12 +835,27 @@ function saramin(){
 					<h3 class="sectionTitle">면접후기</h3>
 					<div class="panel-group" >
 						<div class="box box-danger">
+						
 							<div class="box-body row">
-								<div class="chart col-md-3" >
+								<div class="chart col-md-4" >
 									<h3 class="box-title">면접 난이도</h3>
+									<div class="text-center ">
+<%-- 									<canvas id="pieChart" ></canvas> --%>
+										<h1>${interviewDiffChart}</h1>
+										<span class="f-left text-primary">쉬움</span>
+										<span class="f-right text-danger">어려움</span>
+										<input type="range" min="1" max="100" value="70" class="sliders" disabled >
+										<span class="f-left text-primary">0</span>
+										<span class="f-right text-danger">5</span>
+									</div>	
 								</div>
-								<div class="chart col-md-6" >
-									<canvas id="pieChart" ></canvas>
+								<div class="chart col-md-4" >
+									<h3 class="box-title">면접 경험</h3>
+									<canvas id="pieChartExperience" ></canvas>
+								</div>
+								<div class="chart col-md-4" >
+									<h3 class="box-title">면접 결과</h3>
+									<canvas id="pieChartResult" ></canvas>
 								</div>
 							</div>
 						</div>
