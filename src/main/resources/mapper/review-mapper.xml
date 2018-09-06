@@ -115,11 +115,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 	리뷰 수정 -->
 	<update id="updateReview" parameterType="review">
-		UPDATE REVIEW_TB
-		SET EVALUATION=#{evaluationScore}, CONTENTS=#{contents}, REVW_FL=#{reviewFlag}
-		WHERE REVW_IDX=#{reviewIndex}
+		UPDATE 	REVIEW_TB
+		SET 	EVALUATION=#{evaluationScore}, CONTENTS=#{contents}, REVW_FL=#{reviewFlag}
+		WHERE 	REVW_IDX=#{reviewIndex}
 	</update>
-	
+	<update id="updateReviewByAdmin" parameterType="review">
+		UPDATE  REVIEW_TB r 
+				INNER JOIN MEMBER_TB m 
+				ON r.MBER_IDX=m.MBER_IDX
+		SET		m.MBER_ID=#{mberId},r.ENT_IDX=#{entIndex}, r.QESTN_NO=#{questionNum}, 
+				r.EVALUATION=#{evaluationScore}, r.CONTENTS=#{contents}, r.REVW_FL=#{reviewFlag} 
+		WHERE	r.REVW_IDX=#{reviewIndex}
+	</update>
 <!-- 	기업의 리뷰 평점 최신화  -->
 	<update id="updateEvaluationAvg" parameterType="int">
 		UPDATE 	UPDATE_ENT_INFO_TB
@@ -141,7 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW_TB
 		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0
 	</select>
-	<!-- 리뷰 항목별 만독도  -->
+	<!-- 리뷰 항목별 만족도  -->
 	<select id="valuesByItem" parameterType="map" resultType="map">
 <!-- 		SELECT  EVALUATION, count(*) AS COUNT -->
 <!-- 		FROM REVIEW_TB -->

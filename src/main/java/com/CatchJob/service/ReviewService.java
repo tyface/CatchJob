@@ -43,4 +43,6 @@ public interface ReviewService {
 	public List<Map<String, String>> valuesByItem(Map<String, String> data);
 	//기업별 , 리뷰 항목 수
 	public int numOfValuesByItem(List<Map<String, String>> data);
+	//리뷰 수정 관리자 페이지
+	boolean modifyReviewByAdmin(Review review);
 }

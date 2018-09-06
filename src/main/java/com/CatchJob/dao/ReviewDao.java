@@ -6,19 +6,19 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.Review;
 
 @Repository
 public interface ReviewDao {
 	// 리뷰 등록(
 	public int insertReview(Review review);
-
 	// 리뷰 수정
-	public int updateReview(Review review);
-
+	public int updateReview(Review review);	
+	// 리뷰 수정(관리자 페이지) 
+	public int updateReviewByAdmin(Review review); 
 	// 리뷰 하나 출력
 	public Review selectReview(String reviewIndex);
-
 	// 리뷰 삭제
 	public int deleteReview(Map<String, String> data);
 
