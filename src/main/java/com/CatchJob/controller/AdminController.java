@@ -236,8 +236,7 @@ public class AdminController {
 	
 	/* 리뷰 관리*/
 	@RequestMapping(value = "/mngReview")
-	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {
-		
+	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {		
 		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
@@ -309,18 +308,19 @@ public class AdminController {
 		}
 	}
 	@RequestMapping(value="/modifyComment", method=RequestMethod.POST)
-	public String modifyComment(Model model, String reviewIndex, String entIndex, String mberId, 
-			String questionNum, String contents, String regDate, String evaluation) {
+	public String modifyComment(Model model, String reviewIndex, String entIndex, String evaluation, String mberId, 
+			String questionNum, String contents) {
 			
-		try {
+		try {				
+			
 			Review review = reviewService.selectReview(reviewIndex);
-			String qNum = questionNum.substring(0, 1);
 			review.setEntIndex(Integer.parseInt(entIndex));
-			review.setMberId(mberId);
-			review.setQuestionNum(Integer.parseInt(qNum));
-			review.setContents(contents);
 			review.setEvaluationScore(Integer.parseInt(evaluation));
-			boolean result = reviewService.modifyReview(review);
+			review.setMberId(mberId);
+			review.setQuestionNum(Integer.parseInt(questionNum));
+			review.setContents(contents);
+
+			boolean result = reviewService.modifyReviewByAdmin(review);
 					
 			if(result) {			
 				model.addAttribute("msg", "수정 완료되었습니다");

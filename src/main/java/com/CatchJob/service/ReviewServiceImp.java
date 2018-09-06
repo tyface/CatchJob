@@ -208,6 +208,18 @@ public class ReviewServiceImp implements ReviewService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean modifyReviewByAdmin(Review review) {
+		int result = reviewDao.updateReviewByAdmin(review);
+		if(result > 0) {
+			reviewDao.updateEvaluationAvg(review.getEntIndex());
+			return true;
+		}else {			
+			return false;
+		}
+	}
+	
 	// 리뷰 총 만족도 구하기
 	@Override
 	public double getTotalSatisfaction(Map<String, String> data) {
