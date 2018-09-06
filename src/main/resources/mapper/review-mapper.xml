@@ -73,14 +73,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY r.REVW_IDX desc
 		LIMIT #{NUM_OF_RVW_PER_PAGE}
 		OFFSET #{START_ROW}
-	 </select>
-	 
+	 </select>	 
 	 <select id="selectReviewTotalRows" parameterType="map" resultType="int">
 		SELECT 	 count(*) AS TOTAL_ROWS 
 		FROM	 REVIEW_TB
 		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL = #{REVW_FL}
-	</select>
-	
+	</select>	
 	<select id="selectCountByKeyword" resultType="int" parameterType="map">
 		SELECT COUNT(*)
 		FROM REVIEW_TB r
@@ -98,8 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <if test="questionNumKeyword != null"> 
 	  	  	AND r.QESTN_NO = #{questionNumKeyword} 
 	    </if>
-	</select>
-	
+	</select>	
 	<select id="selectReviewList" resultMap="reviewMap"	parameterType="map">
 		SELECT SQL_CALC_FOUND_ROWS *
 		FROM REVIEW_TB r
@@ -120,14 +117,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>
-	
 <!-- 	리뷰 수정 -->
 	<update id="updateReview" parameterType="review">
-		UPDATE REVIEW_TB
-		SET EVALUATION=#{evaluationScore}, CONTENTS=#{contents}, REVW_FL=#{reviewFlag}
-		WHERE REVW_IDX=#{reviewIndex}
+		UPDATE 	REVIEW_TB
+		SET 	EVALUATION=#{evaluationScore}, CONTENTS=#{contents}, REVW_FL=#{reviewFlag}
+		WHERE 	REVW_IDX=#{reviewIndex}
 	</update>
-	
+	<update id="updateReviewByAdmin" parameterType="review">
+		UPDATE  REVIEW_TB r 
+				INNER JOIN MEMBER_TB m 
+				ON r.MBER_IDX=m.MBER_IDX
+		SET		m.MBER_ID=#{mberId},r.ENT_IDX=#{entIndex}, r.QESTN_NO=#{questionNum}, 
+				r.EVALUATION=#{evaluationScore}, r.CONTENTS=#{contents}, r.REVW_FL=#{reviewFlag} 
+		WHERE	r.REVW_IDX=#{reviewIndex}
+	</update>
 <!-- 	기업의 리뷰 평점 최신화  -->
 	<update id="updateEvaluationAvg" parameterType="int">
 		UPDATE 	UPDATE_ENT_INFO_TB
@@ -149,7 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW_TB
 		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0
 	</select>
-	<!-- 리뷰 항목별 만독도  -->
+	<!-- 리뷰 항목별 만족도  -->
 	<select id="valuesByItem" parameterType="map" resultType="map">
 <!-- 		SELECT  EVALUATION, count(*) AS COUNT -->
 <!-- 		FROM REVIEW_TB -->

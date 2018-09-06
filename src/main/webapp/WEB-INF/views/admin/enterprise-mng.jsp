@@ -49,10 +49,9 @@ $(function(){
 		  modal.find('.modal-body #industryCode').val(button.data('industrycode'))		  
 		  modal.find('.modal-body #entStyleType').val(button.data('entstyletype'))
 		  modal.find('.modal-body #entSubscriberFlag').val(button.data('entsubscriberflag'))
-		  modal.find('.modal-body #entFlag').val(button.data('entflag'))
 		  modal.find('.modal-body #entFoundationDate').val(button.data('entfoundationdate'))
 		  modal.find('.modal-body #industryName').val(button.data('industryname'))		  
-	});
+	}); 	
 	  $("input[name='chk_all']").click(function () {
 	        var chk_listArr = $("input[name='chk_list']");
 	        for (var i=0; i < chk_listArr.length; i++) {
@@ -171,8 +170,7 @@ function chkDelete(){
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th style="width: 2%"><input type="checkbox" id="chk_all"
-							name="chk_all" /></th>
+						<th style="width: 2%"><input type="checkbox" id="chk_all" name="chk_all" /></th>
 						<th style="width: 2%"><span class="glyphicon glyphicon-check"></span></th>
 						<th style="width: 7%">기업코드</th>
 						<th style="width: 20%">기업명</th>
@@ -200,7 +198,6 @@ function chkDelete(){
 								data-industrycode="${enterprise.industryCode}"
 								data-entstyletype="${enterprise.entStyleType}"
 								data-entsubscriberflag="${enterprise.entSubscriberFlag}"
-								data-entflag="${enterprise.entFlag}"
 								data-entfoundationdate="${enterprise.entFoundationDate}"
 								data-industryname="${enterprise.industryName}"
 								data-target="div.modal" value="상세보기" data-toggle="modal">
@@ -256,7 +253,7 @@ function chkDelete(){
 											형태구분</label>
 									</div>
 									<div class="col-xs-9">
-										<select class="form-control" style="color: gray"
+										<select class="form-control"
 											id="entStyleType" name="entStyleType">
 											<option>사업장 형태구분</option>
 											<option value="1">1. 법인</option>
@@ -270,7 +267,7 @@ function chkDelete(){
 											가입상태</label>
 									</div>
 									<div class="col-xs-9">
-										<select class="form-control" style="color: gray"
+										<select class="form-control"
 											id="entSubscriberFlag" name="entSubscriberFlag">
 											<option>사업장 가입상태</option>
 											<option value="1">1. 등록</option>

@@ -60,7 +60,7 @@ public class AdminController {
 	/* 확인창 */
 	@RequestMapping("/result")
 	public String result() {
-		return "admin/include/result";
+		return "result";
 	}
 	
 	/* 로그인폼 */
@@ -149,12 +149,12 @@ public class AdminController {
 			}
 		
 			model.addAttribute("url", "mngMber");
-			return "admin/include/result";
+			return "result";
 		} catch(Exception e) {
 			e.printStackTrace();
 			model.addAttribute("url", "mngMber");
 			model.addAttribute("msg", "수정 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}
 	
 	}
@@ -219,26 +219,24 @@ public class AdminController {
 			boolean result = memberService.modify(member);
 	
 			if(result) {
-				model.addAttribute("url", "mngAdmin");
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngAdmin");
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
-			return "admin/include/result";
+			model.addAttribute("url", "mngAdmin");
+			return "result";
 		
 		} catch(Exception e) {
 			model.addAttribute("url", "mngAdmin");
 			model.addAttribute("msg", "수정 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}
 									
 	}
 	
 	/* 리뷰 관리*/
 	@RequestMapping(value = "/mngReview")
-	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {
-		
+	public String mngReview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {		
 		int pageNumber = 1;	
 		if (page != null) {
 			pageNumber = Integer.parseInt(page);
@@ -310,18 +308,19 @@ public class AdminController {
 		}
 	}
 	@RequestMapping(value="/modifyComment", method=RequestMethod.POST)
-	public String modifyComment(Model model, String reviewIndex, String entIndex, String mberId, 
-			String questionNum, String contents, String regDate, String evaluation) {
+	public String modifyComment(Model model, String reviewIndex, String entIndex, String evaluation, String mberId, 
+			String questionNum, String contents) {
 			
-		try {
+		try {				
+			
 			Review review = reviewService.selectReview(reviewIndex);
-			String qNum = questionNum.substring(0, 1);
 			review.setEntIndex(Integer.parseInt(entIndex));
-			review.setMberId(mberId);
-			review.setQuestionNum(Integer.parseInt(qNum));
-			review.setContents(contents);
 			review.setEvaluationScore(Integer.parseInt(evaluation));
-			boolean result = reviewService.modifyReview(review);
+			review.setMberId(mberId);
+			review.setQuestionNum(Integer.parseInt(questionNum));
+			review.setContents(contents);
+
+			boolean result = reviewService.modifyReviewByAdmin(review);
 					
 			if(result) {			
 				model.addAttribute("msg", "수정 완료되었습니다");
@@ -329,13 +328,13 @@ public class AdminController {
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
 			model.addAttribute("url", "mngReview");
-			return "admin/include/result";
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("url", "mngReview");
 			model.addAttribute("msg", "수정 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}
 	
 	}
@@ -369,7 +368,6 @@ public class AdminController {
 	
 	@RequestMapping(value="/modifyEntFlag", method=RequestMethod.POST)
 	public void modifyEntFlag(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
-		System.out.println(arrayParams);
 		boolean result=false;
 		for(int i=0; i<arrayParams.size(); i++) {
 			Enterprise ent=enterpriseService.getEnt(Integer.parseInt(arrayParams.get(i)));
@@ -392,7 +390,6 @@ public class AdminController {
 	
 	@RequestMapping(value="/deleteEntFlag", method=RequestMethod.POST)
 	public void deleteEntFlag(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
-		System.out.println(arrayParams);
 		boolean result=false;
 		for(int i=0; i<arrayParams.size(); i++) {
 			Enterprise ent= enterpriseService.getEnt(Integer.parseInt(arrayParams.get(i)));
@@ -414,32 +411,30 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/modifyEnt", method=RequestMethod.POST)
-	public String modifyEnt(Model model, String entIndex, String entName, String entBizRegNum, String entFlag, 
-			String entSubscriberFlag) {
-			
+	public String modifyEnt(Model model, String entIndex, String entName, String entBizRegNum, String entStyleType, 
+			String entSubscriberFlag) {		
 		try {
 			Enterprise ent = enterpriseService.getEnt(Integer.parseInt(entIndex));
 			ent.setEntName(entName);
 			ent.setEntBizRegNum(entBizRegNum);
-			ent.setEntFlag(entFlag);
+			ent.setEntStyleType(entStyleType);
 			ent.setEntSubscriberFlag(entSubscriberFlag);
-			
+	
 			boolean result = enterpriseService.modifyEnt(ent);
 					
 			if(result) {
-				model.addAttribute("url", "mngEnt");
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngEnt");
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
-			return "admin/include/result";
+			model.addAttribute("url", "mngEnt");
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("url", "mngEnt");
 			model.addAttribute("msg", "수정 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}
 	
 	}
@@ -481,19 +476,18 @@ public class AdminController {
 			boolean result = domainService.registDomain(domain);
 			
 			if(result) {
-				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "등록 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "등록 실패했습니다");
 			}
-			return "admin/include/result";
+			model.addAttribute("url", "mngDomain");
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("url", "mngDomain");
 			model.addAttribute("msg", "등록 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}	
 	}
 	
@@ -507,19 +501,18 @@ public class AdminController {
 			boolean result = domainService.modifyDomain(domain);
 			
 			if(result) {
-				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
-			return "admin/include/result";
+			model.addAttribute("url", "mngDomain");
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("url", "mngDomain");
 			model.addAttribute("msg", "등록 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}	
 	}
 	
@@ -528,19 +521,18 @@ public class AdminController {
 		try {	
 			boolean result = domainService.deleteDomain(Integer.parseInt(domainIndex));
 			if(result) {
-				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "삭제 완료되었습니다");
 			} else {
-				model.addAttribute("url", "mngDomain");
 				model.addAttribute("msg", "삭제 실패했습니다");
 			}
-			return "admin/include/result";
+			model.addAttribute("url", "mngDomain");
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("url", "mngDomain");
 			model.addAttribute("msg", "삭제 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}	
 	}
 	//산업군 관리 페이지
@@ -552,7 +544,6 @@ public class AdminController {
 		return "admin/mng-industry";
 	}
 	
-
 	@RequestMapping("/mngIndustryCode")
 	public String mngIndustryCode(Model model,String largeCatagory) {	
 		System.out.println(largeCatagory);
@@ -596,7 +587,7 @@ public class AdminController {
 			} else {
 				model.addAttribute("msg", "등록 실패했습니다");
 			}
-			return "admin/include/result";
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -621,13 +612,13 @@ public class AdminController {
 				model.addAttribute("msg", "수정 실패했습니다");
 			}
 			model.addAttribute("url", "mngInduty");
-			return "admin/include/result";
+			return "result";
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			model.addAttribute("url", "mngInduty");
 			model.addAttribute("msg", "수정 실패했습니다");
-			return "admin/include/result";
+			return "result";
 		}	
 	}
 }
