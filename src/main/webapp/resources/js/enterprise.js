@@ -278,20 +278,17 @@ function getInterviewList(pageNum){
                                 }),
                                 $("<div/>",{
                                   class:"col-xs-9 mobile-intvw-p",
-                                  append: $("<table/>",{
-                                            class:"table",
-                                            append: [$("<thead/>",{
-                                                        html: "<tr><th colspan='6'>"+interviewList[i].intrvwReview+"</th></tr>"
-                                                      }),
-                                                     $("<tbody/>",{
-                                                       append: [$("<tr><td colspan='6'><p><b>면접질문</b></p><p class='font-gray'>"+interviewList[i].intrvwQuestion+"</p></td></tr>"),
-                                                                $("<tr><td colspan='6'><p><b>질문에 대한 답변</b></p><p class='font-gray'>"+interviewList[i].intrvwAnswer+"</p></td></tr>"),
-                                                                tempObject
-                                                               ]
-                                                     })
-                                                    ]
+                                  append: [$("<div/>",{
+                                              html: interviewList[i].intrvwReview
+                                            }),
+                                           $("<div/>",{
+                                             append: [$("<div><p><b>면접질문</b></p><p class='font-gray'>"+interviewList[i].intrvwQuestion+"</p></div>"),
+                                                      $("<div><p><b>질문에 대한 답변</b></p><p class='font-gray'>"+interviewList[i].intrvwAnswer+"</p></div>"),
+                                                      tempObject
+                                                     ]
+                                           })
+                                          ]
 
-                                          })
                                 })
                                ]
                     })
