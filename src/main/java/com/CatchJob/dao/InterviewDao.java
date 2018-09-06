@@ -20,8 +20,12 @@ public interface InterviewDao {
 	public Interview selectListByIndex(Map<String, String> data);
 	//계정에서 인터뷰 정보 출력할때 필요..
 	public List<Interview> selectListByMemberIdx(Map<String, String> data);
-	// 면접후기 Pie Chart
-	public List<Map<String,String>> interviewPieChart (Map<String, String> data);
+	//바 형태의 면접후기 모양.
+	public double interviewDiffChart (Map<String, String> data);
+	// 면접후기 면접결과 chart
+	public List<Map<String,String>> interviewResultChart (Map<String, String> data);
+	// 면접후기 면접경험 chart
+	public List<Map<String,String>> interviewExperienceChart (Map<String, String> data);
 	// 면접후기 작성버튼 클릭시에 이미 작성했는지 검사 (true:1, false:0)
 	public int interviewDuplicationCheck(Map<String, String> data);
 	// view page, 페이징 처리

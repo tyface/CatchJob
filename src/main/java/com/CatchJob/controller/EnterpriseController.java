@@ -94,7 +94,10 @@ public class EnterpriseController {
 			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
 			model.addAttribute("entInfo", entService.getEntInfo(mapData));
 			model.addAttribute("industryAvgInfo", new Gson().toJson(entService.getIndustryAvgInfo(entIndex)));
-			model.addAttribute("interviewPieChartJson", new Gson().toJson(itvwService.interviewPieChart(mapData)));
+			System.out.println("--"+itvwService.getDiffChart(mapData));
+			model.addAttribute("interviewDiffChart", itvwService.getDiffChart(mapData));
+			model.addAttribute("interviewExperienceChart", new Gson().toJson(itvwService.getExperienceChart(mapData)));
+			model.addAttribute("interviewResultChart", new Gson().toJson(itvwService.getResultChart(mapData)));
 			model.addAttribute("questionList", reviewService.question(mapData));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -207,6 +210,8 @@ public class EnterpriseController {
 	@RequestMapping(value = "/writeInterview")
 	public String writeInterview(Interview interview,Authentication authentication) {
 		interview.setMberIndex(((Member)authentication.getPrincipal()).getMberIndex());
+		System.out.println("----------------------------------1111"+interview);
+		itvwService.insertInterview(interview);
 		return "redirect:view?entIndex="+interview.getEntIndex()+"#section3";
 	}
 	

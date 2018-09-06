@@ -114,7 +114,7 @@ function appendEntList(entList,pageNum,pageViewCount){
 }
 
 /*리뷰 리스트*/
-function getReviewList(questionNum, pageNum){/* 456 */
+function getReviewList(questionNum, pageNum){
 	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
 	//var reviewListJson = JSON.parse('${reviewListJson}');
 
