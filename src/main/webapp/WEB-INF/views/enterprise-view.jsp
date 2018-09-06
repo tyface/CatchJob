@@ -34,27 +34,27 @@ var outPerson = [industryAvgInfo.NPN_SCBT_CNT,industryAvgInfo.PEER_NPN_SCBT_AVG.
 
 
 $(function(){
-	
+
 	entInf();
 	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
 	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
-	
+
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
-	
-	
+
+
 	stars(); //별
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	saramin(); //#section5 사람인채용정보
 	followCheck();//팔로잉 기업인지 확인
-	
+
 	/* member session 존재여부 확인 */
 	if(member == 'anonymousUser'){
 	}else{
 		status = "login";
 	}
-	
+
     $(window).scroll(function() {
         if ($(this).scrollTop() > 500) {
             $('.move-top').fadeIn();
@@ -70,8 +70,8 @@ $(function(){
         return false;
     });
 
-	
-	
+
+
 	/* 그래프 내용들 배열로 저장 */
 	for(var i in empCount){
 		 var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
@@ -83,7 +83,7 @@ $(function(){
 		 outPersonPerMonth.push(empCount[i]['NPN_SCBT_CNT']) ;
 	}
 	chartPersonnel(); //월별그래프 인원
-	
+
 	/* 기업 팔로잉 START */
 	$(".follow-btn").click(function (e) {
         var $this = $(this).find("i");
@@ -244,7 +244,7 @@ $(function(){
 /* 면접후기 작성 버튼 이벤트 START */
 function intrWriteBtn(){
 	 if(status == "logout"){
-		  swal({ 
+		  swal({
       	  title: "로그인 하시겠습니까?",
       	  text: "면접후기 작성은 로그인 후에 이용 가능합니다.",
       	  type: "info",
@@ -292,7 +292,7 @@ function reviewbarChart(){
 		type: 'bar',
 		/* 데이터 start */
 		data: {
-			labels: ['매우 불만족','불만족','보통','만족','매우 만족'],
+			labels: ['1점','2점','3점','4점','5점'],
 			datasets: [{
 					type: 'bar',
 					backgroundColor: '#FFBB00',
@@ -304,7 +304,7 @@ function reviewbarChart(){
 				borderWidth: 1
 		},/* 데이터 end */
 		/* 옵션 start */
-		options: { 
+		options: {
 
 			layout:{
 				padding:{
@@ -532,9 +532,9 @@ function saramin(){
 			</ul>
 		</nav>
 
-		<div class="col-sm-11">
+		<div class="col-sm-11 mobile-p">
 			<div class="module" id="entNameModule">
-				<div class=" row" id="section1">
+				<div class="row" id="section1">
 					<div class="col-sm-6">
 						<span id="entName">${entInfo.ENT_NM}</span>
 						<a href="#" class="follow follow-btn follow" >
@@ -542,12 +542,10 @@ function saramin(){
 						</a>
 					</div>
 					<div class="col-sm-6">
-						<div class="row">
-								<p>예상평균연봉(국민연금)</p>
+								<p class="m-t-10">예상평균연봉(국민연금)</p>
 								<h1>
 									<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span></b>만원
 								</h1>
-						</div>
 					</div>
 				</div>
 
@@ -669,7 +667,7 @@ function saramin(){
 						</div>
 					</div>
 			</div><!-- section 1 기업정보 END-->
-			
+
 			<!-- section2 리뷰코멘트-->
 			<div class="module">
 				<div id="section2">
@@ -700,11 +698,11 @@ function saramin(){
 								<div class="panel-heading" onclick="getReviewList(${status.count})">
 									<h4 class="panel-title row">
 										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}">
-											<span class="col-sm-8">
+											<div class="col-sm-8 ">
 													${question.QUESTION}
 												<span style="color: #6799FF">(${question.COUNT}) </span>
-											</span>
-											<span class="col-sm-4">
+											</div>
+											<div class="col-sm-4 mobile-m-t-10">
 												<c:forEach begin="1" end="${question.AVG}" step="1">
 													<span class="stars-on"></span>
 												</c:forEach>
@@ -712,7 +710,7 @@ function saramin(){
 													<span class="stars-off"></span>
 												</c:forEach>
 												${question.AVG}
-											</span>
+											</div>
 										</a>
 									</h4>
 								</div>
@@ -775,11 +773,11 @@ function saramin(){
 					<div class="panel-group" >
 						<div class="box box-danger">
 							<div class="box-body row">
-								<div class="chart col-md-3" >
-									<h3 class="box-title">면접 난이도</h3>
-								</div>
-								<div class="chart col-md-6" >
+								<div class="chart" >
 									<canvas id="pieChart" ></canvas>
+								</div>
+								<div class="chart" >
+									<p class="box-title text-center">면접 난이도</p>
 								</div>
 							</div>
 						</div>
@@ -795,7 +793,7 @@ function saramin(){
 					</nav>
 				</div>
 			</div><!-- section3 면접후기  END-->
-			
+
 			<!-- section4 그래프-->
 			<div class="module">
 				<div id="section4">
@@ -817,7 +815,7 @@ function saramin(){
 					</div>
 				</div>
 			</div><!-- section4 그래프 END-->
-			
+
 			<!-- SECTION 5- 채용정보 -->
 			<div class="module">
 
@@ -833,7 +831,7 @@ function saramin(){
 						</div>
 				</div>
 			</div><!-- SECTION 5- 채용정보 end -->
-			
+
 			<!-- SECTION 6- 뉴스 -->
 			<div class="module">
 				<div id="section6">

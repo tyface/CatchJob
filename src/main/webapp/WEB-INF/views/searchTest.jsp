@@ -10,7 +10,7 @@
 <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
 <!-- <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/jquery.validate.min.js"></script> -->
 
- <style type="text/css">
+ <%-- <style type="text/css">
        #errorContainer {
            display: none;
            overflow: auto;
@@ -28,13 +28,13 @@
            border: 1px solid #FF2323;
        }
 
-</style>
+</style> --%>
 <script type="text/javascript">
 
 $(function(){
 // 	test();
 
-	$('#main-search-form').validate({		
+	$('#main-search-form').validate({
 		rules : {
 			keyword:{
 				required : true,
@@ -77,22 +77,22 @@ $(function(){
 // 		errorContainer: $('#errorContainer'),
 //         errorLabelContainer: $('#errorContainer ul'),
 //         wrapper: 'li',
-        
+
 		submitHandler: function(form) {
 // 			function(){
 				var $keyword = $('#main-search-bar').val();
 				$keyword = $keyword.replace(/ /gi, "");
 				$('#main-search-bar').val($keyword);
 				form.submit();
-// 			})		
+// 			})
 		}
-	});	
-	
+	});
+
 	 jQuery.validator.addMethod("laxEmail", function(value, element) {
 	  var result = value.replace(/ /gi, "");
 	  return this.optional( element ) || /^[a-zA-Z가-힇0-9]{1,}$/.test( result );
 	 }, '한글을 정확히 입력해 주세요 ');
-		 
+
 })
 
 </script>
@@ -113,7 +113,7 @@ $(function(){
 					<!-- 면접에 대한 답변 -->
 					<div class="row form-group">
 						<div class="col-xs-9">
-							<input type="text" class="form-control"  name="keyword" id="main-search-bar" 
+							<input type="text" class="form-control"  name="keyword" id="main-search-bar"
 							 placeholder="기업을 검색해 보세요"  data-placement="bottom"  autocomplete="off"><!-- data-placement="bottom" -->
 						</div>
 						<div class="col-xs-3">
@@ -121,13 +121,40 @@ $(function(){
 						</div>
 					</div>
 
-					
-			
+
+
 			</form>
 		</article>
 	<div id="errorContainer">
 <!--         <p> Please correct the following errors and try again:</p> -->
         <ul style="display: none;"></ul>
     </div>
+
+
+
+
+
+
+
+		<div class="box_search">
+                <label for="combineSearchWord" class="blind">검색어입력</label>
+                <span id="search_wrap_span" class="box_search_input banner-on">
+                    <input type="text" name="searchword" id="combineSearchWord" placeholder="검색어를 입력하세요" class="placeholder" accesskey="s" autocomplete="off" size="20" value="">
+                </span>
+                <button type="submit" id="submit_button" name="go" class="btn_search track_event" data-track_event="section|gnb|menu|search"><span>검색</span></button>
+            </div>
+
+
+
+
 </section>
+
+
+
+
+
+
+
+
+
 <%@ include file="include/footer.jsp" %>

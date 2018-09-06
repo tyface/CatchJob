@@ -157,18 +157,20 @@ public class InterviewServiceImp implements InterviewService{
 			}
 		}
 		/* 면접  경험*/		
-		for(int i = 0 ; i<interviewList.size();i++) {	
+		for(int i = 0 ; i<interviewList.size();i++) {
 			try {
-				switch (interviewList.get(i).getIntrvwExperience()) {
-				case "1":
-					interviewList.get(i).setIntrvwExperience("부정적");
-					break;
-				case "2":
-					interviewList.get(i).setIntrvwExperience("보통");
-					break;
-				case "3":
-					interviewList.get(i).setIntrvwExperience("긍정적");
-					break;	
+				if(interviewList.get(i).getIntrvwExperience() != null) {
+					switch (interviewList.get(i).getIntrvwExperience()) {
+					case "1":
+						interviewList.get(i).setIntrvwExperience("부정적");
+						break;
+					case "2":
+						interviewList.get(i).setIntrvwExperience("보통");
+						break;
+					case "3":
+						interviewList.get(i).setIntrvwExperience("긍정적");
+						break;	
+					}
 				}
 			}catch(NullPointerException e) {
 				e.printStackTrace();

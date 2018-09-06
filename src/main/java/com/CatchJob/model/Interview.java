@@ -131,14 +131,12 @@ public class Interview {
 
 	@Override
 	public String toString() {
-		return "Interview [mberIndex=" + mberIndex + ", entIndex=" + entIndex + ", entName=" + entName
-				+ ", intrvwDifficulty=" + intrvwDifficulty + ", intrvwDate=" + intrvwDate + ", intrvwRoute="
+		return "Interview [mberIndex=" + mberIndex + ", entIndex=" + entIndex + ", entName="
+				+ entName + ", intrvwDifficulty=" + intrvwDifficulty + ", intrvwDate=" + intrvwDate + ", intrvwRoute="
 				+ intrvwRoute + ", intrvwReview=" + intrvwReview + ", intrvwQuestion=" + intrvwQuestion
 				+ ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag + ", intrvwResult=" + intrvwResult
 				+ ", intrvwExperience=" + intrvwExperience + ", presentationDate=" + presentationDate + ", regDate="
 				+ regDate + "]";
 	}
-
-	
 
 }

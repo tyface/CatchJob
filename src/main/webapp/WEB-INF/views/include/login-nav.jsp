@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <link href="https://fonts.googleapis.com/css?family=Chango" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Gruppo" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
 <security:authentication var="principal" property="principal"/>
 <script>
 

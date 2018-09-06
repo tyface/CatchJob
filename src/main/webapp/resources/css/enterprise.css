@@ -1,3 +1,23 @@
+/* Mobile*/
+.mobile-intvw-p{
+  padding: 0px;
+}
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+  .mobile-intvw-p{
+    padding: 15px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	.mobile-intvw-p{
+    padding: 15px;
+	}
+}
+
+#pieChart{
+
+}
 #left-nav{
   display: none;
 }

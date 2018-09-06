@@ -83,8 +83,7 @@ public class MemberController {
 
 	/* 회원가입 */
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public void join(HttpServletResponse resp, String signUpId, String signUpPw,
-			String signUpPwCheck) {
+	public void join(HttpServletResponse resp, String signUpId, String signUpPw, String signUpPwCheck) {
 		// "잘못된 형식의 이메일 주소입니다". 유효성 검사
 		// "비밀번호는 00자리 이상 입력해 주세요 유효성 검사2
 		String data = "";
@@ -207,31 +206,28 @@ public class MemberController {
 
 	/* 정회원 인증 하기 */
 	@RequestMapping(value = "/verifyRegularMember")
-	public String verifyRegularMember(String memberId, String oauthId, HttpSession session, HttpServletResponse resp) {
+	public String verifyRegularMember(String memberId, String oauthId, HttpSession session,Model model) {
+		
 		String data = "";
+		model.addAttribute("url", "/catchjob/");
+		
 		try {
 			Member member = memberService.getMemberByOauthId(memberId, oauthId);
 
 			if (member != null) {
-				member.setMberType("2");
-				System.out.println(member);
+				member.setMberType("ROLE_AUTHENTICATED");
 				memberService.memberTypeModify(member);
-				data = "{\"result\" : \"CODE_01\"}"; // 정회원 업데이트 완료
+				model.addAttribute("msg", "정회원 업데이트 완료"); // 정회원 업데이트 완료
 			} else {
-				data = "{\"result\" : \"CODE_02\"}"; // 회원 ID 와 인증 ID 불일치
+				model.addAttribute("msg", "정회원 업데이트 실패"); // 회원 ID 와 인증 ID 불일치
 			}
 
 		} catch (Exception e) {
-			data = "{\"result\" : \"CODE_03\"}"; // TODO 알수업는 오류
+			model.addAttribute("msg", "알수없는 오류"); // TODO 알수업는 오류
 			e.printStackTrace();
-		} finally {
-			try {
-				resp.getWriter().print(data);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "redirect:/";
+		} 
+		
+		return "result";
 	}
 
 	/* 비밀번호 재설정 메일보내기 */
