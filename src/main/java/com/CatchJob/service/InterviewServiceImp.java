@@ -57,10 +57,11 @@ public class InterviewServiceImp implements InterviewService{
 	}
 
 	@Override
-	public double getDiffChart(Map<String, String> data) {
+	public Float getDiffChart(Map<String, String> data) {
 		data.put("INTRVW_FL", "1");
-		double result = 0;
+		Float result = (float) 0;
 		try {
+			
 			result = itvwDao.interviewDiffChart(data);
 		}catch(Exception e) {
 			e.printStackTrace();

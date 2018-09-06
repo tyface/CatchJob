@@ -17,7 +17,7 @@ public interface InterviewService {
 	//계정에서 인터뷰 정보 출력할때 필요..
 	public List<Interview>  selectListByMemberIdx(Map<String, String> data);
 	//바 형태의 면접후기 모양.
-	public double getDiffChart (Map<String, String> data);
+	public Float getDiffChart (Map<String, String> data);
 	// 면접후기 면접결과 chart
 	public List<Map<String,String>> getResultChart (Map<String, String> data);
 	// 면접후기 면접경험 chart

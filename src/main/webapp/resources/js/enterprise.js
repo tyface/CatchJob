@@ -114,7 +114,7 @@ function appendEntList(entList,pageNum,pageViewCount){
 }
 
 /*리뷰 리스트*/
-function getReviewList(questionNum, pageNum){
+function getReviewList(questionNum, pageNum){/* 456 */
 	//비동기적으로 화면에 그릴 리뷰 목록 가져오기
 	//var reviewListJson = JSON.parse('${reviewListJson}');
 
@@ -227,13 +227,13 @@ function getInterviewList(pageNum){
         var tempObject = $("<tr/>");
 
         if(interviewList[i].presentationDate != "" && interviewList[i].presentationDate != null){
-          tempObject.append("<th colspan='2'><p class='well well-sm'><span>발표시기</span><span class='f-right'>"+ interviewList[i].presentationDate+"일후</span></p></th>");
+          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>발표시기</span><span class='f-right'>"+ interviewList[i].presentationDate+"일후</span></th>");
         }
         if(interviewList[i].intrvwResult != "" && interviewList[i].intrvwResult != null){
-          tempObject.append("<th colspan='2'><p class='well well-sm'><span>면접결과</span><span class='f-right'>"+ interviewList[i].intrvwResult+"</span></p></th>");
+          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>면접결과</span><span class='f-right'>"+ interviewList[i].intrvwResult+"</span></th>");
         }
         if(interviewList[i].intrvwExperience != "" && interviewList[i].intrvwExperience != null){
-          tempObject.append("<th colspan='2'><p class='well well-sm'><span>면접경험</span><span class='f-right'>"+ interviewList[i].intrvwExperience+"</span></p></th>");
+          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>면접경험</span><span class='f-right'>"+ interviewList[i].intrvwExperience+"</span></th>");
         }
 
         appendObject =
@@ -246,7 +246,7 @@ function getInterviewList(pageNum){
                     $("<div/>", {
                       class:"panel-body",
                       append: [$("<div/>", {
-                                class: "col-xs-3 mobile-intvw-p",
+                                class: "col-xs-3 intvw-left-side",
                                 append: [$("<div/>", {
                                           class: "row",
                                           html:"<p><b>면접난이도</b></p>"
@@ -278,17 +278,20 @@ function getInterviewList(pageNum){
                                 }),
                                 $("<div/>",{
                                   class:"col-xs-9 mobile-intvw-p",
-                                  append: [$("<div/>",{
-                                              html: interviewList[i].intrvwReview
-                                            }),
-                                           $("<div/>",{
-                                             append: [$("<div><p><b>면접질문</b></p><p class='font-gray'>"+interviewList[i].intrvwQuestion+"</p></div>"),
-                                                      $("<div><p><b>질문에 대한 답변</b></p><p class='font-gray'>"+interviewList[i].intrvwAnswer+"</p></div>"),
-                                                      tempObject
-                                                     ]
-                                           })
-                                          ]
+                                  append: $("<table/>",{
+                                            class:"table",
+                                            append: [$("<thead/>",{
+                                                        html: "<tr><th colspan='6'>"+interviewList[i].intrvwReview+"</th></tr>"
+                                                      }),
+                                                     $("<tbody/>",{
+                                                       append: [$("<tr><td colspan='6'><p><b>면접질문</b></p><p class='font-gray'>"+interviewList[i].intrvwQuestion+"</p></td></tr>"),
+                                                                $("<tr><td colspan='6'><p><b>질문에 대한 답변</b></p><p class='font-gray'>"+interviewList[i].intrvwAnswer+"</p></td></tr>"),
+                                                                tempObject
+                                                               ]
+                                                     })
+                                                    ]
 
+                                          })
                                 })
                                ]
                     })

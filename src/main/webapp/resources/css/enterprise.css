@@ -15,6 +15,12 @@
 	}
 }
 
+/* Mobile*/
+.mobile-intvw-01{
+  max-width: 100px;
+}
+
+
 #pieChart{
 
 }
@@ -139,7 +145,7 @@
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
- 
+
 }
 
 .sliders:hover {

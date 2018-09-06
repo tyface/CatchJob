@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE itv.MBER_IDX=#{MBER_IDX}  AND INTRVW_FL=#{INTRVW_FL}
 		ORDER BY itv.INTRVW_IDX desc
 	</select>
-	<select id="interviewDiffChart" parameterType="map" resultType="double">
+	<select id="interviewDiffChart" parameterType="map" resultType="Float">
 		SELECT ROUND(avg(INTRVW_DFFLY),1) as AVG
 		FROM INTERVIEW_TB 
 		WHERE ENT_IDX=#{ENT_IDX}  AND INTRVW_FL=#{INTRVW_FL}

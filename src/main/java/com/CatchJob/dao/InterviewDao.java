@@ -21,7 +21,7 @@ public interface InterviewDao {
 	//계정에서 인터뷰 정보 출력할때 필요..
 	public List<Interview> selectListByMemberIdx(Map<String, String> data);
 	//바 형태의 면접후기 모양.
-	public double interviewDiffChart (Map<String, String> data);
+	public Float interviewDiffChart (Map<String, String> data);
 	// 면접후기 면접결과 chart
 	public List<Map<String,String>> interviewResultChart (Map<String, String> data);
 	// 면접후기 면접경험 chart
