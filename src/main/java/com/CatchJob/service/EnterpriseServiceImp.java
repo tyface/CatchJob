@@ -11,8 +11,6 @@ import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.EnterpriseDao;
 import com.CatchJob.model.Enterprise;
 
-
-
 @Service
 public class EnterpriseServiceImp implements EnterpriseService {
 
@@ -77,8 +75,7 @@ public class EnterpriseServiceImp implements EnterpriseService {
 				
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
-			
-			System.out.println("키워드 존재!!!");		
+				
 			String keywordOption = (String) data.get("keywordOption");	
 			if(keywordOption.equals("entNameKeyword")) {
 				String entNameKeyword = (String) data.get("keyword");
@@ -121,15 +118,13 @@ public class EnterpriseServiceImp implements EnterpriseService {
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", entDao.selectEntList(map));
-		
-		
+				
 		System.out.println(pageNumber);
 		System.out.println(pageTotalCount);
 		System.out.println(getStartPage(pageNumber));
 		System.out.println(getEndPage(pageNumber));
 		System.out.println(numOfMsgPage);
 		System.out.println( entDao.selectEntList(map));
-
 		
 		return viewData;
 	}
