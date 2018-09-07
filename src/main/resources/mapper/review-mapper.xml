@@ -114,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="questionNumKeyword != null">
 			AND r.QESTN_NO = #{questionNumKeyword}
 		</if>
+		ORDER BY REVW_IDX DESC
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>

@@ -64,14 +64,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		OFFSET		#{START_ROW}
 	</select>
 	<select id="selectInterviewTotalRows" parameterType="map" resultType="int">
-		SELECT 	 count(*) AS TOTAL_ROWS 
+		SELECT 	 COUNT(*) AS TOTAL_ROWS 
 		FROM	 INTERVIEW_TB
 		WHERE	 ENT_IDX=#{ENT_IDX} AND INTRVW_FL=#{INTRVW_FL}
 	</select>
 
+	<select id="selectCountByKeyword" resultType="int" parameterType="map">
+		SELECT 	 COUNT(*)
+		FROM	 INTERVIEW_TB i
+		INNER JOIN MEMBER_TB m 
+		ON i.MBER_IDX = m.MBER_IDX
+		INNER JOIN ENTERPRISE_TB e
+		ON i.ENT_IDX = e.ENT_IDX 
+		WHERE 	 1=1 
+		<if test="entIndexKeyword != null">
+		 	AND i.ENT_IDX = #{entIndexKeyword} 
+   		</if>
+   		<if test="entNameKeyword != null"> 
+ 	 		AND e.ENT_NM LIKE '%${entNameKeyword}%'
+   		</if>
+   		<if test="intrvwDifficultyKeyword != null"> 
+ 	  	    AND i.INTRVW_DFFLY = #{intrvwDifficulty} 
+   	   </if>
+	</select>	
+	<select id="selectInterviewListByAdmin" resultMap="interviewMap" parameterType="map">
+		SELECT 	SQL_CALC_FOUND_ROWS *
+		FROM 	INTERVIEW_TB i
+		INNER JOIN MEMBER_TB m
+		ON		i.MBER_IDX = m.MBER_IDX
+		INNER JOIN ENTERPRISE_TB e
+		ON		i.ENT_IDX = e.ENT_IDX
+		WHERE 	1=1
+		<if test="entIndexKeyword != null">
+			AND i.ENT_IDX = #{entIndexKeyword}
+		</if>
+		<if test="entNameKeyword != null">
+			AND e.ENT_NM LIKE '%${entNameKeyword}%'
+		</if>
+		<if test="intrvwDifficultyKeyword != null">
+			AND i.INTRVW_DFFLY = #{intrvwDifficulty}
+		</if>
+		ORDER BY i.INTRVW_IDX DESC
+		LIMIT #{NUM_OF_MSG_PER_PAGE}
+		OFFSET #{START_ROW}
+	</select>
+	<select id="selectInterview" parameterType="int" resultMap="interviewMap">
+		SELECT 	*
+		FROM	INTERVIEW_TB i
+		INNER JOIN MEMBER_TB m
+		ON i.MBER_IDX = m.MBER_IDX
+		WHERE 	INTRVW_IDX=#{intrvwIndex}
+	</select>
+	<update id="updateInterviewByAdmin" parameterType="interview">	
+		UPDATE 	INTERVIEW_TB i
+		INNER JOIN MEMBER_TB m
+		ON 		i.MBER_IDX = m.MBER_IDX
+		SET		m.MBER_ID=#{mberId},i.ENT_IDX=#{entIndex},i.ENT_NM=#{entName},i.INTRVW_DFFLY=#{intrvwDifficulty},i.INTRVW_YM=#{intrvwDate},i.INTRVW_ROUTE=#{intrvwRoute},i.INTRVW_REVW=#{intrvwReview},i.INTRVW_QESTN=#{intrvwQuestion},i.INTRVW_ANSWER=#{intrvwAnswer},i.INTRVW_FL=#{intrvwFlag},
+		i.INTRVW_RESULT=#{intrvwResult},i.INTRVW_EXPRNC=#{intrvwExperience},i.PRESNATN_DT=#{presentationDate},i.REG_DT=#{regDate}
+		WHERE   INTRVW_IDX=#{intrvwIndex}
+	</update>
 	<resultMap type="interview" id="interviewMap">
 		<result property="entName" column="ENT_NM" />
+		<result property="intrvwIndex" column="INTRVW_IDX"/>
 		<result property="mberIndex" column="MBER_IDX" />
+		<result property="mberId" column="MBER_ID" />
 		<result property="entIndex" column="ENT_IDX" />
 		<result property="intrvwDifficulty" column="INTRVW_DFFLY" />
 		<result property="intrvwDate" column="INTRVW_YM" />
@@ -89,3 +145,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 </mapper>
 
+</mapper>

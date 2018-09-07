@@ -49,7 +49,10 @@
 						<li><a href="${pageContext.request.contextPath}/admin/mngEnt">기업 관리</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/admin/mngReview">리뷰 관리</a></li>
-					</ul></li>
+						<li><a
+							href="${pageContext.request.contextPath}/admin/mngInterview">면접 관리</a></li>
+					</ul>
+				</li>
 				<li><a href="#pageSubmenu3" data-toggle="collapse"
 					aria-expanded="false" class="dropdown-toggle"> <i class="fa fa-list" aria-hidden="true"></i> CATEGORY <i
 						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a>

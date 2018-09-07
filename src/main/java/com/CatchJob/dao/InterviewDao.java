@@ -28,5 +28,12 @@ public interface InterviewDao {
 	public List<Interview> selectInterviewList (Map<String, Integer> data);
 	//interview total rows
 	public int selectInterviewTotalRows(Map<String, String> data);
+	// 관리자 페이지 페이징 처리+검색
+	public int selectCountByKeyword(Map<String, Object> map);
 
+	public List<Interview> selectInterviewListByAdmin(Map<String, Object> map);
+	// 면접 하나 출력
+	public Interview selectInterview(int intrvwIndex);
+	// 관리자 페이지 면접 수정
+	public int updateInterviewByAdmin(Interview interview);
 }

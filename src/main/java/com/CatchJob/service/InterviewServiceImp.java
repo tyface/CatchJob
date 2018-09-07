@@ -210,5 +210,86 @@ public class InterviewServiceImp implements InterviewService{
 		int endPage = (((pageNum - 1) / Constants.Interview.NUM_OF_NAVI_PAGE) + 1) * Constants.Interview.NUM_OF_NAVI_PAGE;
 		return endPage;
 	}
+	
+	/* 관리자 페이징 처리 */
+	public Map<String, Object> getMessageList(Map<String, Object> data) {
+		Map<String, Object> viewData = new HashMap<String,Object>();
+		int totalCount = 0;  	
+		Map<String, Object> map = new HashMap<>();
+				
+		/* 검색 키워드 존재 시*/
+		if(data.get("keyword")!=null) {
+			String keywordOption = (String) data.get("keywordOption");
+			if(keywordOption.equals("entNameKeyword")) {
+				String entNameKeyword = (String) data.get("keyword");
+				map.put("entNameKeyword", entNameKeyword);
+				viewData.put("keyword", entNameKeyword);
+				viewData.put("keywordOption", "entNameKeyword");	
+				totalCount  = itvwDao.selectCountByKeyword(map); 	
+			}else if(keywordOption.equals("entIndexKeyword")) {
+				String entIndexKeyword = (String) data.get("keyword");
+				map.put("entIndexKeyword", entIndexKeyword);
+				viewData.put("keyword", entIndexKeyword);
+				viewData.put("keywordOption", "entIndexKeyword");
+				totalCount  = itvwDao.selectCountByKeyword(map); 	
+			} else if(keywordOption.equals("intrvwDifficultyKeyword")){
+				String intrvwDifficultyKeyword = (String) data.get("keyword");
+				map.put("intrvwDifficultyKeyword", intrvwDifficultyKeyword);
+				viewData.put("keyword", intrvwDifficultyKeyword);
+				viewData.put("keywordOption", "intrvwDifficultyKeyword");
+				totalCount  = itvwDao.selectCountByKeyword(map); 	
+			}else if(keywordOption.equals("")) {
+				totalCount  = itvwDao.selectCountByKeyword(map); 	
+			}				
+		} else {
+			totalCount  = itvwDao.selectCountByKeyword(map); 	
+		}	
+		if(totalCount==0) {
+			totalCount = 1;
+		}
+		int numOfMsgPage = (int) data.get("numOfMsgPage");
+		int pageTotalCount = calPageTotalCount(totalCount, numOfMsgPage);
+		int pageNumber = (int) data.get("pageNumber");
+	
+		if(pageNumber > pageTotalCount) {
+			pageNumber = pageTotalCount;
+		}
+
+		int startRow = numOfMsgPage * (pageNumber - 1);
+		map.put("NUM_OF_MSG_PER_PAGE", numOfMsgPage);
+		map.put("START_ROW", startRow);
+
+		viewData.put("currentPage", pageNumber);	
+		viewData.put("pageTotalCount", pageTotalCount);
+		viewData.put("startPage", getInterviewStartPage(pageNumber));
+		viewData.put("endPage", getInterviewEndPage(pageNumber));
+		viewData.put("msgPerPage", numOfMsgPage);	
+		viewData.put("boardList", itvwDao.selectInterviewListByAdmin(map));
+		
+		System.out.println(itvwDao.selectInterviewListByAdmin(map));
+		
+		return viewData;
+	}
+	public int calPageTotalCount(int totalCount, int numOfMsgPage) {
+		int pageTotalCount = 0;
+		if (totalCount != 0) {
+			pageTotalCount = (int) Math.ceil(((double) totalCount / numOfMsgPage));
+		}
+		return pageTotalCount;
+	}
+	
+	public Interview getInterview(int intrvwIndex) {
+		return itvwDao.selectInterview(intrvwIndex);
+	}
+	
+	@Override
+	public boolean modifyInterviewByAdmin(Interview interview) {
+		int result = itvwDao.updateInterviewByAdmin(interview);
+		if(result > 0) {		
+			return true;
+		}else {			
+			return false;
+		}
+	}
 
 }

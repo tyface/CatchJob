@@ -26,4 +26,12 @@ public interface InterviewService {
 	public Map<String, Integer> interviewPageData (int currentPage, int entIndex);
 	//interview total rows
 	public int getInterviewTotalRows(Map<String, String> data);
+	
+	public Map<String, Object> getMessageList(Map<String, Object> data);
+
+	public int calPageTotalCount(int totalCount, int numOfMsgPage);
+
+	public Interview getInterview(int intrvwIndex);
+	
+	public boolean modifyInterviewByAdmin(Interview interview);
 }

@@ -235,7 +235,7 @@ function chkDelete(){
 							</button>
 							<h4 class="modal-title" id="modalLabel">리뷰 코멘트</h4>
 						</div>
-						<form action="modifyComment" method="post">
+						<form action="modifyReview" method="post">
 							<div class="modal-body">
 								<input type="hidden" name="reviewIndex" id="reviewIndex">
 								<div class="row form-group">

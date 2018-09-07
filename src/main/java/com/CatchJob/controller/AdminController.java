@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.CatchJob.model.Enterprise;
 import com.CatchJob.model.Industry;
+import com.CatchJob.model.Interview;
 import com.CatchJob.model.Member;
 import com.CatchJob.model.Review;
 import com.CatchJob.model.UniversalDomain;
 import com.CatchJob.service.EnterpriseService;
 import com.CatchJob.service.IndustryService;
+import com.CatchJob.service.InterviewService;
 import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
 import com.CatchJob.service.UniversalDomainService;
@@ -48,6 +50,8 @@ public class AdminController {
 	UniversalDomainService domainService;
 	@Autowired
 	IndustryService industryService;
+	@Autowired
+	InterviewService interviewService;
 	
 	
 	/* ROLE_ADMIN이 ROLE_MASTER 권한 요구할 때 */
@@ -307,7 +311,7 @@ public class AdminController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping(value="/modifyComment", method=RequestMethod.POST)
+	@RequestMapping(value="/modifyReview", method=RequestMethod.POST)
 	public String modifyComment(Model model, String reviewIndex, String entIndex, String evaluation, String mberId, 
 			String questionNum, String contents) {
 			
@@ -620,5 +624,113 @@ public class AdminController {
 			model.addAttribute("msg", "수정 실패했습니다");
 			return "result";
 		}	
+	}
+	/* 면접 관리 */
+	@RequestMapping(value = "/mngInterview")
+	public String mngInterview(Model model, String page, String msgPerPage, String keyword, String keywordOption) {		
+		int pageNumber = 1;	
+		if (page != null) {
+			pageNumber = Integer.parseInt(page);
+		}
+		
+		int numOfMsgPage = 10;
+		if (msgPerPage != null) {
+			numOfMsgPage = Integer.parseInt(msgPerPage);
+		} 
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("pageNumber", pageNumber);
+		data.put("numOfMsgPage", numOfMsgPage);
+		
+		if(keyword != null) {
+			data.put("keyword", keyword);
+			data.put("keywordOption", keywordOption);
+		}
+	
+		Map<String, Object> viewData = interviewService.getMessageList(data);
+		model.addAttribute("viewData", viewData);
+		
+		return "admin/interview-mng";
+	}
+	@RequestMapping(value="/modifyInterviewFlag", method=RequestMethod.POST)
+	public void modifyInterviewFlag(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
+		boolean result=false;
+		for(int i=0; i<arrayParams.size(); i++) {
+			Interview interview=interviewService.getInterview(Integer.parseInt(arrayParams.get(i)));
+			interview.setIntrvwFlag("1");
+			result = interviewService.modifyInterviewByAdmin(interview);
+		}
+		String data = "";
+		if (result) {
+			data = "{\"result\" : true}";
+		} else {
+			data = "{\"result\" : false}";
+		}
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/deleteInterviewFlag", method=RequestMethod.POST)
+	public void deleteInterviewFlag(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
+		boolean result=false;
+		for(int i=0; i<arrayParams.size(); i++) {
+			Interview interview= interviewService.getInterview(Integer.parseInt(arrayParams.get(i)));
+			interview.setIntrvwFlag("2");
+			result = interviewService.modifyInterviewByAdmin(interview);
+		}
+		
+		String data = "";
+		if (result) {
+			data = "{\"result\" : true}";
+		} else {
+			data = "{\"result\" : false}";
+		}
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="/modifyInterview", method=RequestMethod.POST)
+	public String modifyInterview(Model model, int intrvwIndex, int entIndex, String entName, String mberId, String intrvwDifficulty, String intrvwDate,String intrvwRoute,String intrvwReview,String intrvwQuestion, 
+			String intrvwAnswer, String intrvwResult, String presentationDate, String intrvwExperience, String regDate) {		
+		try {							
+
+			Interview interview =interviewService.getInterview(intrvwIndex);
+			interview.setIntrvwIndex(intrvwIndex);
+			interview.setEntIndex(entIndex);
+			interview.setEntName(entName);
+			interview.setMberId(mberId);
+			interview.setIntrvwDifficulty(intrvwDifficulty);
+			interview.setIntrvwDate(intrvwDate);
+			interview.setIntrvwRoute(intrvwRoute);
+			interview.setIntrvwReview(intrvwReview);
+			interview.setIntrvwQuestion(intrvwQuestion);
+			interview.setIntrvwAnswer(intrvwAnswer);
+			interview.setIntrvwResult(intrvwResult);
+			interview.setPresentationDate(presentationDate);
+			interview.setIntrvwExperience(intrvwExperience);
+			interview.setRegDate(regDate);
+	
+			boolean result = interviewService.modifyInterviewByAdmin(interview);
+					
+			if(result) {			
+				model.addAttribute("msg", "수정 완료되었습니다");
+			} else {
+				model.addAttribute("msg", "수정 실패했습니다");
+			}
+			model.addAttribute("url", "mngInterview");
+			return "result";
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			model.addAttribute("url", "mngInterview");
+			model.addAttribute("msg", "수정 실패했습니다");
+			return "result";
+		}
+	
 	}
 }

@@ -97,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="entNameKeyword != null"> 
 			 AND ENT_NM LIKE '%${entNameKeyword}%'
 		</if>
+		ORDER BY ENT_IDX DESC
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>	
