@@ -100,19 +100,22 @@
 								<div class="form-group">
 									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
-										<input type="password" class="form-control" id="mberPw"
+										<input type="password" class="form-control" id="mberPw" style="margin-bottom:0"
 											placeholder="비밀번호" >
-										<input type="hidden" name="mberPw" value="${admin.mberPw}">
+						
 									</div>
 								</div>
-								<div class="form-group" style="text-align: right">
-									<label for="mberType" class="control-label" style="margin-right:15px">권한</label>
+								<div class="form-group" style="text-align:right">
+									<label for="mberType" class="control-label" style="margin-right:15px; margin-top:3px">권한</label>
 									<div class="col-sm-8 pull-right">
 										<select class="form-control" id="mberType" name="mberType">
 											<option value="" selected disabled hidden>
 											<c:set var="name" value="${admin.mberType}"/>
-												<c:if test="${name.equals('ROLE_ADMIN')}">level1</c:if>
-												<c:if test="${name.equals('ROLE_MASTER')}">level2</c:if>
+												<c:choose>
+													<c:when test="${name.equals('ROLE_ADMIN')}">level1</c:when>
+													<c:when test="${name.equals('ROLE_MASTER')}">level2</c:when>
+													<c:otherwise>권한</c:otherwise>
+												</c:choose>
 											</option>
 											<option value="ROLE_ADMIN">level1</option>
 											<option value="ROLE_MASTER">level2</option>
@@ -134,6 +137,7 @@
 											placeholder="최근 방문날짜" value="${admin.lastDate}">
 									</div>
 								</div>
+								<input type="hidden" name="mberPw" value="${admin.mberPw}">
 								<!-- </div>
 								<div class="form-group">
 									<div class="col-sm-4 control-label" style="font-weight: bold">사용
