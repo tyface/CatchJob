@@ -378,7 +378,7 @@ margin-left: auto;
 }
 
 .facebookBtn {
-	margin: 4px;
+	margin-bottom: 15px;
 	background-color: #3b5998;
 	font-family: Roboto-Medium;
 	font-size: 14px;
@@ -389,14 +389,16 @@ margin-left: auto;
 }
 
 .facebookBtn img {
+	float: left;
+	margin-left: 10px;
 	height: 18px;
 	width: 18px;
-	margin-right: 24px;
+/* 	margin-right: 24px; */
 	margin-bottom: 3px;
 }
 
 .googleBtn {
-	margin: 4px;
+/* 	margin-bottom: 15px; */
 	background-color: #ffffff;
 	font-family: Roboto-Medium;
 	font-size: 14px;
@@ -407,9 +409,11 @@ margin-left: auto;
 }
 
 .googleBtn img {
+	float: left;
+	margin-left: 10px;
 	height: 18px;
 	width: 18px;
-	margin-right: 24px;
+/* 	margin-right: 24px; */
 	margin-bottom: 3px;
 }
 
@@ -490,7 +494,80 @@ margin-left: auto;
 		text-align: left;
 	}
 }
+/* 로그인, 회원가입  */
+.modal-headers{
+	background-color: #4c78ea;
+	padding:35px 50px;
+	
+}
+.modal-headers h4, .close {
+      
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+      
+}
+.btn-catchjob{
+ 	background-color: #4c78ea;
+ 	color:white !important;
+ 	line-height: 22px; 
+	height: 40px; 
+	box-shadow: 1px 1px 4px gray;
+ }
+ .modal-footer {
+     background-color: #EAEAEA;
+ }
+ .form-text-height{
+ 	height: 40px
+ }
+  .modal-contents {
+    max-width: 400px;  
+    position: relative; 
+    background-color: #FFF; 
+    -webkit-background-clip: padding-box; 
+    background-clip: padding-box; 
+    border: 1px solid #999; 
+    border: 1px solid rgba(0, 0, 0, .2); 
+    border-radius: 6px; 
+    outline: 0; 
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5); 
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5); 
+} 
+.modal.fade .modal-dialogs {
+  -webkit-transition: -webkit-transform .3s ease-out;
+       -o-transition:      -o-transform .3s ease-out;
+          transition:         transform .3s ease-out;
+  -webkit-transform: translate(0, -25%);
+      -ms-transform: translate(0, -25%);
+       -o-transform: translate(0, -25%);
+          transform: translate(0, -25%);
+}
+.modal.in .modal-dialogs {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+       -o-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+/* .modal-open .modal { */
+/*   overflow-x: hidden; */
+/*   overflow-y: auto; */
+/* } */
+.modal-dialogs {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
 
+@media (min-width: 430px) {
+  .modal-dialogs {
+    width: 400px;
+    margin: 30px auto;
+  }
+  .modal-contents .modal-body{
+  	padding:40px 50px;
+  }  
+}
+/* 로그인, 회원가입 end */
 .fa {
 	font-size: 17px;
 }
@@ -656,15 +733,15 @@ margin-left: auto;
 	color: #FF0000
 }
 
-.cat-header {
-	/* 모달 헤더부분 */
-	color: white;
-	background-color: #F361A6;
-}
+/* .cat-header { */
+/* 	/* 모달 헤더부분 */ */
+/* 	color: white; */
+/* 	background-color: #F361A6; */
+/* } */
 
-.modal-footer {
-	background-color: #EAEAEA;
-}
+/* .modal-footer { */
+/* 	background-color: #EAEAEA; */
+/* } */
 
 /* 유효성검사 에러시에  */
 input.error, textarea.error, select.error {
@@ -686,8 +763,6 @@ label.error {
 	box-shadow: 1px 1px 5px 0px #a8bff9;
 	margin-top: 20px;
 }
-
-
 
 /* 마이페이지  START*/
 .text-center td, .text-center th {

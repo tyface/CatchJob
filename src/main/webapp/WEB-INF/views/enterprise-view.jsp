@@ -382,18 +382,18 @@ function interviewExperienceChart(){
 				datasets: [{
 					data: chartData,
 					backgroundColor: [
-						'#FF0000',
-						'#FFBB00',
-						'#1DDB16',
+						'#b8c6ec',
+						'#87a3ec',
+						'#4c78ea',
 					],
 					datalabels: {
 						color:  'white',
 					},
 				}],
 				labels: [
-				"부정적",
+					"부정적",
 					"보통",
-				"긍정적",
+					"긍정적",
 				]
 			},
 			options: {
@@ -949,7 +949,7 @@ function saramin(){
 		<div class="modal-content">
 			<form action="writeInterview" id="writeInterview" method="post">
 				<input type="hidden" name="entIndex" value="${entInfo.ENT_IDX}">
-				<div class="modal-header cat-header">
+				<div class="modal-headers ">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">면접후기 작성</h4>
 				</div>
@@ -1095,7 +1095,7 @@ function saramin(){
 
 				</div>
 				<div class="modal-footer">
-					<button class="btn cat-header" id="itvw-write-btn">제출</button>
+					<button class="btn btn-catchjob" id="itvw-write-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>

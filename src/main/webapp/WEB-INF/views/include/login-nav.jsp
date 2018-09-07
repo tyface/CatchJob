@@ -6,6 +6,9 @@
 		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
 			<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
 <security:authentication var="principal" property="principal"/>
+  <style>
+  
+  </style>
 <script>
 
 $(function() {
@@ -263,42 +266,45 @@ function topSearchValidation(){
 
   <!-- 로그인 모달 -->
   <div class="modal fade" id="loginModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialogs ">
 
       <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
+      <div class="modal-contents">
+        <div class="modal-headers" >
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+          <h4><span class="glyphicon glyphicon-lock"></span> 로그인</h4>
         </div>
-        <div class="modal-body" style="padding:40px 50px;">
+        <div class="modal-body" >
 
           <form role="form" method="post" id="loginForm">
 				<div class="form-group has-feedback">
-					<input type="email" class="form-control" id="loginId" placeholder="Enter">
+					<input type="email" class="form-control form-text-height" id="loginId" placeholder="이메일 주소">
 					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					 <input type="password" class="form-control" id="loginPw" placeholder="Password">
+					 <input type="password" class="form-control form-text-height" id="loginPw" placeholder="비밀번호(8자리 이상)">
 					 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+              <button type="submit" class="btn btn-catchjob btn-block"> 로그인</button>
           </form>
 
 					<div class="form-group row">
-						<br><center><p>- OR -</p></center><br>
+						<br><center><p>- 또는 -</p></center><br>
 						<button class="btn col-xs-12 facebookBtn" >
-								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> Sign in with facebook
+								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로  로그인
 						</button>
 						<button class="btn col-xs-12 googleBtn" >
-								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> Sign in with Google &nbsp;&nbsp;
+								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 로그인 &nbsp;&nbsp;
 						</button>
 					</div>
 
         </div>
         <div class="modal-footer">
-          <p>Not a member? <a href="#myModalSignUp" class="blue-font" data-toggle="modal" id="loginHide">Sign Up</a></p>
-          <p>Forgot <span class="blue-font" onclick="passwordModifyForm()">Password</span></p>
+          <p>아직 회원이 아니세요? <a href="#myModalSignUp" class="blue-font" data-toggle="modal" id="loginHide">회원가입</a></p>
+<!--           <p>Forgot  -->
+          <p><span class="blue-font" onclick="passwordModifyForm()">비밀번호 찾기</span></p>
+<!--           </p> -->
+          	
         </div>
       </div>
     </div>
@@ -306,63 +312,64 @@ function topSearchValidation(){
 
 		<!-- 회원가입 모달 -->
 		<div class="modal fade" id="myModalSignUp" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialogs">
 
 				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header" style="padding: 35px 50px;">
+				<div class="modal-contents">
+					<div class="modal-headers">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4>
-							<span class="glyphicon glyphicon-lock"></span> Sign Up
+							<span class="glyphicon glyphicon-lock"></span> 회원가입
 						</h4>
 					</div>
 
-					<div class="modal-body" style="padding: 40px 50px;">
+					<div class="modal-body" >
 						<form role="form" method="post" id="signUpForm">
 							<div class="form-group has-feedback">
-								<input	type="email" class="form-control" id="signUpId"	placeholder="Email">
+								<input	type="email" class="form-control form-text-height" id="signUpId"	placeholder="이메일 주소">
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 							</div>
 							<div class="form-group has-feedback">
 								<!-- 비밀번호 -->
-								<input type="password" class="form-control" id="signUpPw" placeholder="Password">
+								<input type="password" class="form-control form-text-height" id="signUpPw" placeholder="비밀번호(8자리 이상)">
 								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 							</div>
 					        <div class="form-group has-feedback">
 								<!-- 비밀번호 확인  -->
-								<input type="password" class="form-control" id="signUpPwCheck"	placeholder="Retype password">
+								<input type="password" class="form-control form-text-height" id="signUpPwCheck"	placeholder="비밀번호 확인">
 								 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
 							</div>
-							<button type="submit" class="btn btn-success btn-block">
-								<span class="glyphicon glyphicon-off"></span> Sign Up
+							<button type="submit" class="btn btn-catchjob btn-block">
+								 이메일로 가입
 							</button>
 							<!-- 회원가입 실패 시 보이는 창 -->
-							<div class="form-group has-error has-feedback hidden"
-								id="signUpFail">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span>
-									</span>
-									<input type="text" class="form-control" id="inputError"
-									aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요">
-								</div>
-							</div>
+<!-- 							<div class="form-group has-error has-feedback hidden" -->
+<!-- 								id="signUpFail"> -->
+<!-- 								<div class="input-group"> -->
+<!-- 									<span class="input-group-addon"> -->
+<!-- 										<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span> -->
+<!-- 									</span> -->
+<!-- 									<input type="text" class="form-control" id="inputError" -->
+<!-- 									aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 						</form>
 
 						<div class="form-group row">
-							<br><center><p>- OR -</p></center><br>
+							<br><center><p>- 또는 -</p></center><br>
+							
 							<button class="btn col-xs-12 facebookBtn" >
-									<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> Sign in with facebook
+									<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로 가입
 							</button>
 							<button class="btn col-xs-12 googleBtn" >
-									<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> Sign in with Google &nbsp;&nbsp;
+									<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 가입 &nbsp;&nbsp;
 							</button>
 						</div>
 
 					</div>
 
 					<div class="modal-footer">
-						 <a href="#loginModal" data-toggle="modal" id="signUpHide">I already have a membership</a>
+						 <p>이미 회원이세요? <a  href="#loginModal" data-toggle="modal" id="signUpHide">로그인</a></p>
 					</div>
 				</div>
 

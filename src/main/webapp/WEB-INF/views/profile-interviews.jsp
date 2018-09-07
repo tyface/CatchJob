@@ -10,46 +10,16 @@
 
 <script>
 $(function(){
-
-	//alert("INTRVW_EXPRNC:" + INTRVW_EXPRNC);
-/* 	$(".update").on("click",function(){
-		alert("선택된 기업요소: "+$(this).children().val());
-		 $.ajax({
-			url:"updateInterviewForm",
-			data:{"entIndex":$(this).children().val()},
-			dataType:"json",
-			success: function(){
-				alert("성공");				
-			},
-			error : function(reauest, status, error){
-				alert("실패");
-			}
-			
-		}) 
-		$("#hiddenEntIndex").val($(this).children().val());
-		modal();
-		$("#myModal").modal();
-	});
-	 */
 	 interviewValidation(); //인터뷰 유효성 검사 부분
-	 
-
-  
-		
-		 
 })
 
 function doUpdate(num){
-	 //alert("num: "+num);
-	 
 	$.ajax({	
 		url:"${pageContext.request.contextPath}/profile/interviewForm",
 		type:"get",
-		//url : "form",
 		data : {"entIndex": num},
 		dataType: 'json',
 		success: function(data){
-			//alert("성공~"+data);
 				$("#entName").val(data['entName']);
 				$("#intrvwReview").val(data['intrvwReview']);
 				$("#intrvwQuestion").val(data['intrvwQuestion']);
@@ -67,8 +37,6 @@ function doUpdate(num){
 				$("#intrvwResult").find('option[value="' + INTRVW_RESULT + '"]').prop('selected', true);
 				$("#intrvwRoute").find('option[value="' + INTRVW_ROUTE + '"]').prop('selected', true);
 				$("#optionsRadios" + INTRVW_EXPRNC).prop('checked', true); 
-				//alert(data['entName']);
-			
 		}, 
 		error: function(request, status, error){
 			alert("실패~");
@@ -112,29 +80,6 @@ function doDelete(entIndex){
 			}
 		})
 	});
-// 	.then((willDelete) => {
-// 		if(willDelete){
-// 			$.ajax({
-// 				url: "${pageContext.request.contextPath}/profile/deleteInterview",
-// 				type:"post",
-// 				data: {"entIndex": entIndex},
-// 				success: function(result){
-// 					if(result){
-// 						swal("Deleted!", "Your imaginary file has been deleted.", "success").then(
-// 						   function(){ 
-// 						       location.reload();
-// 						   })						
-// 					}else{
-// 						swal("Cancelled", "Your imaginary file is safe :)", "error");						
-// 					}
-// 				}
-// 			})
-// 		}else{
-// 			swal("Cancelled", "취소누름)", "error");						
-// 		}
-			
-// 	});
-
 			
 }
 
@@ -180,23 +125,19 @@ function interviewValidation(){
 				required : "다른 항목을 선택해주세요"
 			},
 			intrvwDate:{
-//				required : "필수로입력하세요"
 			},
 			intrvwRoute:{
 				required : "다른 항목을 선택해주세요"
 			},
 			intrvwReview:{
-//				required : "필수로입력하세요",
 				minlength : "최소 10글자이상이어야 합니다",	
 				maxlength : "최대 500글자까지 입력할 수 있습니다"	
 			},
 			intrvwQuestion:{
-//				required : "필수로입력하세요",
 				minlength : "최소 10글자이상이어야 합니다"	,	
 				maxlength : "최대 500글자까지 입력할 수 있습니다"				
 			},
 			intrvwAnswer:{
-//				required : "필수로입력하세요",
 				minlength : "최소 10글자이상이어야 합니다"	,	
 				maxlength : "최대 500글자까지 입력할 수 있습니다"				
 			}			
@@ -257,10 +198,6 @@ function interviewValidation(){
 	
 	</div>
 </article>
-<!--  <button type="button" class="btn btn-info" id="myBtn">수정</button>
-<button type="button" class="btn btn-info" id="">삭제</button>
-
- -->
 
 
 <!-- Modal ----------------------------------------------------------------------------------------------------------------------------- -->
@@ -271,7 +208,7 @@ function interviewValidation(){
 		<div class="modal-content">
 			<form action="${pageContext.request.contextPath}/profile/updateInterview" id="updateInterview" method="post">
 				<input type="hidden" name="entIndex" id="hiddenEntIndex" > 
-				<div class="modal-header cat-header">
+				<div class="modal-headers cat-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">면접후기 수정</h4>
 				</div>
@@ -418,7 +355,7 @@ function interviewValidation(){
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn cat-header" id="update-btn">제출</button>
+					<button type="submit" class="btn btn-catchjob" id="update-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>

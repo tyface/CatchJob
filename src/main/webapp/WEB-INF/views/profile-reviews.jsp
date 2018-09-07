@@ -14,22 +14,13 @@ $(function(){
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
-	    	     // alert(value);
 	    	      $("#evaluationScore").text(value);
 	    	      $("#hiddenEvaluationScore").val(value);
-
-
-
 	    }
 	});
 	reviewValidation();
-// 	 $("#update-btn").on("click",function(){
-// 		 $("#writeForm").submit();
-// 		 alert("수정되었습니다^^")
-// 	 });
 })
 function updateForm(num, questionNum){
-	//alert("수정!"+num+questionNum)
 	$.ajax({
 		url:"${pageContext.request.contextPath}/profile/reviewForm",
 		type: 'get',
@@ -38,15 +29,14 @@ function updateForm(num, questionNum){
 		dataType: "json",
 		success: function(review){
 			var evaluationScore = review.evaluationScore;
-			//alert("성공~evaluationScore:"+evaluationScore+"만족도:");
 			$("#entName").val(review.entName);
 			$("#question").val(review.question);
 			$("#evaluationScore").text(evaluationScore);
 			$("#contents").text(review.contents);
 			$("#hiddenQuestionNum").val(review.questionNum);
 			$("#hiddenEntIndex").val(review.entIndex)
-      $("#hiddenReviewFlag").val(review.reviewFlag)
-      $("#hiddenReviewIndex").val(review.reviewIndex)
+		    $("#hiddenReviewFlag").val(review.reviewFlag)
+		    $("#hiddenReviewIndex").val(review.reviewIndex)
 			$('#stars').barrating('set', evaluationScore);
 		},
 		error: function(request, status, error){
@@ -66,7 +56,6 @@ function deleteReview(entIndex,questionNum){
 		  confirmButtonClass: "btn-info",
 		  confirmButtonText: "Yes, delete it!",
 		  closeOnConfirm: false,
-		  //showLoaderOnConfirm: true
 		},
 		function(){
 			$.ajax({
@@ -94,7 +83,6 @@ function deleteReview(entIndex,questionNum){
 							type: "error",
 							confirmButtonClass:"btn-error"
 							})
-
 					}
 				}
 			})
@@ -120,7 +108,6 @@ function reviewValidation(){
 				required : "다른 항목을 선택해주세요"
 			},
 			contents:{
-// 				required : "필수로입력하세요",
 				minlength : "최소 10글자이상이어야 합니다",
 				maxlength : "최대 500글자까지 입력할 수 있습니다"
 			}
@@ -167,12 +154,7 @@ function reviewValidation(){
 
 
 
-<!-- 	</div> -->
 </article>
-
-<!--  <button type="button" class="btn btn-info" id="myBtn">수정</button>
-<button type="button" class="btn btn-info" id="">삭제</button>
-
  -->
 
 
@@ -188,26 +170,36 @@ function reviewValidation(){
           <input type="hidden" name="reviewFlag" id="hiddenReviewFlag">
 				<input type="hidden" name="questionNum" id="hiddenQuestionNum" >
 				<input type="hidden" name="evaluationScore" id="hiddenEvaluationScore" >
-				<div class="modal-header cat-header"> <!--  -->
+				<div class="modal-headers cat-header"> <!--  -->
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">면접후기 수정</h4>
 				</div>
 				<div class="modal-body">
 					<!-- 리뷰 코멘트/ 기업명 -->
-					<div class="form-group">
-						<label>기업명</label>
-						<input type="text" class="form-control" id="entName" name="entName"	 readonly="readonly">
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>기업명</label>
+						</div>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" id="entName" name="entName"	 readonly="readonly">
+						</div>
 					</div>
 					<!-- 리뷰 코멘트/ 질문내용 -->
-					<div class="form-group">
-						<label>질문내용</label>
-						<input type="text" class="form-control" id="question" name="question"	 readonly="readonly">
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>질문내용</label>
+						</div>
+						<div class="col-xs-9">
+							<input type="text" class="form-control" id="question" name="question"	 readonly="readonly">
+						</div>
 					</div>
 					<!-- 리뷰 코멘트/ 만족도  -->
-					<div class="form-group">
-						<label>만족도</label>
-						<div>
-							<select class="stars" id="stars" name="stars">
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>만족도</label>						
+						</div>
+						<div class="col-xs-9 stars01">
+							<select class="stars" id="stars" name="stars" >
 <!-- 								<option value="" >별점</option> -->
 							    <option value="1">1</option>
 							    <option value="2">2</option>
@@ -215,22 +207,25 @@ function reviewValidation(){
 							    <option value="4">4</option>
 							    <option value="5">5</option>
 							</select>
-							<output for="star-input" >
+							<output for="star-input" class="stars02">
 								<b id="evaluationScore" >0</b> 점
 							</output>
 
-					</div>
+						</div>
 					</div>
 					<!-- 리뷰 코멘트/ 내용 -->
-					<div class="form-group">
-						<label>내용</label>
-						<textarea class="form-control" rows="2" name="contents" id="contents"  placeholder="기업리뷰를 추가로 입력해주세요."></textarea>
-						<!-- <input type="text" class="form-control" id="contents" name="contents"	 > -->
+					<div class="row form-group">
+						<div class="col-xs-3">
+							<label>내용</label>
+						</div>
+						<div class="col-xs-9">
+							<textarea class="form-control" rows="2" name="contents" id="contents"  placeholder="기업리뷰를 추가로 입력해주세요."></textarea>
+						</div>
 					</div>
 
 				</div>
 				<div class="modal-footer">
-					<button class="btn cat-header" id="update-btn">제출</button>
+					<button class="btn btn-catchjob" id="update-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>
