@@ -53,32 +53,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON r.ENT_IDX=e.ENT_IDX
 		WHERE r.MBER_IDX=#{mberIndex} AND e.ENT_IDX=#{entIndex} AND q.QESTN_NO=#{questionNum} AND r.REVW_FL = #{REVW_FL}	
 	</select> 
-	<!-- 
-	<select id="reviewListByQNum" parameterType="map" resultMap="reviewMap">
-		SELECT * 
-		FROM REVIEW_QESTN_TB q
-		LEFT JOIN REVIEW_TB r
-		ON r.QESTN_NO=q.QESTN_NO
-		WHERE r.ENT_IDX=#{entIndex} AND r.QESTN_NO=#{questionNum} 
-		ORDER BY r.REVW_IDX desc
+ 	<!-- 리뷰코멘트 VIEW 페이지에서 페이징처리 -->
+	<select id="selectReviewsList" parameterType="map" resultMap="reviewMap">
+		SELECT 		* 
+		FROM 		REVIEW_TB revw
+		INNER JOIN 	MEMBER_TB m
+		ON 			revw.MBER_IDX = m.MBER_IDX
+		WHERE 		revw.ENT_IDX= #{ENT_IDX} 
+		AND 		revw.QESTN_NO= #{QESTN_NO} 
+		AND 		revw.REVW_FL = #{REVW_FL}
+		ORDER BY 	FIELD(m.MBER_TYPE,'ROLE_AUTHENTICATED','ROLE_USER'), revw.REG_DT DESC
+		LIMIT 		#{NUM_OF_RVW_PER_PAGE}
+		OFFSET 		#{START_ROW}
 	</select>
-	 -->
- <!-- 리뷰코멘트 VIEW 페이지에서 페이징처리 -->
-	 <select id="selectReviewsList" parameterType="map" resultMap="reviewMap">
-	 	SELECT SQL_CALC_FOUND_ROWS * 
-		FROM REVIEW_QESTN_TB q
-		LEFT JOIN REVIEW_TB r
-		ON r.QESTN_NO=q.QESTN_NO
-		WHERE r.ENT_IDX=#{ENT_IDX} AND r.QESTN_NO=#{QESTN_NO} AND r.REVW_FL = #{REVW_FL}
-		ORDER BY r.REVW_IDX desc
-		LIMIT #{NUM_OF_RVW_PER_PAGE}
-		OFFSET #{START_ROW}
-	 </select>	 
+	 
 	 <select id="selectReviewTotalRows" parameterType="map" resultType="int">
 		SELECT 	 count(*) AS TOTAL_ROWS 
 		FROM	 REVIEW_TB
 		WHERE	 ENT_IDX=#{ENT_IDX} AND QESTN_NO=#{QESTN_NO} AND REVW_FL = #{REVW_FL}
-	</select>	
+	</select>
+	
 	<select id="selectCountByKeyword" resultType="int" parameterType="map">
 		SELECT COUNT(*)
 		FROM REVIEW_TB r
@@ -96,7 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <if test="questionNumKeyword != null"> 
 	  	  	AND r.QESTN_NO = #{questionNumKeyword} 
 	    </if>
-	</select>	
+	</select>
+	
 	<select id="selectReviewList" resultMap="reviewMap"	parameterType="map">
 		SELECT SQL_CALC_FOUND_ROWS *
 		FROM REVIEW_TB r
@@ -118,6 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
 		OFFSET #{START_ROW}
 	</select>
+	
 <!-- 	리뷰 수정 -->
 	<update id="updateReview" parameterType="review">
 		UPDATE 	REVIEW_TB
@@ -177,6 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="reviewIndex" column="REVW_IDX"/>		<!-- 리뷰 식별번호 -->
 		<result property="entIndex" column="ENT_IDX"/>			<!--기업 식별번호  -->
 		<result property="mberIndex" column="MBER_IDX"/>		<!-- 회원 식별번호 -->
+		<result property="mberType" column="MBER_TYPE"/>		<!-- 회원 권한 -->
 		<result property="questionNum" column="QESTN_NO"/>		<!-- 질문 식별번호 -->
 		<result property="evaluationScore" column="EVALUATION"/>	<!-- 기업 평가 점수 -->
 		<result property="contents" column="CONTENTS"/>		<!--  리뷰 내용-->

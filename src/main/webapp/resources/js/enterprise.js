@@ -131,12 +131,26 @@ function getReviewList(questionNum, pageNum){/* 456 */
 		dataType:"json",
 		success : function(data){
 			reviews.empty()
-			for(var i in data.reviewList){
 
+			for(var i in data.reviewList){
+        //별점 만들기
+        var stars = "";
+
+        for(var j = 1;j < 5;j++){
+          if(j < data.reviewList[i].evaluationScore){
+            stars += "<span class=stars-on/>";
+          }else{
+            stars += "<span class=stars-off/>";
+          }
+        }
+
+        var regularMmember = data.reviewList[i].mberType == "ROLE_AUTHENTICATED"?"<span class='jua-font font-01'>정회원</span>":"";
+        console.log(data);
 				var regDate = data.reviewList[i].regDate;
 				var evaluationScore = data.reviewList[i].evaluationScore;
 				var contents = data.reviewList[i].contents;
-				var td = $("<tr><td><p><small><span class='glyphicon glyphicon-star'></span>"+evaluationScore+".0&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate+"</small></p>"+contents+"</td></tr>").appendTo(reviews);
+
+				var td = $("<tr><td><p><small><span class='stars-on'></span>"+stars+"&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate.substring(0,10)+"</small>"+regularMmember+"</p>"+contents+"</td></tr>").appendTo(reviews);
 				td.appendTo(reviews);
 			}
 
@@ -213,13 +227,13 @@ function getInterviewList(pageNum){
         var tempObject = $("<tr/>");
 
         if(interviewList[i].presentationDate != "" && interviewList[i].presentationDate != null){
-          tempObject.append("<th colspan='2'><p class='well well-sm'><span>발표시기</span><span class='f-right'>"+ interviewList[i].presentationDate+"일후</span></p></th>");
+          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>발표시기</span><span class='f-right'>"+ interviewList[i].presentationDate+"일후</span></th>");
         }
         if(interviewList[i].intrvwResult != "" && interviewList[i].intrvwResult != null){
-          tempObject.append("<th colspan='2'><p class='well well-sm'><span>면접결과</span><span class='f-right'>"+ interviewList[i].intrvwResult+"</span></p></th>");
+          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>면접결과</span><span class='f-right'>"+ interviewList[i].intrvwResult+"</span></th>");
         }
         if(interviewList[i].intrvwExperience != "" && interviewList[i].intrvwExperience != null){
-          tempObject.append("<th colspan='2'><p class='well well-sm'><span>면접경험</span><span class='f-right'>"+ interviewList[i].intrvwExperience+"</span></p></th>");
+          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>면접경험</span><span class='f-right'>"+ interviewList[i].intrvwExperience+"</span></th>");
         }
 
         appendObject =
@@ -232,7 +246,7 @@ function getInterviewList(pageNum){
                     $("<div/>", {
                       class:"panel-body",
                       append: [$("<div/>", {
-                                class: "col-xs-3",
+                                class: "col-xs-3 intvw-left-side",
                                 append: [$("<div/>", {
                                           class: "row",
                                           html:"<p><b>면접난이도</b></p>"
@@ -263,7 +277,7 @@ function getInterviewList(pageNum){
                                         ]
                                 }),
                                 $("<div/>",{
-                                  class:"col-xs-9",
+                                  class:"col-xs-9 mobile-intvw-p",
                                   append: $("<table/>",{
                                             class:"table",
                                             append: [$("<thead/>",{
@@ -492,7 +506,7 @@ function chartSalary(){
 	                tension: 0, // disables bezier curves
 	            }
 	        },
-	        scales: {								
+	        scales: {
                    yAxes: [{
                 	    gridLines: {
    							display: false,
@@ -511,7 +525,7 @@ function chartSalary(){
                    xAxes: [{
                 	   gridLines: {
    							display: false,
-   		            	},  
+   		            	},
                 	    ticks: {
                              callback: function(value, index, values) {
                              	  var month = '';
@@ -520,7 +534,7 @@ function chartSalary(){
                              },
                           },
                 	  }]
-               },	
+               },
                 tooltips: {
                     enabled: true,
                     mode: 'index',
@@ -623,7 +637,7 @@ function chartPersonnel(){
                     },
                 }],
                 xAxes: [{
-                	
+
                 	gridLines: {
 						display: false,
 		            },
@@ -755,6 +769,3 @@ function personnelBtn(){
 	$("#personnel-btn").attr('disabled', true);
 	$("#salary-btn").attr('disabled', false);
 }
-
-
-

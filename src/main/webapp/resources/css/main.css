@@ -9,7 +9,7 @@
 
 /* Mobile */
 .main-font {
-	font-family: 'Jua', sans-serif;
+  font-family: 'Jua', sans-serif;
   color: #4c78ea;
   margin-top: 50px;
   margin-bottom: 30px;
@@ -29,11 +29,6 @@
   }
 }
 
-#anton-font {
-  text-align: center;
-  margin: auto;
-  width: 600px;
-}
 
 /* Mobile */
 #main-search-form{

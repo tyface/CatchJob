@@ -57,9 +57,30 @@ public class InterviewServiceImp implements InterviewService{
 	}
 
 	@Override
-	public List<Map<String,String>> interviewPieChart(Map<String, String> data) {	
+	public Float getDiffChart(Map<String, String> data) {
 		data.put("INTRVW_FL", "1");
-		return itvwDao.interviewPieChart(data);
+		Float result = (float) 0;
+		try {
+			
+			result = itvwDao.interviewDiffChart(data);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Map<String, String>> getResultChart(Map<String, String> data) {
+		// 면접후기 면접결과 chart
+		data.put("INTRVW_FL", "1");
+		return itvwDao.interviewResultChart(data);
+	}
+
+	@Override
+	public List<Map<String, String>> getExperienceChart(Map<String, String> data) {
+		// 면접후기 면접경험 chart
+		data.put("INTRVW_FL", "1");
+		return itvwDao.interviewExperienceChart(data);
 	}
 
 	@Override
@@ -157,18 +178,20 @@ public class InterviewServiceImp implements InterviewService{
 			}
 		}
 		/* 면접  경험*/		
-		for(int i = 0 ; i<interviewList.size();i++) {	
+		for(int i = 0 ; i<interviewList.size();i++) {
 			try {
-				switch (interviewList.get(i).getIntrvwExperience()) {
-				case "1":
-					interviewList.get(i).setIntrvwExperience("부정적");
-					break;
-				case "2":
-					interviewList.get(i).setIntrvwExperience("보통");
-					break;
-				case "3":
-					interviewList.get(i).setIntrvwExperience("긍정적");
-					break;	
+				if(interviewList.get(i).getIntrvwExperience() != null) {
+					switch (interviewList.get(i).getIntrvwExperience()) {
+					case "1":
+						interviewList.get(i).setIntrvwExperience("부정적");
+						break;
+					case "2":
+						interviewList.get(i).setIntrvwExperience("보통");
+						break;
+					case "3":
+						interviewList.get(i).setIntrvwExperience("긍정적");
+						break;	
+					}
 				}
 			}catch(NullPointerException e) {
 				e.printStackTrace();
@@ -291,5 +314,8 @@ public class InterviewServiceImp implements InterviewService{
 			return false;
 		}
 	}
+
+
+	
 
 }

@@ -34,27 +34,27 @@ var outPerson = [industryAvgInfo.NPN_SCBT_CNT,industryAvgInfo.PEER_NPN_SCBT_AVG.
 
 
 $(function(){
-	
+
 	entInf();
 	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
 	getInterviewList(1);
-	interviewPieChart(); //인터뷰 면접난이도 파이 그래프
-	
+	interviewExperienceChart() // 면접 경험 차트
+	interviewResultChart() // 면접 결과 차트
 	// interviewDifficultyShape(); //인터뷰 면접난이도 색칠 부분
-	
-	
+
+
 	stars(); //별
 	interviewValidation(); //인터뷰 유효성 검사 부분
 	saramin(); //#section5 사람인채용정보
 	followCheck();//팔로잉 기업인지 확인
-	
+
 	/* member session 존재여부 확인 */
 	if(member == 'anonymousUser'){
 	}else{
 		status = "login";
 	}
-	
+
     $(window).scroll(function() {
         if ($(this).scrollTop() > 500) {
             $('.move-top').fadeIn();
@@ -70,8 +70,8 @@ $(function(){
         return false;
     });
 
-	
-	
+
+
 	/* 그래프 내용들 배열로 저장 */
 	for(var i in empCount){
 		 var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
@@ -83,7 +83,7 @@ $(function(){
 		 outPersonPerMonth.push(empCount[i]['NPN_SCBT_CNT']) ;
 	}
 	chartPersonnel(); //월별그래프 인원
-	
+
 	/* 기업 팔로잉 START */
 	$(".follow-btn").click(function (e) {
         var $this = $(this).find("i");
@@ -244,7 +244,7 @@ $(function(){
 /* 면접후기 작성 버튼 이벤트 START */
 function intrWriteBtn(){
 	 if(status == "logout"){
-		  swal({ 
+		  swal({
       	  title: "로그인 하시겠습니까?",
       	  text: "면접후기 작성은 로그인 후에 이용 가능합니다.",
       	  type: "info",
@@ -292,7 +292,7 @@ function reviewbarChart(){
 		type: 'bar',
 		/* 데이터 start */
 		data: {
-			labels: ['매우 불만족','불만족','보통','만족','매우 만족'],
+			labels: ['1점','2점','3점','4점','5점'],
 			datasets: [{
 					type: 'bar',
 					backgroundColor: '#FFBB00',
@@ -304,7 +304,7 @@ function reviewbarChart(){
 				borderWidth: 1
 		},/* 데이터 end */
 		/* 옵션 start */
-		options: { 
+		options: {
 
 			layout:{
 				padding:{
@@ -356,29 +356,94 @@ function reviewbarChart(){
 	});
 }/* #section2 리뷰코멘트 - 만족도  end*/
 
-/* #section3 면접후기 면접난이도 */
-function interviewPieChart(){
-	 var interviewPieChartJson = JSON.parse('${interviewPieChartJson}');
+/* #section3 면접후기 면접경험 */
+function interviewExperienceChart(){
+	 var interviewExperienceChart = JSON.parse('${interviewExperienceChart}');
 
-	 var chartData = new Array(0,0,0,0,0);
+	 var chartData = new Array(0,0,0);
 
-  	  for(var i in interviewPieChartJson){
+  	  for(var i in interviewExperienceChart){
 
-	     if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '1'){
-	    	 chartData[0]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '2'){
-	    	 chartData[1]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '3'){
-	    	 chartData[2]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '4'){
-	    	 chartData[3]=interviewPieChartJson[i]['count'];
-	     }else if(interviewPieChartJson[i]['INTRVW_DFFLY'] == '5'){
-	    	 chartData[4]=interviewPieChartJson[i]['count'];
+	     if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '1'){
+	    	 chartData[0]=interviewExperienceChart[i]['COUNT'];
+	     }else if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '2'){
+	    	 chartData[1]=interviewExperienceChart[i]['COUNT'];
+	     }else if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '3'){
+	    	 chartData[2]=interviewExperienceChart[i]['COUNT'];
 	     }
+	    
   	 }
 
 	// pieChart
-	var ctx3 = document.getElementById("pieChart").getContext('2d');
+	var ctx3 = document.getElementById("pieChartExperience").getContext('2d');
+	var pieChart = new Chart(ctx3, {
+		type: 'pie',
+		data: {
+				datasets: [{
+					data: chartData,
+					backgroundColor: [
+						'#FF0000',
+						'#FFBB00',
+						'#1DDB16',
+					],
+					datalabels: {
+						color:  'white',
+					},
+				}],
+				labels: [
+				"부정적",
+					"보통",
+				"긍정적",
+				]
+			},
+			options: {
+				responsive: true,
+				layout:{
+					padding:{
+						top:20,
+						bottom:20,
+					}
+				},
+				legend: {
+			        display: true,
+			        position: 'right'
+			    },
+			    plugins: {
+					datalabels: {
+						display: function(context) {
+							return context.dataset.data[context.dataIndex] > 0;
+						},
+						font: {
+							weight: 'bold'
+						},
+					}
+				},
+
+			}
+
+	});
+
+}
+/* #section3 면접결과 면접경험 */
+function interviewResultChart(){
+	 var interviewResultChart = JSON.parse('${interviewResultChart}');
+
+	 var chartData = new Array(0,0,0);
+
+  	  for(var i in interviewResultChart){
+
+	     if(interviewResultChart[i]['INTRVW_RESULT'] == '1'){
+	    	 chartData[0]=interviewResultChart[i]['COUNT'];
+	     }else if(interviewResultChart[i]['INTRVW_RESULT'] == '2'){
+	    	 chartData[1]=interviewResultChart[i]['COUNT'];
+	     }else if(interviewResultChart[i]['INTRVW_RESULT'] == '3'){
+	    	 chartData[2]=interviewResultChart[i]['COUNT'];
+	     }
+	    
+  	 }
+
+	// pieChart
+	var ctx3 = document.getElementById("pieChartResult").getContext('2d');
 	var pieChart = new Chart(ctx3, {
 		type: 'pie',
 		data: {
@@ -386,21 +451,17 @@ function interviewPieChart(){
 					data: chartData,
 					backgroundColor: [
 						'#1DDB16',
-						'#ABF200',
-						'#FFBB00',
-						'#FF5E00',
 						'#FF0000',
+						'#FFBB00',
 					],
 					datalabels: {
 						color:  'white',
 					},
 				}],
 				labels: [
-					"매우쉬움",
-					"쉬움",
-					"보통",
-					"어려움",
-					"매우어려움",
+					"합격",
+					"불합격",
+					"대기중",
 				]
 			},
 			options: {
@@ -532,9 +593,9 @@ function saramin(){
 			</ul>
 		</nav>
 
-		<div class="col-sm-11">
+		<div class="col-sm-11 mobile-p">
 			<div class="module" id="entNameModule">
-				<div class=" row" id="section1">
+				<div class="row" id="section1">
 					<div class="col-sm-6">
 						<span id="entName">${entInfo.ENT_NM}</span>
 						<a href="#" class="follow follow-btn follow" >
@@ -542,12 +603,10 @@ function saramin(){
 						</a>
 					</div>
 					<div class="col-sm-6">
-						<div class="row">
-								<p>예상평균연봉(국민연금)</p>
+								<p class="m-t-10">예상평균연봉(국민연금)</p>
 								<h1>
 									<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span></b>만원
 								</h1>
-						</div>
 					</div>
 				</div>
 
@@ -669,7 +728,7 @@ function saramin(){
 						</div>
 					</div>
 			</div><!-- section 1 기업정보 END-->
-			
+
 			<!-- section2 리뷰코멘트-->
 			<div class="module">
 				<div id="section2">
@@ -700,11 +759,11 @@ function saramin(){
 								<div class="panel-heading" onclick="getReviewList(${status.count})">
 									<h4 class="panel-title row">
 										<a data-toggle="collapse" data-parent="#accordion" 	href="#collapse${status.count}">
-											<span class="col-sm-8">
+											<div class="col-sm-8 ">
 													${question.QUESTION}
 												<span style="color: #6799FF">(${question.COUNT}) </span>
-											</span>
-											<span class="col-sm-4">
+											</div>
+											<div class="col-sm-4 mobile-m-t-10">
 												<c:forEach begin="1" end="${question.AVG}" step="1">
 													<span class="stars-on"></span>
 												</c:forEach>
@@ -712,7 +771,7 @@ function saramin(){
 													<span class="stars-off"></span>
 												</c:forEach>
 												${question.AVG}
-											</span>
+											</div>
 										</a>
 									</h4>
 								</div>
@@ -774,12 +833,27 @@ function saramin(){
 					<h3 class="sectionTitle">면접후기</h3>
 					<div class="panel-group" >
 						<div class="box box-danger">
+						
 							<div class="box-body row">
-								<div class="chart col-md-3" >
+								<div class="chart col-md-4" >
 									<h3 class="box-title">면접 난이도</h3>
+									<div class="text-center ">
+<%-- 									<canvas id="pieChart" ></canvas> --%>
+										<h1>${interviewDiffChart}</h1>
+										<span class="f-left text-primary">쉬움</span>
+										<span class="f-right text-danger">어려움</span>
+										<input type="range" min="1" max="100" value="70" class="sliders" disabled >
+										<span class="f-left text-primary">0</span>
+										<span class="f-right text-danger">5</span>
+									</div>	
 								</div>
-								<div class="chart col-md-6" >
-									<canvas id="pieChart" ></canvas>
+								<div class="chart col-md-4" >
+									<h3 class="box-title">면접 경험</h3>
+									<canvas id="pieChartExperience" ></canvas>
+								</div>
+								<div class="chart col-md-4" >
+									<h3 class="box-title">면접 결과</h3>
+									<canvas id="pieChartResult" ></canvas>
 								</div>
 							</div>
 						</div>
@@ -795,7 +869,7 @@ function saramin(){
 					</nav>
 				</div>
 			</div><!-- section3 면접후기  END-->
-			
+
 			<!-- section4 그래프-->
 			<div class="module">
 				<div id="section4">
@@ -817,7 +891,7 @@ function saramin(){
 					</div>
 				</div>
 			</div><!-- section4 그래프 END-->
-			
+
 			<!-- SECTION 5- 채용정보 -->
 			<div class="module">
 
@@ -833,7 +907,7 @@ function saramin(){
 						</div>
 				</div>
 			</div><!-- SECTION 5- 채용정보 end -->
-			
+
 			<!-- SECTION 6- 뉴스 -->
 			<div class="module">
 				<div id="section6">

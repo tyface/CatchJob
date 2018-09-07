@@ -5,7 +5,7 @@ public class Interview {
 	private int intrvwIndex; // 면접 식별번호
 	private int mberIndex; // 회원 식별번호
 	private String mberId; // 회원 이름
-	private int entIndex; // 기업 식별번호
+private int entIndex; // 기업 식별번호
 	private String entName; // 사업장명
 	private String intrvwDifficulty; // 면접난이도(1~5)
 	private String intrvwDate; // 면접날짜
@@ -13,10 +13,10 @@ public class Interview {
 	private String intrvwReview; // 면접후기
 	private String intrvwQuestion; // 면접질문
 	private String intrvwAnswer; // 질문에대한 답변
-	private String intrvwFlag; // 면접내용 상태(1:사용,2:삭제,3:대기)
+	private String intrvwFlag; // 면접내용 상태(1:사용,2:삭제,3:대기) TODO
 	private String intrvwResult; // 면접결과(1:합격,2:불합격,3:대기중,4:합격했으나 취업하지않음)
 	private String intrvwExperience; // 면접경험(1:부정적,2:보통,3:긍정적)
-	private String presentationDate; // 발표시기(ex:21일 후)
+	private String presentationDate; // 발표기시(ex:21일 후)
 	private String regDate; // 작성일
 
 	public String getMberId() {
@@ -149,12 +149,12 @@ public class Interview {
 
 	@Override
 	public String toString() {
-		return "Interview [intrvwIndex=" + intrvwIndex + ", mberIndex=" + mberIndex + ", mberId=" + mberId
-				+ ", entIndex=" + entIndex + ", entName=" + entName + ", intrvwDifficulty=" + intrvwDifficulty
-				+ ", intrvwDate=" + intrvwDate + ", intrvwRoute=" + intrvwRoute + ", intrvwReview=" + intrvwReview
-				+ ", intrvwQuestion=" + intrvwQuestion + ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag
-				+ ", intrvwResult=" + intrvwResult + ", intrvwExperience=" + intrvwExperience + ", presentationDate="
-				+ presentationDate + ", regDate=" + regDate + "]";
+		return "Interview [mberIndex=" + mberIndex + ", entIndex=" + entIndex + ", entName="
+				+ entName + ", intrvwDifficulty=" + intrvwDifficulty + ", intrvwDate=" + intrvwDate + ", intrvwRoute="
+				+ intrvwRoute + ", intrvwReview=" + intrvwReview + ", intrvwQuestion=" + intrvwQuestion
+				+ ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag + ", intrvwResult=" + intrvwResult
+				+ ", intrvwExperience=" + intrvwExperience + ", presentationDate=" + presentationDate + ", regDate="
+				+ regDate + "]";
 	}
 
 }

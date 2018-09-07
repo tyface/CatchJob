@@ -38,15 +38,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE itv.MBER_IDX=#{MBER_IDX}  AND INTRVW_FL=#{INTRVW_FL}
 		ORDER BY itv.INTRVW_IDX desc
 	</select>
-	<!-- 면접후기 면접난이도 Pie Chart 그리기 -->
-	<select id="interviewPieChart" parameterType="map" resultType="map">
-		SELECT INTRVW_DFFLY, count(INTRVW_DFFLY) as count
+	<select id="interviewDiffChart" parameterType="map" resultType="Float">
+		SELECT ROUND(avg(INTRVW_DFFLY),1) as AVG
+		FROM INTERVIEW_TB 
+		WHERE ENT_IDX=#{ENT_IDX}  AND INTRVW_FL=#{INTRVW_FL}
+	</select>
+	<!-- 면접후기 면접결과-->
+	<select id="interviewResultChart" parameterType="map" resultType="map">
+		SELECT INTRVW_RESULT, count(INTRVW_RESULT) as COUNT
 		FROM INTERVIEW_TB
 		WHERE ENT_IDX=#{ENT_IDX}  AND INTRVW_FL=#{INTRVW_FL}
-		GROUP BY INTRVW_DFFLY
-		ORDER BY INTRVW_DFFLY 
+		GROUP BY INTRVW_RESULT 
 	</select>
-	
+	<!-- 면접후기  면접경험-->
+	<select id="interviewExperienceChart" parameterType="map" resultType="map">
+		SELECT INTRVW_EXPRNC, count(INTRVW_EXPRNC) as COUNT
+		FROM INTERVIEW_TB
+		WHERE ENT_IDX=#{ENT_IDX}  AND INTRVW_FL=#{INTRVW_FL}
+		GROUP BY INTRVW_EXPRNC
+	</select>
 	<!-- 면접후기 작성버튼 클릭시에 이미 작성했는지 검사 -->
 	<select id="interviewDuplicationCheck" parameterType="map" resultType="int">
 		SELECT count(*)
