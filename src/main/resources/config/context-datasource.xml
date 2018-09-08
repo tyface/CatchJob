@@ -17,13 +17,13 @@
 		<property name="password" value="${mariadb.password}"/>
 		
 		<!-- 4개의 설정은 동일하게 설정하는 것이 예외 케이스를 줄일 수 있음 --> 
-		<property name="initialSize" value="20"/> 
-		<property name="maxTotal" value="20"/> 
-		<property name="maxIdle" value="20"/> 
-		<property name="minIdle" value="20"/> 
+		<property name="initialSize" value="6"/> 
+		<property name="maxTotal" value="6"/> 
+		<property name="maxIdle" value="6"/> 
+		<property name="minIdle" value="6"/> 
 		<property name="defaultReadOnly" value="true"/> 
 		<!-- pool이 고갈되었을 경우 최대 대기 타임 ms --> 
-		<property name="maxWaitMillis" value="3000"/> 
+		<property name="maxWaitMillis" value="10000"/> 
 		<property name="validationQuery" value="SELECT 1"/> 
 		<!-- Evictor 설정 --> 
 		<property name="testOnBorrow" value="false"/> 

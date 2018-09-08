@@ -1,6 +1,7 @@
 package com.CatchJob.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,6 +115,7 @@ public class MemberController {
 
 				mailHandler.setFrom(Constants.Config.ADMIN_EMAIL, Constants.Config.ADMIN_NAME);
 				mailHandler.setTo(signUpId);
+				
 				mailHandler.send();
 
 				
@@ -207,8 +209,6 @@ public class MemberController {
 	/* 정회원 인증 하기 */
 	@RequestMapping(value = "/verifyRegularMember")
 	public String verifyRegularMember(String memberId, String oauthId, HttpSession session,Model model) {
-		
-		String data = "";
 		model.addAttribute("url", "/catchjob/");
 		
 		try {
@@ -403,8 +403,8 @@ public class MemberController {
 		memberService.visitUpdate(member.getMberIndex());
 		member.addAuthority(new Role(member.getMberType()));
 		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(member, null,member.getAuthorities()));
-
-		return "redirect:http://localhost:8090/catchjob/";
+		
+		return "redirect:"+Constants.Config.HOST;
 	}
 
 	// //이메일 인증 코드 검증

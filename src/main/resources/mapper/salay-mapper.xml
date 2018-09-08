@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.CatchJob.dao.SalaryDao">
-	
 	<select id="selectListSalayRank" parameterType="int" resultType="hashMap">
 		SELECT 		tmp.ENT_IDX, ent.ENT_NM 
-		FROM 		(select ENT_IDX 
-					from UPDATE_ENT_INFO_TB
-					order by PAY_AMT_AVG desc
-					limit 5) tmp
+		FROM 		(SELECT ENT_IDX 
+					FROM UPDATE_ENT_INFO_TB
+					ORDER by PAY_AMT_AVG DESC
+					LIMIT 5) tmp
 		INNER JOIN 	ENTERPRISE_TB ent
 		ON 			tmp.ENT_IDX = ent.ENT_IDX
 	</select>
-
 </mapper>
 

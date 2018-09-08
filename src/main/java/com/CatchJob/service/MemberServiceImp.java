@@ -15,11 +15,6 @@ public class MemberServiceImp implements MemberService {
 		
 	@Autowired
 	private MemberDao memberDao;
-/*	사용안함
-	@Override
-	public List<Member> getListMembers(Map<String, String> map) {
-		return memberDao.selectListMember(map);
-	}*/
 
 	@Override
 	public boolean login(String mberId, String mberPw) {
@@ -215,7 +210,6 @@ public class MemberServiceImp implements MemberService {
 		viewData.put("endPage", getEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", memberDao.selectAdminList(map));
-		System.out.println(memberDao.selectAdminList(map));
 		return viewData;
 	}
 

@@ -1,4 +1,25 @@
 /* Mobile*/
+.progress-bars{
+
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+	.progress-bars{
+    padding-left: 9px;
+    padding-right: 9px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	.progress-bars{
+    padding-left: 15px;
+    padding-right: 15px;
+	}
+}
+
+/* Mobile*/
 .mobile-intvw-p{
   padding: 0px;
 }
@@ -17,9 +38,26 @@
 
 /* Mobile*/
 .mobile-intvw-01{
-  max-width: 100px;
+  text-align: center;
+  padding: 0px;
 }
 
+/* Mobile*/
+.intvw-left-side{
+  padding: 0px;
+}
+/* Tablet */
+@media ( min-width :768px) and (max-width:1024px) {
+	.intvw-left-side{
+    padding: 15px;
+	}
+}
+/* Desktop */
+@media ( min-width :1025px) {
+	.intvw-left-side{
+    padding: 15px;
+	}
+}
 
 #pieChart{
 

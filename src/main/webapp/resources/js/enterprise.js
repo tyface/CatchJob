@@ -224,16 +224,29 @@ function getInterviewList(pageNum){
 
 			for(var i in interviewList){
 
-        var tempObject = $("<tr/>");
-
+        var tempObject = $("<div class='row'></div>");
+        var tempInt = 0;
+        var tempStyle = ""
         if(interviewList[i].presentationDate != "" && interviewList[i].presentationDate != null){
-          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>발표시기</span><span class='f-right'>"+ interviewList[i].presentationDate+"일후</span></th>");
+          if(tempInt > 0){
+            tempStyle = "style='border-left: 2px solid #ddd'";
+          }
+          tempObject.append("<div class='mobile-intvw-01 col-xs-4' "+tempStyle+"><span>발표시기<br>"+ interviewList[i].presentationDate+"일후</span></div>");
+          tempInt = tempInt + 1;
         }
         if(interviewList[i].intrvwResult != "" && interviewList[i].intrvwResult != null){
-          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>면접결과</span><span class='f-right'>"+ interviewList[i].intrvwResult+"</span></th>");
+          if(tempInt > 0){
+            tempStyle = "style='border-left: 2px solid #ddd'";
+          }
+          tempObject.append("<div class='mobile-intvw-01 col-xs-4' "+tempStyle+"><span>면접결과<br>"+ interviewList[i].intrvwResult+"</span></div>");
+          tempInt = tempInt + 1;
         }
         if(interviewList[i].intrvwExperience != "" && interviewList[i].intrvwExperience != null){
-          tempObject.append("<th colspan='2' class='well well-sm mobile-intvw-01'><span>면접경험</span><span class='f-right'>"+ interviewList[i].intrvwExperience+"</span></th>");
+          if(tempInt > 0){
+            tempStyle = "style='border-left: 2px solid #ddd'";
+          }
+          tempObject.append("<div class='mobile-intvw-01 col-xs-4' "+tempStyle+"><span>면접경험<br>"+ interviewList[i].intrvwExperience+"</span></div>");
+          tempInt = tempInt + 1;
         }
 
         appendObject =

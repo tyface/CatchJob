@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import com.CatchJob.commons.Constants;
 import com.CatchJob.dao.MemberDao;
 
 @Service
@@ -26,7 +27,7 @@ public class MailServiceImp implements MailService{
         try {
         	String temp="";
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-            		resourceLoader.getResource(filePath).getInputStream()));
+            		resourceLoader.getResource(filePath).getInputStream(), "UTF-8"));
             
             while((temp=bufferedReader.readLine())!=null) {
             	result +=temp;
@@ -43,53 +44,9 @@ public class MailServiceImp implements MailService{
             }
         }
         result = result.replace("memberIdTemp", email);
+        result = result.replace("hostTemp", Constants.Config.HOST);
         result = result.replace("oauthIdTemp", mamberDao.selectById(email).getOauthId());
         return result;
 	}
 
-//    public void regist(Member vo) throws Exception {
-//        
-//        System.out.println("서비스레지스");
-//
-//        String encPassword = passwordEncoder.encode(vo.getMemberPassword());
-//        vo.setMemberPassword(encPassword);
-//        //System.out.println("암호화된 비밀번호 : "+user.getUserPassword());
-//
-//        dao.insertUser(vo);
-//        System.out.println(vo);
-//        System.out.println("///////////////////////  찍히");
-//        String key = new TempKey().getKey(50,false);  // 인증키 생성
-//
-//        dao.createAuthKey(vo.getMemberEmail(),key); //인증키 db 저장
-//        //메일 전송
-//        MailHandler sendMail = new MailHandler(mailSender);
-//        sendMail.setSubject("FAINT  서비스 이메일 인증]");
-//        sendMail.setText(
-//                new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8080/user/emailConfirm?userEmail=").
-//append(vo.getMemberEmail()).
-//append("&memberAuthKey=").append(key).
-//append("' target='_blank'>이메일 인증 확인</a>").toString());
-//        sendMail.setFrom("sososososo@gmail.com", "서어비스센터 ");
-//
-//
-//        sendMail.setTo(vo.getMemberEmail());
-//        sendMail.send();
-//    }
-//
-//    //이메일 인증 키 검증
-//    public Member userAuth(Member user) throws Exception {
-//        Member vo =new Member();
-//        System.out.println(user+"user");
-////        vo=dao.chkAuth(user);
-//   
-//        if(vo!=null){
-//            try{
-//                System.out.println(vo+"vo");
-////                dao.userAuth(user);
-////                dao.successAuth(vo);
-//            }catch (Exception e) {
-//                e.printStackTrace();
-//            }}
-//        return vo;
-//    }
 }

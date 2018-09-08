@@ -30,13 +30,14 @@ public class NaverNewsService {
 		connection.setRequestMethod("GET");
 		connection.setRequestProperty("X-Naver-Client-Id", CLIENT_ID);
 		connection.setRequestProperty("X-Naver-Client-Secret", CLIENT_Secret);
+		
 		int responseCode = connection.getResponseCode();
 		BufferedReader br = null;
 		if (responseCode == 200) {
-			br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			br = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
 		} else {
 			// 예외발생
-			br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+			br = new BufferedReader(new InputStreamReader(connection.getErrorStream(),"UTF-8"));
 		}
 		String inputLine = null;
 		StringBuilder sb = new StringBuilder();
@@ -80,6 +81,7 @@ public class NaverNewsService {
 				String standardDate = pubDate.substring(5,9)+"-"+month+"-"+pubDate.substring(0, 2);
 				news.setPubDate(standardDate);
 				news.setTitle(item.getString("title"));
+				
 				newsList.add(news);
 			}
 		}

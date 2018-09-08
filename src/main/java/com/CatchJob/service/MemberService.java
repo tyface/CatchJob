@@ -1,6 +1,5 @@
 package com.CatchJob.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.CatchJob.model.Member;

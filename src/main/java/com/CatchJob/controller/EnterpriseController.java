@@ -1,6 +1,7 @@
 package com.CatchJob.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -78,15 +79,19 @@ public class EnterpriseController {
 	}
   
 	@RequestMapping(value = "/view")
-	public String entDetailsForm(int entIndex, HttpServletRequest req, Model model, Authentication authentication)  {
+	public String entDetailsForm(int entIndex,HttpServletRequest req, Model model, Authentication authentication)  {
 		// 기업정보 표출될때마다 viewCount올리는 부분
 		Map<String, String> mapData = new HashMap<String, String>();
 		try {
+			req.setCharacterEncoding("UTF-8");
 			mapData.put("ENT_IDX", Integer.toString(entIndex));
 			mapData.put("BROWSER", req.getHeader("User-Agent"));
 			
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
 			if(authentication != null) {
+				System.out.println("======================================");
+				System.out.println(authentication.getPrincipal());
+				System.out.println(Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 				mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 			}
 			recordService.regViewRecord(mapData);
@@ -102,11 +107,15 @@ public class EnterpriseController {
 			e.printStackTrace();
 		} catch (NullPointerException e) {//비로그인 상태( session 없을 때 )에서 view 진입
 			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 		//뉴스
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
 			model.addAttribute("newsList",newsList);
+			System.out.println("========================");
+			System.out.println(newsList);
 			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
 			model.addAttribute("saraminList",new Gson().toJson(saraminList));
 		} catch (Exception e) {
