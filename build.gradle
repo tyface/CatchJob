@@ -319,7 +319,7 @@ war{}
 eclipse {
   wtp {
     component {
-    	contextPath = project.name
+    	contextPath = "/"
     }
     facet {
     	facet name: 'jst.web', version: '3.1'

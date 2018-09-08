@@ -4,7 +4,8 @@ public class Constants {
 	public static class Config{
 		public static final int RANK_VIEW_COUNT = 5; //메인페이지에 기업랭킹 출력될 기업의 수
 		public static final double NPN_PERCENT = 0.09; //메인페이지에 기업랭킹 출력될 기업의 수
-		public static final String HOST = "http://catchjob.mooo.com/catchjob"; //로컬 주소 http://catchjob.mooo.com/catchjob/
+		public static final String HOST = "http://localhost:8090"; //로컬 주소 http://catchjob.mooo.com/catchjob/
+//		public static final String HOST = "http://catchjob.mooo.com/catchjob"; 
 		public static final String ADMIN_EMAIL = "catchjob33@gmail.com"; //관리자 이메일
 		public static final String ADMIN_NAME = "CatchJob";//관리자명
 		 

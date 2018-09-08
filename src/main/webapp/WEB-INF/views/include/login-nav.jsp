@@ -1,20 +1,240 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
-<link href="https://fonts.googleapis.com/css?family=Chango" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Gruppo" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
 <security:authentication var="principal" property="principal"/>
-  <style>
-  
-  </style>
-<script>
 
-$(function() {
-	if(window.location.pathname != "/catchjob/"){
-		$(".top-search-div").css("display","inline-block");
+
+<security:authorize access="isAnonymous()">
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="f-left nav-logo">
+		  	<a class="navbar-brand" href="${pageContext.request.contextPath}/" >
+					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
+					<span class="f-left">&nbsp;CATCH JOB</span>
+				</a>
+  	</div>
+
+		<div class="top-search-div">
+			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
+				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10 jua-font"  data-placement="bottom" autocomplete="off" id="top-search-bar">
+				<button type="submit" class="col-xs-1" id="top-search-btn">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</form>
+		</div>
+
+	  <div class="f-right nav-btn-1">
+	    <%-- <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div> --%>
+	    <div class="cursorOn myBtnLogin">Sign In</div>
+	  </div>
+	</div>
+</nav>
+
+  <!-- 로그인 모달 -->
+  <div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialogs ">
+
+      <!-- Modal content-->
+      <div class="modal-contents">
+        <div class="modal-headers" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> 로그인</h4>
+        </div>
+        <div class="modal-body" >
+
+          <form role="form" method="post" id="loginForm">
+				<div class="form-group has-feedback">
+					<input type="email" class="form-control form-text-height" id="loginId" placeholder="이메일 주소">
+					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					 <input type="password" class="form-control form-text-height" id="loginPw" placeholder="비밀번호(8자리 이상)">
+					 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+              <button type="submit" class="btn btn-catchjob btn-block"> 로그인</button>
+          </form>
+
+					<div class="form-group row">
+						<br><center><p>- 또는 -</p></center><br>
+						<button class="btn col-xs-12 facebookBtn" >
+								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로  로그인
+						</button>
+						<button class="btn col-xs-12 googleBtn" >
+								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 로그인 &nbsp;&nbsp;
+						</button>
+					</div>
+
+        </div>
+        <div class="modal-footer">
+          <p>아직 회원이 아니세요? <a href="#myModalSignUp" class="blue-font" data-toggle="modal" id="loginHide">회원가입</a></p>
+<!--           <p>Forgot  -->
+          <p><span class="blue-font" onclick="passwordModifyForm()">비밀번호 찾기</span></p>
+<!--           </p> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+		<!-- 회원가입 모달 -->
+		<div class="modal fade" id="myModalSignUp" role="dialog">
+			<div class="modal-dialogs">
+
+				<!-- Modal content-->
+				<div class="modal-contents">
+					<div class="modal-headers">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4>
+							<span class="glyphicon glyphicon-lock"></span> 회원가입
+						</h4>
+					</div>
+
+					<div class="modal-body" >
+						<form role="form" method="post" id="signUpForm">
+							<div class="form-group has-feedback">
+								<input	type="email" class="form-control form-text-height" id="signUpId"	placeholder="이메일 주소">
+								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							</div>
+							<div class="form-group has-feedback">
+								<!-- 비밀번호 -->
+								<input type="password" class="form-control form-text-height" id="signUpPw" placeholder="비밀번호(8자리 이상)">
+								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+							</div>
+					        <div class="form-group has-feedback">
+								<!-- 비밀번호 확인  -->
+								<input type="password" class="form-control form-text-height" id="signUpPwCheck"	placeholder="비밀번호 확인">
+								 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+							</div>
+							<button type="submit" class="btn btn-catchjob btn-block">
+								 이메일로 가입
+							</button>
+							<!-- 회원가입 실패 시 보이는 창 -->
+<!-- 							<div class="form-group has-error has-feedback hidden" -->
+<!-- 								id="signUpFail"> -->
+<!-- 								<div class="input-group"> -->
+<!-- 									<span class="input-group-addon"> -->
+<!-- 										<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span> -->
+<!-- 									</span> -->
+<!-- 									<input type="text" class="form-control" id="inputError" -->
+<!-- 									aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+						</form>
+
+						<div class="form-group row">
+							<br><center><p>- 또는 -</p></center><br>
+
+							<button class="btn col-xs-12 facebookBtn" >
+									<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로 가입
+							</button>
+							<button class="btn col-xs-12 googleBtn" >
+									<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 가입 &nbsp;&nbsp;
+							</button>
+						</div>
+
+					</div>
+
+					<div class="modal-footer">
+						 <p>이미 회원이세요? <a  href="#loginModal" data-toggle="modal" id="signUpHide">로그인</a></p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+</security:authorize>
+<!-- 로그인 후! -->
+
+<security:authorize access="isAuthenticated()">
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+
+			<div class="f-left nav-logo">
+		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
+					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
+					<span class="f-left">CATCH JOB</span>
+				</a>
+	  	</div>
+
+			<div class="top-search-div">
+				<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
+					<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10 jua-font"  data-placement="bottom" autocomplete="off" id="top-search-bar">
+					<button type="submit" class="col-xs-1" id="top-search-btn">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</form>
+			</div>
+
+			<div class="f-right nav-btn-1">
+				<div class="dropdown f-right" >
+					<div class="dropdown-toggle cursorOn" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-menu-hamburger top-nav-right-btn1"></span>
+					</div>
+					<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+						<li class="dropdown-header">내 정보</li>
+						<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
+						<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
+						<li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
+					 	<li role="presentation" class="divider"></li>
+			   		<li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
+					</ul>
+				</div>
+
+			</div>
+	</div>
+</nav>
+
+	<%-- 비밀번호 수정 모달 --%>
+	<div class="modal fade" id="pwModifyModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header" style="padding: 35px 50px;">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4>
+						<span class="glyphicon glyphicon-lock"></span> 비밀번호 수정하기
+					</h4>
+				</div>
+
+				<div class="modal-body" style="padding: 40px 50px;">
+					<form role="form" method="post" id="pwModifyForm">
+						<div class="form-group has-feedback">
+							<input	type="email" class="form-control" id="signUpId"	value="${principal.username}" readonly>
+							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+						</div>
+						<!-- 비밀번호 -->
+						<div class="form-group has-feedback">
+							<input type="password" class="form-control" name="password" placeholder="Password">
+							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+						</div>
+						<!-- 비밀번호 확인  -->
+						<div class="form-group has-feedback">
+							<input type="password" class="form-control" name="passwordCheck"	placeholder="Retype password">
+							<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+							<div id="checkMsg"></div>
+						</div>
+						<button type="submit" class="btn btn-success btn-block">
+							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
+						</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</security:authorize>
+
+<script>
+if(window.location.pathname != "/"){
+	if(window.innerWidth < 840){
+			$(".navbar-brand > span").css("display","none");
 	}
+	$(".top-search-div").css("display","inline-block");
+}
+$(function() {
+
 	topSearchValidation()
 	$(".googleBtn").on("click",function() {
 		location.href="${pageContext.request.contextPath}/member/googleLogin";
@@ -236,225 +456,3 @@ function topSearchValidation(){
 		 }, '올바른 언어(영어/한글)로 입력했는지 확인해 보세요.');
 }
 </script>
-
-<security:authorize access="isAnonymous()">
-
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="f-left nav-logo">
-		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
-					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
-					<span class="f-left">CATCH JOB</span>
-				</a>
-  	</div>
-
-		<div class="top-search-div">
-			<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
-				<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10 jua-font"  data-placement="bottom" autocomplete="off" id="top-search-bar">
-				<button type="submit" class="col-xs-1" id="top-search-btn">
-					<span class="glyphicon glyphicon-search"></span>
-				</button>
-			</form>
-		</div>
-
-	  <div class="f-right nav-btn-1">
-	    <%-- <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div> --%>
-	    <div class="cursorOn myBtnLogin">Sign In</div>
-	  </div>
-	</div>
-</nav>
-
-  <!-- 로그인 모달 -->
-  <div class="modal fade" id="loginModal" role="dialog">
-    <div class="modal-dialogs ">
-
-      <!-- Modal content-->
-      <div class="modal-contents">
-        <div class="modal-headers" >
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> 로그인</h4>
-        </div>
-        <div class="modal-body" >
-
-          <form role="form" method="post" id="loginForm">
-				<div class="form-group has-feedback">
-					<input type="email" class="form-control form-text-height" id="loginId" placeholder="이메일 주소">
-					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-				</div>
-				<div class="form-group has-feedback">
-					 <input type="password" class="form-control form-text-height" id="loginPw" placeholder="비밀번호(8자리 이상)">
-					 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-				</div>
-              <button type="submit" class="btn btn-catchjob btn-block"> 로그인</button>
-          </form>
-
-					<div class="form-group row">
-						<br><center><p>- 또는 -</p></center><br>
-						<button class="btn col-xs-12 facebookBtn" >
-								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로  로그인
-						</button>
-						<button class="btn col-xs-12 googleBtn" >
-								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 로그인 &nbsp;&nbsp;
-						</button>
-					</div>
-
-        </div>
-        <div class="modal-footer">
-          <p>아직 회원이 아니세요? <a href="#myModalSignUp" class="blue-font" data-toggle="modal" id="loginHide">회원가입</a></p>
-<!--           <p>Forgot  -->
-          <p><span class="blue-font" onclick="passwordModifyForm()">비밀번호 찾기</span></p>
-<!--           </p> -->
-          	
-        </div>
-      </div>
-    </div>
-  </div>
-
-		<!-- 회원가입 모달 -->
-		<div class="modal fade" id="myModalSignUp" role="dialog">
-			<div class="modal-dialogs">
-
-				<!-- Modal content-->
-				<div class="modal-contents">
-					<div class="modal-headers">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4>
-							<span class="glyphicon glyphicon-lock"></span> 회원가입
-						</h4>
-					</div>
-
-					<div class="modal-body" >
-						<form role="form" method="post" id="signUpForm">
-							<div class="form-group has-feedback">
-								<input	type="email" class="form-control form-text-height" id="signUpId"	placeholder="이메일 주소">
-								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-							</div>
-							<div class="form-group has-feedback">
-								<!-- 비밀번호 -->
-								<input type="password" class="form-control form-text-height" id="signUpPw" placeholder="비밀번호(8자리 이상)">
-								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-							</div>
-					        <div class="form-group has-feedback">
-								<!-- 비밀번호 확인  -->
-								<input type="password" class="form-control form-text-height" id="signUpPwCheck"	placeholder="비밀번호 확인">
-								 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-							</div>
-							<button type="submit" class="btn btn-catchjob btn-block">
-								 이메일로 가입
-							</button>
-							<!-- 회원가입 실패 시 보이는 창 -->
-<!-- 							<div class="form-group has-error has-feedback hidden" -->
-<!-- 								id="signUpFail"> -->
-<!-- 								<div class="input-group"> -->
-<!-- 									<span class="input-group-addon"> -->
-<!-- 										<span class="glyphicon glyphicon-exclamation-sign"	aria-hidden="true"></span> -->
-<!-- 									</span> -->
-<!-- 									<input type="text" class="form-control" id="inputError" -->
-<!-- 									aria-describedby="inputGroupSuccess1Status"	value="이메일 혹은 비밀번호가 유효하지 않습니다. 다시 시도하세요"> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-						</form>
-
-						<div class="form-group row">
-							<br><center><p>- 또는 -</p></center><br>
-							
-							<button class="btn col-xs-12 facebookBtn" >
-									<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로 가입
-							</button>
-							<button class="btn col-xs-12 googleBtn" >
-									<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 가입 &nbsp;&nbsp;
-							</button>
-						</div>
-
-					</div>
-
-					<div class="modal-footer">
-						 <p>이미 회원이세요? <a  href="#loginModal" data-toggle="modal" id="signUpHide">로그인</a></p>
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-</security:authorize>
-<!-- 로그인 후! -->
-
-<security:authorize access="isAuthenticated()">
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-
-			<div class="f-left nav-logo">
-		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
-					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
-					<span class="f-left">CATCH JOB</span>
-				</a>
-	  	</div>
-
-			<div class="top-search-div">
-				<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
-					<input type="text" placeholder="기업을 검색해 보세요" name="keyword" class="col-xs-10 jua-font"  data-placement="bottom" autocomplete="off" id="top-search-bar">
-					<button type="submit" class="col-xs-1" id="top-search-btn">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</form>
-			</div>
-
-			<div class="f-right nav-btn-1">
-				<div class="dropdown f-right" >
-					<div class="dropdown-toggle cursorOn" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-menu-hamburger top-nav-right-btn1"></span>
-					</div>
-					<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
-						<li class="dropdown-header">내 정보</li>
-						<li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
-						<li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
-						<li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
-					 	<li role="presentation" class="divider"></li>
-			   		<li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
-					</ul>
-				</div>
-
-			</div>
-	</div>
-</nav>
-
-	<%-- 비밀번호 수정 모달 --%>
-	<div class="modal fade" id="pwModifyModal" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header" style="padding: 35px 50px;">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4>
-						<span class="glyphicon glyphicon-lock"></span> 비밀번호 수정하기
-					</h4>
-				</div>
-
-				<div class="modal-body" style="padding: 40px 50px;">
-					<form role="form" method="post" id="pwModifyForm">
-						<div class="form-group has-feedback">
-							<input	type="email" class="form-control" id="signUpId"	value="${principal.username}" readonly>
-							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-						</div>
-						<!-- 비밀번호 -->
-						<div class="form-group has-feedback">
-							<input type="password" class="form-control" name="password" placeholder="Password">
-							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-						</div>
-						<!-- 비밀번호 확인  -->
-						<div class="form-group has-feedback">
-							<input type="password" class="form-control" name="passwordCheck"	placeholder="Retype password">
-							<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-							<div id="checkMsg"></div>
-						</div>
-						<button type="submit" class="btn btn-success btn-block">
-							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
-						</button>
-					</form>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</security:authorize>

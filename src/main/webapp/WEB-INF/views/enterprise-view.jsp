@@ -71,9 +71,12 @@ $(function(){
     });
 
 
-
 	/* 그래프 내용들 배열로 저장 */
 	for(var i in empCount){
+		if(window.innerWidth < 500 && Number(i)%4!=0){
+			continue
+		}
+
 		 var num = Math.round((empCount[i]['PAY_AMT'])/0.09/empCount[i]['NPN_SBSCRBER_CNT']);
 		 month.push(empCount[i]['PAY_YM']) ;
 		 salary.push(num) ;
@@ -284,11 +287,13 @@ function reviewbarChart(){
 	var reviewValuesByItem = JSON.parse('${reviewValuesByItem}');
 	var chartData = new Array(0,0,0,0,0);
 
+
 	for( var i in reviewValuesByItem){
 		  chartData[i]= reviewValuesByItem[i].COUNT;
 	}
 	var ctx4 = document.getElementById("reviewbarChart").getContext('2d');
-	var comboBarLineChart = new Chart(ctx4, {
+
+	var reviewbarChart = new Chart(ctx4, {
 		type: 'bar',
 		/* 데이터 start */
 		data: {
@@ -371,7 +376,7 @@ function interviewExperienceChart(){
 	     }else if(interviewExperienceChart[i]['INTRVW_EXPRNC'] == '3'){
 	    	 chartData[2]=interviewExperienceChart[i]['COUNT'];
 	     }
-	    
+
   	 }
 
 	// pieChart
@@ -439,7 +444,7 @@ function interviewResultChart(){
 	     }else if(interviewResultChart[i]['INTRVW_RESULT'] == '3'){
 	    	 chartData[2]=interviewResultChart[i]['COUNT'];
 	     }
-	    
+
   	 }
 
 	// pieChart
@@ -603,10 +608,11 @@ function saramin(){
 						</a>
 					</div>
 					<div class="col-sm-6">
-								<p class="m-t-10">예상평균연봉(국민연금)</p>
+								<p class="m-t-10">평균연봉</p>
 								<h1>
 									<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span></b>만원
 								</h1>
+								<p class="m-t-10 s-red-font">*국민연금 납부기준</p>
 					</div>
 				</div>
 
@@ -833,9 +839,9 @@ function saramin(){
 					<h3 class="sectionTitle">면접후기</h3>
 					<div class="panel-group" >
 						<div class="box box-danger">
-						
+
 							<div class="box-body row">
-								<div class="chart col-md-4" >
+								<div class="chart col-md-4 margin-auto" >
 									<h3 class="box-title">면접 난이도</h3>
 									<div class="text-center ">
 <%-- 									<canvas id="pieChart" ></canvas> --%>
@@ -845,7 +851,7 @@ function saramin(){
 										<input type="range" min="1" max="100" value="70" class="sliders" disabled >
 										<span class="f-left text-primary">0</span>
 										<span class="f-right text-danger">5</span>
-									</div>	
+									</div>
 								</div>
 								<div class="chart col-md-4" >
 									<h3 class="box-title">면접 경험</h3>
@@ -919,7 +925,7 @@ function saramin(){
 								 	<c:forEach items="${newsList}" var="newsList">
 										<div class="row news-margin" >
 											<a class="col-xs-10 f-left text-left blue-font"  href="${newsList.link}" target="_blank">${newsList.title}</a>
-											<span class="col-xs-2 f-right text-right">${newsList.pubDate}</span>
+											<span class="col-xs-2 f-right text-right pad-0">${newsList.pubDate}</span>
 										</div>
 									</c:forEach>
 								</div>
