@@ -581,13 +581,13 @@ function chartPersonnel(){
 			datasets: [{/* 총 인원 datasets */
 					type: 'line',
 					label: '총 인원',
-					borderColor: '#BDBDBD',
-					borderWidth: 2,
-					pointBorderColor: mainColor,
+            backgroundColor: '#A566FF',
+					borderColor: '#A566FF',
+					borderWidth: 0,
+					pointBorderColor: '#A566FF',
 					pointBorderWidth: 3,
 					fill: false,
 					data: totalPersonPerMonth,
-
 					datalabels: {
 						color:  mainColor,
 						align: 'start',

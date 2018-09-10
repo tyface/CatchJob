@@ -5,7 +5,7 @@ public class Interview {
 	private int intrvwIndex; // 면접 식별번호
 	private int mberIndex; // 회원 식별번호
 	private String mberId; // 회원 이름
-private int entIndex; // 기업 식별번호
+	private int entIndex; // 기업 식별번호
 	private String entName; // 사업장명
 	private String intrvwDifficulty; // 면접난이도(1~5)
 	private String intrvwDate; // 면접날짜
@@ -149,12 +149,14 @@ private int entIndex; // 기업 식별번호
 
 	@Override
 	public String toString() {
-		return "Interview [mberIndex=" + mberIndex + ", entIndex=" + entIndex + ", entName="
-				+ entName + ", intrvwDifficulty=" + intrvwDifficulty + ", intrvwDate=" + intrvwDate + ", intrvwRoute="
-				+ intrvwRoute + ", intrvwReview=" + intrvwReview + ", intrvwQuestion=" + intrvwQuestion
-				+ ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag + ", intrvwResult=" + intrvwResult
-				+ ", intrvwExperience=" + intrvwExperience + ", presentationDate=" + presentationDate + ", regDate="
-				+ regDate + "]";
+		return "Interview [intrvwIndex=" + intrvwIndex + ", mberIndex=" + mberIndex + ", mberId=" + mberId
+				+ ", entIndex=" + entIndex + ", entName=" + entName + ", intrvwDifficulty=" + intrvwDifficulty
+				+ ", intrvwDate=" + intrvwDate + ", intrvwRoute=" + intrvwRoute + ", intrvwReview=" + intrvwReview
+				+ ", intrvwQuestion=" + intrvwQuestion + ", intrvwAnswer=" + intrvwAnswer + ", intrvwFlag=" + intrvwFlag
+				+ ", intrvwResult=" + intrvwResult + ", intrvwExperience=" + intrvwExperience + ", presentationDate="
+				+ presentationDate + ", regDate=" + regDate + "]";
 	}
+
+	
 
 }

@@ -86,7 +86,6 @@ $(function(){
 		 outPersonPerMonth.push(empCount[i]['NPN_SCBT_CNT']) ;
 	}
 	chartPersonnel(); //월별그래프 인원
-
 	/* 기업 팔로잉 START */
 	$(".follow-btn").click(function (e) {
         var $this = $(this).find("i");
@@ -564,7 +563,6 @@ function saramin(){
 		<nav class="col-sm-1 padding-zero" id="left-nav">
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
-				<!-- 				<li style="height: 30px"></li> -->
 				<li>
 					<a onclick="fnMove('#section1')" class="cursor-pointer">
 						<span class="fa fa-building logo-small"></span> 기업정보
@@ -613,7 +611,7 @@ function saramin(){
 								<h1>
 									<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span></b>만원
 								</h1>
-								<p class="m-t-10 s-red-font">*국민연금 납부기준</p>
+								<p class="m-t-10 s-red-font">※국민연금 납부기준</p>
 					</div>
 				</div>
 
@@ -732,6 +730,7 @@ function saramin(){
 									<!-- /.box -->
 								</div>
 							</div>
+							<div class="f-right s-red-font">※최근 1년간 데이터 기준 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 						</div>
 					</div>
 			</div><!-- section 1 기업정보 END-->
@@ -869,10 +868,10 @@ function saramin(){
 						</div>
 					</div>
 					<!-- 면접 페이징 처리  -->
-					<button type="button" class="btn btn-info" id="intr-write-btn" onclick="intrWriteBtn()">면접후기작성</button>
 					<nav style="text-align: center">
 						<ul class="pagination intvw-pagination">
 						</ul>
+						<button type="button" class="btn btn-info" id="intr-write-btn" onclick="intrWriteBtn()">면접후기 작성</button>
 					</nav>
 				</div>
 			</div><!-- section3 면접후기  END-->

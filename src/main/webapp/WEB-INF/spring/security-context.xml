@@ -77,8 +77,6 @@
 
 		<security:csrf disabled="true" />
 	</security:http>
-
-
 	<security:authentication-manager>
 		<security:authentication-provider
 			ref="customAuthenticationProvider" />
