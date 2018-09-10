@@ -61,7 +61,7 @@
 </head>
 <!-- jQuery 설정-->
 
-<body class="skin-blue sidebar-mini godo-font">
+<body class="skin-blue sidebar-mini">
 	<div class="container-fluid">
 	  <header class="main-header">
 			<%@ include file="login-nav.jsp" %>

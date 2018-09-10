@@ -157,7 +157,23 @@ margin-left: auto;
 		padding-right: 15px !important;
   }
 }
+/* Mobile */
 
+.mobile-expans{
+		width: 100%;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .mobile-expans{
+		width: 83.33333333%;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .mobile-expans{
+		width: 83.33333333%;
+  }
+}
 .m-t-10{
 	margin-top: 10px;
 }
@@ -189,7 +205,7 @@ margin-left: auto;
 
 .godo-font{
   font-family: 'Godo', sans-serif;
-
+	font-weight:
 }
 .font-01{
 	color: #4c78ea;

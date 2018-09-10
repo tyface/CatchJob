@@ -48,8 +48,8 @@ $(function(){
 	}else{
 		$("#diff").addClass("intrvwlv5");
 	}
-	
-	
+
+
 	entInf();
 	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
@@ -64,11 +64,11 @@ $(function(){
 	saramin(); //#section5 사람인채용정보
 	followCheck();//팔로잉 기업인지 확인
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	/* member session 존재여부 확인 */
 	if(member == 'anonymousUser'){
 	}else{
@@ -560,9 +560,9 @@ function saramin(){
 			}else{
 				trimRequiredEducationLevel = requiredEducationLevel;
 			}
-			
+
 			var index = industry.indexOf("·");
-			industry = industry.substring(0,index);			
+			industry = industry.substring(0,index);
 			if(i<3){
 		 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
 				data.appendTo(saraminRow1);
@@ -588,40 +588,40 @@ function saramin(){
 			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
 				<li>
 					<a onclick="fnMove('#section1')" class="cursor-pointer text-center">
-						<span class="fa fa-building logo-small "></span> 
+						<span class="fa fa-building logo-small "></span>
 						<span>기업정보</span>
-						
+
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section2')" class="cursor-pointer text-center">
 						<span class="fa fa-weixin logo-small"></span>
 						<span>리뷰코멘트</span>
-						 
+
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section3')" class="cursor-pointer text-center">
 						<span class="fa fa-file-text logo-small"></span>
-						<span>면접후기</span> 
+						<span>면접후기</span>
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section4')" class="cursor-pointer text-center">
 						<span class="fa fa-line-chart logo-small"></span>
-						<span>월별그래프</span> 
+						<span>월별그래프</span>
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section5')" class="cursor-pointer text-center">
 						<span class="fa fa-group logo-small"></span>
-						<span>채용정보</span> 
+						<span>채용정보</span>
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section6')"  class="cursor-pointer text-center">
 						<span class="fa fa-newspaper-o logo-small"></span>
-						<span>뉴스</span> 
+						<span>뉴스</span>
 					</a>
 				</li>
 
@@ -876,7 +876,7 @@ function saramin(){
 							<div class="box-body row">
 								<div class="chart col-md-4 margin-auto" >
 									<h3 class="box-title">면접 난이도</h3>
-							
+
 									<div class="text-center ">
 <%-- 									<canvas id="pieChart" ></canvas> --%>
 										<div class="row">
@@ -894,7 +894,7 @@ function saramin(){
 													<div class="row"><span class='progress-bars  bar2 col-xs-4' ></span><span></span></div>
 													<div class="row"><span class='progress-bars  bar1 col-xs-4'  ></span><span><small>쉬움</small></span></div>
 											</div>
-										
+
 										</div>
 <!-- 										<span class="f-left text-primary">쉬움</span> -->
 <!-- 										<span class="f-right text-danger">어려움</span> -->
@@ -974,8 +974,8 @@ function saramin(){
 								<div class="panel-body" >
 								 	<c:forEach items="${newsList}" var="newsList">
 										<div class="row news-margin" >
-											<a class="col-xs-10 f-left text-left blue-font"  href="${newsList.link}" target="_blank">${newsList.title}</a>
-											<span class="col-xs-2 f-right text-right pad-0" >${newsList.pubDate}</span>
+											<a class="col-xs-10 f-left text-left blue-font mobile-expans"  href="${newsList.link}" target="_blank">${newsList.title}</a>
+											<span class="col-xs-2 f-right text-right pad-0 mobile-hide" >${newsList.pubDate}</span>
 										</div>
 									</c:forEach>
 								</div>
