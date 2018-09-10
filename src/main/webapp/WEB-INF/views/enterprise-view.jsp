@@ -35,6 +35,21 @@ var outPerson = [industryAvgInfo.NPN_SCBT_CNT,industryAvgInfo.PEER_NPN_SCBT_AVG.
 
 $(function(){
 
+	if(${interviewDiffChart}<1){//0~0.9
+		//아무것도 아님.
+	}else if(${interviewDiffChart}<2){//1~1.9
+		$("#diff").addClass("intrvwlv1");
+	}else if(${interviewDiffChart}<3){//2~2.9
+		$("#diff").addClass("intrvwlv2");
+	}else if(${interviewDiffChart}<4){//3~3.9
+		$("#diff").addClass("intrvwlv3");
+	}else if(${interviewDiffChart}<5){//4~4.9
+		$("#diff").addClass("intrvwlv4");
+	}else{
+		$("#diff").addClass("intrvwlv5");
+	}
+	
+	
 	entInf();
 	changeAvgInfo('인원')
 	reviewbarChart();//리뷰  바 차트
@@ -49,6 +64,11 @@ $(function(){
 	saramin(); //#section5 사람인채용정보
 	followCheck();//팔로잉 기업인지 확인
 
+	
+	
+	
+	
+	
 	/* member session 존재여부 확인 */
 	if(member == 'anonymousUser'){
 	}else{
@@ -386,9 +406,9 @@ function interviewExperienceChart(){
 				datasets: [{
 					data: chartData,
 					backgroundColor: [
-						'#b8c6ec',
-						'#87a3ec',
-						'#4c78ea',
+						'#FF0000',
+						'#FFBB00',
+						'#1DDB16',
 					],
 					datalabels: {
 						color:  'white',
@@ -540,6 +560,9 @@ function saramin(){
 			}else{
 				trimRequiredEducationLevel = requiredEducationLevel;
 			}
+			
+			var index = industry.indexOf("·");
+			industry = industry.substring(0,index);			
 			if(i<3){
 		 		var data = $("<div class='col-sm-4' ><div class='panels panel-default text-center'> <div class='panel-headings'><span class='expirationTimestamp'>"+expirationTimestamp+"</span></div><div class='panels-body'><h4 class='name'>"+name+"</h4><h5><a class='title blue-font' href='"+url+"' target='_blank'><b>"+title+"</b></a></h5></div><div class='panel-footers'><p><small>	<span class='experienceLevel'>"+experienceLevel+"</span> | <span class='requiredEducationLevel'>"+trimRequiredEducationLevel+"</span> | <span class='location'>"+trimLocation+"</span> | 	<span class='industry'>"+industry+"</span></small></p></div></div></div>");
 				data.appendTo(saraminRow1);
@@ -564,33 +587,41 @@ function saramin(){
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
 				<li>
-					<a onclick="fnMove('#section1')" class="cursor-pointer">
-						<span class="fa fa-building logo-small"></span> 기업정보
+					<a onclick="fnMove('#section1')" class="cursor-pointer text-center">
+						<span class="fa fa-building logo-small "></span> 
+						<span>기업정보</span>
+						
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section2')" class="cursor-pointer">
-						<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
+					<a onclick="fnMove('#section2')" class="cursor-pointer text-center">
+						<span class="fa fa-weixin logo-small"></span>
+						<span>리뷰코멘트</span>
+						 
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section3')" class="cursor-pointer">
-						<span class="fa fa-file-text logo-small"></span> 면접후기
+					<a onclick="fnMove('#section3')" class="cursor-pointer text-center">
+						<span class="fa fa-file-text logo-small"></span>
+						<span>면접후기</span> 
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section4')" class="cursor-pointer">
-						<span class="fa fa-line-chart logo-small"></span> 월별그래프
+					<a onclick="fnMove('#section4')" class="cursor-pointer text-center">
+						<span class="fa fa-line-chart logo-small"></span>
+						<span>월별그래프</span> 
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section5')" class="cursor-pointer">
-						<span class="fa fa-group logo-small"></span> 채용정보
+					<a onclick="fnMove('#section5')" class="cursor-pointer text-center">
+						<span class="fa fa-group logo-small"></span>
+						<span>채용정보</span> 
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section6')">
-						<span class="fa fa-newspaper-o logo-small"></span> 뉴스
+					<a onclick="fnMove('#section6')"  class="cursor-pointer text-center">
+						<span class="fa fa-newspaper-o logo-small"></span>
+						<span>뉴스</span> 
 					</a>
 				</li>
 
@@ -601,10 +632,12 @@ function saramin(){
 			<div class="module" id="entNameModule">
 				<div class="row" id="section1">
 					<div class="col-sm-6">
-						<span id="entName">${entInfo.ENT_NM}</span>
-						<a href="#" class="follow follow-btn follow" >
-							<i class="fa fa-heart-o follow" id="follow"></i>
-						</a>
+						<div class="row" >
+							<span id="entName">${entInfo.ENT_NM}</span>
+							<a href="#" class="follow follow-btn follow" >
+								<i class="fa fa-heart-o follow" id="follow" ></i>
+							</a>
+						</div>
 					</div>
 					<div class="col-sm-6">
 								<p class="m-t-10">평균연봉</p>
@@ -618,7 +651,7 @@ function saramin(){
 			</div>
 			<!-- section 1 기업정보-->
 			<div class="module">
-					<h3  class="sectionTitle">기업정보</h3>
+					<h3  class="sectionTitle p-01">기업정보</h3>
 
 					<div class="panel panel-default">
 						<div class="panel-body" >
@@ -738,7 +771,7 @@ function saramin(){
 			<!-- section2 리뷰코멘트-->
 			<div class="module">
 				<div id="section2">
-					<h3 class="sectionTitle">리뷰코멘트</h3>
+					<h3 class="sectionTitle p-01">리뷰코멘트</h3>
 					<div class="panel-group " id="accordion">
 			        	<div class="box box-warning">
 				            <div class="box-body row">
@@ -836,21 +869,38 @@ function saramin(){
 			<!-- section3 면접후기 -->
 			<div class="module">
 				<div id="section3">
-					<h3 class="sectionTitle">면접후기</h3>
+					<h3 class="sectionTitle p-01">면접후기</h3>
 					<div class="panel-group" >
 						<div class="box box-danger">
 
 							<div class="box-body row">
 								<div class="chart col-md-4 margin-auto" >
 									<h3 class="box-title">면접 난이도</h3>
+							
 									<div class="text-center ">
 <%-- 									<canvas id="pieChart" ></canvas> --%>
-										<h1>${interviewDiffChart}</h1>
-										<span class="f-left text-primary">쉬움</span>
-										<span class="f-right text-danger">어려움</span>
-										<input type="range" min="1" max="100" value="70" class="sliders" disabled >
-										<span class="f-left text-primary">0</span>
-										<span class="f-right text-danger">5</span>
+										<div class="row">
+											<div class="col-xs-5">
+												<h1>${interviewDiffChart}</h1><p><small>평균 난이도</small></p>
+											</div>
+											<div class="col-xs-7"  id="diff">
+<!-- 													<div class='progress-bars  bar5' ></div> -->
+<!-- 													<div class='progress-bars  bar4' ></div> -->
+<!-- 													<div class='progress-bars  bar3' ></div> -->
+<!-- 													<div class='progress-bars  bar2' ></div> -->
+													<div class="row"><span class='progress-bars  bar5 col-xs-4' ></span><span><small>어려움</small></span></div>
+													<div class="row"><span class='progress-bars  bar4 col-xs-4' ></span><span></span></div>
+													<div class="row"><span class='progress-bars  bar3 col-xs-4' ></span><span><small>보통</small></span></div>
+													<div class="row"><span class='progress-bars  bar2 col-xs-4' ></span><span></span></div>
+													<div class="row"><span class='progress-bars  bar1 col-xs-4'  ></span><span><small>쉬움</small></span></div>
+											</div>
+										
+										</div>
+<!-- 										<span class="f-left text-primary">쉬움</span> -->
+<!-- 										<span class="f-right text-danger">어려움</span> -->
+<!-- 										<input type="range" min="1" max="100" value="70" class="sliders" disabled > -->
+<!-- 										<span class="f-left text-primary">0</span> -->
+<!-- 										<span class="f-right text-danger">5</span> -->
 									</div>
 								</div>
 								<div class="chart col-md-4" >
@@ -879,7 +929,7 @@ function saramin(){
 			<!-- section4 그래프-->
 			<div class="module">
 				<div id="section4">
-					<h3 class="sectionTitle">월별그래프</h3>
+					<h3 class="sectionTitle p-01">월별그래프</h3>
 					<!-- 버튼 -->
 					<div class="row graph-row">
 						<div class="btn-group graph-btn" >
@@ -902,7 +952,7 @@ function saramin(){
 			<div class="module">
 
 				<div id="section5">
-					<h3  class="sectionTitle">채용정보</h3>
+					<h3  class="sectionTitle p-01">채용정보</h3>
 						<div id="saramin-margin">
 							<div class="row" id="saraminRow1">
 							</div>
@@ -917,7 +967,7 @@ function saramin(){
 			<!-- SECTION 6- 뉴스 -->
 			<div class="module">
 				<div id="section6">
-					<h3  class="sectionTitle" >뉴스</h3>
+					<h3  class="sectionTitle p-01" >뉴스</h3>
 					<c:choose>
 						<c:when test="${newsList.size() > 0 }">
 							<div class="panel panel-default slideanim">

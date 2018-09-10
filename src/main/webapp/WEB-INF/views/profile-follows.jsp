@@ -105,7 +105,7 @@ $(function(){
 <jsp:include page="include/profile-article.jsp" flush="true" />
 <article class="container  non-padding-top">
 	<div class="contents-wrap ">
-		<h2 class="jua-font text-left p-01">팔로잉 기업</h2>
+		<h2 class="godo-font text-left p-01">팔로잉 기업</h2>
 		<hr style="border: 1px solid #c7d5f8; padding: 0px;">
 		
 		<c:choose>
