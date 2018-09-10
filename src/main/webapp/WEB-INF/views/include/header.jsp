@@ -17,6 +17,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/sweetalert.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/public.css" rel="stylesheet">
+	
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
@@ -31,6 +32,7 @@
 
 
 <script type="text/javascript">
+	var status = "logout";
 	var contextPath = "${pageContext.request.contextPath}";
 	var member = "${principal}"
 	var mainColor = '#4c78ea'

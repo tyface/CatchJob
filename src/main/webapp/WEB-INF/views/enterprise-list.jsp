@@ -4,9 +4,6 @@
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
 <%@ include file="include/header.jsp" %>
 
-<link rel="stylesheet" href="${contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
-
-
 <script>
 var pageViewCount = 10;
 var pageNum = 0;
@@ -20,16 +17,26 @@ $(function() {
 		var maxHeight = $(document).height();
 		var currentScroll = $(window).scrollTop() + $(window).height();
 
-
-
 		if (maxHeight <= currentScroll + 1) {
 				appendEntList(entList, pageNum, pageViewCount);
 				pageNum ++;
 		}
 
 	})
+	$(window).scroll(function() {
+			 if ($(this).scrollTop() > 500) {
+					 $('.move-top').fadeIn();
+			 } else {
+					 $('.move-top').fadeOut();
+			 }
+	 });
 
-
+	 $(".move-top").click(function() {
+			 $('html, body').animate({
+					 scrollTop : 0
+			 }, 400);
+			 return false;
+	 });
 });
 </script>
 
@@ -41,4 +48,3 @@ $(function() {
 		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
 	</button>
 <%@ include file="include/footer.jsp" %>
-

@@ -35,8 +35,6 @@ import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
 import com.CatchJob.service.UniversalDomainService;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -144,8 +142,6 @@ public class AdminController {
 					
 			boolean result = memberService.modify(member);
 				
-			System.out.println(result);
-			
 			if(result) {				
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {

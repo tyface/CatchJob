@@ -46,10 +46,12 @@
             <div class="form-group has-feedback">
                <input type="email" class="form-control form-text-height" id="loginId" placeholder="이메일 주소">
                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+							 <div></div>
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control form-text-height" id="loginPw" placeholder="비밀번호(8자리 이상)">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+								<div></div>
             </div>
               <button type="submit" class="btn btn-catchjob btn-block"> 로그인</button>
           </form>
@@ -176,7 +178,7 @@
                   <li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
                   <li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
                   <li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
-                   <li role="presentation" class="divider"></li>
+                  <li role="presentation" class="divider"></li>
                   <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
                </ul>
             </div>
@@ -251,46 +253,63 @@ $(function() {
       $("#loginModal").modal("hide");
    });
 
+	$("#loginForm").on("click",function(){
+			$("#loginId").next().next().html("")
+			$("#loginPw").next().next().html("")
+	});
+
+
 	$("#loginForm").on("submit", function() {
+		var email = $("#loginId");
+		var pw = $("#loginPw");
+		if(email.val()==""){
+			email.next().next().html("아이디 입력하세요.");
+			email.next().next("div").css({color:"red"});
+			return false;
+		}
+		if(pw.val()==""){
+			pw.next().next().html("비밀번호를 입력하세요.");
+			pw.next().next("div").css({color:"red"});
+			return false;
+		}
 		 $.ajax({
 				type : "post",
 				url : contextPath+"/member/login",
 				data : {
-					 "mberId" : $("#loginId").val(),
-					 "mberPw" : $("#loginPw").val()
+					 "mberId" : email.val(),
+					 "mberPw" : pw.val()
 				},
-
-            dataType : "json",
-            success : function(data) {
-                if (data.result == "CODE_01") {
-                     window.location.reload();
-                }else if(data.result == "CODE_02"){
-                   swal({
-                     title:"비밀번호를 다시 입력해 주세요",
-                      type:"warning",
-                      confirmButtonClass: "btn-warning"
-                   })
-                }else if(data.result == "CODE_03"){
-                   swal({
-                     title:"사용자가 존재하지 않습니다",
-                      type:"error",
-                      confirmButtonClass: "btn-danger"
-                   })
-                }else if(data.result == "CODE_04"){
-                    swal({
-                        title:"메일 인증되지 않은 회원입니다",
-                         type:"error",
-                         confirmButtonClass: "btn-warning"
-                      })
-                }
-            },
-            error : function() {
-               swal({
-                  title:"사용자가 존재하지 않습니다",
-                  type:"error",
-                  confirmButtonClass: "btn-danger"
-               });
-            }
+          dataType : "json",
+          success : function(data) {
+              if (data.result == "CODE_01") {
+                   window.location.reload();
+              }else if(data.result == "CODE_02"){
+                 swal({
+                   title:"비밀번호를 다시 입력해 주세요",
+                    type:"warning",
+                    confirmButtonClass: "btn-warning"
+                 })
+              }else if(data.result == "CODE_03"){
+                 swal({
+                   title:"사용자가 존재하지 않습니다",
+                    type:"error",
+                    confirmButtonClass: "btn-danger"
+                 })
+              }else if(data.result == "CODE_04"){
+                  swal({
+                      title:"메일 인증되지 않은 회원입니다",
+                       type:"error",
+                       confirmButtonClass: "btn-warning"
+                    })
+              }
+          },
+          error : function() {
+             swal({
+                title:"사용자가 존재하지 않습니다",
+                type:"error",
+                confirmButtonClass: "btn-danger"
+             });
+          }
        });
        return false;
    });

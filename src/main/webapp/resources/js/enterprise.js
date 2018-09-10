@@ -1,4 +1,4 @@
-var status = "logout";
+
 
 var month = new Array(); //월
 var salary = new Array(); //연금정보
@@ -394,7 +394,7 @@ function getContextPath() {
 /* 팔로우 기능*/
 function followAction(entIndex,e){
   //로그인 체크
-  if(member == "null"){
+  if(member == "anonymousUser"){
     swal({
       title: "로그인 후 이용 가능합니다. \n\r 로그인 하시겠습니까?!",
       text: "",

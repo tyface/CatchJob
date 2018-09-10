@@ -62,8 +62,8 @@ function verifyRegularMemberForm() {
 	swal({
 		title: "정회원 인증방법\n\r",
 		text: "1) 명함이나 재직증명서로 인증하기　　\n\r"
-          + "관리자 이메일 : catchjob33@gmail.com\n\r\n"
-          + "2) 회사 이메일로 인증하기　　　　　　",
+          & "관리자 이메일 : catchjob33@gmail.com\n\r\n"
+          & "2) 회사 이메일로 인증하기　　　　　　",
 		type: "input",
 		inputPlaceholder: "email",
 		showCancelButton: true,

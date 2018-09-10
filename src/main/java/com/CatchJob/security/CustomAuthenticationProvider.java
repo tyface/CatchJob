@@ -33,23 +33,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		UserDetails member = userDetailService.loadUserByUsername(mberId);
 		if (member == null) {
 			throw new UsernameNotFoundException(mberId + "가 존재하지 않습니다");
-		} else if(member != null && memberService.getMemberById(mberId).getMberFlag().equals("2")) {
-			throw new DisabledException("메일 인증되지 않은 회원입니다");
-		}
-		
-		if(!passwordEncoder.matches(mberPw, member.getPassword())) {
-			System.out.println("password: " + mberPw);
-			System.out.println("member.getPassword(): " + member.getPassword());
-			
-//			System.out.println("비밀번호 일치 하지 않음");
+		} else if(!passwordEncoder.matches(mberPw, member.getPassword())) {
 			throw new BadCredentialsException("사용자가 없거나 비밀번호가 일치하지 않습니다.");
+		}else if(member != null && memberService.getMemberById(mberId).getMberFlag().equals("2")) {
+			throw new DisabledException("메일 인증되지 않은 회원입니다");
 		} else {
-			//비밀번호 일치
-//			System.out.println("비번 일치!!");
-//			System.out.println("member :  " + member.getAuthorities());
-			authToken 
-			= new UsernamePasswordAuthenticationToken(member,mberPw,member.getAuthorities());
-			System.out.println(authToken);
+			authToken = new UsernamePasswordAuthenticationToken(member,mberPw,member.getAuthorities());
 			return authToken;
 		}
 	}

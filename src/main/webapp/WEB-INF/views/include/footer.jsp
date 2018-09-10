@@ -5,7 +5,7 @@
 	<div class="footer-nav col-md-offset-1 col-md-10">
 		<div class="footer-nav-left" style="font-size: 15px; font-weight: bold;">
 			<div class="footer-nav-left-item col-md-offset-1">
-				<a href="faq">FAQ</a>
+				<a href="${contextPath}/faq">FAQ</a>
 			</div>
 		</div>
 			<div class="footer-infos pull-right">
