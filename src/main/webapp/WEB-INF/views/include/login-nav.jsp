@@ -9,10 +9,10 @@
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="f-left nav-logo">
-		  	<a class="navbar-brand" href="${pageContext.request.contextPath}/" >
-					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
-					<span class="f-left">&nbsp;CATCH JOB</span>
-				</a>
+	  	<a class="navbar-brand" href="${pageContext.request.contextPath}/" >
+				<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
+				<span class="f-left">&nbsp;CATCH JOB</span>
+			</a>
   	</div>
 
 		<div class="top-search-div">
@@ -55,12 +55,12 @@
               <button type="submit" class="btn btn-catchjob btn-block"> 로그인</button>
           </form>
 
-					<div class="form-group row">
+					<div class="form-group">
 						<br><center><p>- 또는 -</p></center><br>
-						<button class="btn col-xs-12 facebookBtn" >
+						<button class="btn facebookBtn" >
 								<img src="${pageContext.request.contextPath}/resources/img/flogo-HexRBG-Wht-58.svg" alt="facebookLogo"> 페이스북으로  로그인
 						</button>
-						<button class="btn col-xs-12 googleBtn" >
+						<button class="btn googleBtn" >
 								<img src="${pageContext.request.contextPath}/resources/img/google-logo-01.svg" alt="googleLogo"> 구글로 로그인 &nbsp;&nbsp;
 						</button>
 					</div>
@@ -105,10 +105,10 @@
 								<!-- 비밀번호 확인  -->
 								<input type="password" class="form-control form-text-height" name="passwordCheck" id="signUpPwCheck"	placeholder="비밀번호 확인">
 								 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-								 <div id="checkMsg"></div>
+								 <div class="checkMsg"></div>
 							</div>
 							<button type="submit" class="btn btn-catchjob btn-block">
-								 이메일로 가입
+								 <div>이메일로 가입</div><img src="/resources/img/loading.gif" alt="progress" height="100%" class="loding">
 							</button>
 							<!-- 회원가입 실패 시 보이는 창 -->
 <!-- 							<div class="form-group has-error has-feedback hidden" -->
@@ -152,11 +152,11 @@
 		<div class="container-fluid">
 
 			<div class="f-left nav-logo">
-		  	<a class="navbar-brand" href="${pageContext.request.contextPath}" >
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/" >
 					<img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="logo" class="nav-logo-img"/>
-					<span class="f-left">CATCH JOB</span>
+					<span class="f-left">&nbsp;CATCH JOB</span>
 				</a>
-	  	</div>
+			</div>
 
 			<div class="top-search-div">
 				<form  action="${pageContext.request.contextPath}/enterprise/search" id="top-search-form">
@@ -214,7 +214,7 @@
 						<div class="form-group has-feedback">
 							<input type="password" class="form-control" name="passwordCheck"	placeholder="Retype password">
 							<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-							<div id="checkMsg"></div>
+							<div class="checkMsg"></div>
 						</div>
 						<button type="submit" class="btn btn-success btn-block">
 							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
@@ -253,6 +253,9 @@ $(function() {
 	});
 
 	$("#loginForm").on("submit", function() {
+		if($("#loginPw").val()==""){
+
+		}
 		 $.ajax({
 				type : "post",
 				url : contextPath+"/member/login",
@@ -342,7 +345,7 @@ $(function() {
 	$("input[name=password], input[name=passwordCheck]" ).on("keyup",function(){
 		var pw1 = $("input[name=password]").val();
 		var pw2 = $("input[name=passwordCheck]").val();
-		var checkMsg = $("#checkMsg");
+		var checkMsg = $(".checkMsg");
 
 		if(pw1!=pw2){
 			checkMsg.html("동일한 비밀번호를 입력하세요.");
@@ -385,12 +388,17 @@ $(function() {
 				},
 				dataType : "json",
 				beforeSend:function(){
-								console.log($("#signUpForm").children("button[type=submit]"));
-							 $("#signUpForm").children("button[type=submit]").text("진행중..");
-
+					$(".loding").css("display","block");
+					$(".loding").parent().css("pointer-events","none").css("cursor","default");
+					$(".loding").prev().css("display","none");
 				},
 				success : function(data) {
 					if (data.result) {
+						$(".loding").css("display","none");
+						$(".loding").parent().css("pointer-events","auto").css("cursor","pointer");
+						$(".loding").prev().css("display","block");
+						$("#checkMsg").css("display","none");
+
 						// 회원가입 성공
 						swal({
 							title:"해당 이메일로 인증 메일이 발송되었습니다.",

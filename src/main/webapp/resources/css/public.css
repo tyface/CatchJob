@@ -30,6 +30,18 @@ article {
 	padding-top: 50px;
 }
 
+
+.nav-pills > li.active > a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #337ab7 !important;
+}
+
+
+
+.loding{
+	margin: auto;
+	display: none;
+}
 /* Mobile */
 .row {
 	margin-left: auto;
@@ -407,6 +419,7 @@ margin-left: auto;
 }
 
 .facebookBtn {
+	width:100%;
 	margin-bottom: 15px;
 	background-color: #3b5998;
 	font-family: Roboto-Medium;
@@ -428,6 +441,7 @@ margin-left: auto;
 
 .googleBtn {
 /* 	margin-bottom: 15px; */
+width:100%;
 	background-color: #ffffff;
 	font-family: Roboto-Medium;
 	font-size: 14px;
