@@ -129,8 +129,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE 	INTERVIEW_TB i
 		INNER JOIN MEMBER_TB m
 		ON 		i.MBER_IDX = m.MBER_IDX
-		SET		m.MBER_ID=#{mberId},i.ENT_IDX=#{entIndex},i.ENT_NM=#{entName},i.INTRVW_DFFLY=#{intrvwDifficulty},i.INTRVW_YM=#{intrvwDate},i.INTRVW_ROUTE=#{intrvwRoute},i.INTRVW_REVW=#{intrvwReview},i.INTRVW_QESTN=#{intrvwQuestion},i.INTRVW_ANSWER=#{intrvwAnswer},i.INTRVW_FL=#{intrvwFlag},
-		i.INTRVW_RESULT=#{intrvwResult},i.INTRVW_EXPRNC=#{intrvwExperience},i.PRESNATN_DT=#{presentationDate},i.REG_DT=#{regDate}
+		INNER JOIN ENTERPRISE_TB e
+		ON		i.ENT_IDX = e.ENT_IDX
+		SET		i.ENT_IDX=#{entIndex},e.ENT_NM=#{entName},m.MBER_ID=#{mberId},i.INTRVW_DFFLY=#{intrvwDifficulty},i.INTRVW_YM=#{intrvwDate},i.INTRVW_ROUTE=#{intrvwRoute},i.INTRVW_REVW=#{intrvwReview},i.INTRVW_QESTN=#{intrvwQuestion},i.INTRVW_ANSWER=#{intrvwAnswer},
+		i.INTRVW_RESULT=#{intrvwResult},i.PRESNATN_DT=#{presentationDate},i.INTRVW_EXPRNC=#{intrvwExperience}
+		WHERE   INTRVW_IDX=#{intrvwIndex}
+	</update>
+	<update id="updateInterviewFlagByAdmin" parameterType="interview">	
+		UPDATE 	INTERVIEW_TB 
+		SET		INTRVW_FL=#{intrvwFlag}
 		WHERE   INTRVW_IDX=#{intrvwIndex}
 	</update>
 	<resultMap type="interview" id="interviewMap">

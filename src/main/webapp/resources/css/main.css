@@ -12,10 +12,9 @@
 .main-font {
   font-family: 'Godo', sans-serif;
   color: #4c78ea;
-  font-weight:700px;
   margin-top: 50px;
   margin-bottom: 30px;
-  font-size: 32px;
+  font-size: 29px;
 }
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {

@@ -4,7 +4,7 @@
  } */
 
 @font-face{
-	font-family:'Gruppo'; 
+	font-family:'Gruppo';
 	src:url('../fonts/Gruppo-Regular.ttf')
 	}
 
@@ -12,7 +12,7 @@
   font-family: 'Godo';
   font-style: normal;
   font-weight: 700;
-  src: url('../fonts/GodoB.woff'); 
+  src: url('../fonts/GodoB.woff');
 }
 
 h1 {
@@ -38,13 +38,39 @@ article {
 	padding-top: 50px;
 }
 
-
-.nav-pills > li.active > a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
-    color: #fff;
-    background-color: #337ab7 !important;
+/* Mobile */
+.desktop-hide{
+	 display: block;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .desktop-hide{
+		display: none;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .desktop-hide{
+		display: none;
+  }
 }
 
-
+/* Mobile */
+.mobile-hide{
+	 display: none;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .mobile-hide{
+		display: block;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .mobile-hide{
+		display: block;
+  }
+}
 
 .loding{
 	margin: auto;
@@ -163,7 +189,7 @@ margin-left: auto;
 
 .godo-font{
   font-family: 'Godo', sans-serif;
-  
+
 }
 .font-01{
 	color: #4c78ea;
@@ -388,10 +414,10 @@ margin-left: auto;
 }
 .nav-btn-1 {
 	font-family: 'Godo', sans-serif;
-	font-size: 19px;
+	font-size: 18px;
 	font-weight: bold;
 	width: 65px;
-	margin-top: 12px;
+	margin-top: 14px;
 	margin-right: 10px;
 	text-decoration: none;
 	color: #4c78ea;

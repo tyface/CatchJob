@@ -26,7 +26,7 @@
 .widget-user .widget-user-username {
 	margin-top: 0;
 	margin-bottom: 5px;
-	
+
 	font-size: 25px;
 	font-weight: 300;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2)
@@ -56,7 +56,7 @@
 	color: #fff !important;
 /* 	background-color: #00a7d0 !important; */
 	background-image: url('${pageContext.request.contextPath}/resources/img/main-background.png');
-	background-position: 0px -70px; 
+	background-position: 0px -70px;
 }
 .description-block.margin-bottom {
 	margin-bottom: 25px
@@ -92,7 +92,7 @@ $(function(){
 <!--       <div class="widget-user-image"> -->
 <%--         <img class="img-circle" src="${pageContext.request.contextPath}/resources/img/user1-128x128.jpg" alt="User Avatar"> --%>
 <!--       </div> -->
-      <div class="box-footer">
+      <div class="box-footer mobile-hide">
         <div class="row">
           <div class="col-sm-3 border-right">
             <div class="description-block">
@@ -108,7 +108,7 @@ $(function(){
               <h5 class="description-header godo-font p-a1" onclick="location.href='${pageContext.request.contextPath}/profile/interviews'">내 면접후기</h5>
 <!--               <span class="description-text">숫자</span> -->
               <p class="description-text"></p>
-              
+
             </div>
             <!-- /.description-block -->
           </div>
@@ -117,7 +117,7 @@ $(function(){
             <div class="description-block">
               <h5 class="description-header godo-font p-a1" onclick="location.href='${pageContext.request.contextPath}/profile/follows'">팔로잉 기업</h5>
 <!--               <span class="description-text">숫자</span> -->
-              <p class="description-text"></p>              
+              <p class="description-text"></p>
             </div>
             <!-- /.description-block -->
           </div>
@@ -125,7 +125,7 @@ $(function(){
             <div class="description-block">
               <h5 class="description-header godo-font p-a1"  onclick="location.href='${pageContext.request.contextPath}/profile/recent'">최근 본 기업</h5>
 <!--               <span class="description-text">숫자</span> -->
-              <p class="description-text"></p>              
+              <p class="description-text"></p>
             </div>
             <!-- /.description-block -->
           </div>

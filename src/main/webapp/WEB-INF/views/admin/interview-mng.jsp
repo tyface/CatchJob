@@ -8,7 +8,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <title>Admin Page</title>
 <style>
 	input.form-control.input-sm{
@@ -61,6 +60,7 @@ $(function(){
 	} 
 	
 	 $('div.modal').on('show.bs.modal', function (event) {
+
 		  var button = $(event.relatedTarget);
 		  var modal = $(this)		  
 		  modal.find('.modal-body #intrvwIndex').val(button.data('intrvwindex'))
@@ -225,7 +225,8 @@ function chkDelete(){
 							<td>${interview.entName}</td>
 							<td>${interview.entIndex}</td>
 							<td>${interview.intrvwDifficulty}</td>
-							<td><input class="btn btn-primary btn-sm" type="button"
+							<td>
+							<input class="btn btn-primary btn-sm" type="button"
 								data-intrvwindex="${interview.intrvwIndex}"
 								data-mberid="${interview.mberId}"
 								data-entname="${interview.entName}"
@@ -255,12 +256,13 @@ function chkDelete(){
 							</button>
 							<h4 class="modal-title" id="modalLabel">세부사항</h4>
 						</div>
-						<form action="modifyInterview" method="post">
-						<input type="hidden" name="intrvwIndex" id="intrvwIndex">
+					<form action="modifyInterview" method="post">
+												
 							<div class="modal-body">
 								<div class="row form-group">
 									<div class="col-xs-3 form-group">
 										<label for="entIndex" class="control-label">기업코드</label>
+										<input type="hidden" name="intrvwIndex" id="intrvwIndex">	
 									</div>
 									<div class="col-xs-9">
 										<input type="text" id="entIndex" name="entIndex"
@@ -357,9 +359,17 @@ function chkDelete(){
 										<label for="intrvwResult" class="control-label">면접 결과</label>
 									</div>
 									<div class="col-xs-9">
-										<textArea id="intrvwResult"	name="intrvwResult" class="form-control input-sm"></textArea>
+										<select class="form-control"
+											id="intrvwResult" name="intrvwResult">
+											<option>면접 결과</option>
+											<option value="1">1:합격</option>
+											<option value="2">2:불합격</option>
+											<option value="3">3:대기중</option>
+											<option value="4">4:합격했으나 취업하지않음</option>
+										</select>
 									</div>
-								</div>
+								</div>	
+								
 								<div class="row form-group">
 									<div class="col-xs-3">
 										<label for="presentationDate" class="control-label">발표 시기</label>
@@ -376,7 +386,7 @@ function chkDelete(){
 									<div class="col-xs-9">
 										<select class="form-control"
 											id="intrvwExperience" name="intrvwExperience">
-											<option>면접 경험</option>
+											<option value="0"></option>
 											<option value="1">부정적</option>
 											<option value="2">보통</option>
 											<option value="3">긍정적</option>
@@ -389,7 +399,7 @@ function chkDelete(){
 										<label for="regDate" class="control-label">작성일</label>
 									</div>
 									<div class="col-xs-9">
-										<input type="text" id="regDate" readOnly="readOnly"
+										<input type="text" id="regDate" readOnly
 											name="regDate" class="form-control input-sm" />
 									</div>
 								</div>
@@ -398,11 +408,10 @@ function chkDelete(){
 								<button type="submit" class="btn btn-primary">수정하기</button>
 								<button type="reset" class="btn btn-warning">초기화</button>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 			</div>
-			
 					<div id="pagenation">
 						<ul class="pagination pagination-sm">
 							<c:if test="${viewData.startPage != 1}">

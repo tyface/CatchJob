@@ -333,6 +333,16 @@ public class InterviewServiceImp implements InterviewService{
 		}
 	}
 
+	@Override
+	public boolean modifyInterviewFlagByAdmin(Interview interview) {
+		int result = itvwDao.updateInterviewFlagByAdmin(interview);
+		if(result > 0) {		
+			return true;
+		}else {			
+			return false;
+		}
+	}
+
 
 	
 

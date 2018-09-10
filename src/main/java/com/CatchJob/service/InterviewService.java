@@ -38,4 +38,6 @@ public interface InterviewService {
 	public Interview getInterview(int intrvwIndex);
 	
 	public boolean modifyInterviewByAdmin(Interview interview);
+	
+	public boolean modifyInterviewFlagByAdmin(Interview interview);
 }

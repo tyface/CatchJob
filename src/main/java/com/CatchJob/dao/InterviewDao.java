@@ -40,4 +40,6 @@ public interface InterviewDao {
 	public Interview selectInterview(int intrvwIndex);
 	// 관리자 페이지 면접 수정
 	public int updateInterviewByAdmin(Interview interview);
+	
+	public int updateInterviewFlagByAdmin(Interview interview);
 }

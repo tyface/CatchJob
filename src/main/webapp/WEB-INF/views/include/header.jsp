@@ -17,7 +17,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/sweetalert.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/public.css" rel="stylesheet">
-	
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/sweetalert.min.js"></script>
@@ -61,7 +61,7 @@
 </head>
 <!-- jQuery 설정-->
 
-<body class="skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini godo-font">
 	<div class="container-fluid">
 	  <header class="main-header">
 			<%@ include file="login-nav.jsp" %>
