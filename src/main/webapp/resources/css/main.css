@@ -7,10 +7,12 @@
   margin: 20px;
 }
 
+
 /* Mobile */
 .main-font {
-  font-family: 'Jua', sans-serif;
+  font-family: 'Godo', sans-serif;
   color: #4c78ea;
+  font-weight:700px;
   margin-top: 50px;
   margin-bottom: 30px;
   font-size: 32px;
