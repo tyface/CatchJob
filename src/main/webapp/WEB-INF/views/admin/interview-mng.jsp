@@ -386,7 +386,7 @@ function chkDelete(){
 									<div class="col-xs-9">
 										<select class="form-control"
 											id="intrvwExperience" name="intrvwExperience">
-											<option>면접 경험</option>
+											<option value="0"></option>
 											<option value="1">부정적</option>
 											<option value="2">보통</option>
 											<option value="3">긍정적</option>
