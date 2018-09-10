@@ -738,6 +738,9 @@ width:100%;
 .sectionTitle {
 	color: #4c78ea;
 	font-weight: bolder;
+	font-family: 'Jua', sans-serif;
+	font-weight: normal;
+/* 	font-size: 30px; */
 }
 
 /* view 좌측 side bar */
