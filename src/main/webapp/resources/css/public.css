@@ -3,8 +3,17 @@
 	 --sub-color: #B5B2FF;
  } */
 
-@font-face{font-family:'Jua'; src:url('../fonts/Jua-Regular.ttf')}
-@font-face{font-family:'Gruppo'; src:url('../fonts/Gruppo-Regular.ttf')}
+@font-face{
+	font-family:'Gruppo'; 
+	src:url('../fonts/Gruppo-Regular.ttf')
+	}
+
+@font-face {
+  font-family: 'Godo';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/GodoB.woff'); 
+}
 
 h1 {
 	margin-top: 10px;
@@ -12,7 +21,6 @@ h1 {
 body {
 	position: relative;
 	background-color: #f6f6f6;
-	/* font-family: 'Jua', sans-serif; */
 }
 
 section{
@@ -153,18 +161,26 @@ margin-left: auto;
 	border-top-color: #4c78ea !important;
 }
 
-.jua-font{
-  font-family: 'Jua', sans-serif;
+.godo-font{
+  font-family: 'Godo', sans-serif;
+  
 }
 .font-01{
 	color: #4c78ea;
 	margin-left: 10px;
 }
+
 /* Mobile */
 .p-01{
 	color: #4c78ea;
 	font-size: 20px;
 	margin-bottom: 0px;
+}
+.p-a1{
+	color: #4c78ea;
+	font-size: 15px;
+	font-weight: normal;
+	cursor: pointer;
 }
 /* Tablet */
 @media (min-width:768px) and (max-width:1024px) {
@@ -172,6 +188,11 @@ margin-left: auto;
       font-size: 25px;
 			font-weight: bold;
   }
+  .p-a1{
+	color: #4c78ea;
+	font-size: 15px;
+	margin-bottom: 0px;
+	}
 }
 /* Desktop */
 @media (min-width:1025px) {
@@ -180,6 +201,11 @@ margin-left: auto;
 			font-weight: bold;
 			margin-bottom: 15px;
   }
+  .p-a1{
+	color: #4c78ea;
+	font-size: 20px;
+	margin-bottom: 0px;
+	}
 }
 .navbar-inverse{
 	background-color: white;
@@ -326,6 +352,9 @@ margin-left: auto;
   -ms-transform: scale(1.1,1.1);
   transform: scale(1.1,1.1);
 }
+.cursor-pointer{
+	cursor: pointer;
+}
 
 .abcRioButtonLightBlue {
 	height: 36px;
@@ -358,7 +387,7 @@ margin-left: auto;
 	padding: 0px;
 }
 .nav-btn-1 {
-	font-family: 'Jua', sans-serif;
+	font-family: 'Godo', sans-serif;
 	font-size: 19px;
 	font-weight: bold;
 	width: 65px;
@@ -541,6 +570,7 @@ width:100%;
 .modal-headers{
 	background-color: #4c78ea;
 	padding:35px 50px;
+	border-radius: 5px 5px 0% 0%;
 
 }
 .modal-headers h4, .close {
@@ -559,6 +589,7 @@ width:100%;
  }
  .modal-footer {
      background-color: #EAEAEA;
+     border-radius:  0% 0% 5px 5px;
  }
  .form-text-height{
  	height: 40px
@@ -715,6 +746,9 @@ width:100%;
 .sectionTitle {
 	color: #4c78ea;
 	font-weight: bolder;
+	font-family: 'Godo', sans-serif;
+	font-weight: normal;
+/* 	font-size: 30px; */
 }
 
 /* view 좌측 side bar */

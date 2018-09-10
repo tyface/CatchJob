@@ -142,8 +142,10 @@
 	margin-top: 70px;
 }
 #entName{
-	font-size: 30px;
+	font-size: 35px;
 	font-style: inherit;
+	 font-family: 'Godo', sans-serif;
+  
 }
 
 /* VIEW 페이지 그래프  START*/
@@ -152,7 +154,7 @@
     margin-bottom: 10px;
 }
 .graph-btn {
-	background-color: #B5B2FF;
+	background-color: #4c78ea;
 	color: white;
 	border-radius: 5px;
 /* 	margin: 0 0 10px 40%; */
@@ -194,7 +196,7 @@
 .sliders {
     -webkit-appearance: none;
     width: 100%;
-    height: 15px;
+    height: 10px;
     border-radius: 5px;
     background: #d3d3d3;
     outline: none;
@@ -209,10 +211,10 @@
 .sliders::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: #4c78ea;
 }
 
 /* VIEW 페이지 채용정보 색 */
@@ -251,7 +253,7 @@
  .panel-headings {
 
      color: #fff !important;
-     background-color: #B5B2FF !important;
+     background-color: #a8bff9 !important;
      text-align: right;
      padding: 0px 5px 0px 0px ;
      border-bottom: 1px solid transparent;
@@ -279,6 +281,7 @@
 		margin: 0px 50px 0px 50px;
 	}
 }
+
 #saramin-margin .title{
 	min-height: 31px;
 }
@@ -289,4 +292,7 @@
 /* VIEW 페이지 뉴스 줄 간격 */
 .news-margin {
 	margin-bottom: 15px;
+}
+#diff .row , #diff .progress-bars{
+	min-height: 18px;
 }

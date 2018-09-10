@@ -165,11 +165,12 @@ function interviewValidation(){
 <article class="container non-padding-top">
 	<div class="contents-wrap">
 	
-	  <h2>면접후기</h2>
+	  <h2 class="godo-font text-left p-01">면접후기</h2>
+	  <hr style="border: 1px solid #c7d5f8; padding: 0px;">
 	  <div class="table-responsive">          
 	  <table class="table table-hover text-center mypage-table-width">
 	    <thead>
-	      <tr>
+	      <tr class="info">
 	<!--         <th>#</th> -->
 	        <th>기업명</th>
 	        <th>면접결과</th>
@@ -181,17 +182,29 @@ function interviewValidation(){
 	      </tr>
 	    </thead>
 	    <tbody>
-	    <c:forEach  items="${viewData}" var="viewData" varStatus="status">
-		      <tr>
-		        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${viewData.entIndex}'">${viewData.entName}</span></td>
-		        <td>${viewData.intrvwResult}</td>
-		        <td>${viewData.regDate}</td>
-		        <td>
-		        	<span class="update blue-font" onclick="doUpdate(${viewData.entIndex})">수정  </span> |
-		        	<span class="delete blue-font" onclick="doDelete(${viewData.entIndex})">삭제</span>
-		        </td>
-		      </tr>
-	      </c:forEach>
+	    
+	    <c:choose>
+	    	<c:when test="${viewData.size() > 0 }">
+			     <c:forEach  items="${viewData}" var="viewData" varStatus="status">
+				      <tr>
+				        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${viewData.entIndex}'">${viewData.entName}</span></td>
+				        <td>${viewData.intrvwResult}</td>
+				        <td>${viewData.regDate}</td>
+				        <td>
+				        	<span class="update blue-font" onclick="doUpdate(${viewData.entIndex})">수정  </span> |
+				        	<span class="delete blue-font" onclick="doDelete(${viewData.entIndex})">삭제</span>
+				        </td>
+				      </tr>
+			      </c:forEach>
+	    	</c:when>
+	    	<c:otherwise>
+	    		 <tr>
+	    		 	  <td colspan="4"><div class='well well-lg'>작성한 면접 후기가 없습니다</div></td>
+	    		 </tr>
+	    	</c:otherwise>
+	    </c:choose>
+	    
+	    
 	    </tbody>
 	  </table>
 	  </div>

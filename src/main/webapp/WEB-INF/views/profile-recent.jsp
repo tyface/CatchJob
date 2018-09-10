@@ -105,50 +105,60 @@ $(function(){
 <article class="container non-padding-top">
 	<div class="contents-wrap">
 	  
-	  <h2>최근 본 기업</h2>
-	  		<c:forEach begin="0" varStatus="status"  var="recent" items="${recentView}">
-			<div class="row ent-list">
-	
-				<div class="col-sm-8">
-					<div class="row">
-						<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${recent.entIndex}" class="p25">${recent.entName}</a>
-						<a href="#" class="follow follow-btn follow">
-							<i class="fa fa-heart-o follow" id="follow${status.index}"></i><!-- 123 -->
-							<input type="hidden" value="${recent.entIndex}">
-						</a>
-					</div>
-					<div class="row visible-lg visible-md visible-sm">
-						${recent.industryName} | ${recent.bcityName} ${recent.signguName}
-					</div>
-					<div class="row">
-						<p class="p-1">평균연봉 ${recent.salaryAvg} 만원 </p>
-					</div>
-				</div>
-	
-				<div class="col-sm-4">
-					<div class="row text-center">
-						<c:forEach begin="1" end="${recent.evaluationAvg}" step="1">
-							<span class="stars-on"></span>
-						</c:forEach>
-						<c:forEach begin="${recent.evaluationAvg}" end="4" step="1">
-							 <span class="stars-off"></span>
-						</c:forEach>
-						<span class="ent-score">${recent.evaluationAvg}</span>
-					</div>
-					<div class="row">
-						<div class="col-xs-6 text-center cell-1">
-							<strong>${recent.reviewCount}</strong>
-							<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${recent.entIndex}#section2"><br>리뷰코멘트</a>
+	  <h2 class="godo-font text-left p-01">최근 본 기업</h2>
+	  <hr style="border: 1px solid #c7d5f8; padding: 0px;">
+	  
+	  <c:choose>
+	  	<c:when test="${recentView.size() > 0}">
+		  	<c:forEach begin="0" varStatus="status"  var="recent" items="${recentView}">
+				<div class="row ent-list">
+		
+					<div class="col-sm-8">
+						<div class="row">
+							<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${recent.entIndex}" class="p25">${recent.entName}</a>
+							<a href="#" class="follow follow-btn follow">
+								<i class="fa fa-heart-o follow" id="follow${status.index}"></i><!-- 123 -->
+								<input type="hidden" value="${recent.entIndex}">
+							</a>
 						</div>
-						<div class="col-xs-6 text-center cell-2">
-							<strong>${recent.interviewCount}</strong>
-							<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${recent.entIndex}#section3"><br>면접정보</a>
+						<div class="row visible-lg visible-md visible-sm">
+							${recent.industryName} | ${recent.bcityName} ${recent.signguName}
+						</div>
+						<div class="row">
+							<p class="p-1">평균연봉 ${recent.salaryAvg} 만원 </p>
 						</div>
 					</div>
+		
+					<div class="col-sm-4">
+						<div class="row text-center">
+							<c:forEach begin="1" end="${recent.evaluationAvg}" step="1">
+								<span class="stars-on"></span>
+							</c:forEach>
+							<c:forEach begin="${recent.evaluationAvg}" end="4" step="1">
+								 <span class="stars-off"></span>
+							</c:forEach>
+							<span class="ent-score">${recent.evaluationAvg}</span>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 text-center cell-1">
+								<strong>${recent.reviewCount}</strong>
+								<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${recent.entIndex}#section2"><br>리뷰코멘트</a>
+							</div>
+							<div class="col-xs-6 text-center cell-2">
+								<strong>${recent.interviewCount}</strong>
+								<a href="${pageContext.request.contextPath}/enterprise/view?entIndex=${recent.entIndex}#section3"><br>면접정보</a>
+							</div>
+						</div>
+					</div>
+		
 				</div>
-	
-			</div>
-		</c:forEach>
+			</c:forEach>
+	  	</c:when>
+	  	<c:otherwise>
+	  		<div class='well well-lg'>최근에 본 기업이 없습니다</div>
+	  	</c:otherwise>
+	  </c:choose>
+	  	
 		
 		
 	</div>
