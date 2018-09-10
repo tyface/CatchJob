@@ -200,7 +200,7 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: #4c78ea;
 }
 
 /* VIEW 페이지 채용정보 색 */
@@ -267,6 +267,7 @@
 		margin: 0px 50px 0px 50px;
 	}
 }
+
 #saramin-margin .title{
 	min-height: 31px;
 }

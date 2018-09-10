@@ -558,34 +558,35 @@ function saramin(){
 </script>
 
 
-<div class="container">
+
+<div class="container" >
 	<div class="row">
 		<nav class="col-sm-1 padding-zero" id="left-nav">
 
 			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
 				<!-- 				<li style="height: 30px"></li> -->
 				<li>
-					<a onclick="fnMove('#section1')">
+					<a onclick="fnMove('#section1')" class="cursor-pointer">
 						<span class="fa fa-building logo-small"></span> 기업정보
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section2')">
+					<a onclick="fnMove('#section2')" class="cursor-pointer">
 						<span class="fa fa-weixin logo-small"></span> 리뷰코멘트
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section3')">
+					<a onclick="fnMove('#section3')" class="cursor-pointer">
 						<span class="fa fa-file-text logo-small"></span> 면접후기
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section4')">
+					<a onclick="fnMove('#section4')" class="cursor-pointer">
 						<span class="fa fa-line-chart logo-small"></span> 월별그래프
 					</a>
 				</li>
 				<li>
-					<a onclick="fnMove('#section5')">
+					<a onclick="fnMove('#section5')" class="cursor-pointer">
 						<span class="fa fa-group logo-small"></span> 채용정보
 					</a>
 				</li>
@@ -925,7 +926,7 @@ function saramin(){
 								 	<c:forEach items="${newsList}" var="newsList">
 										<div class="row news-margin" >
 											<a class="col-xs-10 f-left text-left blue-font"  href="${newsList.link}" target="_blank">${newsList.title}</a>
-											<span class="col-xs-2 f-right text-right pad-0">${newsList.pubDate}</span>
+											<span class="col-xs-2 f-right text-right pad-0" >${newsList.pubDate}</span>
 										</div>
 									</c:forEach>
 								</div>
