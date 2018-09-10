@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -22,6 +23,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 		if (authenticationException instanceof UsernameNotFoundException) {
 			System.out.println("멤버 사용자 없음");
 			response.getWriter().print("{\"result\" : \"CODE_03\"}");
+		} else if (authenticationException instanceof DisabledException){
+			System.out.println("메일 인증 안받음");
+			response.getWriter().print("{\"result\" : \"CODE_04\"}");
 		} else if (authenticationException instanceof BadCredentialsException) {
 			System.out.println("멤버 비밀번호 일치 하지 않음");
 			response.getWriter().print("{\"result\" : \"CODE_02\"}");
