@@ -96,7 +96,7 @@ $(function(){
         <div class="row">
           <div class="col-sm-3 border-right">
             <div class="description-block">
-              <h5 class="description-header  jua-font p-a1" onclick="location.href='${pageContext.request.contextPath}/profile/reviews'">내 기업리뷰</h5>
+              <h5 class="description-header  jua-font p-a1" onclick="location.href='${pageContext.request.contextPath}/profile/reviews'">내 리뷰코멘트</h5>
 <!--               <span class="description-text">숫자</span> -->
               <p class="description-text"></p>
             </div>
