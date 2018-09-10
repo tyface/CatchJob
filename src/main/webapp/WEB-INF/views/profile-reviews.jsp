@@ -121,11 +121,13 @@ function reviewValidation(){
 
 <article class="container non-padding-top">
 	<div class="contents-wrap">
-	  <h2>리뷰 코멘트</h2>
+	  <h2 class="godo-font text-left p-01">리뷰 코멘트</h2>
+	  <hr style="border: 1px solid #c7d5f8; padding: 0px;">
+	  <div class="table-responsive">          
 <!-- 	  <div class="table-responsive">           -->
 	  <table class="table table-hover text-center mypage-table-width">
 	    <thead>
-	      <tr>
+	     <tr class="info">
 	        <th>기업명</th>
 	        <th>질문내용</th>
 	        <th>작성일</th>
@@ -136,26 +138,38 @@ function reviewValidation(){
 	      </tr>
 	    </thead>
 	    <tbody>
-	    <c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
-		      <tr>
-		        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</span></td>
-		        <td>${reviewList.question}</td>
-		        <td>${reviewList.regDate}</td>
-		        <td>
-		        	<span class="update blue-font" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </span> |
-		        	<span class="delete blue-font" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </span>
-		        </td>
-		      </tr>
-	      </c:forEach>
+	    
+	     <c:choose>
+	    	<c:when test="${reviewList.size() > 0 }">
+	    		<c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
+			      <tr>
+			        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</span></td>
+			        <td>${reviewList.question}</td>
+			        <td>${reviewList.regDate}</td>
+			        <td>
+			        	<span class="update blue-font" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </span> |
+			        	<span class="delete blue-font" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </span>
+			        </td>
+			      </tr>
+		      </c:forEach>
+	    	</c:when>
+	    	<c:otherwise>
+	    		 <tr>
+	    		 	  <td colspan="4"><div class='well well-lg'>작성한 리뷰 코멘트가 없습니다</div></td>
+	    		 </tr>
+	    	</c:otherwise>
+	    </c:choose>
+	    
+	    
 
 	    </tbody>
 	  </table>
 	  </div>
-
+	</div>
 
 
 </article>
- -->
+
 
 
 <!-- Modal ----------------------------------------------------------------------------------------------------------------------------- -->

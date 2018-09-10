@@ -165,7 +165,7 @@ function interviewValidation(){
 <article class="container non-padding-top">
 	<div class="contents-wrap">
 	
-	  <h2 class="jua-font text-left p-01">면접후기</h2>
+	  <h2 class="godo-font text-left p-01">면접후기</h2>
 	  <hr style="border: 1px solid #c7d5f8; padding: 0px;">
 	  <div class="table-responsive">          
 	  <table class="table table-hover text-center mypage-table-width">

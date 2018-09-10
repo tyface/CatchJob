@@ -175,7 +175,18 @@
                   <li class="dropdown-header">내 정보</li>
                   <li><a class="cursorOn" onclick="verifyRegularMemberForm()">정회원 인증</a></li>
                   <li><a href="#pwModifyModal" data-toggle="modal">비밀번호 수정</a></li>
+                  <!-- Desktop 일 때 -->
                   <li><a href="${pageContext.request.contextPath}/profile/reviews">마이페이지</a></li>
+                  <!-- // -->
+                  <!-- mobile 일 때 -->
+                   <li role="presentation" class="divider"></li>
+                   <li class="dropdown-header">마이페이지</li>
+                   		 <li><a href="${pageContext.request.contextPath}/profile/reviews">내 리뷰코멘트</a></li>
+                   		 <li><a href="${pageContext.request.contextPath}/profile/interviews">내 면접후기</a></li>
+                   		 <li><a href="${pageContext.request.contextPath}/profile/follows">팔로잉 기업</a></li>
+                   		 <li><a href="${pageContext.request.contextPath}/profile/recent">최근 본 기업</a></li>
+                  <!-- // -->
+                  
                    <li role="presentation" class="divider"></li>
                   <li><a href="${pageContext.request.contextPath}/member/logout">로그아웃</a></li>
                </ul>

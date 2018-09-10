@@ -99,7 +99,7 @@ public class EnterpriseController {
 			model.addAttribute("empCount", new Gson().toJson(entService.empCountGraph(entIndex)));
 			model.addAttribute("entInfo", entService.getEntInfo(mapData));
 			model.addAttribute("industryAvgInfo", new Gson().toJson(entService.getIndustryAvgInfo(entIndex)));
-			model.addAttribute("interviewDiffChart", itvwService.getDiffChart(mapData));
+			model.addAttribute("interviewDiffChart",  new Gson().toJson(itvwService.getDiffChart(mapData)) );
 			model.addAttribute("interviewExperienceChart", new Gson().toJson(itvwService.getExperienceChart(mapData)));
 			model.addAttribute("interviewResultChart", new Gson().toJson(itvwService.getResultChart(mapData)));
 			model.addAttribute("questionList", reviewService.question(mapData));
