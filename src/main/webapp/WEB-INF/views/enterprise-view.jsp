@@ -589,39 +589,39 @@ function saramin(){
 				<li>
 					<a onclick="fnMove('#section1')" class="cursor-pointer text-center">
 						<span class="fa fa-building logo-small "></span> 
-						<span>기업정보</span>
+						<span class="godo-font p-a2">기업정보</span>
 						
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section2')" class="cursor-pointer text-center">
 						<span class="fa fa-weixin logo-small"></span>
-						<span>리뷰코멘트</span>
+						<span class="godo-font p-a2">리뷰코멘트</span>
 						 
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section3')" class="cursor-pointer text-center">
 						<span class="fa fa-file-text logo-small"></span>
-						<span>면접후기</span> 
+						<span class="godo-font p-a2">면접후기</span> 
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section4')" class="cursor-pointer text-center">
 						<span class="fa fa-line-chart logo-small"></span>
-						<span>월별그래프</span> 
+						<span class="godo-font p-a2">월별그래프</span> 
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section5')" class="cursor-pointer text-center">
 						<span class="fa fa-group logo-small"></span>
-						<span>채용정보</span> 
+						<span class="godo-font p-a2">채용정보</span> 
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section6')"  class="cursor-pointer text-center">
 						<span class="fa fa-newspaper-o logo-small"></span>
-						<span>뉴스</span> 
+						<span class="godo-font p-a2">뉴스</span> 
 					</a>
 				</li>
 
@@ -630,7 +630,7 @@ function saramin(){
 
 		<div class="col-sm-11 mobile-p">
 			<div class="module" id="entNameModule">
-				<div class="row" id="section1">
+				<div class="row " id="section1">
 					<div class="col-sm-6">
 						<div class="row" >
 							<span id="entName">${entInfo.ENT_NM}</span>
@@ -641,7 +641,7 @@ function saramin(){
 					</div>
 					<div class="col-sm-6">
 								<p class="m-t-10">평균연봉</p>
-								<h1>
+								<h1 class="godo-font">
 									<b><span id="payAmtAvg">${entInfo.PAY_AMT_AVG}</span></b>만원
 								</h1>
 								<p class="m-t-10 s-red-font">※국민연금 납부기준</p>
@@ -875,7 +875,7 @@ function saramin(){
 
 							<div class="box-body row">
 								<div class="chart col-md-4 margin-auto" >
-									<h3 class="box-title">면접 난이도</h3>
+									<h3 class="box-title godo-font p-b1">면접 난이도</h3>
 							
 									<div class="text-center ">
 <%-- 									<canvas id="pieChart" ></canvas> --%>
@@ -904,11 +904,11 @@ function saramin(){
 									</div>
 								</div>
 								<div class="chart col-md-4" >
-									<h3 class="box-title">면접 경험</h3>
+									<h3 class="box-title godo-font p-b1">면접 경험</h3>
 									<canvas id="pieChartExperience" ></canvas>
 								</div>
 								<div class="chart col-md-4" >
-									<h3 class="box-title">면접 결과</h3>
+									<h3 class="box-title godo-font p-b1">면접 결과</h3>
 									<canvas id="pieChartResult" ></canvas>
 								</div>
 							</div>

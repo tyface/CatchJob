@@ -2,36 +2,24 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="include/header.jsp" %>
-  <style>
-  /* Icon when the collapsible content is shown */
-  .collapsed-evt:after {
-    font-family: "Glyphicons Halflings";
-    content: "\e114";
-    float: right;
-    margin-left: 15px;
-  }
-  /* Icon when the collapsible content is hidden */
-  .collapsed-evt.collapsed:after {
-    content: "\e080";
-  }
-</style>
+
 
 <article class="text-left">
 
 	<div class="container">
 		<div class="contents-wrap">
-		<h1 id="title">FAQ</h1>
+		<h1 id="title" class="godo-font main-color">FAQ</h1>
 		<!--   <h2>연봉 정보</h2> -->
 		    <div class="panel-group" id="accordion">
-		 	   <h2><small><b>연봉 정보</b></small></h2>
+		 	   <h2 class="godo-font " ><small><b>연봉 정보</b></small></h2>
 			   <div class="panel panel-default">
 			      <div class="panel-heading">
 			        <h4 class="panel-title">
-			          <a class="collapsed-evt collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse1">평균연봉은 어떻게 산출하나요?</a>
+			          <a class="collapsed-evt collapsed"  data-toggle="collapse" data-parent="#accordion" href="#collapse1">평균연봉은 어떻게 산출하나요?</a>
 			        </h4>
 			      </div>
 			      <div id="collapse1" class="panel-collapse collapse ">
-			        <div class="panel-body">해당 회사의 국민연금 납부액 또는 고용보험 납부액과 납부인원수를 역산하여 계산합니다.</div>
+			        <div class="panel-body ">해당 회사의 국민연금 납부액 또는 고용보험 납부액과 납부인원수를 역산하여 계산합니다.</div>
 			      </div>
 			    </div>
 			    
@@ -92,7 +80,8 @@
 			  
 			<!-- // -->
 			<!--   <h2>기업 정보</h2> -->
-			    <br><h2><small><b>기업 정보</b></small></h2>
+			    <br>
+			    <h2 class="godo-font"><small><b>기업 정보</b></small></h2>
 			    <div class="panel panel-default">
 			      <div class="panel-heading">
 			        <h4 class="panel-title">

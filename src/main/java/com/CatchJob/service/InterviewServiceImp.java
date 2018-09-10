@@ -89,23 +89,24 @@ public class InterviewServiceImp implements InterviewService{
 		List<Interview> result = itvwDao.selectListByMemberIdx(data);
 		for(Interview list: result) {
 			list.setRegDate(list.getRegDate().substring(0, 10));
-			System.out.println("결과: "+list.getIntrvwResult());
-			switch (list.getIntrvwResult()) {
-			case "1":
-				list.setIntrvwResult("합격");
-				break;
-			case "2":
-				list.setIntrvwResult("불합격");
-				break;
-			case "3":
-				list.setIntrvwResult("대기중");		
-				break;
-			case "4":
-				list.setIntrvwResult("합격");
-				break;
-			
-			default:
-				break;
+			if(list.getIntrvwResult() != null) {
+				switch (list.getIntrvwResult()) {
+				case "1":
+					list.setIntrvwResult("합격");
+					break;
+				case "2":
+					list.setIntrvwResult("불합격");
+					break;
+				case "3":
+					list.setIntrvwResult("대기중");		
+					break;
+				case "4":
+					list.setIntrvwResult("합격");
+					break;
+				
+				default:
+					break;
+				}
 			}
 		}
 		return result;
