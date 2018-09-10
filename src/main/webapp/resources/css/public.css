@@ -285,10 +285,6 @@ margin-left: auto;
   border: none;
 
 } */
-@font-face {
-	font-family: 'Roboto-Medium';
-	src: url("../fonts/Roboto-Medium.ttf") format('truetype');
-}
 
 /* 마우스 커서 올릴때 마우스 바뀜*/
 .cursorOn {

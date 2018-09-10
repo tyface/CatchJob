@@ -98,13 +98,14 @@
 							</div>
 							<div class="form-group has-feedback">
 								<!-- 비밀번호 -->
-								<input type="password" class="form-control form-text-height" id="signUpPw" placeholder="비밀번호(8자리 이상)">
+								<input type="password" class="form-control form-text-height" name="password" id="signUpPw" placeholder="비밀번호(8자리 이상)" >
 								 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 							</div>
 					        <div class="form-group has-feedback">
 								<!-- 비밀번호 확인  -->
-								<input type="password" class="form-control form-text-height" id="signUpPwCheck"	placeholder="비밀번호 확인">
+								<input type="password" class="form-control form-text-height" name="passwordCheck" id="signUpPwCheck"	placeholder="비밀번호 확인">
 								 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+								 <div id="checkMsg"></div>
 							</div>
 							<button type="submit" class="btn btn-catchjob btn-block">
 								 이메일로 가입
@@ -346,9 +347,13 @@ $(function() {
 		if(pw1!=pw2){
 			checkMsg.html("동일한 비밀번호를 입력하세요.");
 			checkMsg.css({color:"red"});
-		}else{
+		}else if(pw1 == ""){
+			checkMsg.html("비밀번호를 입력하세요");
+			checkMsg.css({color:"red"});
+		}
+		else{
 			checkMsg.html("비밀번호가 확인 되었습니다.");
-			checkMsg.css({color:"black"});
+			checkMsg.css({color:"green"});
 		}
 	});
 
@@ -366,39 +371,54 @@ $(function() {
 	});
 
 	$("#signUpForm").on("submit", function() {
-		$.ajax({
-			type : "post",
-			url : contextPath+"/member/join",
-			data : {
-				"signUpId" : $("#signUpId").val(),
-				"signUpPw" : $("#signUpPw").val(),
-				"signUpPwCheck" : $("#signUpPwCheck").val()
-			},
-			dataType : "json",
-			success : function(data) {
-				if (data.result) {
-					// 회원가입 성공
-					swal({
-						title:"해당 이메일로 인증 메일이 발송되었습니다.",
-						type: "success",
-						confirmButtonClass: "btn-success"
-					},function(){
-						$("#myModalSignUp").modal("hide");
-					})
+		var pw1 = $("input[name=password]").val();
+		var pw2 = $("input[name=passwordCheck]").val();
 
-				} else {
-					//비밀번호가 다릅니다.
+		if(pw1==pw2 && pw1 !=""){
+			$.ajax({
+				type : "post",
+				url : contextPath+"/member/join",
+				data : {
+					"signUpId" : $("#signUpId").val(),
+					"signUpPw" : $("#signUpPw").val(),
+					"signUpPwCheck" : $("#signUpPwCheck").val()
+				},
+				dataType : "json",
+				beforeSend:function(){
+								console.log($("#signUpForm").children("button[type=submit]"));
+							 $("#signUpForm").children("button[type=submit]").text("진행중..");
+
+				},
+				success : function(data) {
+					if (data.result) {
+						// 회원가입 성공
+						swal({
+							title:"해당 이메일로 인증 메일이 발송되었습니다.",
+							type: "success",
+							confirmButtonClass: "btn-success"
+						},function(){
+							$("#myModalSignUp").modal("hide");
+						})
+					} else {
+						//비밀번호가 다릅니다.
+						$("#signUpFail").removeClass('hidden');
+					}
+				},
+				error : function() {
+					//이미 가입된 이메일입니다
 					$("#signUpFail").removeClass('hidden');
 				}
-			},
-			error : function() {
-				//이미 가입된 이메일입니다
-				$("#signUpFail").removeClass('hidden');
-			}
-		});
-		return false;
+			});
+			return false;
+		}else{
+			swal({
+				title:"동일한 비밀번호를 입력하세요.",
+				type: "warning",
+				confirmButtonClass: "btn-warning"
+			})
+			return false;
+		}
 	});
-
 });
 
 function topSearchValidation(){

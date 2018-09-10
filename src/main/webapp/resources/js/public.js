@@ -107,8 +107,6 @@ function verifyRegularMemberForm() {
 					}
 			 },
 			 error : function() {
-				 alert('에러!!')
-
 				 swal({
 					 title:"비밀번호 재설정에 실패하였습니다.",
 					 type: "warning",
@@ -116,8 +114,6 @@ function verifyRegularMemberForm() {
 				 })
 			 }
 		})
-
-
 	})
 }
 
