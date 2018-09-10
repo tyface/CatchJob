@@ -14,7 +14,12 @@
   font-weight: 700;
   src: url('../fonts/GodoB.woff');
 }
-
+a {
+	text-decoration:none !important;
+}
+a:hover {
+	text-decoration:none !important;
+}
 h1 {
 	margin-top: 10px;
 }
@@ -207,6 +212,9 @@ margin-left: auto;
   font-family: 'Godo', sans-serif;
 	font-weight:
 }
+.main-color{
+	color: #4c78ea;
+}
 .font-01{
 	color: #4c78ea;
 	margin-left: 10px;
@@ -220,6 +228,18 @@ margin-left: auto;
 }
 .p-a1{
 	color: #4c78ea;
+	font-size: 15px;
+	font-weight: normal;
+	cursor: pointer;
+}
+.p-a2{
+	color: #4c78ea;
+	font-size: 15px;
+	font-weight: normal;
+	cursor: pointer;
+}
+.p-b1{
+	color: #494949;
 	font-size: 15px;
 	font-weight: normal;
 	cursor: pointer;

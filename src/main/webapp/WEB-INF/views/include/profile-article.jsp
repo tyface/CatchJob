@@ -86,7 +86,7 @@ $(function(){
 <div class="box box-widget widget-user">
           <!-- Add the bg color to the header using any of the bg-* classes -->
       <div class="widget-user-header bg-aqua-active">
-        <h3 class="widget-user-username">${principal.mberId}</h3>
+        <h3 class="widget-user-username godo-font"><span style="background-color: #0040e685; border-radius: 5px; padding: 5px;">&nbsp;&nbsp; ${principal.mberId} &nbsp;&nbsp;</span></h3>
 <!--         <h5 class="widget-user-desc">Founder &amp; CEO</h5> -->
       </div>
 <!--       <div class="widget-user-image"> -->
