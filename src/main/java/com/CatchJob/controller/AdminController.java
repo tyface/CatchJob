@@ -35,8 +35,6 @@ import com.CatchJob.service.MemberService;
 import com.CatchJob.service.ReviewService;
 import com.CatchJob.service.UniversalDomainService;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -124,7 +122,7 @@ public class AdminController {
 			member.setMberIndex(memberOne.getMberIndex());
 			member.setMberId(mberId);
 
-			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			PasswordEncoder encoder = new BCryptPasswordEncoder();			
 			member.setMberPw(encoder.encode(mberPw));
 
 			if(mberType==null) {
@@ -143,9 +141,7 @@ public class AdminController {
 			member.setLastDate(lastDate);
 					
 			boolean result = memberService.modify(member);
-				
-			System.out.println(result);
-			
+					
 			if(result) {				
 				model.addAttribute("msg", "수정 완료되었습니다");
 			} else {
@@ -545,7 +541,7 @@ public class AdminController {
 		Map<String, Object> viewData = industryService.getIndustryList();
 		
 		model.addAttribute("viewData", viewData.get("industryList"));
-		return "admin/mng-industry";
+		return "admin/industry-mng";
 	}
 	
 	@RequestMapping("/mngIndustryCode")
@@ -558,7 +554,7 @@ public class AdminController {
 		data = industryService.getIndustryCodeList(largeCatagory);
 		model.addAttribute("industryCode", data);
 	
-		return "admin/mng-industry";
+		return "admin/industry-mng";
 	}
 	
 	@RequestMapping("/mngIndustryCodeDetails")
@@ -573,7 +569,7 @@ public class AdminController {
 		
 		Industry industry=industryService.getIndustry(industryCode);
 		model.addAttribute("industryDetails", industry);	
-		return "admin/mng-industry";
+		return "admin/industry-mng";
 	}
 	
 	@RequestMapping(value="/registIndustry", method=RequestMethod.POST)
@@ -658,7 +654,7 @@ public class AdminController {
 		for(int i=0; i<arrayParams.size(); i++) {
 			Interview interview=interviewService.getInterview(Integer.parseInt(arrayParams.get(i)));
 			interview.setIntrvwFlag("1");
-			result = interviewService.modifyInterviewByAdmin(interview);
+			result = interviewService.modifyInterviewFlagByAdmin(interview);
 		}
 		String data = "";
 		if (result) {
@@ -675,11 +671,12 @@ public class AdminController {
 	
 	@RequestMapping(value="/deleteInterviewFlag", method=RequestMethod.POST)
 	public void deleteInterviewFlag(@RequestParam(value="valueArr[]") ArrayList<String> arrayParams, Model model,HttpServletResponse resp) {
+		System.out.println(":::::asdasdasd");
 		boolean result=false;
 		for(int i=0; i<arrayParams.size(); i++) {
 			Interview interview= interviewService.getInterview(Integer.parseInt(arrayParams.get(i)));
 			interview.setIntrvwFlag("2");
-			result = interviewService.modifyInterviewByAdmin(interview);
+			result = interviewService.modifyInterviewFlagByAdmin(interview);
 		}
 		
 		String data = "";
@@ -695,13 +692,14 @@ public class AdminController {
 		}
 	}
 	@RequestMapping(value="/modifyInterview", method=RequestMethod.POST)
-	public String modifyInterview(Model model, int intrvwIndex, int entIndex, String entName, String mberId, String intrvwDifficulty, String intrvwDate,String intrvwRoute,String intrvwReview,String intrvwQuestion, 
-			String intrvwAnswer, String intrvwResult, String presentationDate, String intrvwExperience, String regDate) {		
+	public String modifyInterview(Model model, String intrvwIndex, String entIndex, String entName, String mberId, String intrvwDifficulty, 
+			String intrvwDate,String intrvwRoute,String intrvwReview,String intrvwQuestion, 
+			String intrvwAnswer, @RequestParam(required=false)String intrvwResult, @RequestParam(required=false)String presentationDate, @RequestParam(required=false)String intrvwExperience) {		
 		try {							
-
-			Interview interview =interviewService.getInterview(intrvwIndex);
-			interview.setIntrvwIndex(intrvwIndex);
-			interview.setEntIndex(entIndex);
+			
+			Interview interview=interviewService.getInterview(Integer.parseInt((intrvwIndex)));
+			interview.setIntrvwIndex(Integer.parseInt(intrvwIndex));
+			interview.setEntIndex(Integer.parseInt(entIndex));
 			interview.setEntName(entName);
 			interview.setMberId(mberId);
 			interview.setIntrvwDifficulty(intrvwDifficulty);
@@ -713,7 +711,6 @@ public class AdminController {
 			interview.setIntrvwResult(intrvwResult);
 			interview.setPresentationDate(presentationDate);
 			interview.setIntrvwExperience(intrvwExperience);
-			interview.setRegDate(regDate);
 	
 			boolean result = interviewService.modifyInterviewByAdmin(interview);
 					

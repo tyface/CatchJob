@@ -101,15 +101,14 @@
 									<label for="mberId" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="mberId"
-											placeholder="아이디" value="${member.mberId}" readonly="readonly">
+											placeholder="아이디" value="${member.mberId}" readonly>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control"
-											placeholder="비밀번호">
-										<input type="hidden" name="mberPw" value="${member.mberPw}">
+											placeholder="비밀번호" name="mberPw">
 									</div>
 								</div>
 								<div class="form-group" style="text-align:right">

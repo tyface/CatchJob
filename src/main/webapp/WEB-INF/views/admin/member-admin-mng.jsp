@@ -94,15 +94,14 @@
 									<label for="mberId" class="col-sm-4 control-label">아이디</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" name="mberId" id="mberId"
-											placeholder="아이디" value="${admin.mberId}" readonly="readonly">
+											placeholder="아이디" value="${admin.mberId}" readonly>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
-										<input type="password" class="form-control" id="mberPw" style="margin-bottom:0"
-											placeholder="비밀번호" >
-						
+										<input type="text" class="form-control"
+											placeholder="비밀번호" name="mberPw">
 									</div>
 								</div>
 								<div class="form-group" style="text-align:right">
@@ -137,7 +136,6 @@
 											placeholder="최근 방문날짜" value="${admin.lastDate}">
 									</div>
 								</div>
-								<input type="hidden" name="mberPw" value="${admin.mberPw}">
 								<!-- </div>
 								<div class="form-group">
 									<div class="col-sm-4 control-label" style="font-weight: bold">사용
