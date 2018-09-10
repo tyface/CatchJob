@@ -32,13 +32,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		if (member == null) {
 			System.out.println(2);
 			throw new UsernameNotFoundException(mberid + "가 존재하지 않습니다");
-		}
+		} 
+		
+		
 		System.out.println("password:" + mberPw);
 		System.out.println(!mberPw.equals(""));
 		System.out.println(mberPw.equals(""));
 		System.out.println("-======");
 		System.out.println(passwordEncoder.matches(mberPw, member.getPassword()));		
-		if (passwordEncoder.matches(mberPw, member.getPassword()) && !mberPw.equals("")) {
+		if (!passwordEncoder.matches(mberPw, member.getPassword())) {
 			System.out.println( member.getPassword());
 			System.out.println( mberPw);
 			System.out.println("비밀번호 일치// member : " + member.getAuthorities());
@@ -52,7 +54,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			System.out.println("비밀번호 불일치// member : " + member.getAuthorities());
 			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
 		}
-
 	}
 
 	@Override
