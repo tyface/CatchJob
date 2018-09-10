@@ -3,6 +3,11 @@
 	 --sub-color: #B5B2FF;
  } */
 
+@font-face{
+	font-family:'Gruppo'; 
+	src:url('../fonts/Gruppo-Regular.ttf')
+	}
+
 @font-face {
   font-family: 'Godo';
   font-style: normal;
