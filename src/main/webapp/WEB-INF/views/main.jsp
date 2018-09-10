@@ -3,11 +3,8 @@
 <%@ include file="include/header.jsp" %>
 <%-- <jsp:include page="include/header.jsp" flush="true"/> --%>
 
-<%-- 구글 폰트 --%>
-<%-- <link href="https://fonts.googleapis.com/css?family=Jua" rel="stylesheet"> --%>
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 <!-- 유효성 검사 -->
-
 <%-- <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/messages_ko.min.js"></script> --%>
 
 <script type="text/javascript">
@@ -76,12 +73,12 @@ function searchValidation(){
 	<section>
 		<article id="main-center">
 				<!-- 			슬로건 -->
-				<p class="jua-font main-font">숨은기업, 알짜정보 찾기</p>
+				<p class="Godo main-font">숨은기업, 알짜정보 찾기</p>
 
 				<!-- 			검색바 -->
 				<form action="${pageContext.request.contextPath}/enterprise/search" class="form-inline row" id="main-search-form">
 						<div class="col-xs-11" id="main-search-div">
-							<input type="text" name="keyword" class="form-control jua-font" id="main-search-bar" size="70"  placeholder=" 기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
+							<input type="text" name="keyword" class="form-control" id="main-search-bar" size="70"  placeholder=" 기업을 검색해 보세요 "  data-placement="bottom"  autocomplete="off">
 						</div>
 						<button type="submit" class="col-xs-1" id="search-btn2">
 							<span class="glyphicon glyphicon-search"></span>
@@ -104,7 +101,7 @@ function searchValidation(){
 				<div class="carousel-inner" role="listbox">
 					<div class="item active">
 						<div class="item">
-							<p class="p-01 jua-font">인기검색회사</p>
+							<p class="p-01 godo-font">인기검색회사</p>
 							<c:forEach var="popularRank" items="${popularSearcheList}">
 							<a href="enterprise/view?entIndex=${popularRank.ENT_IDX}">${popularRank.ENT_NM}</a><br>
 						</c:forEach>
@@ -112,14 +109,14 @@ function searchValidation(){
 						</div>
 					</div>
 					<div class="item">
-						<p class="p-01 jua-font">연봉이 높은 회사</p>
+						<p class="p-01 godo-font">연봉이 높은 회사</p>
 						<c:forEach var="salaryRank" items="${salaryRankList}">
 							<a href="enterprise/view?entIndex=${salaryRank.ENT_IDX}">${salaryRank.ENT_NM}</a><br>
 						</c:forEach>
 						<h4></h4>
 					</div>
 					<div class="item">
-						<p class="p-01 jua-font">사원수가 많은 회사</p>
+						<p class="p-01 godo-font">사원수가 많은 회사</p>
 						<c:forEach var="empCntRank" items="${empCntRankList}">
 							<a href="enterprise/view?entIndex=${empCntRank.ENT_IDX}">${empCntRank.ENT_NM}</a><br>
 						</c:forEach>

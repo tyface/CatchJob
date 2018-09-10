@@ -105,11 +105,11 @@ function reviewValidation(){
 
 		messages : {
 			stars:{
-				required : "다른 항목을 선택해주세요"
+				required : "다른 항목을 선택해 주세요"
 			},
 			contents:{
-				minlength : "최소 10글자이상이어야 합니다",
-				maxlength : "최대 500글자까지 입력할 수 있습니다"
+				minlength : "최소 10 글자 이상이어야 합니다",
+				maxlength : "최대 500 글자까지 입력할 수 있습니다"
 			}
 		}
 
@@ -121,14 +121,11 @@ function reviewValidation(){
 
 <article class="container non-padding-top">
 	<div class="contents-wrap">
-	  <h2 class="jua-font text-left p-01">리뷰 코멘트</h2>
-	 <hr style="border: 1px solid #c7d5f8; padding: 0px;">
-	  <div class="table-responsive">  
-<!-- 	  <hr style="border: 1px solid #c7d5f8; padding: 0px;"> -->
+	  <h2>리뷰 코멘트</h2>
 <!-- 	  <div class="table-responsive">           -->
 	  <table class="table table-hover text-center mypage-table-width">
-	    <thead >
-	      <tr class="info">
+	    <thead>
+	      <tr>
 	        <th>기업명</th>
 	        <th>질문내용</th>
 	        <th>작성일</th>
@@ -139,40 +136,26 @@ function reviewValidation(){
 	      </tr>
 	    </thead>
 	    <tbody>
-	    
-	    <c:choose>
-	    	<c:when test="${reviewList.size() > 0}">
-				  <c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
-				      <tr>
-				        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</span></td>
-				        <td>${reviewList.question}</td>
-				        <td>${reviewList.regDate}</td>
-				        <td>
-				        	<span class="update blue-font" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </span> |
-				        	<span class="delete blue-font" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </span>
-				        </td>
-				      </tr>
-			      </c:forEach>
-	    	</c:when>
-	    	<c:otherwise>
-	    		   <tr>
-	    		   		<td colspan="4"><div class='well well-lg'>작성한 리뷰 코멘트가 없습니다</div></td>
-	    		   </tr>
-	    		   
-	    	</c:otherwise>
-	    </c:choose>
-	    
-	    
-	   
+	    <c:forEach  items="${reviewList}" var="reviewList" varStatus="status">
+		      <tr>
+		        <td><span class="blue-font" onclick="location.href='${pageContext.request.contextPath}/enterprise/view?entIndex=${reviewList.entIndex}'">${reviewList.entName}</span></td>
+		        <td>${reviewList.question}</td>
+		        <td>${reviewList.regDate}</td>
+		        <td>
+		        	<span class="update blue-font" onclick="updateForm(${reviewList.entIndex},${reviewList.questionNum})">수정  </span> |
+		        	<span class="delete blue-font" onclick="deleteReview(${reviewList.entIndex},${reviewList.questionNum})">삭제  </span>
+		        </td>
+		      </tr>
+	      </c:forEach>
 
 	    </tbody>
 	  </table>
 	  </div>
-	</div>
+
 
 
 </article>
-
+ -->
 
 
 <!-- Modal ----------------------------------------------------------------------------------------------------------------------------- -->
