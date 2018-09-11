@@ -96,6 +96,7 @@
 							<div class="form-group has-feedback">
 								<input	type="email" class="form-control form-text-height" id="signUpId"	placeholder="이메일 주소">
 								<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+								<div class="check-mail"></div>
 							</div>
 							<div class="form-group has-feedback">
 								<!-- 비밀번호 -->
@@ -239,6 +240,8 @@
 </security:authorize>
 
 <script>
+var emailCheck = false;
+
 if(window.location.pathname != "/"){
    if(window.innerWidth < 840){
          $(".navbar-brand > span").css("display","none");
@@ -268,6 +271,38 @@ $(function() {
 			$("#loginPw").next().next().html("")
 	});
 
+	$("#signUpId").on("keyup",function(){
+		var email = $("#signUpId").val();
+		var checkId = $(".check-mail");
+
+		$.ajax({
+			 type : "get",
+			 url : contextPath+"/member/checkEmail",
+			 data : {
+					"email" : email
+			 },
+			 dataType : "json",
+			 success : function(data) {
+					 if (data.result == "CODE_01") {
+							checkId.html("사용가능한 아이디 입니다.");
+							checkId.css({color:"green"});
+							emailCheck = true;
+					 } else if (data.result == "CODE_02"){
+						  checkId.html("메일인증 대기중인 아이디 입니다.");
+							checkId.css({color:"red"});
+							emailCheck = false;
+					 } else if (data.result == "CODE_03"){
+						  checkId.html("중복된 아이디 입니다.");
+						  checkId.css({color:"red"});
+							emailCheck = false;
+					 }
+			 },
+			 error:function(request,status,error){
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			return false;
+	 });
 
 	$("#loginForm").on("submit", function() {
 		var email = $("#loginId");
@@ -404,59 +439,83 @@ $(function() {
       $("#myModalSignUp").modal("hide");
    });
 
+
    $("#signUpForm").on("submit", function() {
       var pw1 = $("input[name=password]").val();
       var pw2 = $("input[name=passwordCheck]").val();
 
-		if(pw1==pw2 && pw1 !=""){
-			$.ajax({
-				type : "post",
-				url : contextPath+"/member/join",
-				data : {
-					"signUpId" : $("#signUpId").val(),
-					"signUpPw" : $("#signUpPw").val(),
-					"signUpPwCheck" : $("#signUpPwCheck").val()
-				},
-				dataType : "json",
-				beforeSend:function(){
-					$(".loding").css("display","block");
-					$(".loding").parent().css("pointer-events","none").css("cursor","default");
-					$(".loding").prev().css("display","none");
-				},
-				success : function(data) {
-					if (data.result) {
-						$(".loding").css("display","none");
-						$(".loding").parent().css("pointer-events","auto").css("cursor","pointer");
-						$(".loding").prev().css("display","block");
-						$("#checkMsg").css("display","none");
+			if(pw1==pw2 && pw1 !=""){
+				alert(2222);
+				$.ajax({
+					type : "post",
+					url : contextPath+"/member/join",
+					data : {
+						"signUpId" : $("#signUpId").val(),
+						"signUpPw" : $("#signUpPw").val(),
+						"signUpPwCheck" : $("#signUpPwCheck").val()
+					},
+					dataType : "json",
+					beforeSend:function(){
+						$(".loding").css("display","block");
+						$(".loding").parent().css("pointer-events","none").css("cursor","default");
+						$(".loding").prev().css("display","none");
+					},
+					success : function(data) {
+						if (data.result) {
+							$(".loding").css("display","none");
+							$(".loding").parent().css("pointer-events","auto").css("cursor","pointer");
+							$(".loding").prev().css("display","block");
+							$("#checkMsg").css("display","none");
 
-						// 회원가입 성공
-						swal({
-							title:"해당 이메일로 인증 메일이 발송되었습니다.",
-							type: "success",
-							confirmButtonClass: "btn-success"
-						},function(){
-							$("#myModalSignUp").modal("hide");
-						})
-					} else {
-						//비밀번호가 다릅니다.
+							// 회원가입 성공
+							swal({
+								title:"해당 이메일로 인증 메일이 발송되었습니다.",
+								type: "success",
+								confirmButtonClass: "btn-success"
+							},function(){
+								$("#myModalSignUp").modal("hide");
+							})
+						} else {
+							//회원가입 실패
+							$(".loding").css("display","none");
+							$(".loding").parent().css("pointer-events","auto").css("cursor","pointer");
+							$(".loding").prev().css("display","block");
+							$("#checkMsg").css("display","none");
+							swal({
+								title:"회원가입 실패",
+								type:"error",
+								confirmButtonClass: "btn-danger"
+						 	});
+						}
+					},
+					error : function() {
+						//이미 가입된 이메일입니다
 						$("#signUpFail").removeClass('hidden');
 					}
-				},
-				error : function() {
-					//이미 가입된 이메일입니다
-					$("#signUpFail").removeClass('hidden');
-				}
-			});
-			return false;
-		}else{
-			swal({
-				title:"동일한 비밀번호를 입력하세요.",
-				type: "warning",
-				confirmButtonClass: "btn-warning"
-			})
-			return false;
-		}
+				});
+				return false;
+			}else if($("#signUpId").val() == ""){
+				swal({
+					title:"아이디를 입력해주세요",
+					type: "warning",
+					confirmButtonClass: "btn-warning"
+				})
+				return false;
+			}else if(!emailCheck){
+				swal({
+					title:"중복된 아디디 입니다.",
+					type: "warning",
+					confirmButtonClass: "btn-warning"
+				})
+				return false;
+			}else{
+				swal({
+					title:"동일한 비밀번호를 입력하세요.",
+					type: "warning",
+					confirmButtonClass: "btn-warning"
+				})
+				return false;
+			}
 	});
 });
 

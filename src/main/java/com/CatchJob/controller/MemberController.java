@@ -1,7 +1,6 @@
 package com.CatchJob.controller;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,9 +88,11 @@ public class MemberController {
 		// "비밀번호는 00자리 이상 입력해 주세요 유효성 검사2
 		String data = "";
 		String key = new TempKey().getKey(20, false);
-
+		
 		Member member = new Member();
 		member.setMberId(signUpId);
+		
+		
 		// 비밀번호 암호화
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		member.setMberPw(encoder.encode(signUpPw));
@@ -108,7 +109,7 @@ public class MemberController {
 				mailHandler.setSubject("CatchJob 회원가입 이메일 입니다.");
 				mailHandler.setText(mailService.getMailTemplate(signUpId, Constants.File.JOIN));
 				FileSystemResource fsr = new FileSystemResource(
-						resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
+				resourceLoader.getResource(Constants.File.IMG_SUCSSES).getFile());
 				mailHandler.addInline("image-1", fsr);
 				fsr = new FileSystemResource(resourceLoader.getResource(Constants.File.IMG_LOGO_1).getFile());
 				mailHandler.addInline("logo", fsr);
@@ -118,11 +119,9 @@ public class MemberController {
 				
 				mailHandler.send();
 
-				
-				
-
 				data = "{\"result\" : true}";
 			} else {
+				System.out.println("11111111111111111111111");
 				data = "{\"result\" : false}";
 			}
 
@@ -137,7 +136,26 @@ public class MemberController {
 			}
 		}
 	}
-
+	/* ID체크 */
+	@RequestMapping(value = "/checkEmail", method = RequestMethod.GET)
+	public void pwModify(String email, HttpServletResponse resp) {
+		String data = "";
+		
+		Member member = memberService.getMemberById(email);
+		if (member == null) {
+			data = "{\"result\" : \"CODE_01\"}";
+		} else if(member.getMberFlag().equals("2")) {
+			data = "{\"result\" : \"CODE_02\"}";
+		} else {
+			data = "{\"result\" : \"CODE_03\"}";
+		}
+		try {
+			resp.getWriter().print(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/* 패스워드 수정 */
 	@RequestMapping(value = "/passwordModify", method = RequestMethod.POST)
 	public void pwModify(String password, String passwordCheck, HttpSession session, HttpServletResponse resp,Authentication authentication) {
