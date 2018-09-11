@@ -49,7 +49,6 @@ function doUpdate(num){
 function doDelete(entIndex){
 	swal({
 	  title: "삭제하시겠습니까?",
-	  text: "Once deleted, you will not be able to recover this file!",
 	  type: "info",
 	  showCancelButton: true,
 	  confirmButtonClass: "btn-info",
@@ -64,8 +63,7 @@ function doDelete(entIndex){
 			success: function(result){
 				if(result){
 					swal({
-						title:"Deleted!", 
-						text:"Your imaginary file has been deleted.", 
+						title:"삭제되었습니다", 
 						type:"success",
 						confirmButtonClass: "btn-success",
 						showCancelButton: false
@@ -145,8 +143,7 @@ function interviewValidation(){
 		,
 		submitHandler: function(form) {
 			swal({
-				title:"Update", 
-				text: "You clicked the button!", 
+				title:"수정되었습니다", 
 				type: "success",
 				confirmButtonClass: "btn-success",
 

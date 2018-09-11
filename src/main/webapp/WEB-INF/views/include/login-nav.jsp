@@ -25,7 +25,7 @@
 
      <div class="f-right nav-btn-1">
        <%-- <div class="col-xs-6 cursorOn myBtnSignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</div> --%>
-       <div class="cursorOn myBtnLogin">Sign In</div>
+       <div class="cursorOn myBtnLogin">로그인</div>
      </div>
    </div>
 </nav>

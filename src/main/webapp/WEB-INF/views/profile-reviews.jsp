@@ -11,6 +11,7 @@
 
 <script>
 $(function(){
+	reviewValidation();
 	$('.stars').barrating({
 	    theme: 'fontawesome-stars',
 	   	onSelect: function(value, text, event){
@@ -18,7 +19,6 @@ $(function(){
 	    	      $("#hiddenEvaluationScore").val(value);
 	    }
 	});
-	reviewValidation();
 })
 function updateForm(num, questionNum){
 	$.ajax({
@@ -50,7 +50,6 @@ function deleteReview(entIndex,questionNum){
 
 	swal({
 		  title: "삭제하시겠습니까?",
-		  text: "Once deleted, you will not be able to recover this file!",
 		  type: "info",
 		  showCancelButton: true,
 		  confirmButtonClass: "btn-info",
@@ -66,8 +65,7 @@ function deleteReview(entIndex,questionNum){
 				success: function(result){
 					if(result){
 						swal({
-							title:"Deleted!",
-							text:"Your imaginary file has been deleted.",
+							title:"삭제되었습니다",
 							type:"success",
 							confirmButtonClass:"btn-success",
 							showCancelButton: false
@@ -90,7 +88,7 @@ function deleteReview(entIndex,questionNum){
 
 }
 function reviewValidation(){
-	$('.writeForm').validate({
+	$('#writeForm').validate({
 		rules : {
 
 			stars:{
@@ -111,6 +109,19 @@ function reviewValidation(){
 				minlength : "최소 10 글자 이상이어야 합니다",
 				maxlength : "최대 500 글자까지 입력할 수 있습니다"
 			}
+		}
+		,
+		submitHandler: function(form) {
+			swal({
+				title:"수정되었습니다", 
+				type: "success",
+				confirmButtonClass: "btn-success",
+
+			},
+			function(){
+				form.submit();
+			})		
+			
 		}
 
 	});
@@ -177,8 +188,8 @@ function reviewValidation(){
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
-		<div class="modal-content">
-			<form action="${pageContext.request.contextPath}/profile/updateReview" id="writeForm" method="post">
+	<div class="modal-content">
+		<form action="${pageContext.request.contextPath}/profile/updateReview" id="writeForm" method="post">
         <input type="hidden" name="reviewIndex" id="hiddenReviewIndex" >
         <input type="hidden" name="entIndex" id="hiddenEntIndex">
           <input type="hidden" name="reviewFlag" id="hiddenReviewFlag">
@@ -239,7 +250,7 @@ function reviewValidation(){
 
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-catchjob" id="update-btn">제출</button>
+					<button type="submit" class="btn btn-catchjob" id="update-btn">제출</button>
 					<!-- data-dismiss="modal" -->
 				</div>
 			</form>
