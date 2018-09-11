@@ -1,5 +1,3 @@
-
-
 var month = new Array(); //월
 var salary = new Array(); //연금정보
 var viewSalary = new Array();
@@ -13,12 +11,23 @@ function appendEntList(entList,pageNum,pageViewCount){
   var appendObject;
   var firstNum = pageNum * pageViewCount;
   var lastNum = firstNum + 9;
+  console.log('entList.length:' + entList.length + keyword2);
+
+  if(entList.length < 1){
+    $("#ent-list-box").append("<div class='no-data'><b style='color:#4c78ea'>'"+keyword2+"'</b>에 대한 검색결과가 없습니다.</div>");
+    $("#ent-list-box").append("<ul class='no-data1'><li>맞춤법을 확인해보세요</li><li>검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.</li></ul>");
+    return;
+  }
+
   if(lastNum > entList.length){
     lastNum = entList.length;
   }
   if(firstNum >= entList.length){
     return;
   }
+
+
+
 
   for(var i = firstNum; i < lastNum;i++){
     /* 별점 만들기 */
@@ -144,13 +153,18 @@ function getReviewList(questionNum, pageNum){/* 456 */
           }
         }
 
-        var regularMmember = data.reviewList[i].mberType == "ROLE_AUTHENTICATED"?"<span class='godo-font font-01'>정회원</span>":"";
-        console.log(data);
+        var regularMmember = "";
+        var regularStyle = "";
+        console.log(data.reviewList[i].mberType == "ROLE_AUTHENTICATED");
+        if(data.reviewList[i].mberType == "ROLE_AUTHENTICATED"){
+          regularMmember = "<span class='godo-font font-01' >정회원</span>";
+          regularStyle = " style=background-color:#aeceeb40";
+        }
 				var regDate = data.reviewList[i].regDate;
 				var evaluationScore = data.reviewList[i].evaluationScore;
 				var contents = data.reviewList[i].contents;
 
-				var td = $("<tr><td><p><small><span class='stars-on'></span>"+stars+"&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate.substring(0,10)+"</small>"+regularMmember+"</p>"+contents+"</td></tr>").appendTo(reviews);
+				var td = $("<tr><td"+regularStyle+"><p><small><span class='stars-on'></span>"+stars+"&nbsp;&nbsp;<span style='color:#D5D5D5'>|</span>&nbsp;&nbsp;"+regDate.substring(0,10)+"</small>"+regularMmember+"</p>"+contents+"</td></tr>").appendTo(reviews);
 				td.appendTo(reviews);
 			}
 

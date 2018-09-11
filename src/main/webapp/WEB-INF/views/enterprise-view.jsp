@@ -93,7 +93,7 @@ $(function(){
 
 	/* 그래프 내용들 배열로 저장 */
 	for(var i in empCount){
-		if(window.innerWidth < 500 && Number(i)%4!=0){
+		if(window.innerWidth < 500 && Number(i)%4!=0 &&empCount.size > 7){
 			continue
 		}
 

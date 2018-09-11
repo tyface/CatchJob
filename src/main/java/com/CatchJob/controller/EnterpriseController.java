@@ -65,15 +65,17 @@ public class EnterpriseController {
 	public String getEntList(String keyword, Model model, Authentication authentication) {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("keyword", keyword);		
-		try {
-			data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));		
-		}catch(NullPointerException e) {
-			e.printStackTrace();
-		}		
 		
+		if(authentication != null) {
+			data.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));		
+		}else {
+			data.put("MBER_IDX", null);	
+		}
+			
 		Gson gson = new GsonBuilder().create();
 		JsonArray jsonEntList = gson.toJsonTree(entService.getEntList(data)).getAsJsonArray();
 		model.addAttribute("entList", jsonEntList);
+		model.addAttribute("keyword2", keyword);
 		// 기업 리스트 출력
 		return "enterprise-list";
 	}
@@ -89,9 +91,6 @@ public class EnterpriseController {
 			
 			mapData.put("CONN_IP", Inet4Address.getLocalHost().getHostAddress());
 			if(authentication != null) {
-				System.out.println("======================================");
-				System.out.println(authentication.getPrincipal());
-				System.out.println(Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 				mapData.put("MBER_IDX", Integer.toString(((Member)authentication.getPrincipal()).getMberIndex()));
 			}
 			recordService.regViewRecord(mapData);

@@ -43,6 +43,19 @@ article {
 	padding-top: 50px;
 }
 
+.no-data{
+	text-align: left;
+	margin: 20px;
+  padding: 24px;
+  font-size: 29px;
+  font-family: 'Godo';
+}
+.no-data1{
+	text-align: left;
+	margin: 30px 30px 40px 30px;
+  font-size: 15px;
+  font-family: 'Godo';
+}
 /* Mobile */
 .desktop-hide{
 	 display: block;

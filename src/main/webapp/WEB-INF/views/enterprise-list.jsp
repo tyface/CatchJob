@@ -8,9 +8,10 @@
 var pageViewCount = 10;
 var pageNum = 0;
 var entList = JSON.parse('${entList}');
-
+var keyword2 = '${keyword2}';
+// console.log('keyword2:'+keyword2);
 $(function() {
-	appendEntList(entList, pageNum, pageViewCount);
+	appendEntList(entList, pageNum, pageViewCount,keyword2);
 	pageNum ++;
 	/* 무한 스크롤 코딩*/
 	$(document).scroll(function() {
