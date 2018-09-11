@@ -113,7 +113,6 @@ public class EnterpriseController {
 		try {
 			List<News> newsList = naverNewsService.searchNews( entService.getEntInfo(mapData).get("ENT_NM") );	
 			model.addAttribute("newsList",newsList);
-			System.out.println("========================");
 			System.out.println(newsList);
 			List<Saramin> saraminList = saraminService.searchSaramin( entService.getEntInfo(mapData).get("ENT_NM") );
 			model.addAttribute("saraminList",new Gson().toJson(saraminList));

@@ -176,10 +176,11 @@ article {
 /* Desktop */
 @media (min-width:1025px) {
   .container{
+		width:1248px;
 		padding-right: 15px;
-padding-left: 15px;
-margin-right: auto;
-margin-left: auto;
+		padding-left: 15px;
+		margin-right: auto;
+		margin-left: auto;
   }
 }
 

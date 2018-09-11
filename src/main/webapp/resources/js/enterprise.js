@@ -595,11 +595,11 @@ function chartPersonnel(){
 			datasets: [{/* 총 인원 datasets */
 					type: 'line',
 					label: '총 인원',
-            backgroundColor: '#A566FF',
+          backgroundColor: '#A566FF',
 					borderColor: '#A566FF',
 					borderWidth: 0,
 					pointBorderColor: '#A566FF',
-					pointBorderWidth: 3,
+					pointBorderWidth: 2,
 					fill: false,
 					data: totalPersonPerMonth,
 					datalabels: {
