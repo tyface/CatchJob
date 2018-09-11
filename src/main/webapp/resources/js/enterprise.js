@@ -308,7 +308,7 @@ function getInterviewList(pageNum){
                                   append: $("<table/>",{
                                             class:"table",
                                             append: [$("<thead/>",{
-                                                        html: "<tr><th colspan='6'>"+interviewList[i].intrvwReview+"</th></tr>"
+                                                        html: "<tr><th colspan='6'>\""+interviewList[i].intrvwReview+"\"</th></tr>"
                                                       }),
                                                      $("<tbody/>",{
                                                        append: [$("<tr><td colspan='6'><p><b>면접질문</b></p><p class='font-gray'>"+interviewList[i].intrvwQuestion+"</p></td></tr>"),
