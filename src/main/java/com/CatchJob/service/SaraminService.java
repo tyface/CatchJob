@@ -124,7 +124,7 @@ public class SaraminService {
                  
                  expirationTimestamp ="~"+ month+"/"+expirationTimestamp.substring(8, 10)+" ("+dayOfWeek+")";
                  saramin.setExpirationTimestamp(expirationTimestamp);
-                 saramin.setHref(child.item(j).getAttributes().getNamedItem("href").getTextContent());
+                 //saramin.setHref(child.item(j).getAttributes().getNamedItem("href").getTextContent());
                  saramin.setName(child.item(j).getTextContent());                 
                  saramin.setTitle(child1.item(0).getTextContent());
                 

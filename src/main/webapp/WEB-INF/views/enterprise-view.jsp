@@ -658,12 +658,10 @@ function saramin(){
 
 							<div class="row">
 								<div class="col-sm-6">
-									<span><b>소재지</b> </span><span> &nbsp;|&nbsp;&nbsp;
-										${entInfo.ADDR_BCITY_NM} &nbsp; ${entInfo.ADDR_SIGNGU_NM}</span>
+									<span><b>소재지</b></span><span>&nbsp;|&nbsp;${entInfo.ADDR_BCITY_NM}&nbsp;${entInfo.ADDR_SIGNGU_NM}</span>
 								</div>
 								<div class="col-sm-6">
-									<span><b>산업군</b> </span><span> &nbsp;|&nbsp;&nbsp;
-										${entInfo.ENT_INDUTY_NM}</span>
+									<span><b>산업군</b></span><span>&nbsp;|&nbsp;${entInfo.ENT_INDUTY_NM}</span>
 								</div>
 
 							</div>
