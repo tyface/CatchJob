@@ -633,7 +633,7 @@ function saramin(){
 				<div class="row " id="section1">
 					<div class="col-sm-6">
 						<div class="row" >
-							<span id="entName">${entInfo.ENT_NM}</span>
+							<span id="enterpriseName">${entInfo.ENT_NM}</span>
 							<a href="#" class="follow follow-btn follow" >
 								<i class="fa fa-heart-o follow" id="follow" ></i>
 							</a>

@@ -133,7 +133,11 @@ public class InterviewServiceImp implements InterviewService{
 		dataItvw.put("START_ROW", START_ROW);
 		List<Interview> interviewList = itvwDao.selectInterviewList(dataItvw);
 		
-		for(int i = 0 ; i<interviewList.size();i++) {			
+		for(int i = 0 ; i<interviewList.size();i++) {
+			//면접 등록일
+			  interviewList.get(i).setRegDate(  interviewList.get(i).getRegDate().substring(0, 10) );
+			
+			//면접난이도
 			switch (interviewList.get(i).getIntrvwDifficulty()) {
 			case "5":
 				interviewList.get(i).setIntrvwDifficulty("매우 어려움");
