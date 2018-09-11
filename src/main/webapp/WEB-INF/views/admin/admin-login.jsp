@@ -15,7 +15,7 @@
 	href="${pageContext.request.contextPath}/resources/css/admin.css">
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse bg-color-bl">
 	<div class="navbar-header">
 		<div class="navbar-brand">
 			<a id="sidebarCollapse" href="${pageContext.request.contextPath}/admin"> &nbsp;&nbsp;&nbsp;<span
@@ -27,19 +27,19 @@
 	<div class="container" id="loginContainer">
 		<form class="form-signin"
 			action="${pageContext.request.contextPath}/admin/login" method="post">
-			<h2 class="form-signin-heading">Please login</h2>
+			<h2 class="form-signin-heading">관리자 로그인</h2>
 			<div class="input-group">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-user"></i></span> <input type="text"
-					class="form-control" name="mberId" placeholder="Admin ID"/>
+					class="form-control" name="mberId" placeholder="아이디"/>
 			</div>
 			<div class="input-group" id="adminLoginPw">
 				<span class="input-group-addon"><i
 					class="glyphicon glyphicon-lock"></i></span> <input type="password"
-					class="form-control" name="mberPw" placeholder="Admin Password"/>
+					class="form-control" name="mberPw" placeholder="비밀번호"/>
 			</div>
 			<button class="btn btn-lg btn-info pull-right col-md-4" type="submit" id="adminLoginBtn"
-			>login</button>
+			>로그인</button>
 		</form>
 	</div>
 </body>

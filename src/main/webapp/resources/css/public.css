@@ -32,6 +32,7 @@ section{
 }
 
 footer {
+	border-top: 1px solid #d0cfce;
 	position: relative;
 	width: 100%;
 	display: inline-block;
@@ -43,6 +44,32 @@ article {
 	padding-top: 50px;
 }
 
+.intrvw-modal div{
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+/* Mobile */
+.footer-infos {
+	display: block;
+}
+/* Tablet */
+@media (min-width:768px) and (max-width:1024px) {
+  .footer-infos {
+		display: block;
+  }
+}
+/* Desktop */
+@media (min-width:1025px) {
+  .footer-infos {
+		display: block;
+  }
+}
+
+
+.footer-nav{
+	margin-top: 15px;
+}
 .no-data{
 	text-align: left;
 	margin: 20px;

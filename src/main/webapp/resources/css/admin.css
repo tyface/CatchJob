@@ -1,3 +1,20 @@
+.margin-15{
+	margin: 15px;
+}
+.bg-color-bl{
+	background-color: #4c78ea;
+	border-color: #4c78ea;
+}
+.bg-color-bl *{
+	color: #ffffff !important;
+}
+.navbar-btn{
+	background-color: #ffffff;
+	border-color: #ffffff;
+	color: #4c78ea!important;
+	font-weight: bold;
+}
+
 .col-sm-2 #mngSelect {
 	width: 190px;
 	height: 27px;

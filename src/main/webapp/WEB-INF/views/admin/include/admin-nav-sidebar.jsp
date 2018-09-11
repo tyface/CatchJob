@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>	
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bower_components/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin.css">
 <script>
 	$(document).ready(function() {
@@ -14,7 +14,7 @@
 		});
 	});
 </script>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse bg-color-bl">
 <div class="navbar-header">
 	<div class="navbar-brand">
 		<a id="sidebarCollapse"> &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-th-list">&nbsp;</span>Admin Page</a>
@@ -22,9 +22,9 @@
 </div>
 <div id="navbar" class="navbar-collapse collapse">
 	<ul class="nav navbar-nav navbar-right">
-		<li><a href="#"><span class="glyphicon glyphicon-user">&nbsp;</span>
-				<security:authentication property="principal.username" /> 님 접속 상태입니다</a></li>
-		<li class="pull-right"><button class="btn btn-danger navbar-btn"
+		<li><p class="margin-15"><span class="glyphicon glyphicon-user">&nbsp;</span>
+				<security:authentication property="principal.username" /> 님 접속 상태입니다</p></li>
+		<li class="pull-right"><button class="btn btn-info navbar-btn"
 				onclick="location.href='logout'">로그아웃</button>&nbsp;</li>
 	</ul>
 </div>
@@ -74,7 +74,7 @@
 					<ul class="collapse list-unstyled" id="pageSubmenu5">
 						<li><a
 							href="${pageContext.request.contextPath}/admin/mngMain">메인화면
-								관리</a></li> 
+								관리</a></li>
 						<li><a href="${pageContext.request.contextPath}/admin/mngFAQ">FAQ
 								관리</a></li>
 					</ul></li>--%>

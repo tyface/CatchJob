@@ -1008,7 +1008,7 @@ function saramin(){
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">면접후기 작성</h4>
 				</div>
-				<div class="modal-body ">
+				<div class="modal-body intrvw-modal">
 					<div class="row form-group">
 						<div class="col-xs-3">
 							<label>기업명</label>
@@ -1112,11 +1112,11 @@ function saramin(){
 						</div>
 						<div class="col-xs-9">
 							<div class="row">
-								<div class="col-sm-11">
+								<div class="col-xs-11">
 									<input type="text" class="form-control" name="presentationDate"
 										placeholder="면접 결과 발표까지 걸린 시간 ">
 								</div>
-								<div class="col-sm-1">
+								<div class="col-xs-1">
 									<p>일</p>
 								</div>
 							</div>
