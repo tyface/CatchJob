@@ -45,6 +45,6 @@ $(function() {
 </article>
 
 	<button type="button" class="btn btn-default move-top" >
-		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+		<span class="glyphicon glyphicon-chevron-up" aria-hidden="true">TOP</span>
 	</button>
 <%@ include file="include/footer.jsp" %>
