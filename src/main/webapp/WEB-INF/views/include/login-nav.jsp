@@ -199,36 +199,36 @@
 
    <%-- 비밀번호 수정 모달 --%>
    <div class="modal fade" id="pwModifyModal" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialogs">
 
          <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-header" style="padding: 35px 50px;">
+         <div class="modal-contents">
+            <div class="modal-headers" >
                <button type="button" class="close" data-dismiss="modal">&times;</button>
                <h4>
-                  <span class="glyphicon glyphicon-lock"></span> 비밀번호 수정하기
+                  <span class="glyphicon glyphicon-lock"></span>비밀번호 수정
                </h4>
             </div>
 
-				<div class="modal-body" style="padding: 40px 50px;">
+				<div class="modal-body" >
 					<form role="form" method="post" id="pwModifyForm">
 						<div class="form-group has-feedback">
-							<input	type="email" class="form-control" id="signUpId"	value="${principal.username}" readonly>
+							<input	type="email" class="form-control form-text-height" id="signUpId"	value="${principal.username}" readonly>
 							<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 						</div>
 						<!-- 비밀번호 -->
 						<div class="form-group has-feedback">
-							<input type="password" class="form-control" name="password" placeholder="Password">
+							<input type="password" class="form-control form-text-height" name="password" placeholder="Password">
 							<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 						</div>
 						<!-- 비밀번호 확인  -->
 						<div class="form-group has-feedback">
-							<input type="password" class="form-control" name="passwordCheck"	placeholder="Retype password">
+							<input type="password" class="form-control form-text-height" name="passwordCheck"	placeholder="Retype password">
 							<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
 							<div class="checkMsg"></div>
 						</div>
-						<button type="submit" class="btn btn-success btn-block">
-							<span class="glyphicon glyphicon-off"></span> 비밀번호 수정
+						<button type="submit" class="btn btn-catchjob btn-block">
+							비밀번호 수정
 						</button>
 					</form>
 				</div>

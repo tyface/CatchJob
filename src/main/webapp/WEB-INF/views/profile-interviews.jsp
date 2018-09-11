@@ -212,7 +212,7 @@ function interviewValidation(){
 
 <!-- Modal ----------------------------------------------------------------------------------------------------------------------------- -->
 <div class="modal fade" id="myModal" role="dialog">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog ">
 
 		<!-- Modal content-->
 		<div class="modal-content">
