@@ -588,40 +588,40 @@ function saramin(){
 			<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="70">
 				<li>
 					<a onclick="fnMove('#section1')" class="cursor-pointer text-center">
-						<span class="fa fa-building logo-small "></span> 
+						<span class="fa fa-building logo-small "></span>
 						<span class="godo-font p-a2">기업정보</span>
-						
+
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section2')" class="cursor-pointer text-center">
 						<span class="fa fa-weixin logo-small"></span>
 						<span class="godo-font p-a2">리뷰코멘트</span>
-						 
+
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section3')" class="cursor-pointer text-center">
 						<span class="fa fa-file-text logo-small"></span>
-						<span class="godo-font p-a2">면접후기</span> 
+						<span class="godo-font p-a2">면접후기</span>
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section4')" class="cursor-pointer text-center">
 						<span class="fa fa-line-chart logo-small"></span>
-						<span class="godo-font p-a2">월별그래프</span> 
+						<span class="godo-font p-a2">월별그래프</span>
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section5')" class="cursor-pointer text-center">
 						<span class="fa fa-group logo-small"></span>
-						<span class="godo-font p-a2">채용정보</span> 
+						<span class="godo-font p-a2">채용정보</span>
 					</a>
 				</li>
 				<li>
 					<a onclick="fnMove('#section6')"  class="cursor-pointer text-center">
 						<span class="fa fa-newspaper-o logo-small"></span>
-						<span class="godo-font p-a2">뉴스</span> 
+						<span class="godo-font p-a2">뉴스</span>
 					</a>
 				</li>
 
@@ -874,7 +874,7 @@ function saramin(){
 							<div class="box-body row">
 								<div class="chart col-md-4 margin-auto" >
 									<h3 class="box-title godo-font p-b1">면접 난이도</h3>
-							
+
 									<div class="text-center ">
 <%-- 									<canvas id="pieChart" ></canvas> --%>
 										<div class="row">
@@ -920,6 +920,7 @@ function saramin(){
 						<ul class="pagination intvw-pagination">
 						</ul>
 						<button type="button" class="btn btn-info" id="intr-write-btn" onclick="intrWriteBtn()">면접후기 작성</button>
+						<div style="clear:both;"></div>
 					</nav>
 				</div>
 			</div><!-- section3 면접후기  END-->

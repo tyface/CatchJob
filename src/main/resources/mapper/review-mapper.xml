@@ -114,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		OFFSET #{START_ROW}
 	</select>
 	
-<!-- 	리뷰 수정 -->
+	<!-- 	리뷰 수정 -->
 	<update id="updateReview" parameterType="review">
 		UPDATE 	REVIEW_TB
 		SET 	EVALUATION=#{evaluationScore}, CONTENTS=#{contents}, REVW_FL=#{reviewFlag}
@@ -128,7 +128,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				r.EVALUATION=#{evaluationScore}, r.CONTENTS=#{contents}, r.REVW_FL=#{reviewFlag} 
 		WHERE	r.REVW_IDX=#{reviewIndex}
 	</update>
-<!-- 	기업의 리뷰 평점 최신화  -->
+	<!-- 	기업의 리뷰 평점 최신화  -->
 	<update id="updateEvaluationAvg" parameterType="int">
 		UPDATE 	UPDATE_ENT_INFO_TB
 		SET 	EVALUATION_AVG = (SELECT 	round(avg(EVALUATION),1) as AVG
@@ -149,13 +149,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REVIEW_TB
 		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0
 	</select>
+	
 	<!-- 리뷰 항목별 만족도  -->
 	<select id="valuesByItem" parameterType="map" resultType="map">
-<!-- 		SELECT  EVALUATION, count(*) AS COUNT -->
-<!-- 		FROM REVIEW_TB -->
-<!-- 		WHERE ENT_IDX=${ENT_IDX} AND REVW_FL=${REVW_FL} AND EVALUATION > 0 -->
-<!-- 		GROUP BY EVALUATION -->
-		
 		SELECT qes.QESTN_NO as EVALUATION_NUM , count(rev.REVW_IDX) as COUNT
 		FROM   REVIEW_QESTN_TB qes
 		LEFT JOIN REVIEW_TB rev
@@ -166,6 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY qes.QESTN_NO 
 		ORDER BY qes.QESTN_NO 
 	</select>
+	
 	<resultMap type="review" id="reviewMap">
 		<result property="entName" column="ENT_NM"/>
 		<result property="question" column="QUESTION"/>
