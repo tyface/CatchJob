@@ -144,7 +144,7 @@ function getReviewList(questionNum, pageNum){/* 456 */
           }
         }
 
-        var regularMmember = data.reviewList[i].mberType == "ROLE_AUTHENTICATED"?"<span class='jua-font font-01'>정회원</span>":"";
+        var regularMmember = data.reviewList[i].mberType == "ROLE_AUTHENTICATED"?"<span class='godo-font font-01'>정회원</span>":"";
         console.log(data);
 				var regDate = data.reviewList[i].regDate;
 				var evaluationScore = data.reviewList[i].evaluationScore;
