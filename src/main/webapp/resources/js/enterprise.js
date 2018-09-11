@@ -728,8 +728,7 @@ function interviewValidation(){
 		/* submit행들러 */
 		submitHandler: function(form) {
 			swal({
-				title:"등록",
-				text: "You clicked the button!",
+				title:"등록되었습니다",
 				type: "success",
 				confirmButtonClass: "btn-success",
 			},
