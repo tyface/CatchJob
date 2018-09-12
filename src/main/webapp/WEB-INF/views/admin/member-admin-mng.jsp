@@ -101,7 +101,7 @@
 									<label for="mberPw" class="col-sm-4 control-label">비밀번호</label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control"
-											placeholder="비밀번호" name="mberPw">
+											placeholder="******" name="mberPw">
 									</div>
 								</div>
 								<div class="form-group" style="text-align:right">

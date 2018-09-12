@@ -50,7 +50,7 @@
 			default-target-url="/admin" username-parameter="mberId"
 			password-parameter="mberPw" />
 		<security:logout invalidate-session="true"
-			logout-url="/admin/logout" logout-success-url="/admin"/>
+			logout-url="/admin/logout" logout-success-url="/"/>
 		<security:csrf disabled="true" />
 	</security:http>
 	<!-- member security -->

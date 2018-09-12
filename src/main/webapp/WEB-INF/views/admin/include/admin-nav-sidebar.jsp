@@ -58,7 +58,7 @@
 						class="fa  fa-angle-down pull-right" aria-hidden="true"></i></a>
 					<ul class="collapse list-unstyled" id="pageSubmenu3">
 						<li><a href="mngInduty">산업군 관리</a></li>
-						<li><a href="mngDomain">도메인 관리</a></li>
+						<!-- <li><a href="mngDomain">도메인 관리</a></li> -->
 					</ul></li>
 				<!-- <li><a href="#pageSubmenu4" data-toggle="collapse"
 					aria-expanded="false" class="dropdown-toggle"> <i
