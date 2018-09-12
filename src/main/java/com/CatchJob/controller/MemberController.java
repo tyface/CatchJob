@@ -121,7 +121,6 @@ public class MemberController {
 
 				data = "{\"result\" : true}";
 			} else {
-				System.out.println("11111111111111111111111");
 				data = "{\"result\" : false}";
 			}
 
@@ -184,6 +183,7 @@ public class MemberController {
 	public void regularMemberMail(String email, HttpSession session, HttpServletResponse resp,Authentication authentication) {
 		String data = "";
 		String domain;
+		System.out.println(authentication.getPrincipal());
 		Member member = (Member)authentication.getPrincipal();
 
 		String memberId = member.getMberId();
@@ -227,7 +227,7 @@ public class MemberController {
 	/* 정회원 인증 하기 */
 	@RequestMapping(value = "/verifyRegularMember")
 	public String verifyRegularMember(String memberId, String oauthId, HttpSession session,Model model) {
-		model.addAttribute("url", "/catchjob/");
+		model.addAttribute("url", "/");
 		
 		try {
 			Member member = memberService.getMemberByOauthId(memberId, oauthId);
@@ -235,7 +235,7 @@ public class MemberController {
 			if (member != null) {
 				member.setMberType("ROLE_AUTHENTICATED");
 				memberService.memberTypeModify(member);
-				model.addAttribute("msg", "정회원 업데이트 완료"); // 정회원 업데이트 완료
+				model.addAttribute("msg", "정회원 인증이 완료되었습니다."); // 정회원 업데이트 완료
 			} else {
 				model.addAttribute("msg", "정회원 업데이트 실패"); // 회원 ID 와 인증 ID 불일치
 			}

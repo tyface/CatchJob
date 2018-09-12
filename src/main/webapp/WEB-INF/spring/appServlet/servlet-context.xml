@@ -68,7 +68,7 @@
     <bean id="oAuth2Parameters"
         class="org.springframework.social.oauth2.OAuth2Parameters">
         <property name="scope" value="email" />
-        <property name="redirectUri" value="https://${localhost}/member/oAuth2Callback" />
+        <property name="redirectUri" value="https://localhost/member/oAuth2Callback" />
     </bean>
 	
 	<!-- 메일 보내기 (SEND) -->

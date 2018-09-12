@@ -44,6 +44,14 @@ article {
 	padding-top: 50px;
 }
 
+.overflow {
+	display: inline-block;
+	max-width: 330px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
 .intrvw-modal div{
 	padding-left: 3px;
 	padding-right: 3px;
@@ -318,11 +326,9 @@ article {
 
 /* Mobile */
 .navbar-brand{
-	/* font-family: 'Baloo Tammudu', cursive; */
-	font-family: 'Gruppo', cursive;
+	font-family: 'Gruppo', cursive !important;
 	font-size: 35px;
 	font-weight: bolder;
-	/* color: #a8bff9 !important; */
 	color: #555c70 !important;
 }
 /* Tablet */
@@ -756,6 +762,8 @@ width:100%;
 .btnFollow {
 	color: red;
 	padding: 0px;
+	margin-bottom: 16px;
+	margin-left: 3px;
 }
 
 #btnReview {

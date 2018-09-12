@@ -58,7 +58,7 @@ function appendEntList(entList,pageNum,pageViewCount){
                   append:  [$("<div/>",{
                             class:"row",
                             append: [$("<a/>",{
-                                        class:"p25",
+                                        class:"p25 overflow",
                                         href:contextPath+"/enterprise/view?entIndex="+entList[i].entIndex ,
                                         html:entList[i].entName
                                       }),
