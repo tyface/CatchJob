@@ -445,7 +445,6 @@ $(function() {
       var pw2 = $("input[name=passwordCheck]").val();
 
 			if(pw1==pw2 && pw1 !=""){
-				alert(2222);
 				$.ajax({
 					type : "post",
 					url : contextPath+"/member/join",
