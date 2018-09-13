@@ -132,7 +132,7 @@ function reviewValidation(){
 
 <article class="container non-padding-top">
 	<div class="contents-wrap">
-	  <h2 class="godo-font text-left p-01">리뷰 코멘트</h2>
+	  <h2 class="godo-font text-left p-01">내 리뷰코멘트</h2>
 	  <hr style="border: 1px solid #c7d5f8; padding: 0px;">
 	  <div class="table-responsive">          
 <!-- 	  <div class="table-responsive">           -->
@@ -197,18 +197,11 @@ function reviewValidation(){
 				<input type="hidden" name="evaluationScore" id="hiddenEvaluationScore" >
 				<div class="modal-headers cat-header"> <!--  -->
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">면접후기 수정</h4>
+					<h4 class="modal-title">리뷰 코멘트 수정</h4>
 				</div>
 				<div class="modal-body">
 					<!-- 리뷰 코멘트/ 기업명 -->
-					<div class="row form-group">
-						<div class="col-xs-3">
-							<label>기업명</label>
-						</div>
-						<div class="col-xs-9">
-							<input type="text" class="form-control" id="entName" name="entName"	 readonly="readonly">
-						</div>
-					</div>
+					
 					<!-- 리뷰 코멘트/ 질문내용 -->
 					<div class="row form-group">
 						<div class="col-xs-3">
