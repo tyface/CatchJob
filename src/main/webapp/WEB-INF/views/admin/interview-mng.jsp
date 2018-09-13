@@ -25,7 +25,7 @@
 </style>
 <script>		
 	function newPage() {	
-		var url="mngReview?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+
+		var url="mngInterview?page="+${viewData.currentPage}+"&msgPerPage="+$("#quantity").val()+
 			"&keywordOption="+$("#mngSelect option").val()+"&keyword="+$("#keyword").val();		
 		window.location=url;
 	}
@@ -179,7 +179,7 @@ function chkDelete(){
 					</select>
 
 				</div>
-				<form action="mngReview" class="form-inline col-sm-3"
+				<form action="mngInterview" class="form-inline col-sm-3"
 					id="searchForm">
 					<div class="input-group">
 						<input type="hidden" name="page" value="${viewData.currentPage}">
@@ -199,7 +199,7 @@ function chkDelete(){
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th style="width: 2%;"><input type="checkbox" id="chk_all" name="chk_all" /></th>
+						<th style="width: 2%"><input type="checkbox" id="chk_all" name="chk_all" /></th>
 						<th style="width: 2%"><span class="glyphicon glyphicon-check"></span></th>
 						<th style="width: 3%">NO</th>
 						<th style="width: 9%">작성자</th>

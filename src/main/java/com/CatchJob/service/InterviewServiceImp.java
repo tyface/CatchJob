@@ -262,7 +262,7 @@ public class InterviewServiceImp implements InterviewService{
 		Map<String, Object> viewData = new HashMap<String,Object>();
 		int totalCount = 0;  	
 		Map<String, Object> map = new HashMap<>();
-				
+
 		/* 검색 키워드 존재 시*/
 		if(data.get("keyword")!=null) {
 			String keywordOption = (String) data.get("keywordOption");
@@ -271,21 +271,22 @@ public class InterviewServiceImp implements InterviewService{
 				map.put("entNameKeyword", entNameKeyword);
 				viewData.put("keyword", entNameKeyword);
 				viewData.put("keywordOption", "entNameKeyword");	
-				totalCount  = itvwDao.selectCountByKeyword(map); 	
-			}else if(keywordOption.equals("entIndexKeyword")) {
+				totalCount = itvwDao.selectCountByKeyword(map); 	
+			} else if(keywordOption.equals("entIndexKeyword")) {
 				String entIndexKeyword = (String) data.get("keyword");
 				map.put("entIndexKeyword", entIndexKeyword);
 				viewData.put("keyword", entIndexKeyword);
 				viewData.put("keywordOption", "entIndexKeyword");
-				totalCount  = itvwDao.selectCountByKeyword(map); 	
+				totalCount = itvwDao.selectCountByKeyword(map); 	
 			} else if(keywordOption.equals("intrvwDifficultyKeyword")){
 				String intrvwDifficultyKeyword = (String) data.get("keyword");
 				map.put("intrvwDifficultyKeyword", intrvwDifficultyKeyword);
 				viewData.put("keyword", intrvwDifficultyKeyword);
 				viewData.put("keywordOption", "intrvwDifficultyKeyword");
-				totalCount  = itvwDao.selectCountByKeyword(map); 	
-			}else if(keywordOption.equals("")) {
-				totalCount  = itvwDao.selectCountByKeyword(map); 	
+				totalCount = itvwDao.selectCountByKeyword(map);
+				
+			} else if(keywordOption.equals("")) {
+				totalCount = itvwDao.selectCountByKeyword(map); 	
 			}				
 		} else {
 			totalCount  = itvwDao.selectCountByKeyword(map); 	
@@ -311,8 +312,6 @@ public class InterviewServiceImp implements InterviewService{
 		viewData.put("endPage", getInterviewEndPage(pageNumber));
 		viewData.put("msgPerPage", numOfMsgPage);	
 		viewData.put("boardList", itvwDao.selectInterviewListByAdmin(map));
-		
-		System.out.println(itvwDao.selectInterviewListByAdmin(map));
 		
 		return viewData;
 	}

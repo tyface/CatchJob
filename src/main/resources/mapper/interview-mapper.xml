@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	 		AND e.ENT_NM LIKE '%${entNameKeyword}%'
    		</if>
    		<if test="intrvwDifficultyKeyword != null"> 
- 	  	    AND i.INTRVW_DFFLY = #{intrvwDifficulty} 
+ 	  	    AND i.INTRVW_DFFLY = #{intrvwDifficultyKeyword} 
    	   </if>
 	</select>	
 	<select id="selectInterviewListByAdmin" resultMap="interviewMap" parameterType="map">
@@ -112,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND e.ENT_NM LIKE '%${entNameKeyword}%'
 		</if>
 		<if test="intrvwDifficultyKeyword != null">
-			AND i.INTRVW_DFFLY = #{intrvwDifficulty}
+			AND i.INTRVW_DFFLY = #{intrvwDifficultyKeyword}
 		</if>
 		ORDER BY i.INTRVW_IDX DESC
 		LIMIT #{NUM_OF_MSG_PER_PAGE}
