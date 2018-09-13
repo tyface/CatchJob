@@ -155,7 +155,6 @@ function getReviewList(questionNum, pageNum){/* 456 */
 
         var regularMmember = "";
         var regularStyle = "";
-        console.log(data.reviewList[i].mberType == "ROLE_AUTHENTICATED");
         if(data.reviewList[i].mberType == "ROLE_AUTHENTICATED"){
           regularMmember = "<span class='godo-font font-01' >정회원</span>";
           regularStyle = " style=background-color:#aeceeb40";

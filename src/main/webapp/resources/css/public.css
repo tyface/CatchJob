@@ -562,7 +562,7 @@ article {
 	background-color: #3b5998;
 	font-family: Roboto-Medium;
 	font-size: 14px;
-	color: #ffffff;
+	color: #ffffff !important;
 	line-height: 22px;
 	height: 40px;
 	box-shadow: 1px 1px 4px gray;

@@ -9,7 +9,6 @@ var pageViewCount = 10;
 var pageNum = 0;
 var entList = JSON.parse('${entList}');
 var keyword2 = '${keyword2}';
-// console.log('keyword2:'+keyword2);
 $(function() {
 	appendEntList(entList, pageNum, pageViewCount);
 	pageNum ++;
